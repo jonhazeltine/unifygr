@@ -1,8 +1,69 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const missionMoments = [
+	{
+		title: 'Worship',
+		copy: 'We gather with lifted attention, letting adoration re-order the whole room around Jesus.'
+	},
+	{
+		title: 'Discern',
+		copy: 'We listen for the voice of God with humility, Scripture-shaped conviction, and expectant faith.'
+	},
+	{
+		title: 'Respond',
+		copy: 'We move when He speaks—serving our city, strengthening people, and going where He sends.'
+	}
+];
+
+const visionSteps = [
+	{
+		kicker: 'Encounter God',
+		description: 'Presence before program. We make room for holy attention, deep worship, and lives awakened by the nearness of God.'
+	},
+	{
+		kicker: 'Be transformed',
+		description: 'Grace reshapes us from the inside out—healing what is fractured, forming Christlike character, and renewing desire.'
+	},
+	{
+		kicker: 'Change the world',
+		description: 'A transformed people become a sent people, carrying the love, power, and truth of Jesus into the city and beyond.'
+	}
+];
+
+const values = [
+	{
+		title: 'Passion for Jesus',
+		copy: 'Wholehearted devotion that keeps Christ central, beautiful, and above every lesser thing.'
+	},
+	{
+		title: 'Passion for people',
+		copy: 'A costly love that sees, welcomes, serves, and honors the image of God in every person.'
+	},
+	{
+		title: 'Transparent relationships',
+		copy: 'Honest community where confession, courage, and care can mature people into freedom.'
+	},
+	{
+		title: 'Godly character',
+		copy: 'Integrity formed in the secret place—faithful, trustworthy, and steady in public and private.'
+	},
+	{
+		title: 'Supernatural life',
+		copy: 'A Spirit-led expectancy for prayer, healing, wisdom, bold witness, and the active presence of God.'
+	}
+];
+
+const connectionLinks = [
+	{ label: 'Visit', href: 'https://newlifegr.com/plan-a-visit', detail: 'Get directions, service details, and what to expect.' },
+	{ label: 'About', href: 'https://newlifegr.com/about', detail: 'Learn the story, leadership, and heart behind New Life.' },
+	{ label: 'Sermons', href: 'https://newlifegr.com/sermons', detail: 'Listen again and stay rooted in the word preached weekly.' },
+	{ label: 'Ministries', href: 'https://newlifegr.com/ministries', detail: 'Find places to belong, serve, and grow with others.' },
+	{ label: 'Events', href: 'https://newlifegr.com/events', detail: 'See upcoming gatherings, rhythms, and moments to join in.' },
+	{ label: 'Give', href: 'https://newlifegr.com/give', detail: 'Support the mission with generosity and practical partnership.' },
+	{ label: 'Contact', href: 'https://newlifegr.com/contact', detail: 'Reach out with questions, needs, or a next step to take.' }
+];
 ---
 
 <!doctype html>
@@ -11,40 +72,149 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="landing-shell">
+			<section class="hero section" id="top">
+				<div class="hero__veil"></div>
+				<div class="hero__orbit hero__orbit--one"></div>
+				<div class="hero__orbit hero__orbit--two"></div>
+				<div class="hero__city"></div>
+				<div class="container hero__content">
+					<div class="eyebrow">New Life → Unify GR</div>
+					<h1>Jesus at the center. A gathered people listening, worshiping, and being sent.</h1>
+					<p class="hero__lede">
+						A reverent front door into a church being formed around the presence of God—drawn into encounter,
+						reshaped by grace, and mobilized together for the sake of the city.
+					</p>
+					<div class="hero__actions">
+						<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Plan a Visit</a>
+						<a class="button button--secondary" href="https://newlifegr.com">Explore New Life</a>
+					</div>
+				</div>
+				<div class="hero__figure" aria-hidden="true">
+					<div class="figure__halo"></div>
+					<div class="figure__silhouette"></div>
+					<div class="figure__pulse"></div>
+				</div>
+			</section>
+
+			<section class="section section--mission">
+				<div class="container split-grid">
+					<div class="section-heading reveal">
+						<div class="eyebrow">Mission · what we do</div>
+						<h2>We are a people shaped by worship, attentive to God, and ready to move in obedience.</h2>
+						<p>
+							This is not passive spirituality. It is a living response to Jesus—adoring Him, hearing Him,
+							and carrying His life into homes, streets, relationships, and the city we are called to love.
+						</p>
+					</div>
+					<div class="mission-stream reveal">
+						{missionMoments.map((moment, index) => (
+							<article class="mission-card" style={`--delay:${index * 120}ms`}>
+								<span class="mission-card__index">0{index + 1}</span>
+								<h3>{moment.title}</h3>
+								<p>{moment.copy}</p>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--vision">
+				<div class="container">
+					<div class="section-heading section-heading--center reveal">
+						<div class="eyebrow">Vision</div>
+						<h2>Encounter God. Be transformed. Change the world.</h2>
+						<p>
+							A journey of presence, renewal, and sending—where Jesus is revealed through a people made alive in Him.
+						</p>
+					</div>
+					<div class="vision-path">
+						{visionSteps.map((step, index) => (
+							<article class="vision-step reveal" style={`--delay:${index * 160}ms`}>
+								<div class="vision-step__line"></div>
+								<span class="vision-step__count">{index + 1}</span>
+								<h3>{step.kicker}</h3>
+								<p>{step.description}</p>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--values">
+				<div class="container">
+					<div class="section-heading reveal">
+						<div class="eyebrow">Values · how we live</div>
+						<h2>Weighty convictions, lived with tenderness, courage, and the power of the Spirit.</h2>
+						<p>
+							Every value is meant to be embodied. These are not slogans for a wall, but a way of becoming a people who look like Jesus together.
+						</p>
+					</div>
+					<div class="values-grid">
+						{values.map((value, index) => (
+							<article class="value-card reveal" style={`--delay:${index * 90}ms`}>
+								<h3>{value.title}</h3>
+								<p>{value.copy}</p>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--unity">
+				<div class="container unity-grid">
+					<div class="section-heading reveal">
+						<div class="eyebrow">Unity</div>
+						<h2>Strengthening and mobilizing the Church into one shared witness.</h2>
+						<p>
+							Unity here is not vague togetherness. It is many lives gathered around Jesus, formed into shared strength, and sent with one purpose.
+						</p>
+					</div>
+					<div class="unity-panel reveal">
+						<div class="unity-panel__stream"></div>
+						<ul>
+							<li>The Body built up in truth, prayer, and courage.</li>
+							<li>A gathered people becoming a sent people.</li>
+							<li>Many voices, gifts, and stories joined into one movement in Christ.</li>
+							<li>Shared mission that strengthens the Church and blesses the city.</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--connect">
+				<div class="container">
+					<div class="section-heading section-heading--center reveal">
+						<div class="eyebrow">Connection</div>
+						<h2>Step through the front door.</h2>
+						<p>Explore the life of New Life and find the next clear way to engage.</p>
+					</div>
+					<div class="connect-grid">
+						{connectionLinks.map((link, index) => (
+							<a class="connect-card reveal" href={link.href} style={`--delay:${index * 70}ms`}>
+								<span>{link.label}</span>
+								<p>{link.detail}</p>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--final">
+				<div class="container final-cta reveal">
+					<div>
+						<div class="eyebrow">Come near</div>
+						<h2>Join a people gathering around Jesus for the life of the world.</h2>
+					</div>
+					<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Plan a Visit</a>
+				</div>
+			</section>
 		</main>
-		<Footer />
+		<footer class="site-footer">
+			<div class="container site-footer__inner">
+				<p>New Life / Unify GR landing page concept</p>
+				<a href="https://newlifegr.com">Continue to newlifegr.com</a>
+			</div>
+		</footer>
 	</body>
 </html>
