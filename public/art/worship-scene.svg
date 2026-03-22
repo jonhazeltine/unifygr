@@ -1,0 +1,28 @@
+<svg width="1200" height="900" viewBox="0 0 1200 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="600" y1="0" x2="600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#08111D"/>
+      <stop offset="1" stop-color="#06070A"/>
+    </linearGradient>
+    <radialGradient id="window" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(604 244) rotate(90) scale(204 204)">
+      <stop stop-color="#FFF3D7"/>
+      <stop offset="0.22" stop-color="#F0D8B0" stop-opacity="0.92"/>
+      <stop offset="0.56" stop-color="#7AA8DE" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#7AA8DE" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="beam" x1="601" y1="124" x2="601" y2="645" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF1D1" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#FFF1D1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <circle cx="604" cy="244" r="204" fill="url(#window)"/>
+  <path d="M493 116L604 586L715 116H493Z" fill="url(#beam)"/>
+  <circle cx="604" cy="244" r="148" stroke="white" stroke-opacity="0.10"/>
+  <path d="M173 732C257 611 371 539 514 516C589 504 650 506 697 522C763 545 820 548 868 532C942 509 1023 532 1111 602V900H173V732Z" fill="#0B121C"/>
+  <path d="M433 656C433 620 460 591 494 591C525 591 549 620 549 656V809H433V656Z" fill="#0A0E14"/>
+  <path d="M540 632C540 587 574 551 616 551C656 551 689 587 689 632V816H540V632Z" fill="#091019"/>
+  <path d="M685 656C685 620 711 591 745 591C776 591 801 620 801 656V809H685V656Z" fill="#0A0E14"/>
+  <path d="M307 727C348 689 387 665 423 657C471 646 513 649 550 666C590 684 628 692 665 690C721 687 771 662 814 615C846 580 880 555 917 541C955 528 998 532 1045 553V900H307V727Z" fill="#0D1622"/>
+  <path d="M0 776C82 742 162 731 241 742C305 751 365 776 422 816C495 866 572 886 654 874C727 863 799 827 870 765C933 710 998 684 1064 688C1107 691 1152 708 1200 738V900H0V776Z" fill="#07111A"/>
+</svg>

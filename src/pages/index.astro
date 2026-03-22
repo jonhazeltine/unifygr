@@ -1,8 +1,89 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
+const pillars = [
+	{ label: "Gather", detail: "Lay down our lives in worship and dwell in His presence." },
+	{ label: "Listen", detail: "Hear His voice and carry it with humility and faith." },
+	{ label: "Go", detail: "Strengthen the Church and go after the lost in the name of Jesus." },
+];
+
+const experiences = [
+	{
+		title: "Worship",
+		copy: "A community surrendered to Jesus, honoring His presence, with open hearts and lifted eyes.",
+		tone: "glow",
+		image: "/art/generated/worship-ambient-v5-thumb.webp",
+		video: "/art/generated/worship-ambient-v5.mp4",
+		alt: "A dim worship gathering with silhouettes, raised hands, and palpable emotional response.",
+	},
+	{
+		title: "Voice",
+		copy: "A listening people, carrying His voice with humility and obedience.",
+		tone: "mist",
+		image: "/art/generated/voice-ambient-v2-thumb.webp",
+		video: "/art/generated/voice-ambient-v2.mp4",
+		alt: "A quiet night prayer scene with a solitary figure beneath a radiant halo.",
+	},
+	{
+		title: "Mission",
+		copy: "Strengthening and mobilizing the Church so that Jesus is revealed, the city is transformed and the lost are found.",
+		tone: "flare",
+		image: "/art/generated/mission-ambient-v2-thumb.webp",
+		video: "/art/generated/mission-ambient-v2.mp4",
+		alt: "A cinematic city scene washed in warm light and night-blue atmosphere.",
+	},
+];
+
+const rhythms = [
+	{
+		phase: "01",
+		eyebrow: "Presence",
+		title: "A people who linger before God.",
+		copy: "We slow down for worship and to surrender. We gather to taste and see the goodness of the Lord, to hear his voice, and celebrate His presence together.",
+	},
+	{
+		phase: "02",
+		eyebrow: "Voice",
+		title: "Made alive by His voice and power.",
+		copy: "Not a passing encounter, but a life continually shaped through attentive listening, quick obedience, and a shared commitment to grow into maturity together.",
+	},
+	{
+		phase: "03",
+		eyebrow: "Sending",
+		title: "Sent out to our city and the world.",
+		copy: "What happens in worship should strengthen and mobilize the Church, reveal the person of Jesus, and warmly welcome the lost and seeking.",
+	},
+];
+
+const liturgies = [
+	"Lay down our lives in worship",
+	"Dwell in His presence",
+	"Carry His voice and power",
+	"Move united toward the lost",
+];
+
+const quickLinks = [
+	{ label: "Plan a Visit", href: "https://newlifegr.com/plan-a-visit" },
+	{ label: "About New Life", href: "https://newlifegr.com/about" },
+	{ label: "Watch Sermons", href: "https://newlifegr.com/sermons" },
+	{ label: "See Events", href: "https://newlifegr.com/events" },
+];
+
+const heroVariants = {
+	a: {
+		label: "Dawn",
+		concept: "figure",
+		image: "/art/generated/hero-dawn-figure-clean.png",
+	},
+	b: {
+		label: "Blue Hour",
+		concept: "city",
+		city: "/art/generated/hero-bluehour-gr-silhouette-v2.png",
+		cityVideo: "/art/generated/gr-water-loop-v1.mp4",
+		cityPoster: "/art/generated/hero-bluehour-gr-silhouette-v2.png",
+	},
+};
 ---
 
 <!doctype html>
@@ -11,40 +92,355 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="landing-shell">
+			<header class="site-chrome">
+				<div class="container site-chrome__inner">
+					<a class="site-chrome__brand" href="#top">
+						<span>New Life</span>
+						<strong>Unify GR</strong>
+					</a>
+					<nav class="site-chrome__nav" aria-label="Section navigation">
+						<a href="#vision">Vision</a>
+						<a href="#rhythm">Rhythm</a>
+						<a href="#experience">Experience</a>
+						<a href="#visit">Visit</a>
+					</nav>
+					<div class="hero-variant-toggle" aria-label="Hero variant toggle">
+						{Object.entries(heroVariants).map(([key, variant]) => (
+							<button class="hero-variant-toggle__button" data-hero-variant={key} type="button">
+								{variant.label}
+							</button>
+						))}
+					</div>
+				</div>
+			</header>
+
+			<section class="hero section" id="top">
+				<div class="hero__veil"></div>
+				<div class="hero__grain"></div>
+				<div class="hero__light hero__light--one"></div>
+				<div class="hero__light hero__light--two"></div>
+				<div class="hero__light hero__light--three"></div>
+				<div class="hero__orbit hero__orbit--one"></div>
+				<div class="hero__orbit hero__orbit--two"></div>
+				<div class="hero__city" style="display:none;">
+					<video class="hero__city-video" autoplay muted loop playsinline poster="/art/generated/hero-bluehour-gr-silhouette-v2.png">
+						<source src="/art/generated/gr-water-loop-v1.mp4" type="video/mp4" />
+					</video>
+					<img class="hero__city-silhouette" src="/art/generated/hero-bluehour-gr-silhouette-v2.png" alt="" />
+				</div>
+
+				<div class="container hero__content">
+					<p class="eyebrow reveal">New Life / Grand Rapids</p>
+					<p class="hero__micro reveal">Worship. Listen. Speak. Go.</p>
+					<h1 class="reveal">Jesus at the center.</h1>
+					<p class="hero__lede reveal">
+						Dwelling in His presence, carrying His voice, loving our city.
+					</p>
+					<div class="hero__actions reveal">
+						<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Plan a Visit</a>
+						<a class="button button--secondary" href="#experience">See the Vision</a>
+					</div>
+					<div class="hero__pillars reveal">
+						{pillars.map((pillar) => (
+							<div class="hero-pillar">
+								<span>{pillar.label}</span>
+								<p>{pillar.detail}</p>
+							</div>
+						))}
+					</div>
+				</div>
+
+				<div class="hero__figure" aria-hidden="true" style="display:block;">
+					<img class="figure__art" src="/art/generated/hero-dawn-figure-clean.png" alt="" />
+					<div class="figure__halo"></div>
+					<div class="figure__beam figure__beam--one"></div>
+					<div class="figure__beam figure__beam--two"></div>
+					<div class="figure__beam figure__beam--three"></div>
+					<div class="figure__ring figure__ring--one"></div>
+					<div class="figure__ring figure__ring--two"></div>
+					<div class="figure__aura"></div>
+				</div>
+
+				<div class="scroll-cue reveal">
+					<span>Scroll</span>
+					<div class="scroll-cue__line"></div>
+				</div>
+			</section>
+
+			<section class="section section--statement" id="vision">
+				<div class="container statement">
+					<div class="statement__art reveal">
+						<img src="/art/generated/gr-city-unity.png" alt="A luminous Grand Rapids riverfront skyline with the Blue Bridge at blue hour." />
+					</div>
+					<p class="statement__eyebrow eyebrow reveal">Unify GR</p>
+					<h2 class="statement__title reveal">One Body. One Witness.</h2>
+					<p class="statement__copy reveal">
+						Lives laid down in worship until Jesus is revealed and the lost are found.
+					</p>
+				</div>
+			</section>
+
+			<section class="section section--rhythm" id="rhythm">
+				<div class="rhythm__veil"></div>
+				<div class="container">
+					<div class="section-heading reveal">
+						<p class="eyebrow">The Rhythm</p>
+						<h2>Not a program. A way of life in the presence of Jesus.</h2>
+					</div>
+					<div class="rhythm-grid">
+						{rhythms.map((rhythm, index) => (
+							<article class="rhythm-card reveal" style={`--delay:${index * 120}ms`}>
+								<span class="rhythm-card__phase">{rhythm.phase}</span>
+								<p class="eyebrow">{rhythm.eyebrow}</p>
+								<h3>{rhythm.title}</h3>
+								<p>{rhythm.copy}</p>
+								<div class="rhythm-card__pulse"></div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--marquee" aria-label="Core themes">
+				<div class="marquee">
+					<div class="marquee__track">
+						<span>Jesus</span>
+						<span>Presence</span>
+						<span>Voice</span>
+						<span>Unity</span>
+						<span>Mission</span>
+						<span>Jesus</span>
+						<span>Presence</span>
+						<span>Voice</span>
+						<span>Unity</span>
+						<span>Mission</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--pilgrimage">
+				<div class="pilgrimage__backdrop"></div>
+				<div class="pilgrimage__beam pilgrimage__beam--one"></div>
+				<div class="pilgrimage__beam pilgrimage__beam--two"></div>
+				<div class="container pilgrimage">
+					<div class="pilgrimage__copy reveal">
+						<p class="eyebrow">A Cityward Faith</p>
+						<h2>Every gathering should strengthen the Church and spill into the city.</h2>
+						<p>
+							We’re building toward a shared life that rises like the dawn over one another, and over Grand Rapids, calm, radiant, unified, and impossible to contain.
+						</p>
+					</div>
+					<div class="pilgrimage__stage">
+						<div class="pilgrimage-panel pilgrimage-panel--quote reveal" style="--delay:120ms">
+							<p class="pilgrimage-panel__label">Vision Frame</p>
+							<blockquote>
+								“Let worship become witness until Jesus is revealed and the lost are found.”
+							</blockquote>
+						</div>
+						<div class="pilgrimage-panel pilgrimage-panel--path reveal" style="--delay:220ms">
+							<div class="pilgrimage-path" aria-hidden="true">
+								<span></span>
+								<span></span>
+								<span></span>
+							</div>
+							<div>
+								<p class="pilgrimage-panel__label">Movement</p>
+								<ul class="liturgies">
+									{liturgies.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--experience" id="experience">
+				<div class="container">
+					<div class="section-heading section-heading--center reveal">
+						<p class="eyebrow">What We Long For</p>
+						<h2>A people formed by presence, voice, and love.</h2>
+					</div>
+					<div class="experience-grid">
+						{experiences.map((experience, index) => (
+							<article class={`experience-card experience-card--${experience.tone} reveal`} style={`--delay:${index * 140}ms`}>
+								<div class="experience-card__visual">
+									<video
+										class="experience-card__media"
+										autoplay
+										muted
+										loop
+										playsinline
+										poster={experience.image}
+										aria-label={experience.alt}
+									>
+										<source src={experience.video} type="video/mp4" />
+									</video>
+									<div class="experience-card__orb"></div>
+									<div class="experience-card__wave"></div>
+								</div>
+								<div class="experience-card__body">
+									<span class="experience-card__index">0{index + 1}</span>
+									<h3>{experience.title}</h3>
+									<p>{experience.copy}</p>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--links" id="visit">
+				<div class="container">
+					<div class="section-heading reveal">
+						<p class="eyebrow">Take a Step</p>
+						<h2>Visit, be strengthened, and participate in the life of the Church.</h2>
+					</div>
+					<div class="links-grid">
+						{quickLinks.map((link, index) => (
+							<a class="link-card reveal" href={link.href} style={`--delay:${index * 90}ms`}>
+								<span>{link.label}</span>
+								<strong>Open</strong>
+							</a>
+						))}
+					</div>
+				</div>
+			</section>
+
+			<section class="section section--final">
+				<div class="container final-cta reveal">
+					<div>
+						<p class="eyebrow">Join Us</p>
+						<h2>Come worship, listen, and be sent.</h2>
+					</div>
+					<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Step In</a>
+				</div>
+			</section>
 		</main>
-		<Footer />
+
+		<footer class="site-footer">
+			<div class="container site-footer__inner">
+				<p>New Life / Unify GR</p>
+				<a href="https://newlifegr.com">Continue to newlifegr.com</a>
+			</div>
+		</footer>
+
+		<script is:inline define:vars={{ heroVariants }}>
+			const root = document.documentElement;
+			const reveals = Array.from(document.querySelectorAll(".reveal"));
+			const heroCity = document.querySelector(".hero__city");
+			const heroFigure = document.querySelector(".hero__figure");
+			const heroArt = document.querySelector(".hero__figure .figure__art");
+			const heroCityVideo = document.querySelector(".hero__city-video");
+			const heroCitySource = heroCityVideo?.querySelector("source");
+			const heroButtons = Array.from(document.querySelectorAll("[data-hero-variant]"));
+
+			const updatePointer = (event) => {
+				const x = (event.clientX / window.innerWidth) * 100;
+				const y = (event.clientY / window.innerHeight) * 100;
+				root.style.setProperty("--pointer-x", `${x}%`);
+				root.style.setProperty("--pointer-y", `${y}%`);
+			};
+
+			const updateScroll = () => {
+				const progress = Math.min(window.scrollY / window.innerHeight, 1);
+				root.style.setProperty("--scroll-progress", progress.toFixed(3));
+			};
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (entry.isIntersecting) {
+							entry.target.classList.add("is-visible");
+							observer.unobserve(entry.target);
+						}
+					}
+				},
+				{ threshold: 0.18, rootMargin: "0px 0px -10% 0px" },
+			);
+
+			reveals.forEach((element, index) => {
+				if (index < 5) {
+					element.classList.add("is-visible");
+					return;
+				}
+
+				observer.observe(element);
+			});
+
+			const applyHeroVariant = (variantKey, syncUrl = false) => {
+				if (
+					!(heroArt instanceof HTMLImageElement) ||
+					!(heroCity instanceof HTMLDivElement) ||
+					!(heroFigure instanceof HTMLDivElement)
+				) {
+					return;
+				}
+
+				const variant = heroVariants[variantKey] ?? heroVariants.a;
+				root.dataset.heroVariant = variantKey;
+				root.dataset.heroConcept = variant.concept;
+
+				for (const button of heroButtons) {
+					button.classList.toggle("is-active", button.dataset.heroVariant === variantKey);
+				}
+
+				if (variant.concept === "figure" && variant.image) {
+					heroArt.src = variant.image;
+				}
+
+				heroFigure.style.display = variant.concept === "figure" ? "block" : "none";
+				heroCity.style.display = variant.concept === "city" ? "block" : "none";
+				heroCity.style.setProperty("--hero-city-image", variant.city ? `url("${variant.city}")` : "none");
+
+				if (
+					heroCityVideo instanceof HTMLVideoElement &&
+					heroCitySource instanceof HTMLSourceElement &&
+					variant.concept === "city"
+				) {
+					if (variant.cityVideo && heroCitySource.getAttribute("src") !== variant.cityVideo) {
+						heroCitySource.setAttribute("src", variant.cityVideo);
+						heroCityVideo.load();
+					}
+					if (variant.cityPoster) {
+						heroCityVideo.poster = variant.cityPoster;
+					}
+					heroCityVideo.play().catch(() => {});
+				}
+
+				if (syncUrl) {
+					const nextUrl = new URL(window.location.href);
+					nextUrl.searchParams.set("hero", variantKey);
+					window.history.replaceState({}, "", nextUrl);
+					window.localStorage.setItem("hero-variant", variantKey);
+				}
+			};
+
+			const requestedVariant =
+				new URL(window.location.href).searchParams.get("hero") ??
+				window.localStorage.getItem("hero-variant") ??
+				"a";
+
+			if (requestedVariant in heroVariants) {
+				applyHeroVariant(requestedVariant);
+			} else {
+				applyHeroVariant("a");
+			}
+
+			heroButtons.forEach((button) => {
+				button.addEventListener("click", () => {
+					const variantKey = button.dataset.heroVariant;
+					if (variantKey) {
+						applyHeroVariant(variantKey, true);
+					}
+				});
+			});
+
+			updateScroll();
+			window.addEventListener("pointermove", updatePointer, { passive: true });
+			window.addEventListener("scroll", updateScroll, { passive: true });
+		</script>
 	</body>
 </html>

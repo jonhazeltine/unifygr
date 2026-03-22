@@ -1,0 +1,66 @@
+<svg width="1600" height="1200" viewBox="0 0 1600 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="800" y1="0" x2="800" y2="1200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07101B"/>
+      <stop offset="0.5" stop-color="#0A1626"/>
+      <stop offset="1" stop-color="#050608"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(804 318) rotate(90) scale(292 292)">
+      <stop stop-color="#FFF6DE"/>
+      <stop offset="0.18" stop-color="#F6DEB6" stop-opacity="0.92"/>
+      <stop offset="0.42" stop-color="#C8C6E5" stop-opacity="0.36"/>
+      <stop offset="0.75" stop-color="#6AA0D9" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#6AA0D9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(804 886) rotate(90) scale(82 296)">
+      <stop stop-color="#FFDCA8" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#FFDCA8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="robe" x1="803.5" y1="205" x2="803.5" y2="969" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#191F29"/>
+      <stop offset="0.52" stop-color="#0A0E14"/>
+      <stop offset="1" stop-color="#050608"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="800" y1="101" x2="800" y2="873" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF0CE" stop-opacity="0.36"/>
+      <stop offset="0.72" stop-color="#FFF0CE" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#FFF0CE" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blur32" x="190" y="-118" width="1229" height="1006" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="blur16" x="78" y="731" width="1444" height="351" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+  <ellipse cx="354" cy="258" rx="224" ry="154" fill="#7BA7DC" fill-opacity="0.09"/>
+  <ellipse cx="1286" cy="208" rx="230" ry="170" fill="#E9C5B0" fill-opacity="0.07"/>
+  <g filter="url(#blur32)">
+    <path d="M603 149L803 733L1003 149H603Z" fill="url(#beam)"/>
+    <path d="M698 106L803 716L908 106H698Z" fill="#FFF0CE" fill-opacity="0.22"/>
+  </g>
+  <circle cx="804" cy="318" r="292" fill="url(#halo)"/>
+  <circle cx="804" cy="318" r="228" stroke="white" stroke-opacity="0.10"/>
+  <circle cx="804" cy="318" r="342" stroke="white" stroke-opacity="0.05"/>
+  <ellipse cx="804" cy="886" rx="296" ry="82" fill="url(#glow)"/>
+  <path d="M804 205C846 205 884 230 904 267C920 297 927 337 928 390C976 414 1015 457 1040 518C1062 571 1077 639 1089 723L1132 969H468L511 724C523 639 540 570 564 517C589 460 628 418 677 393C678 339 686 299 702 268C722 230 760 205 804 205Z" fill="url(#robe)"/>
+  <path d="M804 278C765 278 734 315 734 362C734 409 765 447 804 447C843 447 874 409 874 362C874 315 843 278 804 278Z" fill="#0A0E14"/>
+  <path d="M707 364C707 294 751 238 803 238C867 238 916 290 917 368C899 349 874 339 844 339C821 339 802 346 786 359C766 345 744 338 722 338C716 338 711 339 707 364Z" fill="#EED7B7" fill-opacity="0.15"/>
+  <path d="M604 564C671 519 738 494 804 486C870 494 937 519 1004 564L971 623C918 599 862 583 804 575C746 583 690 599 637 623L604 564Z" fill="#F4DFC0" fill-opacity="0.16"/>
+  <path d="M334 826L476 786L482 969H252L334 826Z" fill="#09111A"/>
+  <path d="M485 765L603 730L624 969H420L485 765Z" fill="#0B1420"/>
+  <path d="M623 716L726 685L745 969H587L623 716Z" fill="#0D1826"/>
+  <path d="M871 696L975 728L1012 969H853L871 696Z" fill="#0D1826"/>
+  <path d="M997 744L1118 779L1185 969H979L997 744Z" fill="#0B1420"/>
+  <path d="M1126 789L1268 828L1348 969H1118L1126 789Z" fill="#09111A"/>
+  <g filter="url(#blur16)">
+    <rect x="114" y="818" width="66" height="126" fill="#F4D19D" fill-opacity="0.10"/>
+    <rect x="239" y="787" width="46" height="167" fill="#F4D19D" fill-opacity="0.10"/>
+    <rect x="453" y="752" width="38" height="170" fill="#F4D19D" fill-opacity="0.12"/>
+    <rect x="668" y="714" width="48" height="224" fill="#F4D19D" fill-opacity="0.12"/>
+    <rect x="1194" y="772" width="44" height="159" fill="#F4D19D" fill-opacity="0.12"/>
+    <rect x="1345" y="813" width="63" height="137" fill="#F4D19D" fill-opacity="0.10"/>
+  </g>
+  <path d="M0 968H1600V1200H0V968Z" fill="url(#bg)"/>
+</svg>

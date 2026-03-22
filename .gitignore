@@ -200,3 +200,7 @@ dist
 
 ### Astro ###
 .astro/
+.vercel
+.playwright-cli/
+output/
+tmp/
