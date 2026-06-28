@@ -1,0 +1,35 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church } from "../data/site";
+---
+
+<Interior
+	title="New Life | Spiritual Formation"
+	description="Growing deeper in Christ at New Life Grand Rapids."
+	kicker="Be Transformed"
+	heading="Spiritual Formation"
+	lede="Hear His voice. Obey His assignments. Grow deeper in Christ together."
+>
+	<section class="section">
+		<div class="container">
+			<div class="formation-cta reveal is-visible">
+				<p class="eyebrow">New here? Start your journey</p>
+				<h3>Welcome to New Life.</h3>
+				<p>
+					Our spiritual formation journey lives in the New Life app — a guided path to help you take your
+					next step, whether you're brand new or going deeper.
+				</p>
+				<a class="button button--primary" href={church.external.formationWelcome} target="_blank" rel="noopener">
+					Begin the Welcome Path →
+				</a>
+			</div>
+
+			<div class="stub-note reveal is-visible" style="margin-top:1.5rem">
+				<p class="eyebrow">Coming Soon</p>
+				<h3>More to come on this page.</h3>
+				<p>Classes, groups, and rhythms for growing deeper in Christ — staff will be able to fill this in directly once the site editor is wired up.</p>
+				<a class="button button--secondary" href="/be-transformed">Back to Be Transformed</a>
+			</div>
+		</div>
+	</section>
+</Interior>

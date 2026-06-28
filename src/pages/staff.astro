@@ -1,0 +1,58 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { leadership, teams } from "../data/site";
+---
+
+<Interior
+	title="New Life | Our Staff"
+	description="Meet the leadership team of New Life Grand Rapids."
+	kicker="About New Life"
+	heading="Our Leadership"
+	lede="A team that prays, seeks God's direction, and cares for our church family."
+>
+	<section class="section">
+		<div class="container">
+			<p class="lead-copy reveal is-visible">
+				Our Leadership Team carries the vision, direction, and oversight of the church at a strategic level.
+				They meet consistently to pray and seek the Lord, and each member is personally involved across the
+				church as their gifts dictate. This diversity has blessed New Life with a balanced and humble team.
+			</p>
+			<div class="staff-grid">
+				{leadership.map((group, i) => (
+					<article class="staff-card reveal is-visible" style={`--delay:${i * 70}ms`}>
+						<div class="staff-card__photo">
+							<img src={group.photo} alt={group.people.map((p) => p.name).join(" & ")} loading="lazy" />
+						</div>
+						{group.people.map((p) => (
+							<div class="staff-card__person">
+								<h3>{p.name}</h3>
+								<p class="staff-card__role">{p.role}</p>
+								<p>{p.bio}</p>
+							</div>
+						))}
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--rhythm">
+		<div class="rhythm__veil"></div>
+		<div class="container team-grid">
+			<article class="team-card reveal is-visible">
+				<h3>Pastoral Care Team</h3>
+				<p>{teams.pastoralCare.blurb}</p>
+				<ul class="team-card__members">
+					{teams.pastoralCare.members.map((m) => <li>{m}</li>)}
+				</ul>
+			</article>
+			<article class="team-card reveal is-visible" style="--delay:120ms">
+				<h3>Business & Finance Team</h3>
+				<p>{teams.businessFinance.blurb}</p>
+				<ul class="team-card__members">
+					{teams.businessFinance.members.map((m) => <li>{m}</li>)}
+				</ul>
+			</article>
+		</div>
+	</section>
+</Interior>

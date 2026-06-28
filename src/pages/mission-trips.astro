@@ -1,0 +1,54 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { missionTrip, church } from "../data/site";
+---
+
+<Interior
+	title="New Life | Mission Trips"
+	description="Go and serve the Caribbean with New Life Grand Rapids and Mission of Hope."
+	kicker="Change the World"
+	heading="Mission Trips"
+	lede="Going on a mission trip is a life-changing opportunity. We'd love for you to join us."
+>
+	<section class="section">
+		<div class="container trip-hero">
+			<div class="trip-hero__media reveal is-visible">
+				<video autoplay muted loop playsinline poster="/art/generated/mission-ambient-v2-thumb.webp">
+					<source src="/art/generated/mission-ambient-v2.mp4" type="video/mp4" />
+				</video>
+			</div>
+			<div class="trip-hero__body reveal is-visible">
+				<p class="eyebrow">{missionTrip.headline}</p>
+				<h2>{missionTrip.destination}</h2>
+				<p class="trip-hero__dates">{missionTrip.dates}</p>
+				<p>{missionTrip.support}</p>
+				<div class="trip-hero__actions">
+					<a class="button button--primary" href={church.external.connectCard} target="_blank" rel="noopener">Mission Trip Application</a>
+					<a class="button button--secondary" href="/giving">Give to the Team</a>
+				</div>
+				<dl class="trip-facts">
+					<div><dt>Partner</dt><dd>{missionTrip.partner}</dd></div>
+					<div><dt>Cost</dt><dd>{missionTrip.cost}</dd></div>
+				</dl>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--rhythm">
+		<div class="rhythm__veil"></div>
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Good to Know</p>
+				<h2>Frequently asked.</h2>
+			</div>
+			<div class="faq-list">
+				{missionTrip.faq.map((item, i) => (
+					<details class="faq-item reveal is-visible" style={`--delay:${i * 50}ms`}>
+						<summary>{item.q}</summary>
+						<p>{item.a}</p>
+					</details>
+				))}
+			</div>
+		</div>
+	</section>
+</Interior>

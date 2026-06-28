@@ -16,7 +16,9 @@
 		"@astrojs/mdx": "4.3.12",
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.0",
+		"@tinacms/cli": "^2.5.1",
 		"astro": "5.16.2",
+		"tinacms": "^3.9.3",
 		"typescript": "5.9.3"
 	},
 	"devDependencies": {
@@ -30,6 +32,8 @@
 		"check": "astro build && tsc && wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
+		"cms": "tinacms dev -c \"astro dev\"",
+		"tina:build": "tinacms build",
 		"preview": "astro build && wrangler dev"
 	},
 	"type": "module"

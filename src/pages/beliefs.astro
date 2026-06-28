@@ -1,0 +1,34 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { beliefs } from "../data/site";
+---
+
+<Interior
+	title="New Life | What We Believe"
+	description="The core convictions that anchor New Life Grand Rapids."
+	kicker="About New Life"
+	heading="What We Believe"
+	lede="Nine convictions that anchor everything we are and do."
+>
+	<section class="section">
+		<div class="container belief-grid">
+			{beliefs.map((b, i) => (
+				<article class="belief-card reveal is-visible" style={`--delay:${i * 60}ms`}>
+					<span class="belief-card__index">0{i + 1}</span>
+					<h3>{b.title}</h3>
+					<p>{b.body}</p>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="section section--final">
+		<div class="container final-cta reveal is-visible">
+			<div>
+				<p class="eyebrow">Keep Going</p>
+				<h2>See where we're headed.</h2>
+			</div>
+			<a class="button button--primary" href="/vision-values">Vision &amp; Values</a>
+		</div>
+	</section>
+</Interior>

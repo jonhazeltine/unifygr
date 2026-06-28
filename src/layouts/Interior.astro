@@ -1,0 +1,81 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { church, pillars } from "../data/site";
+
+interface Props {
+	title: string;
+	description: string;
+	kicker?: string;
+	heading?: string;
+	lede?: string;
+}
+
+const { title, description, kicker, heading, lede } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body>
+		<main class="landing-shell">
+			<header class="site-chrome">
+				<div class="container site-chrome__inner">
+					<a class="site-chrome__brand" href="/">
+						<span>New Life</span>
+						<strong>Unify GR</strong>
+					</a>
+					<nav class="site-chrome__nav" aria-label="Primary">
+						{pillars.map((p) => <a href={`/${p.slug}`}>{p.title}</a>)}
+						<a href="/giving">Give</a>
+					</nav>
+					<a class="button button--secondary chrome-cta" href="/visit">Plan a Visit</a>
+				</div>
+			</header>
+
+			{(kicker || heading || lede) && (
+				<section class="section interior-hero">
+					<div class="container">
+						{kicker && <p class="eyebrow reveal is-visible">{kicker}</p>}
+						{heading && <h1 class="interior-hero__title reveal is-visible">{heading}</h1>}
+						{lede && <p class="interior-hero__lede reveal is-visible">{lede}</p>}
+					</div>
+				</section>
+			)}
+
+			<slot />
+		</main>
+
+		<footer class="site-footer site-footer--full">
+			<div class="container site-footer__grid">
+				<div>
+					<p class="footer-brand">{church.name}</p>
+					<p class="footer-muted">
+						{church.address.street}<br />
+						{church.address.city}, {church.address.state} {church.address.zip}
+					</p>
+					<p class="footer-muted">
+						<a href={`mailto:${church.email}`}>{church.email}</a> · {church.phone}
+					</p>
+				</div>
+				<nav class="footer-links" aria-label="Footer">
+					{pillars.map((p) => <a href={`/${p.slug}`}>{p.title}</a>)}
+					<a href="/visit">Plan a Visit</a>
+					<a href="/giving">Giving</a>
+				</nav>
+				<div class="footer-social">
+					<a href={church.social.facebook}>Facebook</a>
+					<a href={church.social.instagram}>Instagram</a>
+					<a href={church.social.youtube}>YouTube</a>
+					<a href={church.mapUrl}>Map</a>
+				</div>
+			</div>
+			<div class="container site-footer__base">
+				<p class="footer-muted">{church.tagline}</p>
+				<p class="footer-muted">© {year} {church.name}</p>
+			</div>
+		</footer>
+	</body>
+</html>

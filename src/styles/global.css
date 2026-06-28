@@ -1475,3 +1475,314 @@ strong {
 		scroll-behavior: auto !important;
 	}
 }
+
+/* ============================================================
+   Interior pages (pillar hubs + content) — Unify GR rebuild
+   ============================================================ */
+
+.chrome-cta {
+	padding: 0.55rem 1.1rem;
+	font-size: 0.72rem;
+}
+
+.interior-hero {
+	padding-top: 9rem;
+	padding-bottom: 1rem;
+}
+.interior-hero__title {
+	font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+	font-weight: 600;
+	letter-spacing: -0.05em;
+	font-size: clamp(3rem, 8vw, 6.5rem);
+	line-height: 0.9;
+	margin: 0.6rem 0 0;
+}
+.interior-hero__lede {
+	color: var(--muted);
+	max-width: 46ch;
+	margin-top: 1.1rem;
+	font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+}
+
+/* Pillar hub */
+.pillar-intro__grid {
+	display: grid;
+	grid-template-columns: 1.1fr 1fr;
+	gap: 2.5rem;
+	align-items: center;
+}
+.pillar-intro__media {
+	position: relative;
+	border-radius: 22px;
+	overflow: hidden;
+	border: 1px solid var(--line);
+	box-shadow: var(--shadow);
+	aspect-ratio: 4 / 3;
+}
+.pillar-intro__media video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.pillar-intro__veil {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(160deg, transparent, rgba(5, 6, 8, 0.45));
+	pointer-events: none;
+}
+.pillar-intro__copy {
+	font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+	line-height: 1.5;
+	color: var(--text);
+}
+
+.pillar-card-grid,
+.belief-grid,
+.stack-grid,
+.value-grid,
+.staff-grid,
+.visit-grid,
+.give-grid,
+.sermon-grid,
+.team-grid {
+	display: grid;
+	gap: 1.1rem;
+	margin-top: 2.2rem;
+}
+.pillar-card-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.belief-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.stack-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.value-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.staff-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.visit-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.give-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.sermon-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.team-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+
+.pillar-card,
+.belief-card,
+.stack-card,
+.value-card,
+.staff-card,
+.visit-card,
+.give-card,
+.team-card,
+.sermon-card {
+	position: relative;
+	padding: 1.6rem;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	background: var(--panel);
+	transition: transform 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+.pillar-card { display: flex; flex-direction: column; gap: 0.5rem; }
+.pillar-card:hover,
+.staff-card:hover,
+.give-card:hover,
+.sermon-card:hover,
+.belief-card:hover {
+	transform: translateY(-4px);
+	border-color: var(--gold-soft);
+	background: var(--panel-strong);
+}
+.pillar-card__index,
+.belief-card__index {
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 0.85rem;
+	letter-spacing: 0.2em;
+	color: var(--gold);
+}
+.pillar-card p,
+.belief-card p,
+.stack-card p,
+.value-card p,
+.staff-card p,
+.visit-card p {
+	color: var(--muted);
+}
+.pillar-card__go,
+.experience-card__go {
+	margin-top: auto;
+	color: var(--gold);
+	font-size: 0.8rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+.experience-card__go { display: inline-block; margin-top: 0.8rem; }
+
+.pillar-next__row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+}
+.pillar-next__link {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	padding: 1.1rem 1.6rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: var(--panel);
+	transition: border-color 220ms ease, transform 220ms ease;
+}
+.pillar-next__link:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
+.pillar-next__link strong {
+	font-family: "Iowan Old Style", Georgia, serif;
+	letter-spacing: -0.03em;
+}
+
+/* Staff / teams */
+.lead-copy { max-width: 62ch; color: var(--muted); font-size: 1.15rem; }
+.staff-card__role { color: var(--gold); font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0.2rem 0 0.6rem; }
+.team-card__members { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: 0.35rem; }
+.team-card__members li { color: var(--muted); }
+
+/* Watch */
+.watch-live { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
+.watch-live__frame { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16 / 9; box-shadow: var(--shadow); }
+.watch-live__frame iframe { width: 100%; height: 100%; border: 0; }
+.watch-live__aside p { color: var(--muted); }
+.sermon-card { display: flex; align-items: center; gap: 1rem; }
+.sermon-card__play { color: var(--gold); font-size: 1.4rem; }
+.sermon-card__series { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* Mission trips */
+.trip-hero { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2.5rem; align-items: center; }
+.trip-hero__media { border-radius: 22px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 4/3; box-shadow: var(--shadow); }
+.trip-hero__media video { width: 100%; height: 100%; object-fit: cover; }
+.trip-hero__dates { color: var(--gold); font-size: 1.2rem; margin: 0.4rem 0 1rem; }
+.trip-hero__actions { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1.2rem 0; }
+.trip-facts { display: grid; gap: 0.8rem; margin: 1.5rem 0 0; }
+.trip-facts dt { color: var(--gold); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.trip-facts dd { margin: 0.2rem 0 0; color: var(--muted); }
+.faq-list { display: grid; gap: 0.7rem; margin-top: 2rem; }
+.faq-item { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 0 1.3rem; }
+.faq-item summary { cursor: pointer; padding: 1.1rem 0; font-family: "Iowan Old Style", Georgia, serif; font-size: 1.15rem; letter-spacing: -0.02em; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item[open] summary { color: var(--gold); }
+.faq-item p { color: var(--muted); padding-bottom: 1.2rem; }
+
+/* Giving */
+.give-card--primary { background: var(--panel-strong); border-color: var(--gold-soft); }
+.give-card h3 { margin: 0.3rem 0 0.6rem; }
+.give-card .button { margin-top: 0.8rem; }
+
+/* Unify GR calendar */
+.event-list { margin: 2rem 0; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.event-row { display: grid; grid-template-columns: 160px 1fr auto; gap: 1rem; padding: 1rem 1.4rem; border-bottom: 1px solid var(--line); align-items: center; }
+.event-row:last-child { border-bottom: 0; }
+.event-row__date { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.event-row__title { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.2rem; letter-spacing: -0.02em; }
+.event-row__host { color: var(--muted); font-size: 0.85rem; }
+.calendar-embed { margin-top: 1.5rem; padding: 3rem 1.5rem; border: 1px dashed var(--line); border-radius: 16px; text-align: center; color: var(--muted); }
+
+/* Stub pages */
+.stub-note { max-width: 60ch; padding: 2.5rem; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+.stub-note h3 { margin: 0.4rem 0 0.8rem; }
+.stub-note p { color: var(--muted); }
+.stub-note .button { margin-top: 1.2rem; }
+
+/* Full footer (interior pages) */
+.site-footer--full { border-top: 1px solid var(--line); margin-top: 2rem; padding: 3rem 0 2rem; background: rgba(5, 6, 8, 0.6); }
+.site-footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; }
+.footer-brand { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.3rem; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+.footer-muted { color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+.footer-links, .footer-social { display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-links a:hover, .footer-social a:hover { color: var(--gold); }
+.site-footer__base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+
+@media (max-width: 860px) {
+	.pillar-intro__grid, .watch-live, .trip-hero { grid-template-columns: 1fr; }
+	.site-footer__grid { grid-template-columns: 1fr; }
+	.event-row { grid-template-columns: 1fr; gap: 0.3rem; }
+	.chrome-cta { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reveal { opacity: 1 !important; transform: none !important; filter: none !important; animation: none !important; }
+}
+
+/* Watch page — cinematic */
+.watch-hero { position: relative; min-height: 62svh; display: grid; align-items: end; padding-top: 8rem; overflow: clip; }
+.watch-hero__bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.05); filter: saturate(1.05); z-index: -2; }
+.watch-hero__veil { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(5,6,8,.55) 0%, rgba(5,6,8,.35) 35%, rgba(5,6,8,.95) 100%); }
+.watch-hero__title { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(3rem, 9vw, 7rem); letter-spacing: -.05em; line-height: .9; margin: .4rem 0; }
+.watch-hero__lede { color: var(--muted); max-width: 48ch; font-size: 1.2rem; }
+.watch-hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.live-dot { display: inline-block; width: .55rem; height: .55rem; border-radius: 50%; background: #ff4d4d; margin-right: .4rem; box-shadow: 0 0 0 0 rgba(255,77,77,.6); animation: livePulse 1.6s infinite; vertical-align: middle; }
+@keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(255,77,77,.6);} 70% { box-shadow: 0 0 0 8px rgba(255,77,77,0);} 100% { box-shadow: 0 0 0 0 rgba(255,77,77,0);} }
+
+.sermon-grid--media { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+.sermon-tile { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); transition: transform .25s ease, border-color .25s ease; }
+.sermon-tile:hover { transform: translateY(-5px); border-color: var(--gold-soft); }
+.sermon-tile__thumb { position: relative; aspect-ratio: 16/9; background-size: cover; background-position: center; display: grid; place-items: center; }
+.sermon-tile__thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45)); }
+.sermon-tile__play { position: relative; z-index: 1; width: 3.4rem; height: 3.4rem; border-radius: 50%; display: grid; place-items: center; background: rgba(5,6,8,.6); border: 1px solid rgba(255,255,255,.4); color: #fff; font-size: 1rem; padding-left: .2rem; transition: transform .25s ease, background .25s ease; }
+.sermon-tile:hover .sermon-tile__play { transform: scale(1.12); background: var(--gold); color: #101316; }
+.sermon-tile__body { padding: 1.1rem 1.2rem 1.3rem; }
+.sermon-tile__tag { color: var(--gold); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+.sermon-tile__body h3 { margin-top: .35rem; font-size: 1.15rem; }
+
+/* Home → enter link */
+.hero__enter-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem; color: var(--gold); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; }
+.hero__enter-link:hover { text-shadow: 0 0 18px var(--gold-soft); }
+.hero__newhere { display: inline-block; margin-bottom: .6rem; color: var(--muted); font-size: .82rem; letter-spacing: .06em; }
+.hero__newhere a { color: var(--gold); }
+
+/* Spiritual Formation welcome CTA */
+.formation-cta { max-width: 60ch; padding: 2.5rem; border: 1px solid var(--gold-soft); border-radius: 20px; background: linear-gradient(160deg, rgba(242,210,162,.08), var(--panel)); }
+.formation-cta h3 { margin: .4rem 0 .8rem; }
+.formation-cta p { color: var(--muted); }
+.formation-cta .button { margin-top: 1.2rem; }
+
+/* ---- Mission spine (home) + mission map (vision page) ---- */
+.mission-spine { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 0; counter-reset: none; max-width: 920px; }
+.mission-step { display: grid; grid-template-columns: 4.5rem 1fr auto; align-items: baseline; gap: 1.2rem; padding: 1.4rem 0; border-top: 1px solid var(--line); }
+.mission-step:last-child { border-bottom: 1px solid var(--line); }
+.mission-step__n { font-family: "Iowan Old Style",Georgia,serif; font-size: 1.1rem; color: var(--gold); letter-spacing: .1em; }
+.mission-step__verb { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(1.5rem,3.4vw,2.6rem); letter-spacing: -.03em; line-height: 1.05; }
+.mission-step__pillar { color: var(--muted); font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; }
+.mission-step:hover .mission-step__verb { color: var(--gold-strong); }
+
+.mission-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 2rem; }
+.mission-col { padding: 1.6rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+.mission-col__pillar { display: block; font-family: "Iowan Old Style",Georgia,serif; font-size: 1.3rem; letter-spacing: -.03em; color: var(--gold); margin-bottom: 1rem; }
+.mission-col__list { list-style: none; margin: 0; padding: 0; display: grid; gap: .8rem; }
+.mission-col__list li { display: grid; grid-template-columns: 2.2rem 1fr; align-items: baseline; gap: .5rem; }
+.mission-col__n { color: var(--gold); font-size: .8rem; letter-spacing: .1em; }
+
+@media (max-width: 760px) {
+	.mission-step { grid-template-columns: 3rem 1fr; }
+	.mission-step__pillar { grid-column: 2; }
+	.mission-map { grid-template-columns: 1fr; }
+}
+
+/* Vision cards (Vision & Values) — vision + its mission, linked into content */
+.vision-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; margin-top: 2.2rem; }
+.vision-card { display: flex; flex-direction: column; padding: 1.8rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); transition: transform .25s ease, border-color .25s ease, background .25s ease; }
+.vision-card:hover { transform: translateY(-4px); border-color: var(--gold-soft); background: var(--panel-strong); }
+.vision-card h3 { font-family: "Iowan Old Style",Georgia,serif; }
+.vision-card > p { color: var(--muted); margin-top: .6rem; }
+.vision-card__mission { list-style: none; margin: 1.2rem 0 0; padding: 1.1rem 0 0; border-top: 1px solid var(--line); display: grid; gap: .55rem; }
+.vision-card__mission li { display: grid; grid-template-columns: 2rem 1fr; align-items: baseline; gap: .4rem; color: var(--text); font-size: .98rem; }
+.vision-card__n { color: var(--gold); font-size: .78rem; letter-spacing: .08em; }
+.vision-card__go { margin-top: 1.2rem; color: var(--gold); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; }
+@media (max-width: 760px) { .vision-grid { grid-template-columns: 1fr; } }
+
+/* Staff photos — filtered to match the dark cinematic palette */
+.staff-card { overflow: hidden; padding: 0; }
+.staff-card__photo { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--bg-soft); }
+.staff-card__photo img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1) sepia(.28) brightness(.9) contrast(1.05); transition: filter .5s ease, transform .6s ease; }
+.staff-card__photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,8,.05) 0%, rgba(5,6,8,.15) 55%, rgba(5,6,8,.85) 100%); mix-blend-mode: multiply; }
+.staff-card:hover .staff-card__photo img { filter: grayscale(.15) sepia(.05) brightness(1) contrast(1.02); transform: scale(1.03); }
+.staff-card__person { padding: 1.4rem 1.6rem; }
+.staff-card__person + .staff-card__person { border-top: 1px solid var(--line); }
+.staff-card__person h3 { font-family: "Iowan Old Style",Georgia,serif; }
+
+/* Watch live-status badge */
+.watch-status__live { display: none; align-items: center; }
+.watch-status[data-state="live"] .watch-status__off { display: none; }
+.watch-status[data-state="live"] .watch-status__live { display: inline-flex; color: #ff5d5d; }
+.watch-status[data-state="live"] { animation: liveBlink 1.4s ease-in-out infinite; }
+@keyframes liveBlink { 0%,100% { opacity: 1; } 50% { opacity: .55; } }

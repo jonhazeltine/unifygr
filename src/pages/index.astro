@@ -1,73 +1,63 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { mission } from "../data/site";
+
+const pillarTitle = {
+	"encounter-god": "Encounter God",
+	"be-transformed": "Be Transformed",
+	"change-the-world": "Change the World",
+};
 
 const pillars = [
-	{ label: "Gather", detail: "Lay down our lives in worship and dwell in His presence." },
-	{ label: "Listen", detail: "Hear His voice and carry it with humility and faith." },
-	{ label: "Go", detail: "Strengthen the Church and go after the lost in the name of Jesus." },
+	{ label: "Encounter God", detail: "Host His presence.", href: "/encounter-god" },
+	{ label: "Be Transformed", detail: "Hear His voice. Obey His assignments.", href: "/be-transformed" },
+	{ label: "Change the World", detail: "Unite the Church. Reveal Jesus to the city.", href: "/change-the-world" },
 ];
 
 const experiences = [
 	{
-		title: "Worship",
-		copy: "A community surrendered to Jesus, honoring His presence, with open hearts and lifted eyes.",
+		title: "Encounter God",
+		copy: "Host His presence.",
 		tone: "glow",
 		image: "/art/generated/worship-ambient-v5-thumb.webp",
 		video: "/art/generated/worship-ambient-v5.mp4",
 		alt: "A dim worship gathering with silhouettes, raised hands, and palpable emotional response.",
+		href: "/encounter-god",
 	},
 	{
-		title: "Voice",
-		copy: "A listening people, carrying His voice with humility and obedience.",
+		title: "Be Transformed",
+		copy: "Hear His voice. Obey His assignments.",
 		tone: "mist",
 		image: "/art/generated/voice-ambient-v2-thumb.webp",
 		video: "/art/generated/voice-ambient-v2.mp4",
 		alt: "A quiet night prayer scene with a solitary figure beneath a radiant halo.",
+		href: "/be-transformed",
 	},
 	{
-		title: "Mission",
-		copy: "Strengthening and mobilizing the Church so that Jesus is revealed, the city is transformed and the lost are found.",
+		title: "Change the World",
+		copy: "Unite the Church. Reveal Jesus to the city.",
 		tone: "flare",
 		image: "/art/generated/mission-ambient-v2-thumb.webp",
 		video: "/art/generated/mission-ambient-v2.mp4",
 		alt: "A cinematic city scene washed in warm light and night-blue atmosphere.",
-	},
-];
-
-const rhythms = [
-	{
-		phase: "01",
-		eyebrow: "Presence",
-		title: "A people who linger before God.",
-		copy: "We slow down for worship and to surrender. We gather to taste and see the goodness of the Lord, to hear his voice, and celebrate His presence together.",
-	},
-	{
-		phase: "02",
-		eyebrow: "Voice",
-		title: "Made alive by His voice and power.",
-		copy: "Not a passing encounter, but a life continually shaped through attentive listening, quick obedience, and a shared commitment to grow into maturity together.",
-	},
-	{
-		phase: "03",
-		eyebrow: "Sending",
-		title: "Sent out to our city and the world.",
-		copy: "What happens in worship should strengthen and mobilize the Church, reveal the person of Jesus, and warmly welcome the lost and seeking.",
+		href: "/change-the-world",
 	},
 ];
 
 const liturgies = [
-	"Lay down our lives in worship",
-	"Dwell in His presence",
-	"Carry His voice and power",
-	"Move united toward the lost",
+	"Host His presence",
+	"Hear His voice",
+	"Obey His assignments",
+	"Unite the Church",
+	"Reveal Jesus to the city",
 ];
 
 const quickLinks = [
-	{ label: "Plan a Visit", href: "https://newlifegr.com/plan-a-visit" },
-	{ label: "About New Life", href: "https://newlifegr.com/about" },
-	{ label: "Watch Sermons", href: "https://newlifegr.com/sermons" },
-	{ label: "See Events", href: "https://newlifegr.com/events" },
+	{ label: "Plan a Visit", href: "/visit" },
+	{ label: "What We Believe", href: "/beliefs" },
+	{ label: "Watch Sermons", href: "/watch" },
+	{ label: "See Events", href: "/unify-gr#calendar" },
 ];
 
 const heroVariants = {
@@ -100,10 +90,10 @@ const heroVariants = {
 						<strong>Unify GR</strong>
 					</a>
 					<nav class="site-chrome__nav" aria-label="Section navigation">
-						<a href="#vision">Vision</a>
-						<a href="#rhythm">Rhythm</a>
-						<a href="#experience">Experience</a>
-						<a href="#visit">Visit</a>
+						<a href="/encounter-god">Encounter God</a>
+						<a href="/be-transformed">Be Transformed</a>
+						<a href="/change-the-world">Change the World</a>
+						<a href="/giving">Give</a>
 					</nav>
 					<div class="hero-variant-toggle" aria-label="Hero variant toggle">
 						{Object.entries(heroVariants).map(([key, variant]) => (
@@ -132,21 +122,23 @@ const heroVariants = {
 
 				<div class="container hero__content">
 					<p class="eyebrow reveal">New Life / Grand Rapids</p>
-					<p class="hero__micro reveal">Worship. Listen. Speak. Go.</p>
+					<p class="hero__micro reveal">Encounter God · Be Transformed · Change the World</p>
 					<h1 class="reveal">Jesus at the center.</h1>
 					<p class="hero__lede reveal">
-						Dwelling in His presence, carrying His voice, loving our city.
+						We host His presence, hear His voice, and reveal Jesus to our city.
 					</p>
+					<p class="hero__newhere reveal">New to New Life? <a href="https://theformation.app/m/welcome-to-new-life" target="_blank" rel="noopener">Start here →</a></p>
 					<div class="hero__actions reveal">
-						<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Plan a Visit</a>
+						<a class="button button--primary" href="/visit">Plan a Visit</a>
 						<a class="button button--secondary" href="#experience">See the Vision</a>
 					</div>
+					<a class="hero__enter-link reveal" href="/enter">✦ Enter the experience</a>
 					<div class="hero__pillars reveal">
 						{pillars.map((pillar) => (
-							<div class="hero-pillar">
+							<a class="hero-pillar" href={pillar.href}>
 								<span>{pillar.label}</span>
 								<p>{pillar.detail}</p>
-							</div>
+							</a>
 						))}
 					</div>
 				</div>
@@ -176,45 +168,43 @@ const heroVariants = {
 					<p class="statement__eyebrow eyebrow reveal">Unify GR</p>
 					<h2 class="statement__title reveal">One Body. One Witness.</h2>
 					<p class="statement__copy reveal">
-						Lives laid down in worship until Jesus is revealed and the lost are found.
+						Uniting the Church to reveal Jesus to our city.
 					</p>
 				</div>
 			</section>
 
-			<section class="section section--rhythm" id="rhythm">
+			<section class="section section--rhythm" id="mission">
 				<div class="rhythm__veil"></div>
 				<div class="container">
 					<div class="section-heading reveal">
-						<p class="eyebrow">The Rhythm</p>
-						<h2>Not a program. A way of life in the presence of Jesus.</h2>
+						<p class="eyebrow">Our Mission</p>
+						<h2>Five commitments. One life.</h2>
 					</div>
-					<div class="rhythm-grid">
-						{rhythms.map((rhythm, index) => (
-							<article class="rhythm-card reveal" style={`--delay:${index * 120}ms`}>
-								<span class="rhythm-card__phase">{rhythm.phase}</span>
-								<p class="eyebrow">{rhythm.eyebrow}</p>
-								<h3>{rhythm.title}</h3>
-								<p>{rhythm.copy}</p>
-								<div class="rhythm-card__pulse"></div>
-							</article>
+					<ol class="mission-spine">
+						{mission.map((m, index) => (
+							<li class="mission-step reveal" style={`--delay:${index * 90}ms`}>
+								<span class="mission-step__n">{m.n}</span>
+								<span class="mission-step__verb">{m.verb}</span>
+								<span class="mission-step__pillar">{pillarTitle[m.pillar]}</span>
+							</li>
 						))}
-					</div>
+					</ol>
 				</div>
 			</section>
 
 			<section class="section section--marquee" aria-label="Core themes">
 				<div class="marquee">
 					<div class="marquee__track">
-						<span>Jesus</span>
 						<span>Presence</span>
 						<span>Voice</span>
+						<span>Obedience</span>
 						<span>Unity</span>
-						<span>Mission</span>
-						<span>Jesus</span>
+						<span>Witness</span>
 						<span>Presence</span>
 						<span>Voice</span>
+						<span>Obedience</span>
 						<span>Unity</span>
-						<span>Mission</span>
+						<span>Witness</span>
 					</div>
 				</div>
 			</section>
@@ -225,17 +215,17 @@ const heroVariants = {
 				<div class="pilgrimage__beam pilgrimage__beam--two"></div>
 				<div class="container pilgrimage">
 					<div class="pilgrimage__copy reveal">
-						<p class="eyebrow">A Cityward Faith</p>
-						<h2>Every gathering should strengthen the Church and spill into the city.</h2>
+						<p class="eyebrow">Reveal Jesus to the City</p>
+						<h2>Unite the Church. Reveal Jesus to our city.</h2>
 						<p>
-							We’re building toward a shared life that rises like the dawn over one another, and over Grand Rapids, calm, radiant, unified, and impossible to contain.
+							We believe it is the calling of every believer to bring the light of heaven into every area of society, and to see the news of God’s kindness spread throughout Grand Rapids and the world.
 						</p>
 					</div>
 					<div class="pilgrimage__stage">
 						<div class="pilgrimage-panel pilgrimage-panel--quote reveal" style="--delay:120ms">
-							<p class="pilgrimage-panel__label">Vision Frame</p>
+							<p class="pilgrimage-panel__label">Unify GR</p>
 							<blockquote>
-								“Let worship become witness until Jesus is revealed and the lost are found.”
+								“One Body. One Witness.”
 							</blockquote>
 						</div>
 						<div class="pilgrimage-panel pilgrimage-panel--path reveal" style="--delay:220ms">
@@ -260,12 +250,12 @@ const heroVariants = {
 			<section class="section section--experience" id="experience">
 				<div class="container">
 					<div class="section-heading section-heading--center reveal">
-						<p class="eyebrow">What We Long For</p>
-						<h2>A people formed by presence, voice, and love.</h2>
+						<p class="eyebrow">The Vision</p>
+						<h2>Three movements. One life.</h2>
 					</div>
 					<div class="experience-grid">
 						{experiences.map((experience, index) => (
-							<article class={`experience-card experience-card--${experience.tone} reveal`} style={`--delay:${index * 140}ms`}>
+							<a class={`experience-card experience-card--${experience.tone} reveal`} href={experience.href} style={`--delay:${index * 140}ms`}>
 								<div class="experience-card__visual">
 									<video
 										class="experience-card__media"
@@ -285,8 +275,9 @@ const heroVariants = {
 									<span class="experience-card__index">0{index + 1}</span>
 									<h3>{experience.title}</h3>
 									<p>{experience.copy}</p>
+									<span class="experience-card__go">Enter →</span>
 								</div>
-							</article>
+							</a>
 						))}
 					</div>
 				</div>
@@ -313,9 +304,9 @@ const heroVariants = {
 				<div class="container final-cta reveal">
 					<div>
 						<p class="eyebrow">Join Us</p>
-						<h2>Come worship, listen, and be sent.</h2>
+						<h2>Come and encounter God with us.</h2>
 					</div>
-					<a class="button button--primary" href="https://newlifegr.com/plan-a-visit">Step In</a>
+					<a class="button button--primary" href="/visit">Step In</a>
 				</div>
 			</section>
 		</main>
@@ -323,7 +314,7 @@ const heroVariants = {
 		<footer class="site-footer">
 			<div class="container site-footer__inner">
 				<p>New Life / Unify GR</p>
-				<a href="https://newlifegr.com">Continue to newlifegr.com</a>
+				<a href="/visit">Plan a Visit</a>
 			</div>
 		</footer>
 
