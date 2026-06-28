@@ -214,3 +214,6 @@ public/admin/
 public/art/generated/mission-grok-*.mp4
 public/art/generated/moh-*.mp4
 public/art/refs/
+
+# Vercel
+.vercel/
