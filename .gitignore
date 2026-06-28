@@ -204,3 +204,13 @@ dist
 .playwright-cli/
 output/
 tmp/
+.gstack/
+
+# TinaCMS
+tina/__generated__/
+public/admin/
+
+# AI b-roll staging (not used by site; large)
+public/art/generated/mission-grok-*.mp4
+public/art/generated/moh-*.mp4
+public/art/refs/

@@ -1,0 +1,60 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church } from "../data/site";
+
+// Shared calendar across Grand Rapids churches (thechurches.co).
+// Placeholder events until the live feed is wired in.
+const events = [
+	{ date: "Coming soon", title: "City-wide Worship Night", host: "Unify GR" },
+	{ date: "Coming soon", title: "Prayer Gathering", host: "Partner Churches" },
+	{ date: "Coming soon", title: "Serve Day", host: "Unify GR" },
+];
+---
+
+<Interior
+	title="New Life | Unify GR"
+	description="One Body. One Witness. Uniting the churches of Grand Rapids."
+	kicker="Change the World"
+	heading="Unify GR"
+	lede="One Body. One Witness. Lives laid down in worship until Jesus is revealed and the lost are found."
+>
+	<section class="section">
+		<div class="container statement">
+			<div class="statement__art reveal is-visible">
+				<img src="/art/generated/gr-city-unity.png" alt="A luminous Grand Rapids riverfront skyline at blue hour." />
+			</div>
+			<p class="statement__eyebrow eyebrow reveal is-visible">The Vision</p>
+			<h2 class="statement__title reveal is-visible">A city where the Church moves as one.</h2>
+			<p class="statement__copy reveal is-visible">
+				Unify GR is a growing movement to knit together the churches of Grand Rapids — worshiping, praying, and
+				serving as one Body so that our city sees one witness: Jesus.
+			</p>
+		</div>
+	</section>
+
+	<section class="section section--rhythm" id="calendar">
+		<div class="rhythm__veil"></div>
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Shared Calendar</p>
+				<h2>What's happening across our churches.</h2>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				A single calendar for every Unify GR church — gatherings, prayer nights, and serve days, all in one place.
+				Powered by <a href={church.external.churchesCalendar} target="_blank" rel="noopener">thechurches.co</a>.
+			</p>
+			<div class="event-list reveal is-visible">
+				{events.map((e) => (
+					<div class="event-row">
+						<span class="event-row__date">{e.date}</span>
+						<span class="event-row__title">{e.title}</span>
+						<span class="event-row__host">{e.host}</span>
+					</div>
+				))}
+			</div>
+			<div class="calendar-embed reveal is-visible">
+				<p>Live multi-church calendar embed goes here (thechurches.co).</p>
+			</div>
+		</div>
+	</section>
+</Interior>

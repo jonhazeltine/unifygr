@@ -1,0 +1,26 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church } from "../data/site";
+---
+
+<Interior
+	title="New Life | Membership"
+	description="Make New Life Grand Rapids your home and family."
+	kicker="Be Transformed"
+	heading="Membership"
+	lede="Move from attending to belonging. Make New Life your home and family."
+>
+	<section class="section">
+		<div class="container">
+			<div class="stub-note reveal is-visible">
+				<p class="eyebrow">Coming Soon</p>
+				<h3>This page is ready for your content.</h3>
+				<p>
+					What membership means at New Life, the path to becoming a member, and how to take the next step.
+					Staff will be able to fill this in directly once the site editor is wired up.
+				</p>
+				<a class="button button--primary" href={church.external.connectCard} target="_blank" rel="noopener">Connect Card</a>
+			</div>
+		</div>
+	</section>
+</Interior>

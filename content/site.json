@@ -1,0 +1,32 @@
+{
+	"church": {
+		"name": "New Life Grand Rapids",
+		"shortName": "New Life",
+		"tagline": "Encounter God. Be Transformed. Change the World.",
+		"serviceTime": "Sundays at 10am",
+		"street": "2777 Knapp St NE",
+		"city": "Grand Rapids",
+		"state": "MI",
+		"zip": "49525",
+		"phone": "616.364.7043",
+		"email": "info@newlifegr.com",
+		"textToGive": "855-725-9333"
+	},
+	"mission": [
+		{ "n": "01", "verb": "Host His presence", "pillar": "encounter-god" },
+		{ "n": "02", "verb": "Hear His voice", "pillar": "be-transformed" },
+		{ "n": "03", "verb": "Obey His assignments", "pillar": "be-transformed" },
+		{ "n": "04", "verb": "Unite the Church", "pillar": "change-the-world" },
+		{ "n": "05", "verb": "Reveal Jesus to the city", "pillar": "change-the-world" }
+	],
+	"sermons": [
+		{ "id": "D2y8Qk9qZqg", "title": "Sunday Morning Service", "date": "June 28, 2026", "tag": "Sunday Service" },
+		{ "id": "WQ9fK1RLNSg", "title": "Sunday Morning Service", "date": "June 21, 2026", "tag": "Sunday Service" },
+		{ "id": "NyE5vTMFgTs", "title": "Sunday Morning Service", "date": "June 14, 2026", "tag": "Sunday Service" },
+		{ "id": "YMj1R8bkxiM", "title": "Friday Worship Night", "date": "Recent", "tag": "Worship Night" },
+		{ "id": "gBFL2a9eC-A", "title": "Sunday Morning Service", "date": "June 7, 2026", "tag": "Sunday Service" },
+		{ "id": "xwm5WFxeQZw", "title": "Sunday Morning Service", "date": "May 31, 2026", "tag": "Sunday Service" },
+		{ "id": "E9xtoGm4ymk", "title": "Sunday Morning Service", "date": "May 10, 2026", "tag": "Sunday Service" },
+		{ "id": "O8GL8fzXPUU", "title": "Sunday Morning Service", "date": "May 3, 2026", "tag": "Sunday Service" }
+	]
+}

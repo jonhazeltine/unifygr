@@ -1,0 +1,57 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { vision, values, mission, pillars } from "../data/site";
+---
+
+<Interior
+	title="New Life | Vision & Values"
+	description="The vision and values of New Life Grand Rapids."
+	kicker="About New Life"
+	heading="Vision & Values"
+	lede="Where we're headed, and what we hold dear."
+>
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Our Vision</p>
+				<h2>Three movements of one life.</h2>
+			</div>
+			<div class="vision-grid">
+				{vision.map((v, i) => {
+					const slug = pillars[i].slug;
+					const verbs = mission.filter((m) => m.pillar === slug);
+					return (
+						<a class="vision-card reveal is-visible" href={`/${slug}`} style={`--delay:${i * 90}ms`}>
+							<h3>{v.title}</h3>
+							<p>{v.body}</p>
+							<ul class="vision-card__mission">
+								{verbs.map((m) => (
+									<li><span class="vision-card__n">{m.n}</span>{m.verb}</li>
+								))}
+							</ul>
+							<span class="vision-card__go">Explore →</span>
+						</a>
+					);
+				})}
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--rhythm">
+		<div class="rhythm__veil"></div>
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Our Values</p>
+				<h2>What we hold dear.</h2>
+			</div>
+			<div class="value-grid">
+				{values.map((v, i) => (
+					<article class="value-card reveal is-visible" style={`--delay:${i * 60}ms`}>
+						<h3>{v.title}</h3>
+						<p>{v.body}</p>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+</Interior>

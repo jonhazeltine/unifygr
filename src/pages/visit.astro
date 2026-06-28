@@ -1,0 +1,50 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church } from "../data/site";
+---
+
+<Interior
+	title="New Life | Plan a Visit"
+	description="What to expect and how to find New Life Grand Rapids."
+	kicker="Encounter God"
+	heading="Plan a Visit"
+	lede="We'd love to meet you this Sunday. Here's everything you need."
+>
+	<section class="section" id="when-where">
+		<div class="container visit-grid">
+			<article class="visit-card reveal is-visible">
+				<p class="eyebrow">When</p>
+				<h3>{church.serviceTime}</h3>
+				<p>Plan for about 90 minutes of worship and teaching. Come as you are — there's no dress code and no pressure.</p>
+			</article>
+			<article class="visit-card reveal is-visible" style="--delay:90ms">
+				<p class="eyebrow">Where</p>
+				<h3>{church.address.street}</h3>
+				<p>{church.address.city}, {church.address.state} {church.address.zip}</p>
+				<a class="button button--secondary" href={church.mapUrl} target="_blank" rel="noopener">Open in Maps</a>
+			</article>
+			<article class="visit-card reveal is-visible" style="--delay:180ms">
+				<p class="eyebrow">First Step</p>
+				<h3>Say hello</h3>
+				<p>Fill out a Connect Card and we'll follow up, answer questions, and help you find your way in.</p>
+				<a class="button button--primary" href={church.external.connectCard} target="_blank" rel="noopener">Connect Card</a>
+			</article>
+			<article class="visit-card reveal is-visible" style="--delay:270ms">
+				<p class="eyebrow">New Here?</p>
+				<h3>Start your welcome path</h3>
+				<p>New to New Life? Begin a short, guided welcome journey in our app.</p>
+				<a class="button button--secondary" href={church.external.formationWelcome} target="_blank" rel="noopener">Start Here</a>
+			</article>
+		</div>
+	</section>
+
+	<section class="section section--final">
+		<div class="container final-cta reveal is-visible">
+			<div>
+				<p class="eyebrow">Can't make it in person?</p>
+				<h2>Join us live online.</h2>
+			</div>
+			<a class="button button--primary" href="/watch">Watch & Sermons</a>
+		</div>
+	</section>
+</Interior>

@@ -1,0 +1,103 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church, sermons } from "../data/site";
+
+const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
+const embedUrl = (id: string) => `https://www.youtube.com/embed/${id}?rel=0`;
+const featured = sermons[0]; // most recent — default until the live check resolves
+---
+
+<Interior
+	title="New Life | Watch & Sermons"
+	description="Watch New Life Grand Rapids live on Sunday mornings or catch up on past messages."
+>
+	<section class="section watch-hero">
+		<div class="watch-hero__bg" style={`background-image:url(${thumb(featured.id)})`}></div>
+		<div class="watch-hero__veil"></div>
+		<div class="container watch-hero__inner">
+			<p class="eyebrow watch-status" id="watch-status" data-state="offline">
+				<span class="watch-status__live"><span class="live-dot"></span> Live Now</span>
+				<span class="watch-status__off">Sunday Mornings · {church.serviceTime}</span>
+			</p>
+			<h1 class="watch-hero__title reveal is-visible">Watch New Life</h1>
+			<p class="watch-hero__lede reveal is-visible">
+				Worship with us in real time on Sunday mornings, or catch up on the latest message any time.
+			</p>
+			<div class="watch-hero__actions reveal is-visible">
+				<a class="button button--primary" id="watch-cta" href={`${church.social.youtube}/live`} target="_blank" rel="noopener">▶ Watch Now</a>
+				<a class="button button--secondary" href={church.social.youtube} target="_blank" rel="noopener">All Videos</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="watch-live reveal is-visible">
+				<div class="watch-live__frame">
+					<iframe
+						id="watch-player"
+						src={embedUrl(featured.id)}
+						title="New Life GR player"
+						loading="lazy"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+						allowfullscreen
+					></iframe>
+				</div>
+				<div class="watch-live__aside">
+					<p class="eyebrow" id="player-label">Latest Message</p>
+					<h3 id="player-title">{featured.title}</h3>
+					<p id="player-note">Showing the most recent service. When we go live on Sunday morning, this jumps to the live stream automatically.</p>
+					<a class="button button--secondary" href={church.external.connectCard} target="_blank" rel="noopener">New here? Say hello</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section section--rhythm">
+		<div class="rhythm__veil"></div>
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Recent Services</p>
+				<h2>Catch up any time.</h2>
+			</div>
+			<div class="sermon-grid sermon-grid--media">
+				{sermons.map((s, i) => (
+					<a class="sermon-tile reveal is-visible" href={watchUrl(s.id)} target="_blank" rel="noopener" style={`--delay:${i * 60}ms`}>
+						<div class="sermon-tile__thumb" style={`background-image:url(${thumb(s.id)})`}>
+							<span class="sermon-tile__play" aria-hidden="true">▶</span>
+						</div>
+						<div class="sermon-tile__body">
+							<span class="sermon-tile__tag">{s.tag}{s.date ? ` · ${s.date}` : ""}</span>
+							<h3>{s.title}</h3>
+						</div>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<script is:inline>
+		// Auto-show the live stream when broadcasting; otherwise stay on the latest service.
+		fetch("/api/live.json")
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => {
+				if (!d) return;
+				const status = document.getElementById("watch-status");
+				const player = document.getElementById("watch-player");
+				const cta = document.getElementById("watch-cta");
+				if (d.live && d.liveId) {
+					status?.setAttribute("data-state", "live");
+					if (player) player.src = "https://www.youtube.com/embed/" + d.liveId + "?autoplay=1&rel=0";
+					const label = document.getElementById("player-label");
+					const title = document.getElementById("player-title");
+					const note = document.getElementById("player-note");
+					if (label) label.textContent = "Live Now";
+					if (title) title.textContent = "Sunday Morning — Live";
+					if (note) note.textContent = "We're live right now. Welcome — so glad you're here.";
+					if (cta) cta.setAttribute("href", "https://www.youtube.com/watch?v=" + d.liveId);
+				}
+			})
+			.catch(() => {});
+	</script>
+</Interior>

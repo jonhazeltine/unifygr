@@ -1,0 +1,43 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { church } from "../data/site";
+---
+
+<Interior
+	title="New Life | Giving"
+	description="Give to New Life Grand Rapids online, by text, or by mail."
+	kicker="Change the World"
+	heading="Giving"
+	lede="Giving to New Life is easy. Thank you for fueling the mission."
+>
+	<section class="section">
+		<div class="container give-grid">
+			<article class="give-card give-card--primary reveal is-visible">
+				<p class="eyebrow">Online</p>
+				<h3>Give securely online</h3>
+				<p>One-time or recurring, from any device.</p>
+				<a class="button button--primary" href={church.external.giveOnline} target="_blank" rel="noopener">Give Online</a>
+			</article>
+			<article class="give-card reveal is-visible" style="--delay:90ms">
+				<p class="eyebrow">By Text</p>
+				<h3>Text “GIVE”</h3>
+				<p>Send <strong>GIVE</strong> to <strong>{church.external.textToGive}</strong> and follow the link.</p>
+			</article>
+			<article class="give-card reveal is-visible" style="--delay:180ms">
+				<p class="eyebrow">By Mail</p>
+				<h3>Mail a gift</h3>
+				<p>{church.address.street}<br />{church.address.city}, {church.address.state} {church.address.zip}</p>
+			</article>
+		</div>
+	</section>
+
+	<section class="section section--final">
+		<div class="container final-cta reveal is-visible">
+			<div>
+				<p class="eyebrow">Impact Fund</p>
+				<h2>Give beyond the walls.</h2>
+			</div>
+			<a class="button button--secondary" href="/unify-gr">About Unify GR</a>
+		</div>
+	</section>
+</Interior>

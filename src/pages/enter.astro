@@ -1,0 +1,323 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+
+const panels = [
+	{
+		slug: "encounter-god",
+		kicker: "Mission 01",
+		title: "Encounter God",
+		line: "Host His presence.",
+		image: "/art/generated/worship-still.png",
+		scene: {
+			video: "/art/generated/worship-ambient-v5.mp4",
+			poster: "/art/generated/worship-ambient-v5-thumb.webp",
+			svg: "/art/worship-scene.svg",
+			verse: "Taste and see that the Lord is good.",
+			door: "Enter In",
+		},
+	},
+	{
+		slug: "be-transformed",
+		kicker: "Mission 02 · 03",
+		title: "Be Transformed",
+		line: "Hear His voice. Obey His assignments.",
+		image: "/art/generated/prayer-still.png",
+		scene: {
+			video: "/art/generated/voice-ambient-v2.mp4",
+			poster: "/art/generated/voice-ambient-v2-thumb.webp",
+			svg: "/art/prayer-scene.svg",
+			verse: "Be still, and know that I am God.",
+			door: "Enter In",
+		},
+	},
+	{
+		slug: "change-the-world",
+		kicker: "Mission 04 · 05",
+		title: "Change the World",
+		line: "Unite the Church. Reveal Jesus to the city.",
+		image: "/art/generated/mission-still.png",
+		scene: {
+			video: "/art/generated/mission-ambient-v2.mp4",
+			poster: "/art/generated/mission-ambient-v2-thumb.webp",
+			svg: "/art/mission-scene.svg",
+			verse: "Go and make disciples of all nations.",
+			door: "Enter In",
+		},
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="Enter · New Life | Unify GR"
+			description="Step in. Encounter God. Be Transformed. Change the World."
+		/>
+	</head>
+	<body class="enter-body">
+		<main class="enter" id="enter">
+			<div class="enter__hint" id="hint">Choose one. Break through.</div>
+			{panels.map((p) => (
+				<section class="panel" data-href={`/${p.slug}`} data-slug={p.slug}>
+					{/* Immersive scene revealed behind the glass */}
+					<div class="scene">
+						<video class="scene__video" muted loop playsinline preload="auto" poster={p.scene.poster}>
+							<source src={p.scene.video} type="video/mp4" />
+						</video>
+						<img class="scene__art" src={p.scene.svg} alt="" aria-hidden="true" />
+						<div class="scene__veil"></div>
+						<button class="scene__close" type="button" aria-label="Back to the three">← Back</button>
+						<div class="scene__content">
+							<p class="eyebrow">{p.title}</p>
+							<p class="scene__verse">{p.scene.verse}</p>
+							<a class="scene__door" href={`/${p.slug}`}>
+								<span class="scene__door-glow"></span>
+								<span class="scene__door-label">{p.scene.door} →</span>
+							</a>
+						</div>
+					</div>
+
+					{/* The glass face (shatters on click) */}
+					<button class="glass" type="button" style={`--glass-img:url('${p.image}')`}>
+						<span class="glass__overlay"></span>
+						<span class="glass__content">
+							<span class="eyebrow">{p.kicker}</span>
+							<span class="glass__title">{p.title}</span>
+							<span class="glass__line">{p.line}</span>
+							<span class="glass__cue">Break through →</span>
+						</span>
+					</button>
+				</section>
+			))}
+		</main>
+
+		<a class="enter__back" href="/">↩ Scrolling site</a>
+
+		<style is:global>
+			.enter-body { margin: 0; background: #000; overflow: hidden; height: 100svh; }
+
+			.enter { display: grid; grid-template-columns: 1fr; grid-template-rows: repeat(3,1fr); height: 100svh; }
+			.enter__hint { position: fixed; top: 1.4rem; left: 50%; transform: translateX(-50%); z-index: 12; color: rgba(246,240,231,.7); letter-spacing: .26em; text-transform: uppercase; font-size: .72rem; transition: opacity .4s ease; }
+			.enter__back { position: fixed; bottom: 1.2rem; left: 50%; transform: translateX(-50%); z-index: 12; color: rgba(246,240,231,.6); font-size: .8rem; letter-spacing: .12em; }
+			.enter__back:hover { color: var(--gold); }
+
+			.panel { position: relative; overflow: hidden; isolation: isolate; }
+			.panel + .panel { border-top: 1px solid rgba(255,255,255,.1); }
+			.panel.is-gone { animation: panelGone .7s ease forwards; }
+			@keyframes panelGone { to { opacity: 0; transform: scale(.96); filter: brightness(.2); } }
+			.panel.is-active { position: fixed; inset: 0; z-index: 30; border: 0; width: 100vw; height: 100svh; }
+
+			/* Scene (behind glass) */
+			.scene { position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease; z-index: 0; }
+			.panel.is-active .scene { opacity: 1; }
+			.scene__close { position: absolute; top: 1.2rem; left: 1.4rem; z-index: 6; padding: .5rem 1rem .5rem .85rem; border-radius: 999px; border: 1px solid var(--line); background: rgba(5,6,8,.5); color: var(--text); cursor: pointer; font-size: .72rem; letter-spacing: .12em; backdrop-filter: blur(6px); opacity: 0; transition: opacity .4s ease .6s, border-color .2s ease; }
+			.panel.is-active .scene__close { opacity: 1; }
+			.scene__close:hover { border-color: var(--gold-soft); }
+			.scene__video, .scene__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+			.scene__art { mix-blend-mode: screen; opacity: .9; }
+			.scene__veil { position: absolute; inset: 0; background: radial-gradient(circle at 50% 40%, transparent, rgba(3,4,6,.7) 80%); }
+			.scene__content { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; gap: 1rem; padding: 2rem; }
+			.scene__verse { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(1.8rem,4vw,3.2rem); letter-spacing: -.03em; max-width: 18ch; margin: 0 auto; line-height: 1.1; opacity: 0; transform: translateY(14px); }
+			.panel.is-active .scene__verse { animation: riseSlow 1s ease .55s forwards; }
+			.scene__door { position: relative; justify-self: center; margin-top: 1.4rem; padding: 1rem 2.2rem; border-radius: 999px; border: 1px solid var(--gold-soft); color: var(--text); letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; overflow: hidden; opacity: 0; }
+			.panel.is-active .scene__door { animation: riseSlow 1s ease .9s forwards; }
+			.scene__door-label { position: relative; z-index: 1; }
+			.scene__door-glow { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,231,191,.5), transparent 70%); opacity: .5; animation: doorPulse 2.6s ease-in-out infinite; }
+			.scene__door:hover .scene__door-glow { opacity: .9; }
+			@keyframes doorPulse { 0%,100% { transform: scale(.9); opacity:.35;} 50% { transform: scale(1.15); opacity:.7;} }
+			@keyframes riseSlow { to { opacity: 1; transform: translateY(0); } }
+
+			/* Glass face */
+			.glass { position: absolute; inset: 0; z-index: 2; border: 0; padding: 0; cursor: pointer; color: var(--text); background-image: var(--glass-img); background-size: cover; background-position: center; display: grid; align-items: end; transition: opacity .25s ease; }
+			.glass__overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,.15) 40%, rgba(0,0,0,.85) 100%); transition: background .5s ease; }
+			.glass:hover .glass__overlay { background: linear-gradient(180deg, rgba(20,16,10,.1), rgba(0,0,0,.6) 60%, rgba(0,0,0,.92)); }
+			.glass__content { position: relative; padding: 0 clamp(1.6rem,5vw,4rem) 2.4rem; text-align: left; transition: transform .5s ease; }
+			.glass__title { display: block; font-family: "Iowan Old Style","Palatino Linotype",Georgia,serif; font-size: clamp(2rem,3.4vw,3.4rem); line-height: .98; letter-spacing: -.04em; margin: .4rem 0 .5rem; }
+			.glass__line { display: block; color: var(--muted); max-width: 24ch; }
+			.glass__cue { display: inline-block; margin-top: 1.2rem; color: var(--gold); font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; opacity: 0; transform: translateY(6px); transition: opacity .4s ease, transform .4s ease; }
+			.glass:hover .glass__cue { opacity: 1; transform: translateY(0); }
+			.glass.is-broken { pointer-events: none; }
+
+			/* Shatter shards + flash (global so JS-created nodes match).
+			   Each shard is a full-size copy of the glass image, clipped to one
+			   irregular glass piece, so the picture stays continuous until it breaks. */
+			.shatter-layer { position: fixed; inset: 0; z-index: 35; pointer-events: none; perspective: 1000px; perspective-origin: 50% 42%; }
+			.panel.is-active .scene { filter: brightness(1.12) saturate(1.05); }
+			/* shards read as tinted glass: darker + cool, with bright cracked edges */
+			.shard { position: absolute; inset: 0; background-size: cover, cover; background-position: center, center; background-repeat: no-repeat; will-change: transform, opacity; backface-visibility: hidden; filter: brightness(.62) saturate(.85) contrast(1.05); box-shadow: inset 0 0 0 1px rgba(205,228,255,.35), inset 0 0 22px rgba(0,0,0,.4); }
+			.flash { position: fixed; inset: 0; z-index: 36; pointer-events: none; opacity: 0; background: radial-gradient(circle at var(--fx,50%) var(--fy,45%), rgba(255,255,255,.95), rgba(255,255,255,0) 30%); }
+			.flash.is-on { animation: flashOut .55s ease forwards; }
+			@keyframes flashOut { 0% { opacity: .9; } 100% { opacity: 0; } }
+
+			/* ---- Globe scene (Change the World) ---- */
+			.scene--globe { background: radial-gradient(circle at 50% 42%, #0b1626 0%, #050810 55%, #020305 100%); overflow: hidden; }
+			.globe-stage { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1300px; }
+			.globe-wrap { position: relative; width: min(62vmin, 440px); height: min(62vmin, 440px); transform-origin: 41% 41%; opacity: 0; transition: transform 2.6s cubic-bezier(.55,0,.25,1), opacity 1.6s ease .5s; }
+			.panel.is-active .globe-wrap { opacity: 1; }
+			.globe__body { position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 36% 30%, rgba(132,185,255,.30), rgba(10,20,36,.96) 68%); box-shadow: inset -22px -26px 70px rgba(0,0,0,.75), inset 14px 16px 50px rgba(132,185,255,.10), 0 0 70px rgba(242,210,162,.14); }
+			.globe { position: absolute; inset: 0; transform-style: preserve-3d; animation: globeSpin 24s linear infinite; }
+			.globe .ring { position: absolute; inset: 0; border: 1px solid rgba(242,210,162,.30); border-radius: 50%; }
+			.globe__lats { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; background:
+				linear-gradient(rgba(242,210,162,.18), rgba(242,210,162,.18)) center/100% 1px no-repeat,
+				linear-gradient(rgba(242,210,162,.10), rgba(242,210,162,.10)) center 28%/92% 1px no-repeat,
+				linear-gradient(rgba(242,210,162,.10), rgba(242,210,162,.10)) center 72%/92% 1px no-repeat; }
+			@keyframes globeSpin { to { transform: rotateY(360deg); } }
+			.globe-pin { position: absolute; left: 41%; top: 41%; transform: translate(-50%,-50%); }
+			.globe-pin__dot { display: block; width: 12px; height: 12px; border-radius: 50%; background: var(--gold-strong); box-shadow: 0 0 16px var(--gold); }
+			.globe-pin__pulse { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; border-radius: 50%; transform: translate(-50%,-50%); animation: pinPulse 2s ease-out infinite; }
+			@keyframes pinPulse { 0% { box-shadow: 0 0 0 0 rgba(242,210,162,.5); } 70% { box-shadow: 0 0 0 26px rgba(242,210,162,0); } 100% { box-shadow: 0 0 0 0 rgba(242,210,162,0); } }
+			.globe-caption { position: absolute; bottom: 9%; left: 0; right: 0; text-align: center; color: var(--muted); letter-spacing: .22em; text-transform: uppercase; font-size: .72rem; transition: opacity .6s ease; }
+
+			.hispaniola { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; gap: .55rem; padding: 2rem; opacity: 0; transform: scale(.92); transition: opacity 1.1s ease 1s, transform 1.3s ease 1s; pointer-events: none; }
+			.hispaniola__map { width: min(74vmin, 520px); height: auto; margin-bottom: 1rem; }
+			.hispaniola__land { fill: rgba(242,210,162,.14); stroke: var(--gold); stroke-width: 2; stroke-linejoin: round; }
+			.hispaniola__divide { fill: none; stroke: rgba(255,255,255,.45); stroke-width: 1.5; stroke-dasharray: 5 6; }
+			.hispaniola__pin { fill: var(--gold-strong); stroke: #fff; stroke-width: 2; }
+			.hispaniola__title { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(1.8rem,4vw,3rem); letter-spacing: -.03em; }
+			.hispaniola__note { color: var(--muted); max-width: 36ch; }
+
+			.scene--globe.is-zoomed .globe-wrap { transform: scale(7); opacity: 0; }
+			.scene--globe.is-zoomed .globe-caption { opacity: 0; }
+			.scene--globe.is-zoomed .hispaniola { opacity: 1; transform: scale(1); pointer-events: auto; }
+
+			@media (max-width: 760px) {
+				.enter { grid-template-columns: 1fr; grid-template-rows: repeat(3,1fr); }
+				.panel + .panel { border-left: 0; border-top: 1px solid rgba(255,255,255,.08); }
+				.glass__content { padding-bottom: 2rem; }
+			}
+			@media (prefers-reduced-motion: reduce) {
+				.scene__verse, .scene__door { animation: none !important; opacity: 1 !important; transform: none !important; }
+			}
+		</style>
+
+		<script is:inline>
+			const hint = document.getElementById("hint");
+			let breaking = false;
+
+			function shatter(panel) {
+				if (breaking) return;
+				breaking = true;
+				const glass = panel.querySelector(".glass");
+				const scene = panel.querySelector(".scene");
+				const img = getComputedStyle(glass).backgroundImage.slice(4, -1).replace(/["']/g, "");
+				const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+				document.querySelectorAll(".panel").forEach((p) => { if (p !== panel) p.classList.add("is-gone"); });
+				if (hint) hint.style.opacity = "0";
+
+				panel.classList.add("is-active");
+				scene?.querySelector("video")?.play?.().catch(() => {});
+
+				const rect = panel.getBoundingClientRect();
+				if (reduce) { glass.style.opacity = "0"; return; }
+
+				const W = rect.width, H = rect.height;
+				const ix = W * 0.5, iy = H * 0.42; // impact point
+
+				// impact flash
+				const flash = document.createElement("div");
+				flash.className = "flash";
+				flash.style.setProperty("--fx", ix + "px");
+				flash.style.setProperty("--fy", iy + "px");
+				document.body.appendChild(flash);
+				requestAnimationFrame(() => flash.classList.add("is-on"));
+				setTimeout(() => flash.remove(), 650);
+
+				const layer = document.createElement("div");
+				layer.className = "shatter-layer";
+				document.body.appendChild(layer);
+
+				// --- build an irregular radial crack tessellation ---
+				const RINGS = 3, SECT = 11;
+				const cornerR = Math.hypot(Math.max(ix, W - ix), Math.max(iy, H - iy));
+				const maxR = cornerR * 1.15;
+				const ringFrac = [0, 0.36, 0.68, 1.2]; // 0..RINGS
+
+				// jittered angles (shared between adjacent sectors so cracks line up)
+				const angles = [];
+				let a = Math.random() * Math.PI * 2;
+				for (let i = 0; i < SECT; i++) { angles.push(a); a += (Math.PI * 2 / SECT) * (0.5 + Math.random() * 1.0); }
+				const span = a - angles[0];
+				for (let i = 0; i < SECT; i++) { angles[i] = angles[0] + (angles[i] - angles[0]) * (Math.PI * 2 / span); }
+				angles.push(angles[0] + Math.PI * 2);
+
+				// jittered radius per (ring, vertex), shared so the mesh is watertight
+				const radial = [];
+				for (let ri = 0; ri <= RINGS; ri++) {
+					radial[ri] = [];
+					for (let si = 0; si < SECT; si++) {
+						radial[ri][si] = ri === 0 ? 0 : ringFrac[ri] * maxR * (0.82 + Math.random() * 0.36);
+					}
+					radial[ri][SECT] = radial[ri][0]; // wrap
+				}
+
+				const pct = (x, y) => `${(x / W * 100).toFixed(2)}% ${(y / H * 100).toFixed(2)}%`;
+				const polar = (ang, r) => [ix + r * Math.cos(ang), iy + r * Math.sin(ang)];
+
+				for (let ri = 0; ri < RINGS; ri++) {
+					for (let si = 0; si < SECT; si++) {
+						const a0 = angles[si], a1 = angles[si + 1];
+						const p1 = polar(a0, radial[ri][si]);
+						const p2 = polar(a0, radial[ri + 1][si]);
+						const p3 = polar(a1, radial[ri + 1][si + 1]);
+						const p4 = polar(a1, radial[ri][si + 1]);
+
+						const shard = document.createElement("div");
+						shard.className = "shard";
+						// cool glass tint layered over the face image
+						shard.style.backgroundImage = `linear-gradient(135deg, rgba(150,185,230,.22), rgba(8,12,20,.32)), url("${img}")`;
+						shard.style.clipPath = `polygon(${pct(p1[0], p1[1])}, ${pct(p2[0], p2[1])}, ${pct(p3[0], p3[1])}, ${pct(p4[0], p4[1])})`;
+						layer.appendChild(shard);
+
+						const midA = (a0 + a1) / 2;
+						const out = (ri + 0.5) / RINGS; // 0 center .. ~1 edge
+						const dx = Math.cos(midA) * (50 + out * 240) + (Math.random() * 60 - 30);
+						const dy = Math.sin(midA) * (40 + out * 150) + 200 + Math.random() * 240; // bias downward
+						const dz = 140 + (1 - out) * 540 + Math.random() * 220; // center bursts toward you
+						const rot = Math.random() * 150 - 75;
+						const rotX = 20 + Math.random() * 80; // tip forward as it falls
+						const delay = (out * 0.16 + Math.random() * 0.05) * 1000; // center breaks first
+
+						shard.animate(
+							[
+								{ transform: "translate3d(0,0,0) rotateX(0deg) rotate(0deg)", opacity: 1, offset: 0 },
+								{ opacity: 1, offset: 0.5 },
+								{ transform: `translate3d(${dx}px, ${dy}px, ${dz}px) rotateX(${rotX}deg) rotate(${rot}deg)`, opacity: 0, offset: 1 },
+							],
+							{ duration: 1150, delay, easing: "cubic-bezier(.3,0,.2,1)", fill: "forwards" }
+						);
+					}
+				}
+
+				glass.classList.add("is-broken");
+				glass.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, fill: "forwards" });
+				setTimeout(() => layer.remove(), 1700);
+			}
+
+			function resetEntry() {
+				breaking = false;
+				document.querySelectorAll(".shatter-layer, .flash").forEach((n) => n.remove());
+				document.querySelectorAll(".panel").forEach((p) => {
+					p.classList.remove("is-active", "is-gone");
+					const g = p.querySelector(".glass");
+					g.classList.remove("is-broken");
+					g.getAnimations().forEach((an) => an.cancel());
+					g.style.opacity = "";
+					p.querySelector(".scene--globe")?.classList.remove("is-zoomed");
+					const v = p.querySelector("video");
+					try { v.pause(); v.currentTime = 0; } catch (e) {}
+				});
+				if (hint) hint.style.opacity = "";
+			}
+
+			document.querySelectorAll(".panel .glass").forEach((g) => {
+				g.addEventListener("click", () => shatter(g.closest(".panel")));
+			});
+			document.querySelectorAll(".scene__close").forEach((btn) => {
+				btn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); resetEntry(); });
+			});
+			document.addEventListener("keydown", (e) => { if (e.key === "Escape" && breaking) resetEntry(); });
+		</script>
+	</body>
+</html>

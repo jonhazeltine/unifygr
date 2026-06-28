@@ -1,0 +1,67 @@
+---
+import Interior from "../layouts/Interior.astro";
+import { pillars } from "../data/site";
+
+export function getStaticPaths() {
+	return pillars.map((p) => ({ params: { pillar: p.slug }, props: { pillar: p } }));
+}
+
+const { pillar } = Astro.props;
+const isExternal = (href: string) => href.startsWith("http");
+---
+
+<Interior
+	title={`New Life | ${pillar.title}`}
+	description={pillar.essence}
+	kicker={pillar.kicker}
+	heading={pillar.title}
+>
+	<section class="section pillar-intro">
+		<div class="container pillar-intro__grid">
+			<div class="pillar-intro__media reveal is-visible">
+				<video autoplay muted loop playsinline poster={pillar.poster}>
+					<source src={pillar.video} type="video/mp4" />
+				</video>
+				<div class="pillar-intro__veil"></div>
+			</div>
+			<p class="pillar-intro__copy reveal is-visible">{pillar.copy}</p>
+		</div>
+	</section>
+
+	<section class="section pillar-items">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Take a Step</p>
+				<h2>Where this leads.</h2>
+			</div>
+			<div class="pillar-card-grid">
+				{pillar.items.map((item, i) => (
+					<a
+						class="pillar-card reveal is-visible"
+						href={item.href}
+						style={`--delay:${i * 80}ms`}
+						{...(isExternal(item.href) ? { target: "_blank", rel: "noopener" } : {})}
+					>
+						<span class="pillar-card__index">0{i + 1}</span>
+						<h3>{item.label}</h3>
+						<p>{item.blurb}</p>
+						<span class="pillar-card__go">Open →</span>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section pillar-next">
+		<div class="container pillar-next__row">
+			{pillars
+				.filter((p) => p.slug !== pillar.slug)
+				.map((p) => (
+					<a class="pillar-next__link" href={`/${p.slug}`}>
+						<span class="eyebrow">{p.kicker}</span>
+						<strong>{p.title} →</strong>
+					</a>
+				))}
+		</div>
+	</section>
+</Interior>
