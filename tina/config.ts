@@ -3,7 +3,12 @@ import { defineConfig } from "tinacms";
 // Local editing works out of the box: `npm run cms` serves the editor at /admin.
 // To let staff edit the LIVE site, connect a (free) Tina Cloud project and set
 // TINA_CLIENT_ID + TINA_TOKEN — then editing commits to GitHub and Cloudflare rebuilds.
-const branch = process.env.TINA_BRANCH || process.env.CF_PAGES_BRANCH || process.env.HEAD || "main";
+const branch =
+	process.env.TINA_BRANCH ||
+	process.env.VERCEL_GIT_COMMIT_REF ||
+	process.env.CF_PAGES_BRANCH ||
+	process.env.HEAD ||
+	"main";
 
 export default defineConfig({
 	branch,
