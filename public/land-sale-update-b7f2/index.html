@@ -4,277 +4,91 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>New Life Land Sale — Where Things Stand</title>
+<title>New Life · Private Update</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    /* New Life Grand Rapids palette: charcoal ink, soft neutrals, coral accent */
-    --bg:#F6F5F2;
-    --card:#FFFFFF;
-    --ink:#262626;
-    --muted:#6E6E6E;
-    --line:#E5E2DD;
-    --legal:#3F3F3F;
-    --legal-bg:#ECEBE7;
-    --money:#5E7D46;
-    --money-bg:#EBF0E3;
-    --now:#2F6E7A;
-    --now-bg:#E7F0F1;
-    --safeguard:#A07A2E;
-    --safeguard-bg:#F6EEDC;
-  }
   *{box-sizing:border-box;}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--ink);
+    margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:#F6F5F2;color:#262626;
     font-family:'Inter',system-ui,-apple-system,sans-serif;
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
+    -webkit-font-smoothing:antialiased;padding:24px;
   }
-  .wrap{max-width:760px;margin:0 auto;padding:52px 24px 72px;}
-  header{text-align:center;margin-bottom:40px;}
-
-  /* ---- Logo header ---- */
-  .brand{display:flex;flex-direction:column;align-items:center;gap:9px;margin-bottom:26px;}
-  .brand img{height:80px;width:auto;}
-  .wordmark-sub{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:600;}
-
-  .eyebrow{
-    font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--now);font-weight:600;margin-bottom:14px;
+  .gate{
+    width:100%;max-width:400px;background:#FFFFFF;border:1px solid #E5E2DD;
+    border-radius:18px;padding:38px 32px 32px;text-align:center;
+    box-shadow:0 1px 2px rgba(38,38,38,.04);
   }
+  .gate img{height:64px;width:auto;margin-bottom:22px;}
   h1{
-    font-family:'Fraunces',Georgia,serif;
-    font-weight:600;font-size:36px;line-height:1.15;margin:0 0 14px;
-    letter-spacing:-.01em;
+    font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;
+    margin:0 0 8px;letter-spacing:-.01em;
   }
-  .lede{font-size:18px;color:var(--muted);max-width:568px;margin:0 auto;}
-  .note{
-    background:var(--now-bg);
-    border:1px solid #C5DEE1;
-    border-radius:14px;
-    padding:16px 20px;
-    font-size:15px;
-    color:#245C66;
-    margin:28px auto 0;
-    max-width:620px;
-    text-align:center;
+  p.sub{font-size:14.5px;color:#6E6E6E;margin:0 0 24px;line-height:1.55;}
+  form{display:flex;flex-direction:column;gap:12px;}
+  input{
+    font-family:inherit;font-size:16px;padding:13px 15px;border-radius:11px;
+    border:1px solid #D9D5CE;background:#FBFAF8;color:#262626;text-align:center;
+    letter-spacing:.02em;
   }
-  .note strong{color:#1E4A53;font-weight:600;}
-  .legend{
-    display:flex;gap:22px;justify-content:center;flex-wrap:wrap;
-    margin:36px 0 8px;
+  input:focus{outline:none;border-color:#2F6E7A;box-shadow:0 0 0 3px rgba(47,110,122,.15);}
+  button{
+    font-family:inherit;font-size:15px;font-weight:600;padding:13px 15px;
+    border:none;border-radius:11px;background:#2F6E7A;color:#fff;cursor:pointer;
+    transition:background .15s;
   }
-  .legend span{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);}
-  .swatch{width:12px;height:12px;border-radius:50%;flex:none;}
-
-  .timeline{position:relative;margin-top:20px;padding-left:40px;}
-  .timeline::before{
-    content:"";position:absolute;left:11px;top:14px;bottom:14px;
-    width:2px;background:var(--line);
+  button:hover{background:#28606B;}
+  button:disabled{opacity:.6;cursor:default;}
+  .err{
+    font-size:13.5px;color:#B23A3A;margin:4px 0 0;min-height:18px;
+    opacity:0;transition:opacity .15s;
   }
-  .item{position:relative;margin-bottom:26px;}
-  .dot{
-    position:absolute;left:-40px;top:4px;width:24px;height:24px;border-radius:50%;
-    background:var(--card);border:3px solid var(--line);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .dot i{width:9px;height:9px;border-radius:50%;background:var(--muted);display:block;}
-  .item.now .dot{border-color:var(--now);}
-  .item.now .dot i{background:var(--now);}
-
-  .when{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--muted);margin-bottom:8px;}
-  .item.now .when{color:var(--now);}
-
-  /* ---- Date-certainty markers: solid dark = firm, tan = approximate, dashed = estimate ---- */
-  .cert{
-    display:inline-flex;align-items:center;
-    font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
-    padding:3px 10px;border-radius:20px;line-height:1.5;flex:none;
-  }
-  .cert.confirmed{background:#262626;color:#FBF8F3;}
-  .cert.approx{background:#ECEBE7;color:#6E6E6E;}
-  .cert.estimate{background:transparent;color:#8A8A8A;border:1px dashed #CFCCC6;}
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:16px;
-    padding:20px 22px;
-    box-shadow:0 1px 2px rgba(43,40,34,.04);
-  }
-  .item.now .card{border-color:#BFDBDF;background:#FAFDFD;}
-  .item.safeguard .card{border-color:#E8D9AE;background:var(--safeguard-bg);}
-  .card h2{
-    font-family:'Fraunces',Georgia,serif;
-    font-weight:600;font-size:21px;margin:0 0 8px;letter-spacing:-.01em;
-  }
-  .card p{margin:0;color:#454545;font-size:15.5px;}
-  .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
-  .tag{
-    display:inline-flex;align-items:center;gap:6px;
-    font-size:12.5px;font-weight:600;padding:4px 11px;border-radius:20px;
-  }
-  .tag .swatch{width:8px;height:8px;}
-  .tag.legal{background:var(--legal-bg);color:var(--legal);}
-  .tag.money{background:var(--money-bg);color:var(--money);}
-  .tag.safeguard{background:#EFE2BF;color:var(--safeguard);}
-  .tag.est{background:#EDEBE7;color:#6E6E6E;}
-
-  footer{
-    margin-top:44px;text-align:center;font-size:13.5px;color:var(--muted);
-    border-top:1px solid var(--line);padding-top:26px;
-  }
-  @media (max-width:520px){
-    h1{font-size:29px;}
-    .wrap{padding:38px 18px 56px;}
-    .timeline{padding-left:34px;}
-    .dot{left:-34px;}
-  }
+  .err.show{opacity:1;}
+  .foot{font-size:12px;color:#9A948B;margin-top:22px;letter-spacing:.02em;}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand">
-      <img src="new-life-logo.png" alt="New Life Grand Rapids" width="439" height="210">
-      <div class="wordmark-sub">Grand Rapids</div>
-    </div>
-    <div class="eyebrow">For the New Life family</div>
-    <h1>Update on the Land</h1>
-    <p class="lede">Where things stand with the possible sale of a portion of our property to the Leo Brown Group — and the decisions still ahead of us.</p>
-    <div class="note"><strong>Nothing is final.</strong> We have only signed a letter of intent — an agreement to explore in good faith. New Life decides at each step below, and we are not committed to sell unless a full agreement protects our facility's room to grow.</div>
-  </header>
-
-  <div class="legend">
-    <span><span class="swatch" style="background:var(--legal);"></span> A formal step or decision</span>
-    <span><span class="swatch" style="background:var(--money);"></span> A money moment</span>
-    <span><span class="swatch" style="background:var(--safeguard);"></span> A protection for our community</span>
+  <div class="gate">
+    <img src="new-life-logo.png" alt="New Life Grand Rapids">
+    <h1>This update is private</h1>
+    <p class="sub">Please enter the password to view where things stand with the land.</p>
+    <form id="f">
+      <input id="pw" type="password" autocomplete="current-password" placeholder="Password" autofocus>
+      <button id="go" type="submit">View the update</button>
+      <p class="err" id="err">That password didn't work — try again.</p>
+    </form>
+    <div class="foot">New Life · Grand Rapids</div>
   </div>
-
-  <div class="timeline">
-
-    <div class="item now">
-      <div class="dot"><i></i></div>
-      <div class="when">SIGNED JULY 1, 2026 · WHERE WE ARE TODAY <span class="cert confirmed">Confirmed</span></div>
-      <div class="card">
-        <h2>A signed letter of intent</h2>
-        <p>On July 1, 2026, our board voted unanimously to sign a letter of intent with the Leo Brown Group — an agreement, in good faith, to explore a full purchase agreement together. This is a firm first step, but a starting point, not a sale. The Leo Brown Group hopes to build a senior-living community on the land; New Life would keep the parcel with our facility and room to expand. Right now New Life is beginning to engage the professionals we need — including our attorney — to confirm our future plans fit on the land we would keep, while their team drafts a proposed agreement for us to consider.</p>
-        <div class="tags">
-          <span class="tag legal"><span class="swatch" style="background:var(--legal);"></span> Agreement to explore, in good faith</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> $5,000 good-faith deposit — refundable for now</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">THE NEXT DECISION · AUGUST 2026 AT THE LATEST <span class="cert approx">Approximate</span></div>
-      <div class="card">
-        <h2>Whether to sign a full purchase agreement</h2>
-        <p>This is a choice, not a foregone conclusion. If — and only if — the terms protect our community, New Life would agree to turn the letter into a full, detailed contract. That agreement is where the protections for our retained land are written in: where we can expand, shared driveways and parking, and how the land is divided. If those protections aren't there, we don't sign.</p>
-        <div class="tags">
-          <span class="tag legal"><span class="swatch" style="background:var(--legal);"></span> A decision point for New Life</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> A $50,000 earnest-money deposit would follow — refundable through the study period</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">IF WE SIGN · ABOUT AUGUST 2026 – EARLY 2027 <span class="cert approx">Approximate</span></div>
-      <div class="card">
-        <h2>A study &amp; City approval period would begin</h2>
-        <p>The Leo Brown Group would study the land — title, survey, environmental, utilities — and apply to Grand Rapids Township to approve their plan. As part of that same application, and at their cost, they would include our facility's future expansion. Meanwhile the land would be formally surveyed and divided so our portion becomes its own parcel. During this period the first portions of their deposits also become committed — non-refundable to them, a sign of their seriousness — though every committed dollar still counts toward the purchase price if a sale closes.</p>
-        <div class="tags">
-          <span class="tag legal"><span class="swatch" style="background:var(--legal);"></span> Survey, division &amp; Township filing</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> $5,000 commits once the land is confirmed developable</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> $25,000 of the earnest money commits at Township filing</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item safeguard">
-      <div class="dot"><i></i></div>
-      <div class="when">OUR KEY SAFEGUARD</div>
-      <div class="card">
-        <h2>Our expansion must be approved before any sale can close</h2>
-        <p>Grand Rapids Township would have to give conceptual approval to our facility's future growth — sanctuary, daycare, and parking — before any sale is allowed to close. If our plans can't be protected, New Life is not obligated to go through with it. This is the promise that keeps a deal from ever boxing in our ministry.</p>
-        <div class="tags">
-          <span class="tag safeguard"><span class="swatch" style="background:var(--safeguard);"></span> Condition to closing</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">THE GO / NO-GO DECISION · AROUND FEBRUARY 2027 <span class="cert approx">Approximate</span></div>
-      <div class="card">
-        <h2>Both sides decide whether to proceed</h2>
-        <p>After the study period, the Leo Brown Group decides whether to move forward or step away — and New Life continues to hold its protections. If they continue, the rest of their earnest money becomes non-refundable (still credited toward the purchase price). Up to this point, if the land doesn't work, either side can walk away and our community is no worse off.</p>
-        <div class="tags">
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> Remaining earnest money commits — credited toward purchase</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> Any extension: $35,000 each, also credited</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">ONLY IF EVERY CONDITION IS MET · MID-2027 AT THE EARLIEST <span class="cert approx">Approximate</span></div>
-      <div class="card">
-        <h2>A closing would complete the sale</h2>
-        <p>A sale closes only if every condition — including protecting our expansion — has been met. If it does, ownership of the sold portion transfers and New Life receives the agreed purchase price, approximately $2.5&nbsp;million. Our retained parcel and its protections (room to expand, shared access, and parking) are permanently recorded so they carry forward for good.</p>
-        <div class="tags">
-          <span class="tag legal"><span class="swatch" style="background:var(--legal);"></span> Ownership transfers, rights recorded</span>
-          <span class="tag money"><span class="swatch" style="background:var(--money);"></span> Purchase price received (~$2.5M)</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">AFTER A CLOSING</div>
-      <div class="card">
-        <h2>Transition &amp; good-neighbor arrangements</h2>
-        <p>If a sale is completed, site cleanup would be handled by the Leo Brown Group at their own cost, and shared access and parking arrangements would take effect for both our facility and the new senior-living community next door — Sunday mornings and church events paired with their quieter weekday hours.</p>
-        <div class="tags">
-          <span class="tag legal"><span class="swatch" style="background:var(--legal);"></span> Shared arrangements begin</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">IF BUILT · LATE 2027 – EARLY 2028 <span class="cert estimate">Estimate</span></div>
-      <div class="card">
-        <h2>Estimated start of construction</h2>
-        <p>These next two dates are <strong>estimates only</strong>, based on typical timelines for a project like this — not commitments. If a sale closes, the Leo Brown Group would finish final engineering and pull Township building permits, then break ground on site work and building. For a community of this size, that would likely begin several months after a closing — roughly late 2027 to early 2028.</p>
-        <div class="tags">
-          <span class="tag est"><span class="swatch" style="background:var(--muted);"></span> Estimate · based on market norms</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="item">
-      <div class="dot"><i></i></div>
-      <div class="when">IF BUILT · 2029 – 2030 <span class="cert estimate">Estimate</span></div>
-      <div class="card">
-        <h2>Estimated completion &amp; opening</h2>
-        <p>A senior-living community of roughly 160 units — including memory care — built on undeveloped land typically takes about 18 to 24 months to construct. That points to an estimated opening somewhere around 2029 to 2030. Like the date above, this is illustrative and would shift with weather, permitting, financing, and final design.</p>
-        <div class="tags">
-          <span class="tag est"><span class="swatch" style="background:var(--muted);"></span> Estimate · ~160 units incl. memory care</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <footer>
-    Shared with the New Life family as a simple overview. The letter of intent is signed; everything after it is a decision we still get to make, not a certainty. Dates marked <em>approximate</em> or <em>estimate</em> will shift as the process moves forward. Questions are always welcome.
-  </footer>
-</div>
+<script>
+  var D = {"salt":"QeZ36dfUZjz1DwbUl2VBCg==","iv":"51MUbu/lGNRcmSFX","ct":"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","iter":150000};
+  function bytes(b64){var s=atob(b64),u=new Uint8Array(s.length);for(var i=0;i<s.length;i++)u[i]=s.charCodeAt(i);return u;}
+  async function decrypt(pw){
+    var enc=new TextEncoder();
+    var km=await crypto.subtle.importKey('raw',enc.encode(pw),'PBKDF2',false,['deriveKey']);
+    var key=await crypto.subtle.deriveKey(
+      {name:'PBKDF2',salt:bytes(D.salt),iterations:D.iter,hash:'SHA-256'},
+      km,{name:'AES-GCM',length:256},false,['decrypt']);
+    var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:bytes(D.iv)},key,bytes(D.ct));
+    return new TextDecoder().decode(pt);
+  }
+  function reveal(html){document.open();document.write(html);document.close();}
+  var f=document.getElementById('f'),pw=document.getElementById('pw'),
+      err=document.getElementById('err'),go=document.getElementById('go');
+  async function attempt(p,silent){
+    go.disabled=true;
+    try{
+      var html=await decrypt(p);
+      try{sessionStorage.setItem('nl_land_pw',p);}catch(e){}
+      reveal(html);
+    }catch(e){
+      go.disabled=false;
+      if(!silent){err.classList.add('show');pw.value='';pw.focus();}
+    }
+  }
+  f.addEventListener('submit',function(e){e.preventDefault();err.classList.remove('show');attempt(pw.value,false);});
+  try{var saved=sessionStorage.getItem('nl_land_pw');if(saved)attempt(saved,true);}catch(e){}
+</script>
 </body>
 </html>
