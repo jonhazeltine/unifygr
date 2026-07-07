@@ -10,18 +10,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#FBF8F3;
+    /* New Life Grand Rapids palette: charcoal ink, soft neutrals, coral accent */
+    --bg:#F6F5F2;
     --card:#FFFFFF;
-    --ink:#2B2822;
-    --muted:#6E6860;
-    --line:#E4DDD1;
-    --legal:#2F6E7A;
-    --legal-bg:#E7F0F1;
+    --ink:#262626;
+    --muted:#6E6E6E;
+    --line:#E5E2DD;
+    --legal:#3F3F3F;
+    --legal-bg:#ECEBE7;
     --money:#5E7D46;
     --money-bg:#EBF0E3;
-    --now:#C2653B;
-    --now-bg:#F8ECE3;
-    --safeguard:#8A6D2F;
+    --now:#FD5B63;
+    --now-bg:#FDECEC;
+    --safeguard:#A07A2E;
     --safeguard-bg:#F6EEDC;
   }
   *{box-sizing:border-box;}
@@ -36,17 +37,14 @@
   .wrap{max-width:760px;margin:0 auto;padding:52px 24px 72px;}
   header{text-align:center;margin-bottom:40px;}
 
-  /* ---- Logo header ----
-     To use a real image, replace the .logo-mark <svg> below with:
-     <img src="new-life-logo.png" alt="New Life Grand Rapids" style="height:64px;"> */
-  .brand{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:26px;}
-  .logo-mark{width:60px;height:60px;}
-  .wordmark{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;letter-spacing:.02em;color:var(--legal);}
-  .wordmark span{color:var(--muted);font-weight:400;}
+  /* ---- Logo header ---- */
+  .brand{display:flex;flex-direction:column;align-items:center;gap:9px;margin-bottom:26px;}
+  .brand img{height:52px;width:auto;}
+  .wordmark-sub{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:600;}
 
   .eyebrow{
     font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--money);font-weight:600;margin-bottom:14px;
+    color:var(--now);font-weight:600;margin-bottom:14px;
   }
   h1{
     font-family:'Fraunces',Georgia,serif;
@@ -56,16 +54,16 @@
   .lede{font-size:18px;color:var(--muted);max-width:568px;margin:0 auto;}
   .note{
     background:var(--now-bg);
-    border:1px solid #EAD3C2;
+    border:1px solid #F5C7C9;
     border-radius:14px;
     padding:16px 20px;
     font-size:15px;
-    color:#7A4327;
+    color:#8A2E34;
     margin:28px auto 0;
     max-width:620px;
     text-align:center;
   }
-  .note strong{color:#6A3A22;font-weight:600;}
+  .note strong{color:#6E2126;font-weight:600;}
   .legend{
     display:flex;gap:22px;justify-content:center;flex-wrap:wrap;
     margin:36px 0 8px;
@@ -97,9 +95,9 @@
     font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
     padding:3px 10px;border-radius:20px;line-height:1.5;flex:none;
   }
-  .cert.confirmed{background:#33302A;color:#FBF8F3;}
-  .cert.approx{background:#ECE5D7;color:#7A6E52;}
-  .cert.estimate{background:transparent;color:#8A8272;border:1px dashed #C9BFAE;}
+  .cert.confirmed{background:#262626;color:#FBF8F3;}
+  .cert.approx{background:#ECEBE7;color:#6E6E6E;}
+  .cert.estimate{background:transparent;color:#8A8A8A;border:1px dashed #CFCCC6;}
   .card{
     background:var(--card);
     border:1px solid var(--line);
@@ -107,13 +105,13 @@
     padding:20px 22px;
     box-shadow:0 1px 2px rgba(43,40,34,.04);
   }
-  .item.now .card{border-color:#E7C7B2;background:#FFFCFA;}
+  .item.now .card{border-color:#F6CFD1;background:#FFFBFB;}
   .item.safeguard .card{border-color:#E8D9AE;background:var(--safeguard-bg);}
   .card h2{
     font-family:'Fraunces',Georgia,serif;
     font-weight:600;font-size:21px;margin:0 0 8px;letter-spacing:-.01em;
   }
-  .card p{margin:0;color:#4A453D;font-size:15.5px;}
+  .card p{margin:0;color:#454545;font-size:15.5px;}
   .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
   .tag{
     display:inline-flex;align-items:center;gap:6px;
@@ -123,7 +121,7 @@
   .tag.legal{background:var(--legal-bg);color:var(--legal);}
   .tag.money{background:var(--money-bg);color:var(--money);}
   .tag.safeguard{background:#EFE2BF;color:var(--safeguard);}
-  .tag.est{background:#EEEAE1;color:#6E6860;}
+  .tag.est{background:#EDEBE7;color:#6E6E6E;}
 
   footer{
     margin-top:44px;text-align:center;font-size:13.5px;color:var(--muted);
@@ -141,12 +139,8 @@
 <div class="wrap">
   <header>
     <div class="brand">
-      <svg class="logo-mark" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <rect x="2" y="2" width="56" height="56" rx="16" fill="#E7F0F1" stroke="#2F6E7A" stroke-width="2"/>
-        <path d="M30 15 V45 M20 26 Q30 18 40 26" stroke="#2F6E7A" stroke-width="3.4" stroke-linecap="round" fill="none"/>
-        <circle cx="30" cy="41" r="3.2" fill="#5E7D46"/>
-      </svg>
-      <div class="wordmark">New Life <span>· Grand Rapids</span></div>
+      <img src="new-life-logo.png" alt="New Life Grand Rapids" width="439" height="210">
+      <div class="wordmark-sub">Grand Rapids</div>
     </div>
     <div class="eyebrow">For the New Life family</div>
     <h1>Update on the Land</h1>
