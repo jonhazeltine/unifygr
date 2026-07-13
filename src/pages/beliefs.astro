@@ -28,28 +28,7 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 3 — How he's known -->
-	<section class="section prose-block">
-		<div class="container">
-			<p class="eyebrow reveal">How he's known</p>
-			<h2 class="prose-block__title reveal">You know a person by knowing them.</h2>
-			<div class="prose-block__body">
-				<p class="reveal">
-					Not by reading their file. We come to know Jesus the way you come to know anyone who's
-					alive — by encounter. By his presence with us, among us, in the life of his people.
-				</p>
-				<p class="reveal">
-					So where does the Bible fit? It's the trustworthy witness. It tells us the truth about
-					the One we're meeting, and it keeps that encounter honest — anchored to the real Christ
-					instead of one we invented to suit ourselves. We love Scripture and we trust it. But it
-					points <em>to</em> him; it doesn't stand <em>between</em> us and him. The book is holy
-					because of who it reveals — not the other way around.
-				</p>
-			</div>
-		</div>
-	</section>
-
-	<!-- Section 4 — What he asks -->
+	<!-- Section 3 — What he asks -->
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<p class="eyebrow reveal">What he asks</p>
@@ -96,7 +75,7 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 5 — What this means (and what it doesn't) -->
+	<!-- Section 4 — What this means (and what it doesn't) -->
 	<section class="section prose-block">
 		<div class="container">
 			<p class="eyebrow reveal">What this means</p>
@@ -116,7 +95,7 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 6 — The honest challenge -->
+	<!-- Section 5 — The honest challenge -->
 	<section class="section challenge">
 		<div class="container">
 			<p class="eyebrow reveal">One honest question</p>
@@ -134,19 +113,29 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 7 — Where the rest lives + CTA -->
+	<!-- Section 6 — Where the rest lives + CTA -->
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<p class="eyebrow reveal">Where the rest lives</p>
 			<h2 class="prose-block__title reveal">So where's everything else?</h2>
 			<div class="prose-block__body">
 				<p class="reveal">
-					Baptism, the details of the end times, the shape of church government, the hard questions
-					of the day — we have thoughts, and real ones. But those aren't things we hand you on a
-					webpage, where there's no relationship to hold them and no room for you to push back.
+					The authority of Scripture. The nature of Christ. Baptism. Sexuality and gender. The end
+					times. Church government. Our people hold real, considered convictions about all of it —
+					and they don't all land in the same place. We don't hand you the church's official
+					position on these, because the church doesn't have one. We have the one floor, and then
+					we have people who love Jesus, read carefully, and dialogue with each other in the open.
 				</p>
+			</div>
+			<p class="rest-pull reveal">
+				That's not a gap we're apologizing for. It's the point. The moment we mandate answers to
+				these, we're back to dividing over them.
+			</p>
+			<div class="prose-block__body">
 				<p class="reveal">
-					They belong in person. Over a table. In the life of a community you can actually walk into.
+					So these aren't things we settle on a webpage, where there's no relationship to hold them
+					and no room for you to push back. They belong in person. Over a table. In the life of a
+					community you can actually walk into.
 				</p>
 			</div>
 			<div class="rest-cta reveal">
@@ -156,7 +145,7 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 8 — Values + vision strip -->
+	<!-- Section 7 — Values + vision strip -->
 	<section class="section section--final identity-strip">
 		<div class="container">
 			<div class="section-heading reveal">
@@ -392,7 +381,18 @@ import { values, vision } from "../data/site";
 		margin-top: 1.6rem;
 	}
 
-	/* --- Section 7: CTA --- */
+	/* --- Section 6: pull line + CTA --- */
+	.rest-pull {
+		max-width: 40ch;
+		margin: 1.6rem 0 0;
+		padding-left: 1.4rem;
+		border-left: 2px solid var(--gold-soft);
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+		line-height: 1.35;
+		letter-spacing: -0.01em;
+		color: var(--text);
+	}
 	.rest-cta {
 		margin-top: 2.2rem;
 		padding: 1.8rem;
