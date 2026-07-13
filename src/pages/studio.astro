@@ -1,0 +1,250 @@
+---
+// The AI Studio — staff-only chat portal to edit the site's words.
+// Server-rendered (needs the session cookie + live content), not prebuilt.
+export const prerender = false;
+
+import { isAuthed } from "../lib/studio/auth";
+const authed = isAuthed(Astro.cookies);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>Studio · New Life</title>
+		<style>
+			:root {
+				--bg: #0d0f14; --panel: #151922; --panel-2: #1c2130; --line: #2a3040;
+				--ink: #eef1f6; --muted: #9aa3b2; --accent: #7c9cff; --accent-2: #5cd6a8;
+				--danger: #ff7a7a; --radius: 14px;
+			}
+			* { box-sizing: border-box; }
+			body {
+				margin: 0; background: var(--bg); color: var(--ink);
+				font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			}
+			.wrap { max-width: 940px; margin: 0 auto; padding: 24px 20px 64px; }
+			.topbar { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+			.brand { font-weight: 700; letter-spacing: .3px; }
+			.brand span { color: var(--muted); font-weight: 500; }
+			.sub { color: var(--muted); font-size: 13px; margin: 0 0 22px; }
+			.card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; }
+			.hidden { display: none !important; }
+
+			/* Gate */
+			.gate { max-width: 380px; margin: 12vh auto 0; }
+			.gate h1 { font-size: 20px; margin: 0 0 4px; }
+			.gate p { color: var(--muted); margin: 0 0 18px; font-size: 14px; }
+			input[type=password], input[type=text] {
+				width: 100%; padding: 11px 13px; border-radius: 10px; border: 1px solid var(--line);
+				background: var(--panel-2); color: var(--ink); font-size: 15px;
+			}
+			button {
+				font: inherit; font-weight: 600; border: 0; border-radius: 10px; padding: 10px 16px;
+				background: var(--accent); color: #0b1020; cursor: pointer;
+			}
+			button:disabled { opacity: .5; cursor: default; }
+			button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); }
+			button.good { background: var(--accent-2); }
+			.err { color: var(--danger); font-size: 13px; min-height: 18px; margin-top: 8px; }
+
+			/* App layout */
+			.grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+			@media (min-width: 820px) { .grid { grid-template-columns: 1.15fr .85fr; } }
+
+			.chat { display: flex; flex-direction: column; min-height: 460px; }
+			.log { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 4px; max-height: 52vh; }
+			.msg { max-width: 88%; padding: 10px 13px; border-radius: 12px; white-space: pre-wrap; }
+			.msg.you { align-self: flex-end; background: var(--accent); color: #0b1020; }
+			.msg.ai { align-self: flex-start; background: var(--panel-2); border: 1px solid var(--line); }
+			.composer { display: flex; gap: 8px; margin-top: 12px; }
+			.composer input { flex: 1; }
+
+			.proposal { margin-top: 10px; border: 1px dashed var(--accent); border-radius: 12px; padding: 12px; background: rgba(124,156,255,.06); }
+			.proposal h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+			.diff { font-size: 14px; }
+			.diff .field { color: var(--muted); font-size: 12px; margin-bottom: 2px; }
+			.diff .old { color: var(--danger); text-decoration: line-through; opacity: .8; }
+			.diff .new { color: var(--accent-2); }
+			.proposal .actions { display: flex; gap: 8px; margin-top: 12px; }
+
+			.panel-title { display: flex; justify-content: space-between; align-items: center; margin: 0 0 12px; }
+			.panel-title h3 { margin: 0; font-size: 14px; }
+			.fields { display: flex; flex-direction: column; gap: 14px; }
+			.fgroup h5 { margin: 0 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+			.frow { padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--panel-2); margin-bottom: 6px; }
+			.frow .flabel { font-size: 12px; color: var(--muted); }
+			.frow .fval { font-size: 14px; }
+			.toast {
+				position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+				background: var(--accent-2); color: #08130d; padding: 10px 16px; border-radius: 999px;
+				font-weight: 600; box-shadow: 0 8px 30px rgba(0,0,0,.4); opacity: 0; transition: opacity .2s; pointer-events: none;
+			}
+			.toast.show { opacity: 1; }
+			.foot { color: var(--muted); font-size: 12px; margin-top: 20px; }
+			.foot code { background: var(--panel-2); padding: 1px 6px; border-radius: 5px; }
+		</style>
+	</head>
+	<body>
+		<!-- Passcode gate -->
+		<div id="gate" class={"gate card" + (authed ? " hidden" : "")}>
+			<h1>Studio</h1>
+			<p>Staff editor for the New Life site. Enter the passcode to continue.</p>
+			<form id="gate-form">
+				<input id="passcode" type="password" placeholder="Passcode" autocomplete="off" />
+				<div class="err" id="gate-err"></div>
+				<button type="submit" style="width:100%;margin-top:6px">Enter</button>
+			</form>
+		</div>
+
+		<!-- App -->
+		<div id="app" class={"wrap" + (authed ? "" : " hidden")}>
+			<div class="topbar">
+				<div class="brand">Studio <span>· New Life</span></div>
+				<button class="ghost" id="signout" style="padding:6px 12px">Sign out</button>
+			</div>
+			<p class="sub">Tell me what to change, in plain words. I'll show you the edit — nothing goes live until you hit Publish.</p>
+
+			<div class="grid">
+				<div class="card chat">
+					<div class="log" id="log"></div>
+					<div id="proposal-slot"></div>
+					<form class="composer" id="composer">
+						<input id="message" type="text" placeholder='e.g. change the tagline to "Come as you are."' autocomplete="off" />
+						<button type="submit" id="send">Send</button>
+					</form>
+				</div>
+
+				<div class="card">
+					<div class="panel-title">
+						<h3>Live content</h3>
+						<button class="ghost" id="undo" style="padding:6px 12px" disabled>Undo last</button>
+					</div>
+					<div class="fields" id="fields"><p class="sub">Loading…</p></div>
+				</div>
+			</div>
+
+			<p class="foot">Stubbed brain (no API key yet) — it understands simple “change X to …” requests today. Editable fields are fenced in <code>src/lib/studio/schema.ts</code>.</p>
+		</div>
+
+		<div class="toast" id="toast"></div>
+
+		<script>
+			const $ = (id) => document.getElementById(id);
+			const api = (path, opts) => fetch(path, { headers: { "content-type": "application/json" }, ...opts }).then((r) => r.json());
+			let pending = null; // current proposal awaiting publish
+
+			function toast(msg) {
+				const t = $("toast"); t.textContent = msg; t.classList.add("show");
+				setTimeout(() => t.classList.remove("show"), 1800);
+			}
+			function esc(s) { return String(s).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])); }
+
+			function addMsg(text, who) {
+				const el = document.createElement("div");
+				el.className = "msg " + who;
+				el.textContent = text;
+				$("log").appendChild(el);
+				$("log").scrollTop = $("log").scrollHeight;
+			}
+
+			function renderProposal(p) {
+				pending = p;
+				const slot = $("proposal-slot");
+				if (!p.edits || p.edits.length === 0) { slot.innerHTML = ""; return; }
+				const rows = p.edits.map((e) => `
+					<div class="diff">
+						<div class="field">${esc(e.path)}</div>
+						<div class="old">${esc(e.from ?? "")}</div>
+						<div class="new">${esc(e.to)}</div>
+					</div>`).join("");
+				slot.innerHTML = `
+					<div class="proposal">
+						<h4>Proposed edit${p.edits.length > 1 ? "s" : ""}</h4>
+						${rows}
+						<div class="actions">
+							<button class="good" id="publish">Publish</button>
+							<button class="ghost" id="discard">Discard</button>
+						</div>
+					</div>`;
+				$("publish").onclick = publish;
+				$("discard").onclick = () => { pending = null; slot.innerHTML = ""; };
+			}
+
+			async function loadFields() {
+				const data = await api("/api/studio/content");
+				if (data.error) return;
+				$("undo").disabled = !data.canUndo;
+				const groups = {};
+				for (const f of data.fields) (groups[f.group] ||= []).push(f);
+				$("fields").innerHTML = Object.entries(groups).map(([g, fs]) => `
+					<div class="fgroup">
+						<h5>${esc(g)}</h5>
+						${fs.map((f) => `<div class="frow"><div class="flabel">${esc(f.label)}</div><div class="fval">${esc(f.value)}</div></div>`).join("")}
+					</div>`).join("");
+			}
+
+			async function send(e) {
+				e.preventDefault();
+				const input = $("message"); const msg = input.value.trim();
+				if (!msg) return;
+				addMsg(msg, "you"); input.value = ""; $("proposal-slot").innerHTML = ""; pending = null;
+				$("send").disabled = true;
+				try {
+					const res = await api("/api/studio/chat", { method: "POST", body: JSON.stringify({ message: msg }) });
+					addMsg(res.reply || res.error || "…", "ai");
+					renderProposal(res);
+				} finally { $("send").disabled = false; input.focus(); }
+			}
+
+			async function publish() {
+				if (!pending || !pending.edits.length) return;
+				$("publish").disabled = true;
+				const res = await api("/api/studio/apply", {
+					method: "POST",
+					body: JSON.stringify({ edits: pending.edits, summary: pending.reply }),
+				});
+				if (res.ok) {
+					toast("Published ✓");
+					$("proposal-slot").innerHTML = ""; pending = null;
+					addMsg("Done — it's live. (Refresh a page to see it.)", "ai");
+					await loadFields();
+				} else {
+					addMsg("Couldn't publish: " + (res.error || "unknown error"), "ai");
+					$("publish").disabled = false;
+				}
+			}
+
+			async function undo() {
+				$("undo").disabled = true;
+				const res = await api("/api/studio/undo", { method: "POST" });
+				if (res.ok) { toast("Reverted ✓"); addMsg("Reverted the last change.", "ai"); await loadFields(); }
+				else { $("undo").disabled = false; }
+			}
+
+			// Gate
+			$("gate-form")?.addEventListener("submit", async (e) => {
+				e.preventDefault();
+				const res = await api("/api/studio/session", { method: "POST", body: JSON.stringify({ passcode: $("passcode").value }) });
+				if (res.ok) { $("gate").classList.add("hidden"); $("app").classList.remove("hidden"); boot(); }
+				else { $("gate-err").textContent = res.error || "Try again."; }
+			});
+			$("signout")?.addEventListener("click", async () => {
+				await api("/api/studio/session", { method: "DELETE" });
+				location.reload();
+			});
+
+			function boot() {
+				$("composer").addEventListener("submit", send);
+				$("undo").addEventListener("click", undo);
+				loadFields();
+				addMsg("Hi! What would you like to change? Try: change the tagline to \"Come as you are.\"", "ai");
+				$("message").focus();
+			}
+
+			if (!$("app").classList.contains("hidden")) boot();
+		</script>
+	</body>
+</html>
