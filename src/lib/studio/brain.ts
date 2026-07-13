@@ -62,11 +62,26 @@ function extractValue(msg: string): string | null {
 
 export type PageContext = { path?: string; page?: string };
 
+// Dispatch: use the real brain (your Claude subscription via the CLI) by
+// default; fall back to the rule-based stub if the CLI isn't available
+// (e.g. on Vercel) or errors. Set STUDIO_BRAIN=stub to force the stub.
 export async function proposeEdits(
 	message: string,
 	content: any,
-	_context: PageContext = {},
+	context: PageContext = {},
 ): Promise<Proposal> {
+	if (process.env.STUDIO_BRAIN !== "stub") {
+		try {
+			const { proposeEditsViaClaude } = await import("./brain-claude");
+			return await proposeEditsViaClaude(message, content, context);
+		} catch {
+			// CLI missing or failed — fall through to the stub.
+		}
+	}
+	return proposeEditsStub(message, content);
+}
+
+function proposeEditsStub(message: string, content: any): Proposal {
 	const fields = editableFields(content);
 	const msg = message.trim();
 
