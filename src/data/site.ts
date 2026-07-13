@@ -114,18 +114,6 @@ export const pillars: Pillar[] = [
 
 // ---- About content (real, captured from the live site) ----
 
-export const beliefs = [
-	{ title: "Trinity", body: "There is only one true God who is the eternal King, Creator and Redeemer of all that is. He is perfectly holy, just, loving, and truthful. He has revealed Himself to be eternally self-existent, one being in three persons: God the Father, God the Son, and God the Holy Spirit." },
-	{ title: "The Bible", body: "The Bible is the inspired and only infallible and authoritative Word of God." },
-	{ title: "Humankind", body: "Humankind was created in the image of God to know and enjoy Him, yet we willfully rejected the Lordship and glory of God for which we were intended. Because of this, sickness, death and judgement entered the world and now creation experiences the effects and consequences of sin." },
-	{ title: "Jesus Christ", body: "The Lord Jesus Christ, the one and only Son of God, was conceived of the Holy Spirit, born of the virgin Mary, and is God's Anointed One, empowered by the Holy Spirit to inaugurate God's kingdom on earth. He was crucified for our sins, died, was buried, resurrected and ascended into heaven, and is now alive today in the presence of God the Father and in His people. He is “true God” and “true man”." },
-	{ title: "Redemption", body: "We are saved by God's grace, through faith in the person and work of Jesus Christ. Anyone can be restored to fellowship with God through repenting, believing and receiving Jesus as their Savior and Lord. The Holy Spirit convicts, regenerates, justifies, and adopts us as we enter the kingdom of God as His sons and daughters." },
-	{ title: "Holy Spirit", body: "In the sanctifying power of the Holy Spirit, by whose indwelling the Christian is enabled to live holy and minister supernaturally. The baptism of the Holy Spirit according to Acts 1:4-8 and 2:4 is poured out on believers that they might have power to be witnesses." },
-	{ title: "The Cross", body: "The victorious redemptive work of Christ on the cross provides freedom from the power of the enemy — sin, lies, sickness and torment." },
-	{ title: "Unity", body: "The Church consists of all who put their faith in Jesus Christ and further advance His kingdom by undoing the works of the enemy, preaching and living the good news of God's love, and discipling the nations — baptizing and teaching them to love and obey God." },
-	{ title: "Resurrection Life", body: "In the ever-increasing government of God and in the Blessed Hope, which is the glorious visible return of our Lord Jesus Christ for His overcoming bride — His church. Heaven and hell are real places. There will be a resurrection of the saved and the lost, one to everlasting life and the other to everlasting death." },
-];
-
 // The Mission — five commitments that flow inward → outward, living under
 // the three Vision pillars. Managed in content/site.json (TinaCMS).
 export const mission = siteContent.mission;

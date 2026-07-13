@@ -1,34 +1,500 @@
 ---
 import Interior from "../layouts/Interior.astro";
-import { beliefs } from "../data/site";
+import { values, vision } from "../data/site";
 ---
 
 <Interior
 	title="New Life | What We Believe"
-	description="The core convictions that anchor New Life Grand Rapids."
+	description="It starts and ends with a Person: Jesus Christ — crucified, risen, and Lord. What we believe at New Life Grand Rapids."
 	kicker="About New Life"
 	heading="What We Believe"
-	lede="Nine convictions that anchor everything we are and do."
+	lede="We could give you a long list of positions. Instead we'll tell you the one thing everything else hangs on."
 >
-	<section class="section">
-		<div class="container belief-grid">
-			{beliefs.map((b, i) => (
-				<article class="belief-card reveal is-visible" style={`--delay:${i * 60}ms`}>
-					<span class="belief-card__index">0{i + 1}</span>
-					<h3>{b.title}</h3>
-					<p>{b.body}</p>
-				</article>
-			))}
+	<!-- Section 2 — The floor (the Person) -->
+	<section class="section creed">
+		<div class="creed__glow" aria-hidden="true"></div>
+		<div class="container creed__inner">
+			<p class="eyebrow reveal">It starts and ends with a Person.</p>
+			<p class="creed__sub reveal">Not a doctrine about him. Him.</p>
+			<p class="creed__name reveal">
+				Jesus Christ<span>— crucified, risen, and Lord.</span>
+			</p>
+			<p class="creed__body reveal">
+				Before the church had a single page of the New Testament to argue over, it had a
+				confession: <strong>Jesus is Lord.</strong> That's the ground we stand on. That's the line.
+				A person who confesses Christ crucified and risen is our family, even where we see things
+				differently. A teaching that denies him isn't a disagreement — it's a different faith.
+			</p>
 		</div>
 	</section>
 
-	<section class="section section--final">
-		<div class="container final-cta reveal is-visible">
-			<div>
-				<p class="eyebrow">Keep Going</p>
-				<h2>See where we're headed.</h2>
+	<!-- Section 3 — What he asks -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal">What he asks</p>
+			<h2 class="prose-block__title reveal">Two commands sit at the center. A third comes with them.</h2>
+			<div class="commands__pair">
+				<div class="command-card reveal">
+					<span class="command-card__n">01</span>
+					<h3>Love God</h3>
+					<p>with everything you are.</p>
+				</div>
+				<div class="command-card reveal" style="--delay:90ms">
+					<span class="command-card__n">02</span>
+					<h3>Love people</h3>
+					<p>as yourself.</p>
+				</div>
 			</div>
-			<a class="button button--primary" href="/vision-values">Vision &amp; Values</a>
+			<div class="prose-block__body">
+				<p class="reveal">
+					Now watch what that second one already contains. You can't love people and quietly carve
+					out the believers who read a verse differently than you do. You can't claim to love a God
+					you haven't seen while refusing his family that you have. So a third thing arrives whether
+					we like it or not:
+				</p>
+			</div>
+			<div class="command-card command-card--derived reveal">
+				<span class="command-card__n">→</span>
+				<h3>Be one</h3>
+				<p>with the rest of Christ's church.</p>
+			</div>
+			<div class="prose-block__body">
+				<p class="reveal">
+					We didn't add it to the list. Love did. Unity isn't a doctrine we ranked highly — it's
+					what the two great commands <em>produce</em> when they're real. That's why it sits in the
+					center and not out among the debated things: those are implications people argue over;
+					this is a direct command of the faith.
+				</p>
+				<p class="reveal">
+					And it's the one Jesus prayed last. The night before he died he asked that his people
+					would be one — <strong>so that the world would know</strong> he was sent. The oneness
+					isn't the reward for finally agreeing. The oneness <em>is</em> the witness. Unity across
+					real difference is the thing the world can't explain away.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 4 — What this means (and what it doesn't) -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal">What this means</p>
+			<h2 class="prose-block__title reveal">Let's be clear, because this gets misread.</h2>
+			<div class="clarify">
+				<ul class="clarify__col clarify__col--not">
+					<li class="reveal">This does <strong>not</strong> mean doctrine doesn't matter. It does.</li>
+					<li class="reveal">This does <strong>not</strong> mean we're soft on our convictions. We're not.</li>
+					<li class="reveal">This does <strong>not</strong> mean visiting or praying for another church endorses everything they believe.</li>
+				</ul>
+				<ul class="clarify__col clarify__col--does">
+					<li class="reveal">We hold our convictions firmly <em>and</em> refuse to break fellowship with believers who land somewhere different on secondary things.</li>
+					<li class="reveal">We think using theology as a cover for tribalism is a real and present danger — maybe the more common one.</li>
+					<li class="reveal">The honest test isn't whether you can tolerate people outside the faith. It's whether you can pray with a brother or sister <em>inside</em> it who disagrees with you.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 5 — The honest challenge -->
+	<section class="section challenge">
+		<div class="container">
+			<p class="eyebrow reveal">One honest question</p>
+			<blockquote class="challenge__quote reveal">
+				Most of us can have coffee with someone who doesn't believe at all and feel completely
+				fine. But put us across the table from a Christian who reads the same Bible, loves the same
+				Jesus, and lands somewhere different — and suddenly it's unbearable.
+			</blockquote>
+			<p class="challenge__body reveal">
+				Worth asking why. It's usually not that truth matters more to us. It's that the outsider
+				doesn't threaten our certainty, and the insider does. Unity doesn't ask you to lower your
+				convictions. It asks you to be more suspicious of your own tribalism than of the person
+				across the table.
+			</p>
+		</div>
+	</section>
+
+	<!-- Section 6 — Where the rest lives + CTA -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal">Where the rest lives</p>
+			<h2 class="prose-block__title reveal">So where's everything else?</h2>
+			<div class="prose-block__body">
+				<p class="reveal">
+					The authority of Scripture. The nature of Christ. Baptism. Sexuality and gender. The end
+					times. Church government. Our people hold real, considered convictions about all of it —
+					and they don't all land in the same place. We don't hand you the church's official
+					position on these, because the church doesn't have one. We have the one floor, and then
+					we have people who love Jesus, read carefully, and dialogue with each other in the open.
+				</p>
+			</div>
+			<p class="rest-pull reveal">
+				That's not a gap we're apologizing for. It's the point. The moment we mandate answers to
+				these, we're back to dividing over them.
+			</p>
+			<div class="prose-block__body">
+				<p class="reveal">
+					So these aren't things we settle on a webpage, where there's no relationship to hold them
+					and no room for you to push back. They belong in person. Over a table. In the life of a
+					community you can actually walk into.
+				</p>
+			</div>
+			<div class="rest-cta reveal">
+				<p>So come ask. That's where we do our best thinking anyway.</p>
+				<a class="button button--primary" href="/visit">Plan a Visit</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Section 7 — Values + vision strip -->
+	<section class="section section--final identity-strip">
+		<div class="container">
+			<div class="section-heading reveal">
+				<p class="eyebrow">The identity underneath it</p>
+				<h2>The values and vision we carry.</h2>
+			</div>
+
+			<div class="value-grid">
+				{values.map((v, i) => (
+					<article class="value-card reveal" style={`--delay:${i * 60}ms`}>
+						<h3>{v.title}</h3>
+						<p>{v.body}</p>
+					</article>
+				))}
+			</div>
+
+			<div class="identity-strip__vision">
+				<p class="eyebrow reveal">Our Vision</p>
+				<ul class="vision-line">
+					{vision.map((v, i) => (
+						<li class="reveal" style={`--delay:${i * 90}ms`}>{v.title}</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	</section>
 </Interior>
+
+<style>
+	/* --- Section 2: the Person --- */
+	.creed {
+		padding-top: 3rem;
+		padding-bottom: 6rem;
+		overflow: hidden;
+	}
+	.creed__inner {
+		max-width: 34ch;
+		text-align: left;
+	}
+	.creed__glow {
+		position: absolute;
+		top: 42%;
+		left: 8%;
+		width: min(48rem, 90vw);
+		height: min(48rem, 90vw);
+		transform: translateY(-50%);
+		background: radial-gradient(circle, rgba(242, 210, 162, 0.18), transparent 62%);
+		filter: blur(24px);
+		pointer-events: none;
+		z-index: 0;
+		animation: creedBreathe 9s ease-in-out infinite;
+	}
+	.creed__inner > * {
+		position: relative;
+		z-index: 1;
+	}
+	.creed__sub {
+		color: var(--muted);
+		font-size: 1.1rem;
+		margin: 0.4rem 0 1.4rem;
+	}
+	.creed__name {
+		font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+		font-weight: 600;
+		letter-spacing: -0.04em;
+		line-height: 0.98;
+		font-size: clamp(2.6rem, 7vw, 5.2rem);
+		max-width: 18ch;
+		margin: 0;
+	}
+	.creed__name span {
+		display: block;
+		font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+		letter-spacing: 0;
+		color: var(--gold);
+		margin-top: 0.7rem;
+	}
+	.creed__body {
+		color: var(--muted);
+		font-size: clamp(1.05rem, 2vw, 1.22rem);
+		line-height: 1.6;
+		max-width: 46ch;
+		margin-top: 2rem;
+	}
+	.creed__body strong {
+		color: var(--text);
+	}
+
+	/* --- Prose sections (3, 4, 5, 7) --- */
+	.prose-block {
+		padding: 4rem 0;
+	}
+	.prose-block--tinted {
+		background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
+		border-top: 1px solid var(--line);
+		border-bottom: 1px solid var(--line);
+	}
+	.prose-block__title {
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-weight: 600;
+		letter-spacing: -0.03em;
+		line-height: 1.05;
+		font-size: clamp(1.8rem, 4.4vw, 3rem);
+		max-width: 20ch;
+		margin: 0.5rem 0 0;
+	}
+	.prose-block__body {
+		max-width: 62ch;
+		margin-top: 1.6rem;
+		display: grid;
+		gap: 1.2rem;
+	}
+	.prose-block__body p {
+		color: var(--muted);
+		font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+		line-height: 1.68;
+	}
+	.prose-block__body em {
+		color: var(--text);
+		font-style: italic;
+	}
+	.prose-block__body strong {
+		color: var(--text);
+	}
+
+	/* --- Section 4: command cards --- */
+	.commands__pair {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.1rem;
+		margin-top: 1.8rem;
+	}
+	.command-card {
+		position: relative;
+		padding: 1.6rem;
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		background: var(--panel);
+	}
+	.command-card__n {
+		font-family: "Iowan Old Style", Georgia, serif;
+		font-size: 0.85rem;
+		letter-spacing: 0.2em;
+		color: var(--gold);
+	}
+	.command-card h3 {
+		font-family: "Iowan Old Style", Georgia, serif;
+		font-size: 1.6rem;
+		margin: 0.4rem 0 0.2rem;
+	}
+	.command-card p {
+		color: var(--muted);
+		margin: 0;
+	}
+	.command-card--derived {
+		margin-top: 1.4rem;
+		max-width: 62ch;
+		border-color: var(--gold-soft);
+		background: linear-gradient(120deg, rgba(242, 210, 162, 0.1), var(--panel));
+	}
+	.command-card--derived h3 {
+		color: var(--gold-strong);
+	}
+
+	/* --- Section 5: clarify columns --- */
+	.clarify {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.6rem;
+		margin-top: 2rem;
+	}
+	.clarify__col {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.9rem;
+		align-content: start;
+	}
+	.clarify__col li {
+		position: relative;
+		padding: 1rem 1.1rem 1rem 2.4rem;
+		border: 1px solid var(--line);
+		border-radius: 14px;
+		background: var(--panel);
+		color: var(--muted);
+		line-height: 1.5;
+	}
+	.clarify__col li strong {
+		color: var(--text);
+	}
+	.clarify__col li em {
+		color: var(--text);
+		font-style: italic;
+	}
+	.clarify__col li::before {
+		position: absolute;
+		left: 0.95rem;
+		top: 1rem;
+		font-family: "Iowan Old Style", Georgia, serif;
+	}
+	.clarify__col--not li::before {
+		content: "×";
+		color: var(--rose);
+	}
+	.clarify__col--does li {
+		border-color: var(--gold-soft);
+	}
+	.clarify__col--does li::before {
+		content: "✓";
+		color: var(--gold);
+	}
+
+	/* --- Section 6: challenge --- */
+	.challenge__quote {
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-weight: 500;
+		font-style: italic;
+		letter-spacing: -0.01em;
+		line-height: 1.32;
+		font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+		color: var(--text);
+		max-width: 24ch;
+		margin: 0.8rem 0 0;
+		padding-left: 1.4rem;
+		border-left: 2px solid var(--gold-soft);
+	}
+	.challenge__body {
+		color: var(--muted);
+		font-size: clamp(1.02rem, 1.8vw, 1.18rem);
+		line-height: 1.68;
+		max-width: 58ch;
+		margin-top: 1.6rem;
+	}
+
+	/* --- Section 6: pull line + CTA --- */
+	.rest-pull {
+		max-width: 40ch;
+		margin: 1.6rem 0 0;
+		padding-left: 1.4rem;
+		border-left: 2px solid var(--gold-soft);
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-size: clamp(1.3rem, 2.8vw, 1.9rem);
+		line-height: 1.35;
+		letter-spacing: -0.01em;
+		color: var(--text);
+	}
+	.rest-cta {
+		margin-top: 2.2rem;
+		padding: 1.8rem;
+		border: 1px solid var(--gold-soft);
+		border-radius: 1.4rem;
+		background: linear-gradient(120deg, rgba(242, 210, 162, 0.08), var(--panel));
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.2rem;
+	}
+	.rest-cta p {
+		font-family: "Iowan Old Style", Georgia, serif;
+		font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+		color: var(--text);
+		margin: 0;
+		max-width: 24ch;
+	}
+
+	/* --- Section 8: identity strip --- */
+	.identity-strip__vision {
+		margin-top: 2.6rem;
+		padding-top: 1.8rem;
+		border-top: 1px solid var(--line);
+	}
+	.vision-line {
+		list-style: none;
+		margin: 0.8rem 0 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.7rem 1.4rem;
+	}
+	.vision-line li {
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-weight: 600;
+		letter-spacing: -0.02em;
+		font-size: clamp(1.5rem, 4vw, 2.6rem);
+		color: var(--text);
+		position: relative;
+	}
+	.vision-line li:not(:last-child)::after {
+		content: "·";
+		color: var(--gold);
+		margin-left: 1.4rem;
+	}
+
+	/* --- Scoped motion: rise-in on scroll --- */
+	.reveal {
+		opacity: 0;
+		transform: translateY(28px);
+		filter: blur(10px);
+		will-change: transform, opacity, filter;
+	}
+	.reveal.is-visible {
+		animation: riseIn 0.9s ease both;
+		animation-delay: var(--delay, 0ms);
+	}
+
+	@keyframes creedBreathe {
+		0%, 100% {
+			opacity: 0.7;
+			transform: translateY(-50%) scale(0.97);
+		}
+		50% {
+			opacity: 1;
+			transform: translateY(-50%) scale(1.05);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			filter: none !important;
+			animation: none !important;
+		}
+		.creed__glow {
+			animation: none !important;
+		}
+	}
+</style>
+
+<noscript>
+	<style>
+		.reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+	</style>
+</noscript>
+
+<script>
+	const els = document.querySelectorAll<HTMLElement>(".reveal");
+	const io = new IntersectionObserver(
+		(entries) => {
+			for (const entry of entries) {
+				if (entry.isIntersecting) {
+					entry.target.classList.add("is-visible");
+					io.unobserve(entry.target);
+				}
+			}
+		},
+		{ rootMargin: "0px 0px -12% 0px", threshold: 0.12 },
+	);
+	els.forEach((el) => io.observe(el));
+</script>
