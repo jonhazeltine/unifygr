@@ -8,7 +8,6 @@ import { values, vision } from "../data/site";
 	description="It starts and ends with a Person: Jesus Christ — crucified, risen, and Lord. What we believe at New Life Grand Rapids."
 	kicker="About New Life"
 	heading="What We Believe"
-	lede="We could give you a long list of positions. Instead we'll tell you the one thing everything else hangs on."
 >
 	<!-- Section 2 — The floor (the Person) -->
 	<section class="section creed">
@@ -32,7 +31,7 @@ import { values, vision } from "../data/site";
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<p class="eyebrow reveal">What he asks</p>
-			<h2 class="prose-block__title reveal">Two commands sit at the center. A third comes with them.</h2>
+			<h2 class="prose-block__title reveal">Three commands.</h2>
 			<div class="commands__pair">
 				<div class="command-card reveal">
 					<span class="command-card__n">01</span>
@@ -45,14 +44,6 @@ import { values, vision } from "../data/site";
 					<p>as yourself.</p>
 				</div>
 			</div>
-			<div class="prose-block__body">
-				<p class="reveal">
-					Now watch what that second one already contains. You can't love people and quietly carve
-					out the believers who read a verse differently than you do. You can't claim to love a God
-					you haven't seen while refusing his family that you have. So a third thing arrives whether
-					we like it or not:
-				</p>
-			</div>
 			<div class="command-card command-card--derived reveal">
 				<span class="command-card__n">→</span>
 				<h3>Be one</h3>
@@ -60,16 +51,12 @@ import { values, vision } from "../data/site";
 			</div>
 			<div class="prose-block__body">
 				<p class="reveal">
-					We didn't add it to the list. Love did. Unity isn't a doctrine we ranked highly — it's
-					what the two great commands <em>produce</em> when they're real. That's why it sits in the
-					center and not out among the debated things: those are implications people argue over;
-					this is a direct command of the faith.
-				</p>
-				<p class="reveal">
-					And it's the one Jesus prayed last. The night before he died he asked that his people
-					would be one — <strong>so that the world would know</strong> he was sent. The oneness
-					isn't the reward for finally agreeing. The oneness <em>is</em> the witness. Unity across
-					real difference is the thing the world can't explain away.
+					The third isn't a rule we added — it's what the first two produce when they're real. You
+					can't love people and quietly carve out the believers who read a verse differently, or
+					claim to love a God you haven't seen while refusing his family that you have. So unity
+					isn't a doctrine we ranked highly; it's what love makes when it's honest. It's what Jesus
+					prayed for the night before he died — that his people would be one, <strong>so the world
+					would know</strong> he was sent. Not the reward for finally agreeing. The witness itself.
 				</p>
 			</div>
 		</div>
@@ -95,25 +82,7 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 5 — The honest challenge -->
-	<section class="section challenge">
-		<div class="container">
-			<p class="eyebrow reveal">One honest question</p>
-			<blockquote class="challenge__quote reveal">
-				Most of us can have coffee with someone who doesn't believe at all and feel completely
-				fine. But put us across the table from a Christian who reads the same Bible, loves the same
-				Jesus, and lands somewhere different — and suddenly it's unbearable.
-			</blockquote>
-			<p class="challenge__body reveal">
-				Worth asking why. It's usually not that truth matters more to us. It's that the outsider
-				doesn't threaten our certainty, and the insider does. Unity doesn't ask you to lower your
-				convictions. It asks you to be more suspicious of your own tribalism than of the person
-				across the table.
-			</p>
-		</div>
-	</section>
-
-	<!-- Section 6 — Where the rest lives + CTA -->
+	<!-- Section 5 — Where the rest lives + CTA -->
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<p class="eyebrow reveal">Where the rest lives</p>
@@ -123,8 +92,9 @@ import { values, vision } from "../data/site";
 					The authority of Scripture. The nature of Christ. Baptism. Sexuality and gender. The end
 					times. Church government. Our people hold real, considered convictions about all of it —
 					and they don't all land in the same place. We don't hand you the church's official
-					position on these, because the church doesn't have one. We have the one floor, and then
-					we have people who love Jesus, read carefully, and dialogue with each other in the open.
+					position on these, because the church doesn't have one. We have the one foundation — the
+					Person himself — and then people who love Jesus, read carefully, and dialogue with each
+					other in the open.
 				</p>
 			</div>
 			<p class="rest-pull reveal">
@@ -142,6 +112,24 @@ import { values, vision } from "../data/site";
 				<p>So come ask. That's where we do our best thinking anyway.</p>
 				<a class="button button--primary" href="/visit">Plan a Visit</a>
 			</div>
+		</div>
+	</section>
+
+	<!-- Section 6 — The honest challenge -->
+	<section class="section challenge">
+		<div class="container">
+			<p class="eyebrow reveal">One honest question</p>
+			<blockquote class="challenge__quote reveal">
+				Most of us can have coffee with someone who doesn't believe at all and feel completely
+				fine. But put us across the table from a Christian who reads the same Bible, loves the same
+				Jesus, and lands somewhere different — and suddenly it's unbearable.
+			</blockquote>
+			<p class="challenge__body reveal">
+				Worth asking why. It's usually not that truth matters more to us. It's that the outsider
+				doesn't threaten our certainty, and the insider does. Unity doesn't ask you to lower your
+				convictions. It asks you to be more suspicious of your own tribalism than of the person
+				across the table.
+			</p>
 		</div>
 	</section>
 
@@ -177,21 +165,21 @@ import { values, vision } from "../data/site";
 <style>
 	/* --- Section 2: the Person --- */
 	.creed {
-		padding-top: 3rem;
+		padding-top: 4rem;
 		padding-bottom: 6rem;
 		overflow: hidden;
+		text-align: center;
 	}
 	.creed__inner {
-		max-width: 34ch;
-		text-align: left;
+		max-width: 72ch;
 	}
 	.creed__glow {
 		position: absolute;
-		top: 42%;
-		left: 8%;
-		width: min(48rem, 90vw);
-		height: min(48rem, 90vw);
-		transform: translateY(-50%);
+		top: 40%;
+		left: 50%;
+		width: min(44rem, 92vw);
+		height: min(44rem, 92vw);
+		transform: translate(-50%, -50%);
 		background: radial-gradient(circle, rgba(242, 210, 162, 0.18), transparent 62%);
 		filter: blur(24px);
 		pointer-events: none;
@@ -205,30 +193,31 @@ import { values, vision } from "../data/site";
 	.creed__sub {
 		color: var(--muted);
 		font-size: 1.1rem;
-		margin: 0.4rem 0 1.4rem;
+		margin: 0.4rem 0 1.6rem;
 	}
 	.creed__name {
 		font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 		font-weight: 600;
 		letter-spacing: -0.04em;
 		line-height: 0.98;
-		font-size: clamp(2.6rem, 7vw, 5.2rem);
-		max-width: 18ch;
-		margin: 0;
+		font-size: clamp(2.8rem, 7.5vw, 5.6rem);
+		max-width: 22ch;
+		margin: 0 auto;
 	}
 	.creed__name span {
 		display: block;
-		font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+		font-size: clamp(1.15rem, 2.4vw, 1.7rem);
 		letter-spacing: 0;
 		color: var(--gold);
-		margin-top: 0.7rem;
+		margin-top: 0.8rem;
 	}
 	.creed__body {
 		color: var(--muted);
 		font-size: clamp(1.05rem, 2vw, 1.22rem);
-		line-height: 1.6;
-		max-width: 46ch;
-		margin-top: 2rem;
+		line-height: 1.65;
+		max-width: 54ch;
+		margin: 2.6rem auto 0;
+		text-align: left;
 	}
 	.creed__body strong {
 		color: var(--text);
@@ -456,11 +445,11 @@ import { values, vision } from "../data/site";
 	@keyframes creedBreathe {
 		0%, 100% {
 			opacity: 0.7;
-			transform: translateY(-50%) scale(0.97);
+			transform: translate(-50%, -50%) scale(0.97);
 		}
 		50% {
 			opacity: 1;
-			transform: translateY(-50%) scale(1.05);
+			transform: translate(-50%, -50%) scale(1.05);
 		}
 	}
 
