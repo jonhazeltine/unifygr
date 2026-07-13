@@ -18,14 +18,21 @@ import { values, vision } from "../data/site";
 			<p class="creed__name reveal">
 				Jesus Christ<span>— crucified, risen, and Lord.</span>
 			</p>
-			<p class="creed__body reveal">
-				Before the church had a single page of the New Testament to argue over, it had a
-				confession: <strong>Jesus is Lord.</strong> Rome demanded its people declare
-				<em>Caesar is Lord</em> — and Christians went to their deaths rather than say it of anyone
-				but Jesus. That's the ground we stand on. That's the line.
-				A person who confesses Christ crucified and risen is our family, even where we see things
-				differently. A teaching that denies him isn't a disagreement — it's a different faith.
-			</p>
+			<div class="creed__body reveal">
+				<p>
+					Before the church had a single page of the New Testament to argue over, it had a
+					confession: <strong>Jesus is Lord.</strong>
+				</p>
+				<p>
+					Rome demanded its people declare <em>Caesar is Lord</em> — and Christians went to their
+					deaths rather than say it of anyone but Jesus. That's the ground we stand on. That's the
+					line.
+				</p>
+				<p>
+					A person who confesses Christ crucified and risen is our family, even where we see things
+					differently. A teaching that denies him isn't a disagreement — it's a different faith.
+				</p>
+			</div>
 		</div>
 	</section>
 
@@ -47,18 +54,18 @@ import { values, vision } from "../data/site";
 				</div>
 			</div>
 			<div class="command-card command-card--derived reveal">
-				<span class="command-card__n">→</span>
+				<span class="command-card__n">03</span>
 				<h3>Be one</h3>
 				<p>with the rest of Christ's church.</p>
 			</div>
 			<div class="prose-block__body">
 				<p class="reveal">
-					The third isn't a rule we added — it's what the first two produce when they're real. You
-					can't love people and quietly carve out the believers who read a verse differently, or
-					claim to love a God you haven't seen while refusing his family that you have. So unity
-					isn't a doctrine we ranked highly; it's what love makes when it's honest. It's what Jesus
-					prayed for the night before he died — that his people would be one, <strong>so the world
-					would know</strong> he was sent. Not the reward for finally agreeing. The witness itself.
+					That's our whole position. Love God, love people, be one — the rest is just working out
+					what these three mean. And the third comes with the first two whether we like it or not:
+					you can't love the people God loves and quietly carve out his family, even the ones who
+					read a verse differently than you do. It's what Jesus prayed for the night before he died
+					— that his people would be one, <strong>so the world would know</strong> he was sent. Not
+					the reward for finally agreeing. The witness itself.
 				</p>
 			</div>
 		</div>
@@ -68,12 +75,13 @@ import { values, vision } from "../data/site";
 	<section class="section prose-block">
 		<div class="container">
 			<p class="eyebrow reveal">What this means</p>
-			<h2 class="prose-block__title reveal">Let's be clear, because this gets misread.</h2>
+			<h2 class="prose-block__title reveal">Let's be clear.</h2>
 			<div class="clarify">
 				<ul class="clarify__col clarify__col--not">
 					<li class="reveal">This does <strong>not</strong> mean doctrine doesn't matter. It does.</li>
 					<li class="reveal">This does <strong>not</strong> mean we're soft on our convictions. We're not.</li>
 					<li class="reveal">This does <strong>not</strong> mean visiting or praying for another church endorses everything they believe.</li>
+					<li class="reveal">This does <strong>not</strong> mean working alongside unbelievers or other organizations endorses everything they stand for.</li>
 				</ul>
 				<ul class="clarify__col clarify__col--does">
 					<li class="reveal">We hold our convictions firmly <em>and</em> refuse to break fellowship with believers who land somewhere different on secondary things.</li>
@@ -221,8 +229,18 @@ import { values, vision } from "../data/site";
 		margin: 2.6rem auto 0;
 		text-align: left;
 	}
+	.creed__body p {
+		margin: 0;
+	}
+	.creed__body p + p {
+		margin-top: 1.15rem;
+	}
 	.creed__body strong {
 		color: var(--text);
+	}
+	.creed__body em {
+		color: var(--text);
+		font-style: italic;
 	}
 
 	/* --- Prose sections (3, 4, 5, 7) --- */
