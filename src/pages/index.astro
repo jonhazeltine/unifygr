@@ -1,5 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import StudioDock from "../components/StudioDock.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { mission } from "../data/site";
 
@@ -433,5 +434,7 @@ const heroVariants = {
 			window.addEventListener("pointermove", updatePointer, { passive: true });
 			window.addEventListener("scroll", updateScroll, { passive: true });
 		</script>
+
+		<StudioDock />
 	</body>
 </html>

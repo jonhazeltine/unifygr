@@ -60,7 +60,13 @@ function extractValue(msg: string): string | null {
 	return null;
 }
 
-export async function proposeEdits(message: string, content: any): Promise<Proposal> {
+export type PageContext = { path?: string; page?: string };
+
+export async function proposeEdits(
+	message: string,
+	content: any,
+	_context: PageContext = {},
+): Promise<Proposal> {
 	const fields = editableFields(content);
 	const msg = message.trim();
 

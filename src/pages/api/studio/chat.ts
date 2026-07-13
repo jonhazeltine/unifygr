@@ -12,10 +12,10 @@ const json = (data: unknown, status = 200) =>
 export const POST: APIRoute = async ({ request, cookies }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 
-	const { message } = await request.json().catch(() => ({}));
+	const { message, path, page } = await request.json().catch(() => ({}));
 	if (!message || typeof message !== "string") return json({ error: "No message." }, 400);
 
 	const content = await readContent();
-	const proposal = await proposeEdits(message, content);
+	const proposal = await proposeEdits(message, content, { path, page });
 	return json(proposal);
 };
