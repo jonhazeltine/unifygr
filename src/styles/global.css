@@ -359,20 +359,20 @@ strong {
 }
 
 @media (max-width: 860px) {
-	.site-chrome__inner {
+	.site-chrome--drawer .site-chrome__inner {
 		flex-direction: row;
 		align-items: center;
 		border-radius: 999px;
 	}
-	.site-chrome__toggle {
+	.site-chrome--drawer .site-chrome__toggle {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 	}
-	.chrome-cta {
+	.site-chrome--drawer .chrome-cta {
 		display: none;
 	}
-	.site-chrome__nav {
+	.site-chrome--drawer .site-chrome__nav {
 		position: absolute;
 		top: calc(100% + 0.6rem);
 		left: 0;
@@ -393,7 +393,7 @@ strong {
 		transform: translateY(-8px);
 		transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
 	}
-	.site-chrome.nav-open .site-chrome__nav {
+	.site-chrome--drawer.nav-open .site-chrome__nav {
 		opacity: 1;
 		visibility: visible;
 		transform: translateY(0);
@@ -1626,6 +1626,21 @@ strong {
 @media (max-width: 719px) {
 	.site-chrome__inner {
 		padding: 0.7rem 0.9rem;
+	}
+
+	/* Homepage header (no drawer): keep its links visible by stacking + wrapping. */
+	.site-chrome:not(.site-chrome--drawer) .site-chrome__inner {
+		flex-direction: column;
+		align-items: stretch;
+		border-radius: 1.5rem;
+	}
+	.site-chrome:not(.site-chrome--drawer) .site-chrome__brand {
+		justify-content: center;
+	}
+	.site-chrome:not(.site-chrome--drawer) .site-chrome__nav {
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 0.55rem 1rem;
 	}
 
 	.hero {
