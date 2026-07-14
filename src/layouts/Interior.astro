@@ -24,16 +24,87 @@ const year = new Date().getFullYear();
 			<header class="site-chrome">
 				<div class="container site-chrome__inner">
 					<a class="site-chrome__brand" href="/">
-						<span>New Life</span>
-						<strong>Unify GR</strong>
+						<strong>New Life</strong>
 					</a>
-					<nav class="site-chrome__nav" aria-label="Primary">
-						{pillars.map((p) => <a href={`/${p.slug}`}>{p.title}</a>)}
-						<a href="/giving">Give</a>
+					<button
+						class="site-chrome__toggle"
+						type="button"
+						aria-label="Menu"
+						aria-expanded="false"
+						aria-controls="primary-nav"
+					>
+						<span class="site-chrome__bars" aria-hidden="true"></span>
+					</button>
+					<nav class="site-chrome__nav" id="primary-nav" aria-label="Primary">
+						{pillars.map((p) => (
+							<div class="nav-group">
+								<a class="nav-group__trigger" href={`/${p.slug}`} aria-expanded="false">
+									{p.title}
+									<span class="nav-group__caret" aria-hidden="true"></span>
+								</a>
+								<div class="nav-menu">
+									{p.items.map((it) => (
+										<a class="nav-menu__link" href={it.href}>
+											<span class="nav-menu__label">{it.label}</span>
+											<span class="nav-menu__blurb">{it.blurb}</span>
+										</a>
+									))}
+								</div>
+							</div>
+						))}
+						<a class="nav-simple" href="/giving">Give</a>
+						<a class="button button--primary nav-panel-cta" href="/visit">Plan a Visit</a>
 					</nav>
 					<a class="button button--secondary chrome-cta" href="/visit">Plan a Visit</a>
 				</div>
 			</header>
+
+			<script>
+				const chrome = document.querySelector(".site-chrome");
+				const toggle = document.querySelector(".site-chrome__toggle");
+				const nav = document.getElementById("primary-nav");
+				const mobile = window.matchMedia("(max-width: 860px)");
+
+				const closeNav = () => {
+					chrome?.classList.remove("nav-open");
+					toggle?.setAttribute("aria-expanded", "false");
+				};
+
+				toggle?.addEventListener("click", () => {
+					const open = chrome?.classList.toggle("nav-open");
+					toggle.setAttribute("aria-expanded", open ? "true" : "false");
+				});
+
+				// On mobile a pillar trigger expands its submenu instead of navigating.
+				document.querySelectorAll(".nav-group__trigger").forEach((trigger) => {
+					trigger.addEventListener("click", (event) => {
+						if (!mobile.matches) return;
+						event.preventDefault();
+						const group = trigger.closest(".nav-group");
+						const expanded = group?.classList.toggle("is-expanded");
+						trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
+					});
+				});
+
+				// Tapping a real destination closes the panel.
+				nav?.querySelectorAll(".nav-menu__link, .nav-simple, .nav-panel-cta").forEach((link) => {
+					link.addEventListener("click", closeNav);
+				});
+
+				document.addEventListener("keydown", (event) => {
+					if (event.key === "Escape") closeNav();
+				});
+
+				// Reset when leaving the mobile breakpoint.
+				mobile.addEventListener("change", (event) => {
+					if (!event.matches) {
+						closeNav();
+						document
+							.querySelectorAll(".nav-group.is-expanded")
+							.forEach((group) => group.classList.remove("is-expanded"));
+					}
+				});
+			</script>
 
 			{(kicker || heading || lede) && (
 				<section class="section interior-hero">

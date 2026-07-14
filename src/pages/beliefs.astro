@@ -6,11 +6,19 @@ import { values, vision } from "../data/site";
 <Interior
 	title="New Life | What We Believe"
 	description="It starts and ends with a Person: Jesus Christ — crucified, risen, and Lord. What we believe at New Life Grand Rapids."
-	kicker="About New Life"
-	heading="What We Believe"
 >
+	<!-- Section 1 — Hero -->
+	<section class="section interior-hero page-hero">
+		<div class="page-hero__media" aria-hidden="true"></div>
+		<div class="container page-hero__inner">
+			<p class="eyebrow reveal is-visible">About New Life</p>
+			<h1 class="interior-hero__title reveal is-visible">What We Believe</h1>
+		</div>
+	</section>
+
 	<!-- Section 2 — The floor (the Person) -->
 	<section class="section creed">
+		<div class="creed__media" aria-hidden="true"></div>
 		<div class="creed__glow" aria-hidden="true"></div>
 		<div class="container creed__inner">
 			<p class="eyebrow reveal">It starts and ends with a Person.</p>
@@ -64,11 +72,12 @@ import { values, vision } from "../data/site";
 			<p class="commands__line reveal">Love God, love people, be one.</p>
 			<div class="prose-block__body">
 				<p class="reveal">
-					The rest is just working out what these three mean. And the third grows right out of the
-					first two: when you love the people God loves, you find yourself loving his whole family —
-					the ones who read a verse differently standing right alongside you. It's what Jesus prayed
-					for the night before he died — that his people would be one, <strong>so the world would
-					know</strong> he was sent. Not the reward for finally agreeing. The witness itself.
+					The rest is just working out what these three mean. The third follows naturally from the
+					first two: love the people God loves, and you find yourself loving his whole family —
+					unity is simply what that love becomes. It's the last thing Jesus asked for before the
+					cross: that we would be one, <strong>so the world would know</strong> the Father sent him.
+					A people who stay together across everything they don't share is a witness the world can't
+					explain.
 				</p>
 			</div>
 		</div>
@@ -82,8 +91,8 @@ import { values, vision } from "../data/site";
 			<div class="prose-block__body">
 				<p class="reveal">
 					It drew the line between Jew and Samaritan, between Pharisee and Sadducee, between the
-					clean and the unclean — and every time, the people drawing it were certain they were
-					defending righteousness.
+					clean and the unclean. And from the inside it never feels like tribalism — it feels like
+					faithfulness, like guarding something holy.
 				</p>
 				<p class="reveal">
 					Jesus walked straight through those lines. He talked with the woman at the well, made a
@@ -230,22 +239,64 @@ import { values, vision } from "../data/site";
 </Interior>
 
 <style>
+	/* --- Section 1: top hero with cinematic background --- */
+	.page-hero {
+		position: relative;
+		overflow: hidden;
+		padding-bottom: 3rem;
+	}
+	.page-hero__media {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background: url("/art/generated/hero-dawn-figure-clean.png") center right / cover no-repeat;
+		opacity: 0.55;
+	}
+	.page-hero__media::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(95deg, var(--bg) 6%, rgba(5, 6, 8, 0.55) 46%, rgba(5, 6, 8, 0.1) 100%),
+			linear-gradient(to bottom, rgba(5, 6, 8, 0.4) 0%, transparent 30%, var(--bg) 98%);
+	}
+	.page-hero__inner {
+		position: relative;
+		z-index: 1;
+	}
+
 	/* --- Section 2: the Person --- */
 	.creed {
-		padding-top: 4rem;
-		padding-bottom: 6rem;
+		position: relative;
+		padding-top: 5rem;
+		padding-bottom: 9.5rem;
 		overflow: hidden;
 		text-align: center;
 	}
+	.creed__media {
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background: url("/art/generated/hero-silhouette-still.png") center 12% / cover no-repeat;
+		opacity: 0.42;
+	}
+	.creed__media::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background:
+			radial-gradient(120% 70% at 50% 20%, transparent 0%, rgba(5, 6, 8, 0.35) 55%, rgba(5, 6, 8, 0.7) 100%),
+			linear-gradient(to bottom, rgba(5, 6, 8, 0.3) 0%, rgba(5, 6, 8, 0.55) 45%, var(--bg) 88%);
+	}
 	.creed__inner {
-		max-width: 72ch;
+		max-width: 76ch;
 	}
 	.creed__glow {
 		position: absolute;
 		top: 40%;
 		left: 50%;
-		width: min(44rem, 92vw);
-		height: min(44rem, 92vw);
+		width: min(50rem, 94vw);
+		height: min(50rem, 94vw);
 		transform: translate(-50%, -50%);
 		background: radial-gradient(circle, rgba(242, 210, 162, 0.18), transparent 62%);
 		filter: blur(24px);
@@ -259,31 +310,31 @@ import { values, vision } from "../data/site";
 	}
 	.creed__sub {
 		color: var(--muted);
-		font-size: 1.1rem;
-		margin: 0.4rem 0 1.6rem;
+		font-size: clamp(1.25rem, 2.8vw, 1.85rem);
+		margin: 0.8rem 0 2.4rem;
 	}
 	.creed__name {
 		font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 		font-weight: 600;
-		letter-spacing: -0.04em;
-		line-height: 0.98;
-		font-size: clamp(2.8rem, 7.5vw, 5.6rem);
-		max-width: 22ch;
+		letter-spacing: -0.045em;
+		line-height: 0.92;
+		font-size: clamp(3.6rem, 10vw, 8rem);
+		max-width: 20ch;
 		margin: 0 auto;
 	}
 	.creed__name span {
 		display: block;
-		font-size: clamp(1.15rem, 2.4vw, 1.7rem);
+		font-size: clamp(1.3rem, 3vw, 2.2rem);
 		letter-spacing: 0;
 		color: var(--gold);
-		margin-top: 0.8rem;
+		margin-top: 1.2rem;
 	}
 	.creed__body {
 		color: var(--muted);
-		font-size: clamp(1.05rem, 2vw, 1.22rem);
-		line-height: 1.65;
-		max-width: 54ch;
-		margin: 2.6rem auto 0;
+		font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+		line-height: 1.8;
+		max-width: 50ch;
+		margin: 3.4rem auto 0;
 		text-align: left;
 	}
 	.creed__body p {
@@ -300,34 +351,39 @@ import { values, vision } from "../data/site";
 		font-style: italic;
 	}
 
-	/* --- Prose sections (3, 4, 5, 7) --- */
+	/* --- Prose sections --- */
 	.prose-block {
-		padding: 4rem 0;
+		padding: 7rem 0;
 	}
 	.prose-block--tinted {
 		background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
 		border-top: 1px solid var(--line);
 		border-bottom: 1px solid var(--line);
 	}
+	.eyebrow {
+		font-size: 0.8rem;
+		letter-spacing: 0.28em;
+		margin: 0 0 1.6rem;
+	}
 	.prose-block__title {
 		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 		font-weight: 600;
-		letter-spacing: -0.03em;
-		line-height: 1.05;
-		font-size: clamp(1.8rem, 4.4vw, 3rem);
-		max-width: 20ch;
-		margin: 0.5rem 0 0;
+		letter-spacing: -0.038em;
+		line-height: 1.0;
+		font-size: clamp(2.6rem, 6.4vw, 5rem);
+		max-width: 16ch;
+		margin: 0;
 	}
 	.prose-block__body {
-		max-width: 62ch;
-		margin-top: 1.6rem;
+		max-width: 56ch;
+		margin-top: 2.8rem;
 		display: grid;
-		gap: 1.2rem;
+		gap: 1.4rem;
 	}
 	.prose-block__body p {
 		color: var(--muted);
-		font-size: clamp(1.02rem, 1.8vw, 1.18rem);
-		line-height: 1.68;
+		font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+		line-height: 1.8;
 	}
 	.prose-block__body em {
 		color: var(--text);
@@ -346,29 +402,31 @@ import { values, vision } from "../data/site";
 	}
 	.command-card {
 		position: relative;
-		padding: 1.6rem;
+		padding: 2.1rem;
 		border: 1px solid var(--line);
 		border-radius: 18px;
 		background: var(--panel);
 	}
 	.command-card__n {
 		font-family: "Iowan Old Style", Georgia, serif;
-		font-size: 0.85rem;
+		font-size: 0.9rem;
 		letter-spacing: 0.2em;
 		color: var(--gold);
 	}
 	.command-card h3 {
 		font-family: "Iowan Old Style", Georgia, serif;
-		font-size: 1.6rem;
-		margin: 0.4rem 0 0.2rem;
+		font-size: clamp(1.9rem, 3vw, 2.3rem);
+		line-height: 1.05;
+		margin: 0.5rem 0 0.3rem;
 	}
 	.command-card p {
 		color: var(--muted);
+		font-size: clamp(0.95rem, 1.3vw, 1.05rem);
 		margin: 0;
 	}
 	.command-card--derived {
-		margin-top: 1.4rem;
-		max-width: 62ch;
+		margin-top: 1.2rem;
+		max-width: 56ch;
 		border-color: var(--gold-soft);
 		background: linear-gradient(120deg, rgba(242, 210, 162, 0.1), var(--panel));
 	}
@@ -378,11 +436,11 @@ import { values, vision } from "../data/site";
 	.commands__line {
 		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 		font-weight: 600;
-		letter-spacing: -0.02em;
-		font-size: clamp(1.5rem, 3.4vw, 2.3rem);
-		line-height: 1.2;
+		letter-spacing: -0.03em;
+		font-size: clamp(2rem, 4.6vw, 3.3rem);
+		line-height: 1.1;
 		color: var(--text);
-		margin: 1.8rem 0 0;
+		margin: 2.6rem 0 0;
 	}
 
 	/* --- Section 5: clarify columns --- */
@@ -402,12 +460,13 @@ import { values, vision } from "../data/site";
 	}
 	.clarify__col li {
 		position: relative;
-		padding: 1rem 1.1rem 1rem 2.4rem;
+		padding: 1.1rem 1.2rem 1.1rem 2.5rem;
 		border: 1px solid var(--line);
 		border-radius: 14px;
 		background: var(--panel);
 		color: var(--muted);
-		line-height: 1.5;
+		font-size: clamp(0.95rem, 1.3vw, 1.02rem);
+		line-height: 1.6;
 	}
 	.clarify__col li strong {
 		color: var(--text);
@@ -439,38 +498,38 @@ import { values, vision } from "../data/site";
 		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 		font-weight: 500;
 		font-style: italic;
-		letter-spacing: -0.01em;
-		line-height: 1.32;
-		font-size: clamp(1.5rem, 3.6vw, 2.5rem);
+		letter-spacing: -0.025em;
+		line-height: 1.2;
+		font-size: clamp(1.9rem, 4.6vw, 3.2rem);
 		color: var(--text);
 		max-width: 24ch;
-		margin: 0.8rem 0 0;
-		padding-left: 1.4rem;
+		margin: 0.4rem 0 0;
+		padding-left: 1.8rem;
 		border-left: 2px solid var(--gold-soft);
 	}
 	.challenge__body {
 		color: var(--muted);
-		font-size: clamp(1.02rem, 1.8vw, 1.18rem);
-		line-height: 1.68;
-		max-width: 58ch;
-		margin-top: 1.6rem;
+		font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+		line-height: 1.8;
+		max-width: 54ch;
+		margin-top: 2.6rem;
 	}
 
 	/* --- Section 6: pull line + CTA --- */
 	.rest-pull {
-		max-width: 40ch;
-		margin: 1.6rem 0 0;
-		padding-left: 1.4rem;
+		max-width: 34ch;
+		margin: 2.6rem 0 0;
+		padding-left: 1.8rem;
 		border-left: 2px solid var(--gold-soft);
 		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-		font-size: clamp(1.3rem, 2.8vw, 1.9rem);
-		line-height: 1.35;
-		letter-spacing: -0.01em;
+		font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+		line-height: 1.28;
+		letter-spacing: -0.02em;
 		color: var(--text);
 	}
 	.rest-cta {
-		margin-top: 2.2rem;
-		padding: 1.8rem;
+		margin-top: 3rem;
+		padding: 2.2rem;
 		border: 1px solid var(--gold-soft);
 		border-radius: 1.4rem;
 		background: linear-gradient(120deg, rgba(242, 210, 162, 0.08), var(--panel));
@@ -482,31 +541,45 @@ import { values, vision } from "../data/site";
 	}
 	.rest-cta p {
 		font-family: "Iowan Old Style", Georgia, serif;
-		font-size: clamp(1.2rem, 2.6vw, 1.7rem);
+		font-size: clamp(1.4rem, 3vw, 2.1rem);
 		color: var(--text);
 		margin: 0;
-		max-width: 24ch;
+		max-width: 22ch;
 	}
 
 	/* --- Section 8: identity strip --- */
+	.section-heading h2 {
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-weight: 600;
+		letter-spacing: -0.038em;
+		line-height: 1.0;
+		font-size: clamp(2.4rem, 5.6vw, 4.2rem);
+	}
+	.value-card h3 {
+		font-size: clamp(1.4rem, 2.4vw, 1.7rem);
+	}
+	.value-card p {
+		font-size: clamp(0.95rem, 1.3vw, 1.02rem);
+		line-height: 1.6;
+	}
 	.identity-strip__vision {
-		margin-top: 2.6rem;
-		padding-top: 1.8rem;
+		margin-top: 3.4rem;
+		padding-top: 2.4rem;
 		border-top: 1px solid var(--line);
 	}
 	.vision-line {
 		list-style: none;
-		margin: 0.8rem 0 0;
+		margin: 1rem 0 0;
 		padding: 0;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.7rem 1.4rem;
+		gap: 0.7rem 1.6rem;
 	}
 	.vision-line li {
 		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 		font-weight: 600;
-		letter-spacing: -0.02em;
-		font-size: clamp(1.5rem, 4vw, 2.6rem);
+		letter-spacing: -0.03em;
+		font-size: clamp(1.9rem, 5vw, 3.4rem);
 		color: var(--text);
 		position: relative;
 	}

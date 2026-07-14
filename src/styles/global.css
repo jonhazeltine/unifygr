@@ -206,6 +206,267 @@ strong {
 	transform: scaleX(1);
 }
 
+/* --- Header dropdown menus --- */
+.nav-group {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+.nav-group__trigger {
+	display: inline-flex;
+	align-items: center;
+}
+.nav-group__caret {
+	width: 0;
+	height: 0;
+	margin-left: 0.4rem;
+	border-left: 3px solid transparent;
+	border-right: 3px solid transparent;
+	border-top: 4px solid currentColor;
+	opacity: 0.5;
+	transition: transform 220ms ease, opacity 220ms ease;
+}
+.nav-group:hover .nav-group__caret,
+.nav-group:focus-within .nav-group__caret {
+	transform: rotate(180deg);
+	opacity: 0.9;
+}
+.nav-group:hover .nav-group__trigger::after,
+.nav-group:focus-within .nav-group__trigger::after {
+	opacity: 1;
+	transform: scaleX(1);
+}
+.nav-menu {
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%) translateY(8px);
+	margin-top: 0.85rem;
+	min-width: 264px;
+	padding: 0.55rem;
+	display: grid;
+	gap: 0.1rem;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 18px;
+	background: rgba(6, 10, 15, 0.92);
+	backdrop-filter: blur(20px);
+	box-shadow: 0 26px 64px rgba(0, 0, 0, 0.45);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 200ms ease, transform 200ms ease;
+	z-index: 30;
+}
+.nav-menu::before {
+	/* invisible bridge so the menu stays open while the cursor crosses the gap */
+	content: "";
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: -0.95rem;
+	height: 0.95rem;
+}
+.nav-group:hover .nav-menu,
+.nav-group:focus-within .nav-menu {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translateX(-50%) translateY(0);
+}
+.site-chrome__nav .nav-menu__link {
+	display: grid;
+	gap: 0.12rem;
+	padding: 0.55rem 0.7rem;
+	border-radius: 12px;
+	text-transform: none;
+	letter-spacing: 0;
+	transition: background 180ms ease;
+}
+.site-chrome__nav .nav-menu__link::after {
+	display: none;
+}
+.site-chrome__nav .nav-menu__link:hover {
+	background: rgba(255, 255, 255, 0.06);
+}
+.nav-menu__label {
+	font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	font-size: 0.95rem;
+	letter-spacing: -0.02em;
+	color: var(--text);
+}
+.nav-menu__blurb {
+	font-size: 0.76rem;
+	line-height: 1.4;
+	letter-spacing: 0;
+	text-transform: none;
+	color: rgba(246, 240, 231, 0.55);
+}
+@media (prefers-reduced-motion: reduce) {
+	.nav-menu,
+	.nav-group__caret {
+		transition: none;
+	}
+}
+
+/* --- Mobile header: hamburger + accordion --- */
+.site-chrome__toggle {
+	display: none;
+	position: relative;
+	width: 2.4rem;
+	height: 2.4rem;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.04);
+	cursor: pointer;
+}
+.site-chrome__bars,
+.site-chrome__bars::before,
+.site-chrome__bars::after {
+	position: absolute;
+	left: 50%;
+	width: 1.05rem;
+	height: 1.5px;
+	background: var(--text);
+	border-radius: 2px;
+	transform: translateX(-50%);
+	transition: transform 240ms ease, opacity 200ms ease;
+}
+.site-chrome__bars {
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+.site-chrome__bars::before {
+	content: "";
+	top: -5px;
+}
+.site-chrome__bars::after {
+	content: "";
+	top: 5px;
+}
+.site-chrome.nav-open .site-chrome__bars {
+	background: transparent;
+}
+.site-chrome.nav-open .site-chrome__bars::before {
+	top: 0;
+	transform: translateX(-50%) rotate(45deg);
+}
+.site-chrome.nav-open .site-chrome__bars::after {
+	top: 0;
+	transform: translateX(-50%) rotate(-45deg);
+}
+.nav-panel-cta {
+	display: none;
+}
+
+@media (max-width: 860px) {
+	.site-chrome__inner {
+		flex-direction: row;
+		align-items: center;
+		border-radius: 999px;
+	}
+	.site-chrome__toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+	.chrome-cta {
+		display: none;
+	}
+	.site-chrome__nav {
+		position: absolute;
+		top: calc(100% + 0.6rem);
+		left: 0;
+		right: 0;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.15rem;
+		max-height: min(72vh, 620px);
+		overflow-y: auto;
+		padding: 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 20px;
+		background: rgba(6, 10, 15, 0.985);
+		backdrop-filter: blur(22px);
+		box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-8px);
+		transition: opacity 220ms ease, transform 220ms ease, visibility 220ms;
+	}
+	.site-chrome.nav-open .site-chrome__nav {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+	}
+	.nav-group {
+		display: block;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	}
+	.nav-group__trigger,
+	.site-chrome__nav .nav-simple {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		padding: 0.9rem 0.6rem;
+		font-size: 0.9rem;
+	}
+	.nav-group__caret {
+		margin-left: auto;
+	}
+	.site-chrome__nav .nav-group__trigger::after,
+	.site-chrome__nav .nav-simple::after {
+		display: none;
+	}
+	/* Submenu is an accordion: collapsed until its group is expanded. */
+	.nav-menu {
+		position: static;
+		transform: none;
+		min-width: 0;
+		margin: 0;
+		padding: 0 0.6rem;
+		border: none;
+		border-radius: 0;
+		background: none;
+		backdrop-filter: none;
+		box-shadow: none;
+		visibility: visible;
+		pointer-events: auto;
+		display: grid;
+		gap: 0.1rem;
+		max-height: 0;
+		opacity: 0;
+		overflow: hidden;
+		transition: max-height 300ms ease, opacity 220ms ease;
+	}
+	.nav-menu::before {
+		display: none;
+	}
+	/* Neutralize the desktop hover/focus positioning on mobile — the accordion
+	   is driven only by .is-expanded, and the menu must not shift left. */
+	.nav-group:hover .nav-menu,
+	.nav-group:focus-within .nav-menu {
+		transform: none;
+	}
+	.nav-group .nav-menu {
+		max-height: 0;
+	}
+	.nav-group.is-expanded .nav-menu {
+		max-height: 560px;
+		opacity: 1;
+		padding-bottom: 0.5rem;
+	}
+	.nav-group.is-expanded .nav-group__caret {
+		transform: rotate(180deg);
+	}
+	.nav-panel-cta {
+		display: inline-flex;
+		justify-content: center;
+		margin-top: 0.7rem;
+		text-align: center;
+	}
+}
+
 .hero-variant-toggle {
 	display: flex;
 	align-items: center;
@@ -1364,20 +1625,7 @@ strong {
 
 @media (max-width: 719px) {
 	.site-chrome__inner {
-		flex-direction: column;
-		align-items: stretch;
-		border-radius: 1.5rem;
-		padding: 0.9rem 1rem;
-	}
-
-	.site-chrome__brand {
-		justify-content: center;
-	}
-
-	.site-chrome__nav {
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 0.55rem 1rem;
+		padding: 0.7rem 0.9rem;
 	}
 
 	.hero {
