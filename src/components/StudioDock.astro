@@ -184,7 +184,7 @@
 			$("sd-signout").hidden = false; $("sd-undo").hidden = false;
 			sessionStorage.setItem(OPEN_KEY, "1"); // stay open as staff navigate
 			renderLog();
-			if (loadLog().length === 0) addMsg(`Hi! You're on ${pageName}. Tell me what to change — I'll show you the edit before anything goes live.`, "ai");
+			if (loadLog().length === 0) addMsg(`Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
 			setTimeout(() => $("sd-msg")?.focus(), 50);
 		}
 		function showSignin() {
@@ -194,9 +194,9 @@
 		}
 
 		async function undoLast() {
-			const res = await api("/api/studio/undo", { method: "POST" });
-			if (res.ok) { toast("Reverted ✓"); addMsg("Reverted the last change. Reload to see it on the page.", "ai"); }
-			else { addMsg(res.error || "Nothing to undo.", "ai"); }
+			const res = await api("/api/studio/agent-undo", { method: "POST" });
+			if (res.ok) { toast("Reverted ✓"); addMsg(res.reply || "Reverted the last change.", "ai"); }
+			else { addMsg(res.reply || res.error || "Nothing to undo.", "ai"); }
 		}
 
 		function open() {
@@ -223,13 +223,13 @@
 			addMsg(msg, "you"); input.value = ""; $("sd-proposal").innerHTML = ""; pending = null;
 			const btn = $("sd-send") as HTMLButtonElement; btn.disabled = true;
 			const think = document.createElement("div");
-			think.className = "sd-bubble ai sd-thinking"; think.textContent = "Thinking…";
+			think.className = "sd-bubble ai sd-thinking"; think.textContent = "Working on it…";
 			$("sd-log").appendChild(think); $("sd-log").scrollTop = $("sd-log").scrollHeight;
 			try {
-				const res = await api("/api/studio/chat", { method: "POST", body: JSON.stringify({ message: msg, path, page: pageName }) });
+				const res = await api("/api/studio/agent", { method: "POST", body: JSON.stringify({ message: msg, path, page: pageName }) });
 				think.remove();
 				addMsg(res.reply || res.error || "…", "ai");
-				renderProposal(res);
+				if (res.changed && res.changed.length) addMsg("↻ Updated " + res.changed.join(", ") + " — reload the page to see it.", "ai");
 			} catch { think.remove(); addMsg("Something went wrong — try again.", "ai"); }
 			finally { btn.disabled = false; input.focus(); }
 		}
