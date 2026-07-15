@@ -1,0 +1,7 @@
+---
+// The editor now lives as a dock on the real site (see StudioDock.astro).
+// This route is just a friendly door: it sends staff to the homepage with the
+// editor open, so an old /studio bookmark still works.
+export const prerender = false;
+return Astro.redirect("/?edit=1");
+---

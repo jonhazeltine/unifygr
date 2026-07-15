@@ -217,3 +217,6 @@ public/art/refs/
 
 # Vercel
 .vercel/
+
+# AI Studio local history / drafts
+.studio/
