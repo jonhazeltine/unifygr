@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
+import MenuEditor from "./MenuEditor";
 
 type PageMeta = { slug: string; title: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
 
@@ -28,6 +29,7 @@ const api = (path: string, opts?: RequestInit) =>
 export default function BuilderApp() {
 	const [pages, setPages] = useState<PageMeta[]>([]);
 	const [sitePages, setSitePages] = useState<Array<{ path: string; title: string }>>([]);
+	const [menuMode, setMenuMode] = useState(false);
 	const [slug, setSlug] = useState<string | null>(null);
 	const [data, setData] = useState<any>(null);
 	const [rev, setRev] = useState(0); // bump to remount Puck after AI edits
@@ -123,6 +125,20 @@ export default function BuilderApp() {
 		} finally { setAiBusy(false); }
 	}
 
+	// ---- menu editor screen ----
+	if (menuMode) {
+		return (
+			<div style={{ ...S.shell, alignItems: "stretch", justifyContent: "stretch", paddingTop: 0, display: "block" }}>
+				<MenuEditor
+					paths={[...pages.map((p) => ({ path: p.path, title: p.title })), ...sitePages]}
+					onBack={() => setMenuMode(false)}
+					say={say}
+				/>
+				{toast && <div style={S.toast}>{toast}</div>}
+			</div>
+		);
+	}
+
 	// ---- page picker screen ----
 	if (!slug || !data) {
 		return (
@@ -132,7 +148,10 @@ export default function BuilderApp() {
 					<p style={{ color: "#9aa3b2", fontSize: 14, margin: "6px 0 20px" }}>
 						Build pages by dragging blocks and talking to the AI. Pages publish at <code>/p/…</code> on the site.
 					</p>
-					<button style={S.btn} onClick={newPage}>+ New page</button>
+					<div style={{ display: "flex", gap: 8 }}>
+						<button style={S.btn} onClick={newPage}>+ New page</button>
+						<button style={{ ...S.btn, background: "transparent", color: "#f2d2a2", border: "1px solid rgba(242,210,162,.4)" }} onClick={() => setMenuMode(true)}>☰ Edit site menu</button>
+					</div>
 					<p style={{ color: "#9aa3b2", fontSize: 12, margin: "14px 0 6px" }}>Drag to reorder · new pages start as drafts only staff can see.</p>
 					<div style={{ display: "grid", gap: 8 }}>
 						{pages.map((p, i) => (

@@ -2,6 +2,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import StudioDock from "../components/StudioDock.astro";
 import { church, pillars } from "../data/site";
+import { readNav } from "../lib/studio/nav";
 
 interface Props {
 	title: string;
@@ -13,6 +14,9 @@ interface Props {
 
 const { title, description, kicker, heading, lede } = Astro.props;
 const year = new Date().getFullYear();
+
+// The menus are content (content/nav.json), editable in the Page Builder.
+const nav = await readNav();
 ---
 
 <!doctype html>
@@ -37,26 +41,29 @@ const year = new Date().getFullYear();
 						<span class="site-chrome__bars" aria-hidden="true"></span>
 					</button>
 					<nav class="site-chrome__nav" id="primary-nav" aria-label="Primary">
-						{pillars.map((p) => (
-							<div class="nav-group">
-								<a class="nav-group__trigger" href={`/${p.slug}`} aria-expanded="false">
-									{p.title}
-									<span class="nav-group__caret" aria-hidden="true"></span>
-								</a>
-								<div class="nav-menu">
-									{p.items.map((it) => (
-										<a class="nav-menu__link" href={it.href}>
-											<span class="nav-menu__label">{it.label}</span>
-											<span class="nav-menu__blurb">{it.blurb}</span>
-										</a>
-									))}
+						{nav.groups.map((g) => (
+							g.items.length ? (
+								<div class="nav-group">
+									<a class="nav-group__trigger" href={g.href} aria-expanded="false">
+										{g.label}
+										<span class="nav-group__caret" aria-hidden="true"></span>
+									</a>
+									<div class="nav-menu">
+										{g.items.map((it) => (
+											<a class="nav-menu__link" href={it.href}>
+												<span class="nav-menu__label">{it.label}</span>
+												<span class="nav-menu__blurb">{it.blurb}</span>
+											</a>
+										))}
+									</div>
 								</div>
-							</div>
+							) : (
+								<a class="nav-simple" href={g.href}>{g.label}</a>
+							)
 						))}
-						<a class="nav-simple" href="/giving">Give</a>
-						<a class="button button--primary nav-panel-cta" href="/visit">Plan a Visit</a>
+						<a class="button button--primary nav-panel-cta" href={nav.cta.href}>{nav.cta.label}</a>
 					</nav>
-					<a class="button button--secondary chrome-cta" href="/visit">Plan a Visit</a>
+					<a class="button button--secondary chrome-cta" href={nav.cta.href}>{nav.cta.label}</a>
 				</div>
 			</header>
 
