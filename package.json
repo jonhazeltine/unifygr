@@ -14,11 +14,15 @@
 	"dependencies": {
 		"@astrojs/cloudflare": "12.6.12",
 		"@astrojs/mdx": "4.3.12",
+		"@astrojs/react": "^6.0.1",
 		"@astrojs/rss": "4.0.14",
 		"@astrojs/sitemap": "3.6.0",
 		"@astrojs/vercel": "^8.2.11",
+		"@measured/puck": "^0.20.2",
 		"@tinacms/cli": "^2.5.1",
 		"astro": "5.16.2",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
 		"tinacms": "^3.9.3",
 		"typescript": "5.9.3"
 	},

@@ -1,0 +1,21 @@
+---
+// Renders a builder page (content/pages/<slug>.json) inside the site chrome.
+// Server-rendered so newly published pages appear immediately.
+export const prerender = false;
+
+import { Render } from "@measured/puck";
+import Interior from "../../layouts/Interior.astro";
+import { blocksConfig } from "../../components/builder/blocks";
+import { readPage } from "../../lib/studio/pages";
+
+const { slug } = Astro.params;
+const data = slug ? await readPage(slug) : null;
+if (!data) {
+	return new Response("Not found", { status: 404 });
+}
+const title = `New Life | ${data.root.props.title || "Page"}`;
+---
+
+<Interior title={title} description={data.root.props.title || "New Life Grand Rapids"}>
+	<Render config={blocksConfig} data={data} />
+</Interior>
