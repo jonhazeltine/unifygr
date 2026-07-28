@@ -1,0 +1,95 @@
+{
+	"status": "live",
+	"order": 1,
+	"root": {
+		"props": {
+			"title": "Our Staff",
+			"kicker": "About New Life",
+			"description": "Meet the leadership team of New Life Grand Rapids."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-staff",
+				"kicker": "About New Life",
+				"heading": "Our Leadership",
+				"lede": "A team that prays, seeks God's direction, and cares for our church family."
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-staff-lead",
+				"eyebrow": "",
+				"title": "",
+				"body": "Our Leadership Team carries the vision, direction, and oversight of the church at a strategic level. They meet consistently to pray and seek the Lord, and each member is personally involved across the church as their gifts dictate. This diversity has blessed New Life with a balanced and humble team.",
+				"tinted": false
+			}
+		},
+		{
+			"type": "Profiles",
+			"props": {
+				"id": "Profiles-staff",
+				"items": [
+					{
+						"photo": "/art/staff/staff-1.jpg",
+						"name": "Jon Hazeltine",
+						"role": "Senior Leader",
+						"bio": "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the church. Jon is a visionary and strategic thinker and the primary driver behind the direction of the church.",
+						"name2": "Stacy Hazeltine",
+						"role2": "Director of Missions, Church Leadership & Oversight",
+						"bio2": "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family."
+					},
+					{
+						"photo": "/art/staff/staff-2.jpg",
+						"name": "Rebecca Taylor",
+						"role": "Senior Associate Leader, Director of Outreach",
+						"bio": "Rebecca has an extensive ministry background. She is an ordained minister with deep experience in community outreach. Rebecca currently directs the staff at New Life and preaches frequently.",
+						"name2": "",
+						"role2": "",
+						"bio2": ""
+					},
+					{
+						"photo": "/art/staff/staff-3.jpg",
+						"name": "Allie Seif",
+						"role": "Children's Ministry Director, Church Leadership & Oversight",
+						"bio": "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the church. She loves to minister to children and to lead the church in corporate ministry, and her creativity has inspired countless projects.",
+						"name2": "Tory Seif",
+						"role2": "Church Leadership & Oversight",
+						"bio2": "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the church. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the church."
+					},
+					{
+						"photo": "/art/staff/staff-elizabeth.png",
+						"name": "Elizabeth Bish",
+						"role": "Connections Lead & Executive Administrator",
+						"bio": "Elizabeth helps people find their place in the New Life family and keeps the church running behind the scenes — connecting newcomers, caring for the details, and supporting the team in all they do.",
+						"name2": "",
+						"role2": "",
+						"bio2": ""
+					}
+				]
+			}
+		},
+		{
+			"type": "ListCards",
+			"props": {
+				"id": "ListCards-staff-teams",
+				"cards": [
+					{
+						"title": "Pastoral Care Team",
+						"blurb": "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our church family. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
+						"items": "Tory & Allie Seif\nTom & Sarah Rhein\nBill & Sue Meyer\nElizabeth Bish\nTim & Diane Cosby\nRebecca Taylor\nJon Hazeltine"
+					},
+					{
+						"title": "Business & Finance Team",
+						"blurb": "Wisdom, expertise and oversight for the management of church assets and finances — making sure provision is in place to do all that God has called us to do.",
+						"items": "Jon Hazeltine\nTom Rhein\nRebecca Taylor\nAnne Gruber\nTory Seif"
+					}
+				]
+			}
+		}
+	],
+	"zones": {}
+}

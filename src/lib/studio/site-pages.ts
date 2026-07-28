@@ -9,7 +9,8 @@
 // Keys look like "../../pages/visit.astro".
 const PAGE_FILES = Object.keys(import.meta.glob("../../pages/*.astro"));
 
-// Routes that aren't public content pages.
+// Routes that aren't public content pages — plus pages that have been
+// "blockified" (mounted builder pages), which list as builder pages instead.
 const EXCLUDE = new Set([
 	"index", // listed explicitly as Homepage first
 	"studio", // the editor door
@@ -17,18 +18,14 @@ const EXCLUDE = new Set([
 	"[pillar]", // expanded below
 	"land-sale-update-b7f2", // password-gated private page
 	"happy-church", // local experiment, not a nav page
+	"mission-trips", "membership", "spiritual-formation", "staff", "giving", // blockified
 ]);
 
 const TITLES: Record<string, string> = {
 	"visit": "Plan a Visit",
 	"beliefs": "What We Believe",
 	"vision-values": "Vision & Values",
-	"spiritual-formation": "Spiritual Formation",
-	"membership": "Membership",
-	"staff": "Our Staff",
-	"mission-trips": "Mission Trips",
 	"unify-gr": "Unify GR",
-	"giving": "Giving",
 	"watch": "Watch & Sermons",
 };
 

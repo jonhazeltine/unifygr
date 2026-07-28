@@ -25,14 +25,24 @@ const PAGES_DIR = path.join(ROOT, "content", "pages");
 const BUNDLED: Record<string, any> = import.meta.glob("../../../content/pages/*.json", { eager: true });
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
-export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video"] as const;
+export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards"] as const;
+
+// Builder pages mounted at REAL site routes (their .astro files render the
+// page JSON). These can't be deleted from the builder — the nav links to them.
+export const MOUNTED: Record<string, string> = {
+	"mission-trips": "/mission-trips",
+	"membership": "/membership",
+	"spiritual-formation": "/spiritual-formation",
+	"staff": "/staff",
+	"giving": "/giving",
+};
 
 export type PageStatus = "draft" | "live";
 
 export type PageData = {
 	status: PageStatus;
 	order: number;
-	root: { props: { title?: string; kicker?: string } };
+	root: { props: { title?: string; kicker?: string; description?: string } };
 	content: Array<{ type: string; props: Record<string, unknown> }>;
 	zones?: Record<string, unknown>;
 };
@@ -59,7 +69,13 @@ export function sanitizeData(input: any): PageData {
 	return {
 		status: input?.status === "live" ? "live" : "draft",
 		order: Number.isFinite(input?.order) ? Number(input.order) : 0,
-		root: { props: { title: String(rootProps.title || "Untitled page"), kicker: String(rootProps.kicker || "") } },
+		root: {
+			props: {
+				title: String(rootProps.title || "Untitled page"),
+				kicker: String(rootProps.kicker || ""),
+				description: String(rootProps.description || ""),
+			},
+		},
 		content: cleanContent,
 		zones: {},
 	};
@@ -80,17 +96,37 @@ async function fsPageSlugs(): Promise<string[] | null> {
 	}
 }
 
-export async function listPages(): Promise<Array<{ slug: string; title: string; status: PageStatus; order: number }>> {
+export type PageListing = {
+	slug: string;
+	title: string;
+	status: PageStatus;
+	order: number;
+	/** where the page is served (a mounted real route, or /p/<slug>) */
+	path: string;
+	/** mounted pages are part of the site structure and can't be deleted */
+	mounted: boolean;
+};
+
+export async function listPages(): Promise<PageListing[]> {
 	const fromFs = await fsPageSlugs();
 	const slugs = new Set<string>(
 		fromFs ?? Object.keys(BUNDLED).map((k) => k.split("/").pop()!.replace(/\.json$/, "")),
 	);
 
-	const out: Array<{ slug: string; title: string; status: PageStatus; order: number }> = [];
+	const out: PageListing[] = [];
 	for (const slug of slugs) {
 		if (!validSlug(slug)) continue;
 		const data = await readPage(slug);
-		if (data) out.push({ slug, title: String(data.root.props.title || slug), status: data.status, order: data.order });
+		if (data) {
+			out.push({
+				slug,
+				title: String(data.root.props.title || slug),
+				status: data.status,
+				order: data.order,
+				path: MOUNTED[slug] || `/p/${slug}`,
+				mounted: Boolean(MOUNTED[slug]),
+			});
+		}
 	}
 	return out.sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
 }
@@ -151,6 +187,7 @@ export async function updatePageMeta(slug: string, meta: { status?: PageStatus; 
 
 export async function deletePage(slug: string): Promise<{ via: "fs" | "git" }> {
 	if (!validSlug(slug)) throw new Error("Bad page name.");
+	if (MOUNTED[slug]) throw new Error("This page is part of the site's structure — it can't be deleted (unpublish it instead).");
 	try {
 		await fs.rm(path.join(PAGES_DIR, `${slug}.json`));
 		return { via: "fs" };

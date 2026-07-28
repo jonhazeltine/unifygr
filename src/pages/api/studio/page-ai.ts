@@ -29,6 +29,12 @@ Available blocks (the "type" of each content item) and their props:
 - Spacer: { size } — "24px" | "64px" | "120px".
 - Image: { src, alt, caption, width } — src MUST be one of the site image paths listed below (never invent one); width is "full" or "inset".
 - Video: { url, caption } — url is a YouTube link.
+- FAQ: { eyebrow, title, items: [{ q, a }] } — accordion of questions.
+- Callout: { eyebrow, title, body, buttons: [{ label, href, style }] } — a highlighted panel with optional buttons.
+- Profiles: { items: [{ photo, name, role, bio, name2, role2, bio2 }] } — people cards; photo from the site image list; name2/role2/bio2 for a second person sharing the photo, else "".
+- ListCards: { cards: [{ title, blurb, items }] } — cards with a bullet list; items is ONE STRING with one entry per line.
+- Feature: { eyebrow, heading, subline, body, image, video, buttons, facts: [{ label, value }] } — media beside text with quick facts.
+- CtaCards: { cards: [{ label, title, body, buttonLabel, buttonHref, featured }] } — action cards (featured is boolean).
 Only these types: ${ALLOWED_BLOCKS.join(", ")}.`;
 
 export const POST: APIRoute = async ({ request, cookies }) => {
