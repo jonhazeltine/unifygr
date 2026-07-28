@@ -7,6 +7,7 @@
 // src/lib/studio/pages.ts (the fence), then it's available everywhere.
 
 import type { Config } from "@measured/puck";
+import { useEffect, useRef, useState } from "react";
 
 // Split a textarea into paragraphs on blank lines.
 function paras(text: string) {
@@ -14,6 +15,70 @@ function paras(text: string) {
 		.split(/\n\s*\n/)
 		.map((p) => p.trim())
 		.filter(Boolean);
+}
+
+// Pull a YouTube video id out of any pasted link (or accept a bare id).
+function youtubeId(input: string): string | null {
+	const s = String(input || "").trim();
+	if (/^[\w-]{11}$/.test(s)) return s;
+	const m = s.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/|\/live\/)([\w-]{11})/);
+	return m ? m[1] : null;
+}
+
+// Custom Puck field: pick from the site's media library or upload a photo.
+// Only mounts inside the editor (client), never on published pages.
+function ImagePickerField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+	const [images, setImages] = useState<string[]>([]);
+	const [open, setOpen] = useState(false);
+	const [busy, setBusy] = useState(false);
+	const fileRef = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		fetch("/api/studio/media").then((r) => r.json()).then((d) => setImages(d.images || [])).catch(() => {});
+	}, []);
+
+	async function upload(file: File) {
+		setBusy(true);
+		try {
+			const dataBase64 = await new Promise<string>((res, rej) => {
+				const fr = new FileReader();
+				fr.onload = () => res(String(fr.result));
+				fr.onerror = rej;
+				fr.readAsDataURL(file);
+			});
+			const r = await fetch("/api/studio/media", {
+				method: "POST",
+				headers: { "content-type": "application/json" },
+				body: JSON.stringify({ name: file.name, dataBase64 }),
+			}).then((x) => x.json());
+			if (r.src) { onChange(r.src); setImages((im) => [r.src, ...im]); }
+			else alert(r.error || "Upload failed");
+		} finally { setBusy(false); }
+	}
+
+	return (
+		<div style={{ display: "grid", gap: 8 }}>
+			{value ? <img src={value} alt="" style={{ width: "100%", borderRadius: 8, border: "1px solid #ddd" }} /> : null}
+			<div style={{ display: "flex", gap: 6 }}>
+				<button type="button" onClick={() => setOpen((o) => !o)} style={{ flex: 1, padding: "6px 8px", cursor: "pointer" }}>
+					{open ? "Close library" : "Choose from site"}
+				</button>
+				<button type="button" onClick={() => fileRef.current?.click()} disabled={busy} style={{ flex: 1, padding: "6px 8px", cursor: "pointer" }}>
+					{busy ? "Uploading…" : "Upload photo"}
+				</button>
+			</div>
+			<input ref={fileRef} type="file" accept="image/*" hidden onChange={(e) => { const f = e.target.files?.[0]; if (f) upload(f); e.target.value = ""; }} />
+			{open && (
+				<div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4, maxHeight: 220, overflowY: "auto" }}>
+					{images.map((src) => (
+						<img key={src} src={src} alt="" title={src}
+							onClick={() => { onChange(src); setOpen(false); }}
+							style={{ width: "100%", aspectRatio: "1", objectFit: "cover", borderRadius: 6, cursor: "pointer", outline: src === value ? "2px solid #4a7bd0" : "none" }} />
+					))}
+				</div>
+			)}
+		</div>
+	);
 }
 
 export const blocksConfig: Config = {
@@ -162,6 +227,82 @@ export const blocksConfig: Config = {
 					</div>
 				</section>
 			),
+		},
+
+		Image: {
+			label: "Photo",
+			fields: {
+				src: {
+					type: "custom",
+					label: "Photo",
+					render: ({ value, onChange }: any) => <ImagePickerField value={value} onChange={onChange} />,
+				},
+				alt: { type: "text", label: "Describe the photo (for screen readers)" },
+				caption: { type: "text", label: "Caption (optional)" },
+				width: {
+					type: "radio",
+					label: "Size",
+					options: [
+						{ label: "Full width", value: "full" },
+						{ label: "Inset", value: "inset" },
+					],
+				},
+			},
+			defaultProps: { src: "", alt: "", caption: "", width: "inset" },
+			render: ({ src, alt, caption, width }) => (
+				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+					<div className="container">
+						{src ? (
+							<figure style={{ margin: 0, maxWidth: width === "inset" ? "760px" : "100%", marginInline: "auto" }}>
+								<img src={src} alt={alt || ""} style={{ width: "100%", borderRadius: "18px", display: "block" }} />
+								{caption ? (
+									<figcaption style={{ marginTop: "10px", fontSize: "14px", opacity: 0.65, textAlign: "center" }}>{caption}</figcaption>
+								) : null}
+							</figure>
+						) : (
+							<p style={{ opacity: 0.5, textAlign: "center", padding: "40px 0", border: "1px dashed rgba(128,128,128,.4)", borderRadius: "18px" }}>
+								Pick or upload a photo →
+							</p>
+						)}
+					</div>
+				</section>
+			),
+		},
+
+		Video: {
+			label: "Video (YouTube)",
+			fields: {
+				url: { type: "text", label: "YouTube link (paste any share link)" },
+				caption: { type: "text", label: "Caption (optional)" },
+			},
+			defaultProps: { url: "", caption: "" },
+			render: ({ url, caption }) => {
+				const id = youtubeId(url);
+				return (
+					<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+						<div className="container">
+							<figure style={{ margin: 0, maxWidth: "860px", marginInline: "auto" }}>
+								{id ? (
+									<iframe
+										src={`https://www.youtube-nocookie.com/embed/${id}`}
+										title={caption || "Video"}
+										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+										allowFullScreen
+										style={{ width: "100%", aspectRatio: "16 / 9", border: 0, borderRadius: "18px", display: "block" }}
+									/>
+								) : (
+									<p style={{ opacity: 0.5, textAlign: "center", padding: "40px 0", border: "1px dashed rgba(128,128,128,.4)", borderRadius: "18px" }}>
+										Paste a YouTube link →
+									</p>
+								)}
+								{caption ? (
+									<figcaption style={{ marginTop: "10px", fontSize: "14px", opacity: 0.65, textAlign: "center" }}>{caption}</figcaption>
+								) : null}
+							</figure>
+						</div>
+					</section>
+				);
+			},
 		},
 
 		Spacer: {

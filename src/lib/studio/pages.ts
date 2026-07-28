@@ -13,7 +13,7 @@ const ROOT = process.cwd();
 const PAGES_DIR = path.join(ROOT, "content", "pages");
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
-export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer"] as const;
+export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video"] as const;
 
 export type PageData = {
 	root: { props: { title?: string; kicker?: string } };

@@ -8,6 +8,7 @@ import type { APIRoute } from "astro";
 import { execFile } from "node:child_process";
 import { isAuthed } from "../../../lib/studio/auth";
 import { sanitizeData, ALLOWED_BLOCKS } from "../../../lib/studio/pages";
+import { listSiteImages } from "../../../lib/studio/media";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -26,6 +27,8 @@ Available blocks (the "type" of each content item) and their props:
 - Quote: { text } — one pulled-out line.
 - Buttons: { buttons: [{ label, href, style }] } — style is "primary" or "secondary"; href is a path like "/visit".
 - Spacer: { size } — "24px" | "64px" | "120px".
+- Image: { src, alt, caption, width } — src MUST be one of the site image paths listed below (never invent one); width is "full" or "inset".
+- Video: { url, caption } — url is a YouTube link.
 Only these types: ${ALLOWED_BLOCKS.join(", ")}.`;
 
 export const POST: APIRoute = async ({ request, cookies }) => {
@@ -35,10 +38,14 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 	if (!message || typeof message !== "string") return json({ error: "No message." }, 400);
 
 	const current = sanitizeData(data);
+	const images = (await listSiteImages()).slice(0, 80);
 	const prompt = [
 		"You are the page-building assistant for the New Life Grand Rapids church website.",
 		"You edit ONE page document (JSON). You have no file access — you only return an updated document.",
 		BLOCK_GUIDE,
+		"",
+		"Site images available for Image blocks (use these exact paths only):",
+		images.join("\n"),
 		"",
 		"Document shape: { root: { props: { title, kicker } }, content: [ { type, props } ] }.",
 		"Keep existing content unless the request says otherwise; make the smallest change that fulfills it.",

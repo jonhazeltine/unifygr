@@ -26,6 +26,16 @@
 			}
 		},
 		{
+			"type": "Image",
+			"props": {
+				"src": "/art/generated/gr-city-unity.png",
+				"alt": "A luminous Grand Rapids riverfront skyline at blue hour.",
+				"caption": "Grand Rapids — the city we love.",
+				"width": "inset",
+				"id": "Image-1-z1sbk3"
+			}
+		},
+		{
 			"type": "Cards",
 			"props": {
 				"id": "Cards-demo-1",
@@ -70,6 +80,14 @@
 			"props": {
 				"text": "Come as you are — leave transformed.",
 				"id": "Quote-1-d4wv5v"
+			}
+		},
+		{
+			"type": "Video",
+			"props": {
+				"url": "https://www.youtube.com/watch?v=D2y8Qk9qZqg",
+				"caption": "A recent Sunday at New Life.",
+				"id": "Video-2-pepgo2"
 			}
 		}
 	],
