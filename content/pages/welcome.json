@@ -1,0 +1,97 @@
+{
+	"status": "draft",
+	"order": 3,
+	"root": {
+		"props": {
+			"title": "Welcome",
+			"kicker": "New Life"
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-demo-1",
+				"kicker": "A demo page",
+				"heading": "You could build this.",
+				"lede": "This page was assembled from blocks — drag them, edit them, or ask the AI to rework the whole thing."
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-demo-1",
+				"eyebrow": "How it works",
+				"title": "Blocks that look like the site.",
+				"body": "Every block uses the site's own design, so anything you build here looks like it belongs.\n\nOpen the builder, drag a block in from the left, and click any text to edit it in the panel.",
+				"tinted": true
+			}
+		},
+		{
+			"type": "Image",
+			"props": {
+				"src": "/art/generated/gr-city-unity.png",
+				"alt": "A luminous Grand Rapids riverfront skyline at blue hour.",
+				"caption": "Grand Rapids — the city we love.",
+				"width": "inset",
+				"id": "Image-1-z1sbk3"
+			}
+		},
+		{
+			"type": "Cards",
+			"props": {
+				"id": "Cards-demo-1",
+				"eyebrow": "Three things to try",
+				"title": "",
+				"cards": [
+					{
+						"title": "Drag",
+						"text": "Pull a new block in from the left panel."
+					},
+					{
+						"title": "Edit",
+						"text": "Click a block and change its words on the right."
+					},
+					{
+						"title": "Ask AI",
+						"text": "Type what you want in the bar up top and watch the page change."
+					}
+				]
+			}
+		},
+		{
+			"type": "Buttons",
+			"props": {
+				"id": "Buttons-demo-1",
+				"buttons": [
+					{
+						"label": "Plan a Visit",
+						"href": "/visit",
+						"style": "primary"
+					},
+					{
+						"label": "What We Believe",
+						"href": "/beliefs",
+						"style": "secondary"
+					}
+				]
+			}
+		},
+		{
+			"type": "Quote",
+			"props": {
+				"text": "Come as you are — leave transformed.",
+				"id": "Quote-1-d4wv5v"
+			}
+		},
+		{
+			"type": "Video",
+			"props": {
+				"url": "https://www.youtube.com/watch?v=D2y8Qk9qZqg",
+				"caption": "A recent Sunday at New Life.",
+				"id": "Video-2-pepgo2"
+			}
+		}
+	],
+	"zones": {}
+}
