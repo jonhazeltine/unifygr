@@ -1,0 +1,35 @@
+{
+	"status": "live",
+	"order": 3,
+	"root": {
+		"props": {
+			"title": "Membership",
+			"kicker": "Be Transformed",
+			"description": "Make New Life Grand Rapids your home and family."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-membership",
+				"kicker": "Be Transformed",
+				"heading": "Membership",
+				"lede": "Move from attending to belonging. Make New Life your home and family."
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-membership",
+				"eyebrow": "Coming Soon",
+				"title": "This page is ready for your content.",
+				"body": "What membership means at New Life, the path to becoming a member, and how to take the next step. Staff can fill this in directly in the Page Builder.",
+				"buttons": [
+					{ "label": "Connect Card", "href": "https://newlife.ccbchurch.com/goto/forms/156/responses/new", "style": "primary" }
+				]
+			}
+		}
+	],
+	"zones": {}
+}

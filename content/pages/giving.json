@@ -1,0 +1,67 @@
+{
+	"status": "live",
+	"order": 2,
+	"root": {
+		"props": {
+			"title": "Giving",
+			"kicker": "Change the World",
+			"description": "Give to New Life Grand Rapids online, by text, or by mail."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-giving",
+				"kicker": "Change the World",
+				"heading": "Giving",
+				"lede": "Giving to New Life is easy. Thank you for fueling the mission."
+			}
+		},
+		{
+			"type": "CtaCards",
+			"props": {
+				"id": "CtaCards-giving",
+				"cards": [
+					{
+						"label": "Online",
+						"title": "Give securely online",
+						"body": "One-time or recurring, from any device.",
+						"buttonLabel": "Give Online",
+						"buttonHref": "https://app.securegive.com/NewLifeGR/new-life/donate/category",
+						"featured": true
+					},
+					{
+						"label": "By Text",
+						"title": "Text “GIVE”",
+						"body": "Send GIVE to 855-725-9333 and follow the link.",
+						"buttonLabel": "",
+						"buttonHref": "",
+						"featured": false
+					},
+					{
+						"label": "By Mail",
+						"title": "Mail a gift",
+						"body": "2777 Knapp St NE\n\nGrand Rapids, MI 49525",
+						"buttonLabel": "",
+						"buttonHref": "",
+						"featured": false
+					}
+				]
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-giving-impact",
+				"eyebrow": "Impact Fund",
+				"title": "Give beyond the walls.",
+				"body": "",
+				"buttons": [
+					{ "label": "About Unify GR", "href": "/unify-gr", "style": "secondary" }
+				]
+			}
+		}
+	],
+	"zones": {}
+}

@@ -8,7 +8,7 @@ import { Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 
-type PageMeta = { slug: string; title: string; status: "draft" | "live"; order: number };
+type PageMeta = { slug: string; title: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
 
 const EMPTY = (title: string) => ({
 	status: "draft" as const,
@@ -147,13 +147,15 @@ export default function BuilderApp() {
 								<span style={{ color: "#4a5262", fontSize: 15, userSelect: "none" }}>⠿</span>
 								<button onClick={() => openPage(p.slug)} style={{ font: "inherit", flex: 1, textAlign: "left", background: "none", border: 0, color: "#eef1f6", cursor: "pointer", padding: 0, display: "grid", gap: 2 }}>
 									<strong>{p.title}</strong>
-									<span style={{ color: "#9aa3b2", fontSize: 12 }}>/p/{p.slug}</span>
+									<span style={{ color: "#9aa3b2", fontSize: 12 }}>{p.path}</span>
 								</button>
 								<span style={p.status === "live" ? S.badgeLive : S.badgeDraft}>{p.status === "live" ? "LIVE" : "DRAFT"}</span>
 								<button style={S.small} onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")}>
 									{p.status === "live" ? "Unpublish" : "Go live"}
 								</button>
-								<button style={{ ...S.small, color: "#eec7b7" }} title="Delete page" onClick={() => removePage(p.slug, p.title)}>✕</button>
+								{!p.mounted && (
+									<button style={{ ...S.small, color: "#eec7b7" }} title="Delete page" onClick={() => removePage(p.slug, p.title)}>✕</button>
+								)}
 							</div>
 						))}
 						{pages.length === 0 && <p style={{ color: "#9aa3b2", fontSize: 13 }}>No pages yet — make the first one.</p>}
@@ -194,7 +196,7 @@ export default function BuilderApp() {
 				>
 					{data?.status === "live" ? "LIVE" : "DRAFT"}
 				</button>
-				<a style={{ ...S.small, textDecoration: "none" }} href={`/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
+				<a style={{ ...S.small, textDecoration: "none" }} href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<form onSubmit={askAI} style={{ display: "flex", gap: 8, flex: 1, minWidth: 260 }}>
 					<input name="ai" placeholder='Ask AI — e.g. "build this out for a fall retreat with 3 cards and a signup button"' style={S.aiInput} disabled={aiBusy} />
 					<button style={{ ...S.btn, opacity: aiBusy ? 0.5 : 1 }} disabled={aiBusy}>{aiBusy ? "…" : "✦ Ask AI"}</button>

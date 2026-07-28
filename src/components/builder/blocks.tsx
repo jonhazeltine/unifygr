@@ -82,6 +82,14 @@ function ImagePickerField({ value, onChange }: { value: string; onChange: (v: st
 }
 
 export const blocksConfig: Config = {
+	root: {
+		fields: {
+			title: { type: "text", label: "Page title" },
+			kicker: { type: "text", label: "Kicker (small line used by the site)" },
+			description: { type: "textarea", label: "Search-engine description" },
+		},
+		render: ({ children }: any) => <>{children}</>,
+	},
 	components: {
 		Hero: {
 			label: "Page heading",
@@ -142,6 +150,14 @@ export const blocksConfig: Config = {
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
 				title: { type: "text", label: "Row title" },
+				style: {
+					type: "radio",
+					label: "Card style",
+					options: [
+						{ label: "Numbered", value: "numbered" },
+						{ label: "Simple", value: "simple" },
+					],
+				},
 				cards: {
 					type: "array",
 					label: "Cards",
@@ -156,25 +172,344 @@ export const blocksConfig: Config = {
 			defaultProps: {
 				eyebrow: "",
 				title: "",
+				style: "numbered",
 				cards: [
 					{ title: "First", text: "Something true." },
 					{ title: "Second", text: "Something good." },
 				],
 			},
-			render: ({ eyebrow, title, cards }) => (
+			render: ({ eyebrow, title, style, cards }) => (
 				<section className="section prose-block">
 					<div className="container">
-						{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
-						{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
-						<div style={{ display: "grid", gap: "18px", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", marginTop: "18px" }}>
-							{(cards || []).map((c: any, i: number) => (
-								<div className="command-card reveal is-visible" key={i}>
-									<span className="command-card__n">{String(i + 1).padStart(2, "0")}</span>
-									<h3>{c.title}</h3>
-									<p>{c.text}</p>
-								</div>
+						{(eyebrow || title) ? (
+							<div className="section-heading reveal is-visible">
+								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+								{title ? <h2>{title}</h2> : null}
+							</div>
+						) : null}
+						{style === "simple" ? (
+							<div className="value-grid">
+								{(cards || []).map((c: any, i: number) => (
+									<article className="value-card reveal is-visible" key={i}>
+										<h3>{c.title}</h3>
+										<p>{c.text}</p>
+									</article>
+								))}
+							</div>
+						) : (
+							<div style={{ display: "grid", gap: "18px", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", marginTop: "18px" }}>
+								{(cards || []).map((c: any, i: number) => (
+									<div className="command-card reveal is-visible" key={i}>
+										<span className="command-card__n">{String(i + 1).padStart(2, "0")}</span>
+										<h3>{c.title}</h3>
+										<p>{c.text}</p>
+									</div>
+								))}
+							</div>
+						)}
+					</div>
+				</section>
+			),
+		},
+
+		FAQ: {
+			label: "Questions & answers",
+			fields: {
+				eyebrow: { type: "text", label: "Small label above" },
+				title: { type: "text", label: "Section title" },
+				items: {
+					type: "array",
+					label: "Questions",
+					arrayFields: {
+						q: { type: "text", label: "Question" },
+						a: { type: "textarea", label: "Answer" },
+					},
+					defaultItemProps: { q: "A question?", a: "" },
+					getItemSummary: (item: any) => item?.q || "Question",
+				},
+			},
+			defaultProps: { eyebrow: "Good to Know", title: "Frequently asked.", items: [] },
+			render: ({ eyebrow, title, items }) => (
+				<section className="section section--rhythm">
+					<div className="rhythm__veil"></div>
+					<div className="container">
+						{(eyebrow || title) ? (
+							<div className="section-heading reveal is-visible">
+								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+								{title ? <h2>{title}</h2> : null}
+							</div>
+						) : null}
+						<div className="faq-list">
+							{(items || []).map((it: any, i: number) => (
+								<details className="faq-item reveal is-visible" key={i}>
+									<summary>{it.q}</summary>
+									<p>{it.a}</p>
+								</details>
 							))}
 						</div>
+					</div>
+				</section>
+			),
+		},
+
+		Callout: {
+			label: "Callout panel",
+			fields: {
+				eyebrow: { type: "text", label: "Small label above" },
+				title: { type: "text", label: "Panel title" },
+				body: { type: "textarea", label: "Body" },
+				buttons: {
+					type: "array",
+					label: "Buttons",
+					arrayFields: {
+						label: { type: "text", label: "Label" },
+						href: { type: "text", label: "Link" },
+						style: {
+							type: "radio",
+							label: "Style",
+							options: [
+								{ label: "Solid", value: "primary" },
+								{ label: "Outline", value: "secondary" },
+							],
+						},
+					},
+					defaultItemProps: { label: "Learn more", href: "/", style: "primary" },
+					getItemSummary: (item: any) => item?.label || "Button",
+				},
+			},
+			defaultProps: { eyebrow: "", title: "A word from us", body: "", buttons: [] },
+			render: ({ eyebrow, title, body, buttons }) => (
+				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+					<div className="container">
+						<div className="formation-cta reveal is-visible">
+							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+							{title ? <h3>{title}</h3> : null}
+							{paras(body).map((p, i) => <p key={i}>{p}</p>)}
+							{(buttons || []).length ? (
+								<div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "6px" }}>
+									{(buttons || []).map((b: any, i: number) => (
+										<a className={`button button--${b.style === "secondary" ? "secondary" : "primary"}`} href={b.href} key={i}>{b.label}</a>
+									))}
+								</div>
+							) : null}
+						</div>
+					</div>
+				</section>
+			),
+		},
+
+		Profiles: {
+			label: "People (photo cards)",
+			fields: {
+				items: {
+					type: "array",
+					label: "People",
+					arrayFields: {
+						photo: {
+							type: "custom",
+							label: "Photo",
+							render: ({ value, onChange }: any) => <ImagePickerField value={value} onChange={onChange} />,
+						},
+						name: { type: "text", label: "Name" },
+						role: { type: "text", label: "Role" },
+						bio: { type: "textarea", label: "Bio" },
+						name2: { type: "text", label: "Second person's name (optional)" },
+						role2: { type: "text", label: "Second person's role" },
+						bio2: { type: "textarea", label: "Second person's bio" },
+					},
+					defaultItemProps: { photo: "", name: "Name", role: "Role", bio: "", name2: "", role2: "", bio2: "" },
+					getItemSummary: (item: any) => item?.name || "Person",
+				},
+			},
+			defaultProps: { items: [] },
+			render: ({ items }) => (
+				<section className="section">
+					<div className="container">
+						<div className="staff-grid">
+							{(items || []).map((p: any, i: number) => (
+								<article className="staff-card reveal is-visible" key={i}>
+									{p.photo ? (
+										<div className="staff-card__photo">
+											<img src={p.photo} alt={[p.name, p.name2].filter(Boolean).join(" & ")} loading="lazy" />
+										</div>
+									) : null}
+									<div className="staff-card__person">
+										<h3>{p.name}</h3>
+										{p.role ? <p className="staff-card__role">{p.role}</p> : null}
+										{p.bio ? <p>{p.bio}</p> : null}
+									</div>
+									{p.name2 ? (
+										<div className="staff-card__person">
+											<h3>{p.name2}</h3>
+											{p.role2 ? <p className="staff-card__role">{p.role2}</p> : null}
+											{p.bio2 ? <p>{p.bio2}</p> : null}
+										</div>
+									) : null}
+								</article>
+							))}
+						</div>
+					</div>
+				</section>
+			),
+		},
+
+		ListCards: {
+			label: "Cards with lists",
+			fields: {
+				cards: {
+					type: "array",
+					label: "Cards",
+					arrayFields: {
+						title: { type: "text", label: "Card title" },
+						blurb: { type: "textarea", label: "Blurb" },
+						items: { type: "textarea", label: "List (one item per line)" },
+					},
+					defaultItemProps: { title: "Team", blurb: "", items: "" },
+					getItemSummary: (item: any) => item?.title || "Card",
+				},
+			},
+			defaultProps: { cards: [] },
+			render: ({ cards }) => (
+				<section className="section section--rhythm">
+					<div className="rhythm__veil"></div>
+					<div className="container team-grid">
+						{(cards || []).map((c: any, i: number) => (
+							<article className="team-card reveal is-visible" key={i}>
+								<h3>{c.title}</h3>
+								{c.blurb ? <p>{c.blurb}</p> : null}
+								<ul className="team-card__members">
+									{String(c.items || "").split("\n").map((s: string) => s.trim()).filter(Boolean).map((m: string, j: number) => (
+										<li key={j}>{m}</li>
+									))}
+								</ul>
+							</article>
+						))}
+					</div>
+				</section>
+			),
+		},
+
+		Feature: {
+			label: "Feature (media + facts)",
+			fields: {
+				eyebrow: { type: "text", label: "Small label above" },
+				heading: { type: "text", label: "Heading" },
+				subline: { type: "text", label: "Highlighted line (e.g. dates)" },
+				body: { type: "textarea", label: "Body" },
+				image: {
+					type: "custom",
+					label: "Photo (also used as the video's poster)",
+					render: ({ value, onChange }: any) => <ImagePickerField value={value} onChange={onChange} />,
+				},
+				video: { type: "text", label: "Video file path (optional, e.g. /art/generated/….mp4)" },
+				buttons: {
+					type: "array",
+					label: "Buttons",
+					arrayFields: {
+						label: { type: "text", label: "Label" },
+						href: { type: "text", label: "Link" },
+						style: {
+							type: "radio",
+							label: "Style",
+							options: [
+								{ label: "Solid", value: "primary" },
+								{ label: "Outline", value: "secondary" },
+							],
+						},
+					},
+					defaultItemProps: { label: "Learn more", href: "/", style: "primary" },
+					getItemSummary: (item: any) => item?.label || "Button",
+				},
+				facts: {
+					type: "array",
+					label: "Quick facts",
+					arrayFields: {
+						label: { type: "text", label: "Label" },
+						value: { type: "textarea", label: "Value" },
+					},
+					defaultItemProps: { label: "Fact", value: "" },
+					getItemSummary: (item: any) => item?.label || "Fact",
+				},
+			},
+			defaultProps: { eyebrow: "", heading: "A big thing", subline: "", body: "", image: "", video: "", buttons: [], facts: [] },
+			render: ({ eyebrow, heading, subline, body, image, video, buttons, facts }) => (
+				<section className="section">
+					<div className="container trip-hero">
+						{(video || image) ? (
+							<div className="trip-hero__media reveal is-visible">
+								{video ? (
+									<video autoPlay muted loop playsInline poster={image || undefined}>
+										<source src={video} type="video/mp4" />
+									</video>
+								) : (
+									<img src={image} alt="" style={{ width: "100%", display: "block" }} />
+								)}
+							</div>
+						) : null}
+						<div className="trip-hero__body reveal is-visible">
+							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+							{heading ? <h2>{heading}</h2> : null}
+							{subline ? <p className="trip-hero__dates">{subline}</p> : null}
+							{paras(body).map((p, i) => <p key={i}>{p}</p>)}
+							{(buttons || []).length ? (
+								<div className="trip-hero__actions">
+									{(buttons || []).map((b: any, i: number) => (
+										<a className={`button button--${b.style === "secondary" ? "secondary" : "primary"}`} href={b.href} key={i}>{b.label}</a>
+									))}
+								</div>
+							) : null}
+							{(facts || []).length ? (
+								<dl className="trip-facts">
+									{(facts || []).map((f: any, i: number) => (
+										<div key={i}><dt>{f.label}</dt><dd>{f.value}</dd></div>
+									))}
+								</dl>
+							) : null}
+						</div>
+					</div>
+				</section>
+			),
+		},
+
+		CtaCards: {
+			label: "Action cards",
+			fields: {
+				cards: {
+					type: "array",
+					label: "Cards",
+					arrayFields: {
+						label: { type: "text", label: "Small label" },
+						title: { type: "text", label: "Card title" },
+						body: { type: "textarea", label: "Card text" },
+						buttonLabel: { type: "text", label: "Button label (optional)" },
+						buttonHref: { type: "text", label: "Button link" },
+						featured: {
+							type: "radio",
+							label: "Highlight",
+							options: [
+								{ label: "Normal", value: false },
+								{ label: "Featured", value: true },
+							],
+						},
+					},
+					defaultItemProps: { label: "", title: "Card", body: "", buttonLabel: "", buttonHref: "", featured: false },
+					getItemSummary: (item: any) => item?.title || "Card",
+				},
+			},
+			defaultProps: { cards: [] },
+			render: ({ cards }) => (
+				<section className="section">
+					<div className="container give-grid">
+						{(cards || []).map((c: any, i: number) => (
+							<article className={`give-card${c.featured ? " give-card--primary" : ""} reveal is-visible`} key={i}>
+								{c.label ? <p className="eyebrow">{c.label}</p> : null}
+								<h3>{c.title}</h3>
+								{paras(c.body).map((p, j) => <p key={j}>{p}</p>)}
+								{c.buttonLabel ? (
+									<a className="button button--primary" href={c.buttonHref} target={/^https?:/.test(c.buttonHref || "") ? "_blank" : undefined} rel="noopener">{c.buttonLabel}</a>
+								) : null}
+							</article>
+						))}
 					</div>
 				</section>
 			),

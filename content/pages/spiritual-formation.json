@@ -1,0 +1,47 @@
+{
+	"status": "live",
+	"order": 4,
+	"root": {
+		"props": {
+			"title": "Spiritual Formation",
+			"kicker": "Be Transformed",
+			"description": "Growing deeper in Christ at New Life Grand Rapids."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-formation",
+				"kicker": "Be Transformed",
+				"heading": "Spiritual Formation",
+				"lede": "Hear His voice. Obey His assignments. Grow deeper in Christ together."
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-formation-welcome",
+				"eyebrow": "New here? Start your journey",
+				"title": "Welcome to New Life.",
+				"body": "Our spiritual formation journey lives in the New Life app — a guided path to help you take your next step, whether you're brand new or going deeper.",
+				"buttons": [
+					{ "label": "Begin the Welcome Path →", "href": "https://theformation.app/m/welcome-to-new-life", "style": "primary" }
+				]
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-formation-more",
+				"eyebrow": "Coming Soon",
+				"title": "More to come on this page.",
+				"body": "Classes, groups, and rhythms for growing deeper in Christ — staff can fill this in directly in the Page Builder.",
+				"buttons": [
+					{ "label": "Back to Be Transformed", "href": "/be-transformed", "style": "secondary" }
+				]
+			}
+		}
+	],
+	"zones": {}
+}
