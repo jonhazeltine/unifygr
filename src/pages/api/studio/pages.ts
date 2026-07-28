@@ -12,6 +12,7 @@ export const prerender = false;
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { listPages, readPage, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
+import { listHandBuiltPages } from "../../../lib/studio/site-pages";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -23,7 +24,7 @@ export const GET: APIRoute = async ({ url, cookies }) => {
 		const data = await readPage(slug);
 		return data ? json({ data }) : json({ error: "Not found" }, 404);
 	}
-	return json({ pages: await listPages() });
+	return json({ pages: await listPages(), sitePages: listHandBuiltPages() });
 };
 
 export const POST: APIRoute = async ({ request, cookies }) => {
