@@ -20,7 +20,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 	const { name, dataBase64 } = await request.json().catch(() => ({}));
 	if (!name || !dataBase64) return json({ error: "Missing file." }, 400);
 	try {
-		return json({ ok: true, src: await saveUpload(name, dataBase64) });
+		const res = await saveUpload(name, dataBase64);
+		return json({ ok: true, src: res.src, via: res.via });
 	} catch (err) {
 		return json({ error: (err as Error).message }, 400);
 	}

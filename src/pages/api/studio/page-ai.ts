@@ -60,18 +60,56 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 	].join("\n");
 
 	try {
-		const stdout = await new Promise<string>((resolve, reject) => {
-			execFile(
-				"claude",
-				["-p", prompt, "--output-format", "json", "--json-schema", SCHEMA, "--allowedTools", "", "--strict-mcp-config", "--no-session-persistence", "--model", process.env.STUDIO_MODEL || "sonnet"],
-				{ timeout: 120_000, maxBuffer: 20 * 1024 * 1024 },
-				(err, out) => (err ? reject(err) : resolve(out.toString())),
-			);
-		});
-		const out = JSON.parse(stdout)?.structured_output;
+		const out = process.env.ANTHROPIC_API_KEY ? await viaApi(prompt) : await viaCli(prompt);
 		if (!out?.data) throw new Error("no structured output");
 		return json({ reply: String(out.reply || "Done — review the change."), data: sanitizeData(out.data) });
 	} catch (err) {
-		return json({ reply: "I couldn't reach the AI on this machine — drag-and-drop still works.", error: (err as Error).message.slice(0, 200) }, 502);
+		return json({ reply: "I couldn't reach the AI right now — drag-and-drop still works.", error: (err as Error).message.slice(0, 200) }, 502);
 	}
 };
+
+// Production brain: the Anthropic API directly (metered key). A single forced
+// tool call gives schema-validated {reply, data} with no text parsing.
+async function viaApi(prompt: string): Promise<{ reply: string; data: any }> {
+	const res = await fetch("https://api.anthropic.com/v1/messages", {
+		method: "POST",
+		headers: {
+			"x-api-key": process.env.ANTHROPIC_API_KEY as string,
+			"anthropic-version": "2023-06-01",
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			model: process.env.STUDIO_API_MODEL || "claude-sonnet-5",
+			max_tokens: 8192,
+			tools: [{
+				name: "return_page",
+				description: "Return the updated page document and a one-sentence reply.",
+				input_schema: {
+					type: "object",
+					properties: { reply: { type: "string" }, data: { type: "object" } },
+					required: ["reply", "data"],
+				},
+			}],
+			tool_choice: { type: "tool", name: "return_page" },
+			messages: [{ role: "user", content: prompt }],
+		}),
+	});
+	if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${(await res.text()).slice(0, 150)}`);
+	const body = await res.json();
+	const tool = (body.content || []).find((c: any) => c.type === "tool_use");
+	if (!tool?.input) throw new Error("API returned no tool output");
+	return tool.input as { reply: string; data: any };
+}
+
+// Local brain: the claude CLI on the signed-in machine (your subscription).
+async function viaCli(prompt: string): Promise<{ reply: string; data: any }> {
+	const stdout = await new Promise<string>((resolve, reject) => {
+		execFile(
+			"claude",
+			["-p", prompt, "--output-format", "json", "--json-schema", SCHEMA, "--allowedTools", "", "--strict-mcp-config", "--no-session-persistence", "--model", process.env.STUDIO_MODEL || "sonnet"],
+			{ timeout: 120_000, maxBuffer: 20 * 1024 * 1024 },
+			(err, out) => (err ? reject(err) : resolve(out.toString())),
+		);
+	});
+	return JSON.parse(stdout)?.structured_output;
+}

@@ -1,4 +1,6 @@
 {
+	"status": "draft",
+	"order": 3,
 	"root": {
 		"props": {
 			"title": "Welcome",

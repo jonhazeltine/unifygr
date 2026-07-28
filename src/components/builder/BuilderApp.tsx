@@ -8,9 +8,11 @@ import { Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 
-type PageMeta = { slug: string; title: string };
+type PageMeta = { slug: string; title: string; status: "draft" | "live"; order: number };
 
 const EMPTY = (title: string) => ({
+	status: "draft" as const,
+	order: 0,
 	root: { props: { title, kicker: "New Life" } },
 	content: [],
 	zones: {},
@@ -57,7 +59,43 @@ export default function BuilderApp() {
 	async function save(d: any) {
 		if (!slug) return;
 		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug, data: d }) });
-		if (res.ok) { say("Published ✓"); refresh(); } else { say(res.error || "Couldn't save"); }
+		if (res.ok) {
+			if (res.data) { setData(res.data); live.current = res.data; }
+			say(res.via === "git" ? "Saved — going live in a minute or two" : "Saved ✓");
+			refresh();
+		} else { say(res.error || "Couldn't save"); }
+	}
+
+	async function setStatus(s: string, status: "draft" | "live") {
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status }) });
+		if (res.ok) {
+			say(status === "live"
+				? (res.via === "git" ? "Going live in a minute or two" : "Live ✓")
+				: "Back to draft");
+			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
+			refresh();
+		} else { say(res.error || "Couldn't update"); }
+	}
+
+	async function removePage(s: string, title: string) {
+		if (!window.confirm(`Delete "${title}"? This removes the page completely.`)) return;
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, delete: true }) });
+		if (res.ok) { say("Deleted"); if (slug === s) { setSlug(null); setData(null); } refresh(); }
+		else { say(res.error || "Couldn't delete"); }
+	}
+
+	// Drag-to-reorder the page list (native HTML5 drag on the rows).
+	const dragFrom = useRef<number | null>(null);
+	async function reorder(from: number, to: number) {
+		if (from === to) return;
+		const next = [...pages];
+		const [moved] = next.splice(from, 1);
+		next.splice(to, 0, moved);
+		setPages(next);
+		await Promise.all(next.map((p, i) =>
+			api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: p.slug, order: i }) }),
+		));
+		refresh();
 	}
 
 	async function askAI(e: React.FormEvent<HTMLFormElement>) {
@@ -93,12 +131,28 @@ export default function BuilderApp() {
 						Build pages by dragging blocks and talking to the AI. Pages publish at <code>/p/…</code> on the site.
 					</p>
 					<button style={S.btn} onClick={newPage}>+ New page</button>
-					<div style={{ marginTop: 18, display: "grid", gap: 8 }}>
-						{pages.map((p) => (
-							<button key={p.slug} style={S.row} onClick={() => openPage(p.slug)}>
-								<strong>{p.title}</strong>
-								<span style={{ color: "#9aa3b2" }}>/p/{p.slug}</span>
-							</button>
+					<p style={{ color: "#9aa3b2", fontSize: 12, margin: "14px 0 6px" }}>Drag to reorder · new pages start as drafts only staff can see.</p>
+					<div style={{ display: "grid", gap: 8 }}>
+						{pages.map((p, i) => (
+							<div
+								key={p.slug}
+								draggable
+								onDragStart={() => { dragFrom.current = i; }}
+								onDragOver={(e) => e.preventDefault()}
+								onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, i); dragFrom.current = null; }}
+								style={{ ...S.row, cursor: "grab", alignItems: "center" }}
+							>
+								<span style={{ color: "#4a5262", fontSize: 15, userSelect: "none" }}>⠿</span>
+								<button onClick={() => openPage(p.slug)} style={{ font: "inherit", flex: 1, textAlign: "left", background: "none", border: 0, color: "#eef1f6", cursor: "pointer", padding: 0, display: "grid", gap: 2 }}>
+									<strong>{p.title}</strong>
+									<span style={{ color: "#9aa3b2", fontSize: 12 }}>/p/{p.slug}</span>
+								</button>
+								<span style={p.status === "live" ? S.badgeLive : S.badgeDraft}>{p.status === "live" ? "LIVE" : "DRAFT"}</span>
+								<button style={S.small} onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")}>
+									{p.status === "live" ? "Unpublish" : "Go live"}
+								</button>
+								<button style={{ ...S.small, color: "#eec7b7" }} title="Delete page" onClick={() => removePage(p.slug, p.title)}>✕</button>
+							</div>
 						))}
 						{pages.length === 0 && <p style={{ color: "#9aa3b2", fontSize: 13 }}>No pages yet — make the first one.</p>}
 					</div>
@@ -112,8 +166,15 @@ export default function BuilderApp() {
 	return (
 		<div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
 			<div style={S.bar}>
-				<button style={S.small} onClick={() => { setSlug(null); setData(null); }}>‹ Pages</button>
+				<button style={S.small} onClick={() => { setSlug(null); setData(null); refresh(); }}>‹ Pages</button>
 				<strong style={{ fontSize: 14 }}>{data?.root?.props?.title || slug}</strong>
+				<button
+					style={data?.status === "live" ? { ...S.small, ...S.badgeLive, border: 0 } : { ...S.small, ...S.badgeDraft, border: 0 }}
+					title="Click to flip between draft and live"
+					onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
+				>
+					{data?.status === "live" ? "LIVE" : "DRAFT"}
+				</button>
 				<a style={{ ...S.small, textDecoration: "none" }} href={`/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<form onSubmit={askAI} style={{ display: "flex", gap: 8, flex: 1, minWidth: 260 }}>
 					<input name="ai" placeholder='Ask AI — e.g. "build this out for a fall retreat with 3 cards and a signup button"' style={S.aiInput} disabled={aiBusy} />
@@ -145,4 +206,6 @@ const S: Record<string, React.CSSProperties> = {
 	aiInput: { flex: 1, font: "inherit", fontSize: 14, padding: "9px 12px", borderRadius: 10, border: "1px solid #2a3040", background: "#1c2130", color: "#eef1f6" },
 	note: { padding: "8px 14px", fontSize: 13, background: "rgba(242,210,162,.08)", color: "#f2d2a2", borderBottom: "1px solid #2a3040", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
 	toast: { position: "fixed", left: "50%", bottom: 24, transform: "translateX(-50%)", background: "linear-gradient(135deg,#ffe7bf,#f2d2a2)", color: "#12100c", fontWeight: 600, padding: "10px 16px", borderRadius: 999, zIndex: 1000 },
+	badgeLive: { fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "#5cd6a8", color: "#08130d", cursor: "pointer" },
+	badgeDraft: { fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "#2a3040", color: "#9aa3b2", cursor: "pointer" },
 };
