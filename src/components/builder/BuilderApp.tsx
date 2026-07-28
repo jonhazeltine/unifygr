@@ -27,6 +27,7 @@ const api = (path: string, opts?: RequestInit) =>
 
 export default function BuilderApp() {
 	const [pages, setPages] = useState<PageMeta[]>([]);
+	const [sitePages, setSitePages] = useState<Array<{ path: string; title: string }>>([]);
 	const [slug, setSlug] = useState<string | null>(null);
 	const [data, setData] = useState<any>(null);
 	const [rev, setRev] = useState(0); // bump to remount Puck after AI edits
@@ -40,6 +41,7 @@ export default function BuilderApp() {
 	const refresh = useCallback(async () => {
 		const res = await api("/api/studio/pages");
 		setPages(res.pages || []);
+		setSitePages(res.sitePages || []);
 	}, []);
 	useEffect(() => { refresh(); }, [refresh]);
 
@@ -155,6 +157,23 @@ export default function BuilderApp() {
 							</div>
 						))}
 						{pages.length === 0 && <p style={{ color: "#9aa3b2", fontSize: 13 }}>No pages yet — make the first one.</p>}
+					</div>
+
+					<h2 style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "#9aa3b2", margin: "26px 0 6px" }}>The rest of the site</h2>
+					<p style={{ color: "#9aa3b2", fontSize: 12, margin: "0 0 10px" }}>
+						Hand-built pages. To change their words, open one and use the ✦ chat in the corner.
+					</p>
+					<div style={{ display: "grid", gap: 6 }}>
+						{sitePages.map((p) => (
+							<a key={p.path} href={p.path} target="_blank" rel="noreferrer" style={{ ...S.row, textDecoration: "none", padding: "9px 14px", alignItems: "center" }}>
+								<span style={{ flex: 1, display: "grid", gap: 1 }}>
+									<strong style={{ fontSize: 14 }}>{p.title}</strong>
+									<span style={{ color: "#9aa3b2", fontSize: 12 }}>{p.path}</span>
+								</span>
+								<span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "#2a3040", color: "#c9b48f" }}>HAND-BUILT</span>
+								<span style={{ color: "#9aa3b2" }}>↗</span>
+							</a>
+						))}
 					</div>
 					<p style={{ marginTop: 24 }}><a href="/" style={{ color: "#9aa3b2" }}>← Back to the site</a></p>
 				</div>
