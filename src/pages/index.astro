@@ -1,12 +1,9 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import SiteHeader from "../components/SiteHeader.astro";
 import StudioDock from "../components/StudioDock.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { mission } from "../data/site";
-import { readNav } from "../lib/studio/nav";
-
-// The menus are content (content/nav.json), editable in the Page Builder.
-const nav = await readNav();
 
 const pillarTitle = {
 	"encounter-god": "Encounter God",
@@ -88,23 +85,15 @@ const heroVariants = {
 	</head>
 	<body>
 		<main class="landing-shell">
-			<header class="site-chrome">
-				<div class="container site-chrome__inner">
-					<a class="site-chrome__brand" href="#top">
-						<strong>New Life</strong>
-					</a>
-					<nav class="site-chrome__nav" aria-label="Section navigation">
-						{nav.groups.map((g) => <a href={g.href}>{g.label}</a>)}
-					</nav>
-					<div class="hero-variant-toggle" aria-label="Hero variant toggle">
-						{Object.entries(heroVariants).map(([key, variant]) => (
-							<button class="hero-variant-toggle__button" data-hero-variant={key} type="button">
-								{variant.label}
-							</button>
-						))}
-					</div>
+			<SiteHeader brandHref="#top">
+				<div class="hero-variant-toggle" slot="chrome-extra" aria-label="Hero variant toggle">
+					{Object.entries(heroVariants).map(([key, variant]) => (
+						<button class="hero-variant-toggle__button" data-hero-variant={key} type="button">
+							{variant.label}
+						</button>
+					))}
 				</div>
-			</header>
+			</SiteHeader>
 
 			<section class="hero section" id="top">
 				<div class="hero__veil"></div>
