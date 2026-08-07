@@ -354,7 +354,9 @@ strong {
 	top: 0;
 	transform: translateX(-50%) rotate(-45deg);
 }
-.nav-panel-cta {
+/* The in-panel CTA is for the mobile drawer only. Needs to out-specify the
+   later `.button { display: inline-flex }` rule, which otherwise wins. */
+.site-chrome__nav .nav-panel-cta {
 	display: none;
 }
 
@@ -459,7 +461,7 @@ strong {
 	.nav-group.is-expanded .nav-group__caret {
 		transform: rotate(180deg);
 	}
-	.nav-panel-cta {
+	.site-chrome__nav .nav-panel-cta {
 		display: inline-flex;
 		justify-content: center;
 		margin-top: 0.7rem;
