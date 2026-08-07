@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 240" role="img" aria-label="Good Morning Joy Mug in Harvest Gold and Burnt Sienna">
+  <title>Good Morning Joy Mug</title>
+
+  <!-- Drop shadow -->
+  <ellipse cx="133" cy="232" rx="94" ry="7" fill="#1a1008" opacity="0.13"/>
+
+  <!-- STEAM wisps -->
+  <path d="M97 68 Q92 52 100 38 Q108 24 103 12" fill="none" stroke="#c8c0a8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M133 64 Q128 48 136 34 Q144 20 139 8" fill="none" stroke="#c8c0a8" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M169 68 Q164 52 172 38 Q180 24 175 12" fill="none" stroke="#c8c0a8" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- MUG BODY -->
+  <path d="M48 80 L48 216 Q48 228 62 228 L204 228 Q218 228 218 216 L218 80 Z" fill="#fff"/>
+
+  <!-- RETRO STRIPES clipped to body -->
+  <clipPath id="mc">
+    <path d="M48 80 L48 216 Q48 228 62 228 L204 228 Q218 228 218 216 L218 80 Z"/>
+  </clipPath>
+  <g clip-path="url(#mc)">
+    <!-- harvest gold top -->
+    <rect x="48" y="80" width="170" height="32" fill="#f5c800"/>
+    <!-- rust stripe -->
+    <rect x="48" y="112" width="170" height="22" fill="#c45000"/>
+    <!-- cream band (text lives here) -->
+    <rect x="48" y="134" width="170" height="48" fill="#fdf6e3"/>
+    <!-- harvest gold lower -->
+    <rect x="48" y="182" width="170" height="22" fill="#f5c800"/>
+    <!-- brown base -->
+    <rect x="48" y="204" width="170" height="24" fill="#5c3a1e"/>
+  </g>
+
+  <!-- Body outline -->
+  <path d="M48 80 L48 216 Q48 228 62 228 L204 228 Q218 228 218 216 L218 80 Z" fill="none" stroke="#1a1008" stroke-width="3"/>
+
+  <!-- TOP RIM (ellipse for depth) -->
+  <ellipse cx="133" cy="80" rx="85" ry="17" fill="#d8ceae" stroke="#1a1008" stroke-width="3"/>
+  <!-- inner rim highlight -->
+  <ellipse cx="133" cy="78" rx="72" ry="11" fill="#e8e0c8" stroke="none"/>
+
+  <!-- TEXT on cream band -->
+  <text x="133" y="155" text-anchor="middle" font-family="'Arial Black', 'Impact', Arial, sans-serif" font-size="10.5" font-weight="900" fill="#1a1008" letter-spacing="0.5">THE JOY OF THE LORD</text>
+  <text x="133" y="170" text-anchor="middle" font-family="'Arial Black', 'Impact', Arial, sans-serif" font-size="10.5" font-weight="900" fill="#c45000" letter-spacing="0.5">IS MY STRENGTH</text>
+
+  <!-- HANDLE -->
+  <path d="M218 112 Q270 112 270 158 Q270 204 218 204" fill="none" stroke="#1a1008" stroke-width="14" stroke-linecap="round"/>
+  <path d="M218 112 Q260 112 260 158 Q260 200 218 200" fill="none" stroke="#c8a870" stroke-width="8" stroke-linecap="round"/>
+
+  <!-- Rust band decorative dots -->
+  <circle cx="80" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+  <circle cx="100" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+  <circle cx="120" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+  <circle cx="140" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+  <circle cx="160" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+  <circle cx="180" cy="123" r="3" fill="#f5c800" opacity="0.7"/>
+</svg>

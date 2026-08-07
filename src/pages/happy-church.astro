@@ -1,0 +1,895 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import StudioDock from "../components/StudioDock.astro";
+
+const merch = [
+	{
+		emoji: "👕",
+		name: "This Church Is Happy Tee",
+		colors: ["Sunshine Yellow", "Tangerine Orange"],
+		price: "$28",
+		desc: "Our signature smile tee — giant cartoon sun on the front, 'New Life GR' on the back in groovy bubble letters. 100% heavyweight cotton, feels like a hug.",
+		tag: "Bestseller",
+		tagColor: "#e05c00",
+	},
+	{
+		emoji: "🧢",
+		image: "/merch/flower-power-hat.svg",
+		name: "Flower Power Trucker Hat",
+		colors: ["Avocado & Cream"],
+		price: "$22",
+		desc: "Retro 5-panel with an embroidered daisy and 'Joy' stitched in burnt orange. Adjustable snap-back — one size makes everybody happy.",
+		tag: "New",
+		tagColor: "#2a7d3f",
+	},
+	{
+		emoji: "☕",
+		image: "/merch/joy-mug.svg",
+		name: "Good Morning Joy Mug",
+		colors: ["Harvest Gold", "Burnt Sienna"],
+		price: "$18",
+		desc: "Big 16oz ceramic mug with retro stripe pattern and 'The Joy of the Lord is My Strength' in bold slab type. Dishwasher safe (hallelujah).",
+		tag: "Fan Fave",
+		tagColor: "#7b3fa0",
+	},
+	{
+		emoji: "🤸",
+		name: "Rejoice Always Hoodie",
+		colors: ["Burnt Orange", "Avocado Green"],
+		price: "$48",
+		desc: "Heavyweight pullover with a vintage sunburst graphic on the chest and 'Rejoice Always' printed down the sleeve. Soft fleece lining. Very cozy.",
+		tag: null,
+		tagColor: "",
+	},
+	{
+		emoji: "👜",
+		name: "Be Glad In It Tote",
+		colors: ["Rust & Cream"],
+		price: "$16",
+		desc: "Big canvas carryall with a retro smiling face and 'Be Glad In It' on the front. Hauls your Bible, your coffee, and your good attitude.",
+		tag: "Giftable",
+		tagColor: "#c45000",
+	},
+	{
+		emoji: "🎉",
+		name: "Groovy Sticker Pack",
+		colors: ["Full Rainbow"],
+		price: "$8",
+		desc: "8 waterproof vinyl stickers — sunbursts, daisies, smiley faces, and Scripture snippets. Laptop, water bottle, bumper, offering envelope — the sky's the limit.",
+		tag: "Giftable",
+		tagColor: "#c45000",
+	},
+	{
+		emoji: "🧣",
+		name: "Joyful Noise Beanie",
+		colors: ["Mustard Yellow", "Chocolate Brown"],
+		price: "$20",
+		desc: "Thick-knit pom beanie with 'Make a Joyful Noise' embroidered across the brim. Winter worship gear. Very GR.",
+		tag: null,
+		tagColor: "",
+	},
+	{
+		emoji: "🍶",
+		name: "Full of Joy Bottle",
+		colors: ["Turquoise & Gold"],
+		price: "$32",
+		desc: "32oz insulated steel bottle with vintage-label art and Psalm 16:11 wrapped around the body. Keeps joy cold for 24 hours.",
+		tag: "New",
+		tagColor: "#2a7d3f",
+	},
+	{
+		emoji: "🎽",
+		name: "Sunshine Raglan Tee",
+		colors: ["Cream & Orange Sleeves"],
+		price: "$30",
+		desc: "Classic 3/4 sleeve raglan with a groovy hand-lettered 'Happy' across the chest. Baseball-style casual. Perfect for Sundays or every other day.",
+		tag: null,
+		tagColor: "",
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title="Happy Church — New Life GR" description="Joy. Merch. Good vibes. Scripture. This church is happy and it shows." />
+		<!-- Unlisted experiment: the merch here is illustrative, not for sale.
+		     Kept out of the nav and the Page Builder (see lib/studio/site-pages.ts). -->
+		<meta name="robots" content="noindex, nofollow" />
+		<style>
+			/* ============================================
+			   HAPPY CHURCH — Retro 70s Cartoon Theme
+			   ============================================ */
+
+			*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+			:root {
+				--yellow: #f5c800;
+				--orange: #e05c00;
+				--green: #4a7c3f;
+				--avocado: #7a8c3a;
+				--brown: #5c3a1e;
+				--cream: #fdf6e3;
+				--rust: #c45000;
+				--black: #1a1008;
+				--radius: 16px;
+				--outline: 3px solid var(--black);
+			}
+
+			body {
+				background-color: var(--cream);
+				color: var(--black);
+				font-family: "Arial Rounded MT Bold", "Arial Black", Arial, sans-serif;
+				overflow-x: hidden;
+			}
+
+			/* ---- HEADER ---- */
+			.hc-header {
+				background: var(--yellow);
+				border-bottom: 4px solid var(--black);
+				padding: 1rem 1.5rem;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				gap: 1rem;
+			}
+
+			.hc-header__brand {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				text-decoration: none;
+				color: var(--black);
+			}
+
+			.hc-header__sun {
+				font-size: 2.2rem;
+				line-height: 1;
+				animation: spin-slow 12s linear infinite;
+			}
+
+			@keyframes spin-slow {
+				from { transform: rotate(0deg); }
+				to { transform: rotate(360deg); }
+			}
+
+			.hc-header__wordmark {
+				display: flex;
+				flex-direction: column;
+				line-height: 1;
+			}
+
+			.hc-header__wordmark span {
+				font-size: 0.75rem;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				text-transform: uppercase;
+				color: var(--brown);
+			}
+
+			.hc-header__wordmark strong {
+				font-size: 1.6rem;
+				font-weight: 900;
+				letter-spacing: -0.01em;
+			}
+
+			.hc-header__nav {
+				display: flex;
+				gap: 1.25rem;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+
+			.hc-header__nav a {
+				font-size: 0.875rem;
+				font-weight: 800;
+				text-decoration: none;
+				color: var(--black);
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				padding: 0.35rem 0.75rem;
+				border: 2px solid transparent;
+				border-radius: 100px;
+				transition: background 0.15s, border-color 0.15s;
+			}
+
+			.hc-header__nav a:hover {
+				background: var(--orange);
+				color: #fff;
+				border-color: var(--black);
+			}
+
+			.hc-header__nav a.is-active {
+				background: var(--black);
+				color: var(--yellow);
+				border-color: var(--black);
+			}
+
+			/* ---- HERO ---- */
+			.hc-hero {
+				background: var(--yellow);
+				border-bottom: 4px solid var(--black);
+				padding: 5rem 1.5rem 4rem;
+				text-align: center;
+				position: relative;
+				overflow: hidden;
+			}
+
+			.hc-hero__bg-circles {
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				overflow: hidden;
+			}
+
+			.hc-hero__bg-circles::before,
+			.hc-hero__bg-circles::after {
+				content: "";
+				position: absolute;
+				border-radius: 50%;
+				border: 8px solid var(--orange);
+				opacity: 0.25;
+			}
+
+			.hc-hero__bg-circles::before {
+				width: 600px;
+				height: 600px;
+				top: -200px;
+				left: -150px;
+			}
+
+			.hc-hero__bg-circles::after {
+				width: 400px;
+				height: 400px;
+				bottom: -120px;
+				right: -100px;
+			}
+
+			.hc-hero__eyebrow {
+				display: inline-block;
+				background: var(--orange);
+				color: #fff;
+				font-size: 0.8rem;
+				font-weight: 900;
+				letter-spacing: 0.18em;
+				text-transform: uppercase;
+				padding: 0.3rem 1rem;
+				border: 2px solid var(--black);
+				border-radius: 100px;
+				margin-bottom: 1.5rem;
+			}
+
+			.hc-hero__smiley {
+				font-size: 5rem;
+				line-height: 1;
+				display: block;
+				margin-bottom: 1rem;
+				animation: bob 3s ease-in-out infinite;
+			}
+
+			@keyframes bob {
+				0%, 100% { transform: translateY(0); }
+				50% { transform: translateY(-10px); }
+			}
+
+			.hc-hero__title {
+				font-size: clamp(3rem, 9vw, 8rem);
+				font-weight: 900;
+				line-height: 0.95;
+				letter-spacing: -0.02em;
+				color: var(--black);
+				position: relative;
+				z-index: 1;
+				-webkit-text-stroke: 3px var(--black);
+				paint-order: stroke fill;
+			}
+
+			.hc-hero__title em {
+				font-style: normal;
+				color: var(--orange);
+				-webkit-text-stroke: 3px var(--black);
+			}
+
+			.hc-hero__lede {
+				margin-top: 1.5rem;
+				font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+				font-weight: 700;
+				color: var(--brown);
+				max-width: 560px;
+				margin-left: auto;
+				margin-right: auto;
+			}
+
+			.hc-hero__cta {
+				margin-top: 2.5rem;
+				display: inline-block;
+				background: var(--orange);
+				color: #fff;
+				font-size: 1.1rem;
+				font-weight: 900;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				padding: 0.85rem 2.5rem;
+				border: 3px solid var(--black);
+				border-radius: 100px;
+				box-shadow: 5px 5px 0 var(--black);
+				transition: transform 0.1s, box-shadow 0.1s;
+			}
+
+			.hc-hero__cta:hover {
+				transform: translate(-2px, -2px);
+				box-shadow: 7px 7px 0 var(--black);
+			}
+
+			/* ---- VERSE BAND ---- */
+			.verse-band {
+				background: var(--green);
+				border-top: 4px solid var(--black);
+				border-bottom: 4px solid var(--black);
+				padding: 2.5rem 1.5rem;
+				text-align: center;
+			}
+
+			.verse-band blockquote {
+				font-size: clamp(1.2rem, 3vw, 2rem);
+				font-weight: 900;
+				color: var(--cream);
+				max-width: 800px;
+				margin: 0 auto;
+				line-height: 1.3;
+			}
+
+			.verse-band cite {
+				display: block;
+				margin-top: 0.75rem;
+				font-size: 0.9rem;
+				font-weight: 700;
+				color: var(--yellow);
+				font-style: normal;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+			}
+
+			.verse-band--orange {
+				background: var(--orange);
+			}
+
+			.verse-band--brown {
+				background: var(--brown);
+			}
+
+			.verse-band--rust {
+				background: var(--rust);
+			}
+
+			/* ---- SECTION HEADING ---- */
+			.hc-section-heading {
+				text-align: center;
+				padding: 4rem 1.5rem 2.5rem;
+			}
+
+			.hc-section-heading__kicker {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5rem;
+				font-size: 0.8rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: 0.15em;
+				color: var(--orange);
+				margin-bottom: 0.75rem;
+			}
+
+			.hc-section-heading__title {
+				font-size: clamp(2rem, 5vw, 3.5rem);
+				font-weight: 900;
+				line-height: 1.05;
+				color: var(--black);
+			}
+
+			.hc-section-heading__sub {
+				margin-top: 0.75rem;
+				font-size: 1.1rem;
+				font-weight: 700;
+				color: var(--brown);
+			}
+
+			/* ---- MERCH GRID ---- */
+			.hc-merch-section {
+				padding: 0 1.5rem 5rem;
+			}
+
+			.hc-merch-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+				gap: 1.5rem;
+				max-width: 1200px;
+				margin: 0 auto;
+			}
+
+			.merch-card {
+				background: #fff;
+				border: 3px solid var(--black);
+				border-radius: var(--radius);
+				box-shadow: 6px 6px 0 var(--black);
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				transition: transform 0.15s, box-shadow 0.15s;
+			}
+
+			.merch-card:hover {
+				transform: translate(-3px, -3px);
+				box-shadow: 9px 9px 0 var(--black);
+			}
+
+			.merch-card:nth-child(3n+1) .merch-card__visual { background: var(--yellow); }
+			.merch-card:nth-child(3n+2) .merch-card__visual { background: #ffd4a8; }
+			.merch-card:nth-child(3n+3) .merch-card__visual { background: #c8e6b0; }
+
+			.merch-card__visual {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 4.5rem;
+				height: 160px;
+				border-bottom: 3px solid var(--black);
+				position: relative;
+			}
+
+			.merch-card__tag {
+				position: absolute;
+				top: 0.75rem;
+				right: 0.75rem;
+				background: var(--orange);
+				color: #fff;
+				font-size: 0.7rem;
+				font-weight: 900;
+				letter-spacing: 0.1em;
+				text-transform: uppercase;
+				padding: 0.2rem 0.6rem;
+				border: 2px solid var(--black);
+				border-radius: 100px;
+			}
+
+			.merch-card__body {
+				padding: 1.25rem;
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
+
+			.merch-card__name {
+				font-size: 1.1rem;
+				font-weight: 900;
+				color: var(--black);
+				line-height: 1.2;
+				margin-bottom: 0.4rem;
+			}
+
+			.merch-card__colors {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.3rem;
+				margin-bottom: 0.75rem;
+			}
+
+			.merch-card__color {
+				font-size: 0.7rem;
+				font-weight: 700;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+				background: var(--cream);
+				border: 1.5px solid var(--black);
+				border-radius: 100px;
+				padding: 0.15rem 0.55rem;
+				color: var(--brown);
+			}
+
+			.merch-card__desc {
+				font-size: 0.9rem;
+				font-weight: 600;
+				color: #444;
+				line-height: 1.5;
+				flex: 1;
+				font-family: Arial, sans-serif;
+			}
+
+			.merch-card__footer {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-top: 1.25rem;
+				padding-top: 1rem;
+				border-top: 2px solid var(--black);
+			}
+
+			.merch-card__price {
+				font-size: 1.5rem;
+				font-weight: 900;
+				color: var(--black);
+			}
+
+			.merch-card__buy {
+				display: inline-block;
+				background: var(--yellow);
+				color: var(--black);
+				font-size: 0.8rem;
+				font-weight: 900;
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				padding: 0.5rem 1.1rem;
+				border: 2px solid var(--black);
+				border-radius: 100px;
+				box-shadow: 3px 3px 0 var(--black);
+				cursor: pointer;
+				transition: transform 0.1s, box-shadow 0.1s, background 0.1s;
+			}
+
+			.merch-card__buy:hover {
+				background: var(--orange);
+				color: #fff;
+				transform: translate(-1px, -1px);
+				box-shadow: 4px 4px 0 var(--black);
+			}
+
+			/* ---- VERSE SCATTER ---- */
+			.verse-scatter {
+				padding: 3rem 1.5rem;
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 1.25rem;
+				max-width: 1100px;
+				margin: 0 auto;
+			}
+
+			.verse-chip {
+				background: var(--yellow);
+				border: 3px solid var(--black);
+				border-radius: var(--radius);
+				box-shadow: 5px 5px 0 var(--black);
+				padding: 1.5rem;
+				display: flex;
+				flex-direction: column;
+				gap: 0.6rem;
+			}
+
+			.verse-chip:nth-child(2n) { background: #ffd4a8; }
+			.verse-chip:nth-child(3n) { background: #c8e6b0; }
+			.verse-chip:nth-child(5n) { background: #f5d0f0; }
+
+			.verse-chip__icon {
+				font-size: 1.8rem;
+				line-height: 1;
+			}
+
+			.verse-chip__text {
+				font-size: 1.05rem;
+				font-weight: 700;
+				color: var(--black);
+				line-height: 1.4;
+				font-family: Arial, sans-serif;
+			}
+
+			.verse-chip__ref {
+				font-size: 0.8rem;
+				font-weight: 900;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: var(--orange);
+			}
+
+			/* ---- FOOTER ---- */
+			.hc-footer {
+				background: var(--brown);
+				border-top: 4px solid var(--black);
+				padding: 2.5rem 1.5rem;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 1rem;
+				text-align: center;
+			}
+
+			.hc-footer__logo {
+				font-size: 1.3rem;
+				font-weight: 900;
+				color: var(--yellow);
+				letter-spacing: -0.01em;
+			}
+
+			.hc-footer__links {
+				display: flex;
+				gap: 1.5rem;
+				flex-wrap: wrap;
+				justify-content: center;
+			}
+
+			.hc-footer__links a {
+				font-size: 0.875rem;
+				font-weight: 700;
+				color: var(--cream);
+				text-decoration: none;
+				text-transform: uppercase;
+				letter-spacing: 0.08em;
+			}
+
+			.hc-footer__links a:hover { color: var(--yellow); }
+
+			.hc-footer__copy {
+				font-size: 0.8rem;
+				font-weight: 600;
+				color: #a0876a;
+			}
+
+			/* ---- SUNBURST DIVIDER ---- */
+			.sunburst-divider {
+				text-align: center;
+				font-size: 2.5rem;
+				padding: 1.5rem 0;
+				letter-spacing: 0.5rem;
+				color: var(--orange);
+				opacity: 0.7;
+			}
+
+			/* ---- COMING SOON BANNER ---- */
+			.coming-soon-banner {
+				background: var(--avocado);
+				border-top: 4px solid var(--black);
+				border-bottom: 4px solid var(--black);
+				padding: 2rem 1.5rem;
+				text-align: center;
+				margin-bottom: 0;
+			}
+
+			.coming-soon-banner p {
+				font-size: clamp(1rem, 2.5vw, 1.4rem);
+				font-weight: 900;
+				color: var(--cream);
+			}
+
+			.coming-soon-banner span {
+				color: var(--yellow);
+			}
+		</style>
+	</head>
+	<body>
+
+		<!-- HEADER -->
+		<header class="hc-header">
+			<a class="hc-header__brand" href="/">
+				<span class="hc-header__sun" aria-hidden="true">☀</span>
+				<div class="hc-header__wordmark">
+					<span>New Life GR</span>
+					<strong>Happy Church</strong>
+				</div>
+			</a>
+			<nav class="hc-header__nav" aria-label="Happy Church navigation">
+				<a href="/">Home</a>
+				<a href="/visit">Plan a Visit</a>
+				<a href="/giving">Give</a>
+				<a href="/happy-church" class="is-active">Happy Church</a>
+			</nav>
+		</header>
+
+		<!-- HERO -->
+		<section class="hc-hero">
+			<div class="hc-hero__bg-circles" aria-hidden="true"></div>
+			<p class="hc-hero__eyebrow">✦ New Life Grand Rapids ✦</p>
+			<span class="hc-hero__smiley" aria-hidden="true">😄</span>
+			<h1 class="hc-hero__title">This Church<br />Is <em>Happy.</em></h1>
+			<p class="hc-hero__lede">Joy isn't a vibe — it's a foundation. Come as you are. Leave with a grin and maybe a new shirt.</p>
+			<a class="hc-hero__cta" href="/visit">Come See For Yourself</a>
+		</section>
+
+		<!-- VERSE 1 -->
+		<div class="verse-band">
+			<blockquote>
+				"This is the day the Lord has made; let us rejoice and be glad in it."
+				<cite>Psalm 118:24</cite>
+			</blockquote>
+		</div>
+
+		<!-- MERCH HEADING -->
+		<div class="hc-section-heading">
+			<p class="hc-section-heading__kicker">☀ Happy Church Merch ☀</p>
+			<h2 class="hc-section-heading__title">Wear the Joy.</h2>
+			<p class="hc-section-heading__sub">Retro 70s vibes. Real Scripture. Ridiculously good cotton.</p>
+		</div>
+
+		<!-- MERCH GRID — Part 1 (first 3 items) -->
+		<section class="hc-merch-section" style="padding-bottom: 0;">
+			<div class="hc-merch-grid">
+				{merch.slice(0, 3).map((item) => (
+					<div class="merch-card">
+						<div class="merch-card__visual">
+							{item.image
+								? <img src={item.image} alt={item.name} style="height:128px;width:auto;object-fit:contain;" />
+								: <span aria-hidden="true" style="line-height:1;">{item.emoji}</span>
+							}
+							{item.tag && (
+								<span class="merch-card__tag" style={item.tagColor ? `background:${item.tagColor}` : ""}>{item.tag}</span>
+							)}
+						</div>
+						<div class="merch-card__body">
+							<h3 class="merch-card__name">{item.name}</h3>
+							<div class="merch-card__colors">
+								{item.colors.map((c) => (
+									<span class="merch-card__color">{c}</span>
+								))}
+							</div>
+							<p class="merch-card__desc">{item.desc}</p>
+							<div class="merch-card__footer">
+								<span class="merch-card__price">{item.price}</span>
+								<button class="merch-card__buy" type="button">I Want This</button>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- VERSE 2 -->
+		<div class="verse-band verse-band--orange" style="margin-top:3rem;">
+			<blockquote>
+				"Rejoice in the Lord always. I will say it again: Rejoice!"
+				<cite>Philippians 4:4</cite>
+			</blockquote>
+		</div>
+
+		<!-- MERCH GRID — Part 2 (items 4-6) -->
+		<section class="hc-merch-section" style="padding-top:3rem; padding-bottom: 0;">
+			<div class="hc-merch-grid">
+				{merch.slice(3, 6).map((item) => (
+					<div class="merch-card">
+						<div class="merch-card__visual">
+							{item.image
+								? <img src={item.image} alt={item.name} style="height:128px;width:auto;object-fit:contain;" />
+								: <span aria-hidden="true" style="line-height:1;">{item.emoji}</span>
+							}
+							{item.tag && (
+								<span class="merch-card__tag" style={item.tagColor ? `background:${item.tagColor}` : ""}>{item.tag}</span>
+							)}
+						</div>
+						<div class="merch-card__body">
+							<h3 class="merch-card__name">{item.name}</h3>
+							<div class="merch-card__colors">
+								{item.colors.map((c) => (
+									<span class="merch-card__color">{c}</span>
+								))}
+							</div>
+							<p class="merch-card__desc">{item.desc}</p>
+							<div class="merch-card__footer">
+								<span class="merch-card__price">{item.price}</span>
+								<button class="merch-card__buy" type="button">I Want This</button>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- VERSE SCATTER — Joy verses as color chips -->
+		<div class="verse-scatter">
+			<div class="verse-chip">
+				<span class="verse-chip__icon">💪</span>
+				<p class="verse-chip__text">"The joy of the Lord is your strength."</p>
+				<span class="verse-chip__ref">Nehemiah 8:10</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">💊</span>
+				<p class="verse-chip__text">"A joyful heart is good medicine."</p>
+				<span class="verse-chip__ref">Proverbs 17:22</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🙌</span>
+				<p class="verse-chip__text">"Happy are the people whose God is the Lord!"</p>
+				<span class="verse-chip__ref">Psalm 144:15</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🌊</span>
+				<p class="verse-chip__text">"You will fill me with joy in your presence."</p>
+				<span class="verse-chip__ref">Acts 2:28</span>
+			</div>
+		</div>
+
+		<!-- MERCH GRID — Part 3 (items 7-9) -->
+		<section class="hc-merch-section" style="padding-top:0;">
+			<div class="hc-merch-grid">
+				{merch.slice(6).map((item) => (
+					<div class="merch-card">
+						<div class="merch-card__visual">
+							{item.image
+								? <img src={item.image} alt={item.name} style="height:128px;width:auto;object-fit:contain;" />
+								: <span aria-hidden="true" style="line-height:1;">{item.emoji}</span>
+							}
+							{item.tag && (
+								<span class="merch-card__tag" style={item.tagColor ? `background:${item.tagColor}` : ""}>{item.tag}</span>
+							)}
+						</div>
+						<div class="merch-card__body">
+							<h3 class="merch-card__name">{item.name}</h3>
+							<div class="merch-card__colors">
+								{item.colors.map((c) => (
+									<span class="merch-card__color">{c}</span>
+								))}
+							</div>
+							<p class="merch-card__desc">{item.desc}</p>
+							<div class="merch-card__footer">
+								<span class="merch-card__price">{item.price}</span>
+								<button class="merch-card__buy" type="button">I Want This</button>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- VERSE 3 -->
+		<div class="verse-band verse-band--brown">
+			<blockquote>
+				"Ask and you will receive, and your joy will be complete."
+				<cite>John 16:24</cite>
+			</blockquote>
+		</div>
+
+		<!-- COMING SOON BANNER -->
+		<div class="coming-soon-banner">
+			<p>The store is <span>coming soon.</span> Get on the list → <span>hello@newlifegr.com</span></p>
+		</div>
+
+		<!-- MORE VERSES -->
+		<div class="verse-scatter" style="padding-top:3rem;">
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🌱</span>
+				<p class="verse-chip__text">"Delight yourself in the Lord, and he will give you the desires of your heart."</p>
+				<span class="verse-chip__ref">Psalm 37:4</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🎵</span>
+				<p class="verse-chip__text">"He will rejoice over you with gladness; he will exult over you with loud singing."</p>
+				<span class="verse-chip__ref">Zephaniah 3:17</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🌞</span>
+				<p class="verse-chip__text">"Shout for joy to the Lord, all the earth."</p>
+				<span class="verse-chip__ref">Psalm 100:1</span>
+			</div>
+			<div class="verse-chip">
+				<span class="verse-chip__icon">🕊</span>
+				<p class="verse-chip__text">"The fruit of the Spirit is love, joy, peace…"</p>
+				<span class="verse-chip__ref">Galatians 5:22</span>
+			</div>
+		</div>
+
+		<!-- SUNBURST DIVIDER -->
+		<div class="sunburst-divider" aria-hidden="true">✦ ☀ ✦ ☀ ✦</div>
+
+		<!-- FINAL CTA SECTION -->
+		<section style="padding: 4rem 1.5rem 5rem; text-align: center; background: var(--yellow); border-top: 4px solid var(--black);">
+			<p style="font-size:0.85rem; font-weight:900; letter-spacing:0.15em; text-transform:uppercase; color:var(--orange); margin-bottom:0.75rem;">☀ Come Hang Out ☀</p>
+			<h2 style="font-size:clamp(2rem,5vw,3.5rem); font-weight:900; color:var(--black); line-height:1.05; margin-bottom:1rem;">Church should feel this good.</h2>
+			<p style="font-size:1.1rem; font-weight:700; color:var(--brown); max-width:480px; margin:0 auto 2rem; font-family:Arial,sans-serif;">Sundays at 10am. 2777 Knapp St NE, Grand Rapids. Come see for yourself — there's coffee and probably free stuff.</p>
+			<a href="/visit" style="display:inline-block; background:var(--black); color:var(--yellow); font-size:1.1rem; font-weight:900; text-decoration:none; text-transform:uppercase; letter-spacing:0.1em; padding:0.85rem 2.5rem; border:3px solid var(--black); border-radius:100px; box-shadow:5px 5px 0 var(--orange); transition:transform 0.1s,box-shadow 0.1s;">Plan My Visit</a>
+		</section>
+
+		<!-- FOOTER -->
+		<footer class="hc-footer">
+			<p class="hc-footer__logo">New Life GR ☀ Happy Church</p>
+			<nav class="hc-footer__links" aria-label="Footer">
+				<a href="/">Home</a>
+				<a href="/encounter-god">Encounter God</a>
+				<a href="/be-transformed">Be Transformed</a>
+				<a href="/change-the-world">Change the World</a>
+				<a href="/visit">Visit</a>
+				<a href="/giving">Give</a>
+			</nav>
+			<p class="hc-footer__copy">© {new Date().getFullYear()} New Life Grand Rapids · 2777 Knapp St NE · Grand Rapids, MI</p>
+		</footer>
+
+		<StudioDock />
+	</body>
+</html>

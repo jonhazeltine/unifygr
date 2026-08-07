@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Vision — Encounter God · Be Transformed · Change the World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#000000;
+    --ink:#f4f1ec;
+    --muted:rgba(244,241,236,0.55);
+    --faint:rgba(244,241,236,0.30);
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html,body{ height:100%; }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,-apple-system,sans-serif;
+    overflow:hidden;
+    -webkit-font-smoothing:antialiased;
+    height:100%;
+    position:relative;
+  }
+  /* faint film grain + vignette so pure black feels filmic, not flat */
+  body::after{
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:9000;
+    background:radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.7) 100%);
+    mix-blend-mode:multiply;
+  }
+
+  /* ============ FRONT WALL ============ */
+  #wall{
+    position:fixed; inset:0;
+    display:flex; flex-direction:column;
+    z-index:10;
+  }
+  .band{
+    position:relative;
+    flex:1 1 0;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    overflow:hidden;
+    transition:flex-grow .7s cubic-bezier(.22,.61,.18,1);
+    border-top:1px solid rgba(255,255,255,0.05);
+  }
+  .band:first-child{ border-top:none; }
+  /* accent glow pooled behind each phrase, breathing */
+  .band .glow{
+    position:absolute; inset:0;
+    opacity:.0;
+    transition:opacity .8s ease;
+    background:radial-gradient(60% 120% at 50% 50%, var(--accent-glow), transparent 70%);
+    pointer-events:none;
+  }
+  .band:hover{ flex-grow:2.1; }
+  .band:hover .glow{ opacity:1; }
+  .band:hover .phrase{ color:var(--ink); letter-spacing:.06em; }
+  .band .phrase{
+    font-family:"Cormorant Garamond", Georgia, serif;
+    font-weight:400;
+    font-size:clamp(2.6rem, 9vw, 8.5rem);
+    line-height:.95;
+    letter-spacing:.04em;
+    color:rgba(244,241,236,0.62);
+    text-transform:uppercase;
+    transition:color .7s ease, letter-spacing .7s ease, text-shadow .7s ease;
+    text-align:center;
+    user-select:none;
+    position:relative; z-index:2;
+    padding:0 4vw;
+  }
+  .band:hover .phrase{ text-shadow:0 0 60px var(--accent-glow); }
+  .band .idx{
+    position:absolute; left:max(4vw,28px); top:50%; transform:translateY(-50%);
+    font-family:"Inter"; font-weight:400; font-size:.72rem; letter-spacing:.4em;
+    color:var(--faint); z-index:2;
+  }
+  .band .enter{
+    position:absolute; right:max(4vw,28px); top:50%; transform:translateY(-50%) translateX(8px);
+    font-size:.7rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted);
+    opacity:0; transition:opacity .5s ease, transform .5s ease; z-index:2;
+  }
+  .band:hover .enter{ opacity:1; transform:translateY(-50%) translateX(0); }
+
+  #wall .masthead{
+    position:fixed; top:24px; left:0; right:0; text-align:center; z-index:30;
+    font-size:.68rem; letter-spacing:.45em; text-transform:uppercase; color:var(--faint);
+    pointer-events:none;
+  }
+  #wall .hint{
+    position:fixed; bottom:22px; left:0; right:0; text-align:center; z-index:30;
+    font-size:.64rem; letter-spacing:.32em; text-transform:uppercase; color:var(--faint);
+    pointer-events:none;
+    animation:pulse 3.2s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:.25} 50%{opacity:.7} }
+
+  /* intro reveal */
+  .band .phrase, #wall .masthead, #wall .hint{ animation:rise 1.4s cubic-bezier(.2,.7,.2,1) both; }
+  .band:nth-child(1) .phrase{ animation-delay:.15s; }
+  .band:nth-child(2) .phrase{ animation-delay:.32s; }
+  .band:nth-child(3) .phrase{ animation-delay:.49s; }
+  @keyframes rise{ from{ opacity:0; transform:translateY(26px); } to{ opacity:1; transform:none; } }
+
+  /* ============ SHATTER LAYER ============ */
+  #shatter{ position:fixed; inset:0; z-index:60; pointer-events:none; display:none;
+    transition:transform 1.1s cubic-bezier(.3,.5,.2,1), filter 1.1s ease; }
+  /* whole pane settles down + slightly away (into the opening), never toward the viewer */
+  #shatter.go{ transform:translateY(36px) scale(0.95); filter:blur(0.5px); }
+  .shard{
+    position:absolute; inset:0; overflow:hidden;
+    transition:transform 1.15s cubic-bezier(.33,.05,.3,1), opacity 1.15s ease;
+    will-change:transform,opacity;
+    backface-visibility:hidden;
+  }
+  #shatter.go .shard{
+    transform:translate(var(--dx),var(--dy)) rotate(var(--rot)) scale(var(--scl));
+    opacity:0;
+  }
+  .scene{
+    position:absolute; inset:0; background:#000;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .scene .glow{ position:absolute; inset:0;
+    background:radial-gradient(55% 90% at 50% 50%, var(--accent-glow), transparent 70%); }
+  .scene .phrase{
+    font-family:"Cormorant Garamond", Georgia, serif; font-weight:400;
+    font-size:clamp(2.6rem, 9vw, 8.5rem); line-height:.95; letter-spacing:.06em;
+    text-transform:uppercase; color:var(--ink); text-align:center; padding:0 4vw;
+    text-shadow:0 0 60px var(--accent-glow);
+  }
+  /* subtle crack outlines on each shard edge sells the glass */
+  .shard::after{ content:""; position:absolute; inset:0;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,0.06); }
+
+  /* ============ SECTION VIEW ============ */
+  #section{
+    position:fixed; inset:0; z-index:40; display:none;
+    opacity:0; transform:scale(1.04); filter:blur(6px);
+    transition:opacity .85s ease, transform .85s cubic-bezier(.2,.6,.2,1), filter .85s ease;
+    perspective:1700px;
+  }
+  #section.show{ opacity:1; transform:none; filter:none; }
+  #section.leaving{ opacity:0; transform:scale(.94); filter:blur(6px); transition:all .5s ease; }
+  #section .secglow{ position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(70% 80% at 50% 42%, var(--accent-glow), transparent 72%); opacity:.7; }
+
+  #section .sectitle{
+    position:absolute; top:30px; left:0; right:0; text-align:center;
+    font-family:"Cormorant Garamond",serif; font-weight:400;
+    font-size:clamp(1rem,2.4vw,1.7rem); letter-spacing:.42em; text-transform:uppercase;
+    color:var(--muted); z-index:5;
+  }
+  #back{
+    position:absolute; top:26px; left:max(4vw,26px); z-index:6;
+    background:none; border:none; color:var(--muted); cursor:pointer;
+    font-family:"Inter"; font-size:.66rem; letter-spacing:.3em; text-transform:uppercase;
+    padding:10px 4px; transition:color .3s ease;
+  }
+  #back:hover{ color:var(--ink); }
+
+  #stage{ position:absolute; inset:0; transform-style:preserve-3d; }
+  .item{
+    position:absolute; left:50%; top:48%;
+    width:min(56vw,520px);
+    text-align:center;
+    cursor:pointer; user-select:none;
+    transition:transform .55s cubic-bezier(.2,.65,.2,1), opacity .55s ease, filter .55s ease;
+    transform-style:preserve-3d;
+  }
+  .item .word{
+    font-family:"Cormorant Garamond",serif; font-weight:400;
+    font-size:clamp(2.4rem,7.5vw,6rem); line-height:1; letter-spacing:.03em;
+    text-transform:uppercase; color:var(--ink);
+    white-space:nowrap;
+  }
+  .item .blurb{
+    margin-top:22px; font-family:"Inter"; font-weight:300;
+    font-size:clamp(.8rem,1.5vw,1rem); letter-spacing:.06em; color:var(--muted);
+    max-width:34ch; margin-left:auto; margin-right:auto; line-height:1.5;
+  }
+  .item .ph{ display:inline-block; margin-top:14px; font-size:.6rem; letter-spacing:.28em;
+    text-transform:uppercase; color:var(--accent); opacity:.6; }
+
+  .chev{
+    position:absolute; top:50%; transform:translateY(-50%);
+    z-index:7; background:none; border:none; cursor:pointer;
+    color:var(--faint); font-size:2.4rem; line-height:1; padding:18px;
+    transition:color .3s ease, transform .3s ease;
+    font-family:"Cormorant Garamond",serif;
+  }
+  .chev:hover{ color:var(--ink); }
+  #prev{ left:max(2vw,8px); } #next{ right:max(2vw,8px); }
+  #prev:hover{ transform:translateY(-50%) translateX(-4px); }
+  #next:hover{ transform:translateY(-50%) translateX(4px); }
+
+  #dots{ position:absolute; bottom:46px; left:0; right:0; display:flex; gap:14px;
+    justify-content:center; z-index:7; }
+  #dots .dot{ width:7px; height:7px; border-radius:50%; background:var(--faint);
+    cursor:pointer; transition:all .3s ease; }
+  #dots .dot.on{ background:var(--accent); transform:scale(1.5); box-shadow:0 0 14px var(--accent); }
+  #section .sechint{ position:absolute; bottom:20px; left:0; right:0; text-align:center;
+    font-size:.6rem; letter-spacing:.3em; text-transform:uppercase; color:var(--faint); z-index:5; }
+
+  /* ============ ITEM SCENES (experimental) ============ */
+  #scene{ position:fixed; inset:0; z-index:50; display:none; opacity:0; background:#000;
+    transition:opacity .6s ease; }
+  #scene.show{ opacity:1; }
+  #sback{ position:absolute; top:26px; left:max(4vw,26px); z-index:10; background:none; border:none;
+    color:var(--muted); cursor:pointer; font-family:"Inter"; font-size:.66rem; letter-spacing:.3em;
+    text-transform:uppercase; padding:10px 4px; transition:color .3s ease; }
+  #sback:hover{ color:var(--ink); }
+  .scene-art{ position:absolute; inset:0; }
+  .art-svg{ position:absolute; inset:0; width:100%; height:100%; }
+  .art-verse{ position:absolute; left:0; right:0; bottom:9%; text-align:center;
+    font-family:"Cormorant Garamond",serif; font-style:italic; font-weight:400;
+    font-size:clamp(1.3rem,3.6vw,2.7rem); letter-spacing:.03em; color:var(--ink);
+    text-shadow:0 2px 34px rgba(0,0,0,.85); padding:0 6vw; z-index:3;
+    animation:verseIn 1.6s ease both .55s; }
+  @keyframes verseIn{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:none;} }
+
+  /* worship: mountaintop path → glowing door */
+  .worship .art-svg{ animation:slowIn 2.2s ease both; }
+  @keyframes slowIn{ from{opacity:0; transform:scale(1.06);} to{opacity:1; transform:none;} }
+  .worship .doorglow, .worship .halo{ transform-box:fill-box; transform-origin:center;
+    animation:doorPulse 3.6s ease-in-out infinite; }
+  @keyframes doorPulse{ 0%,100%{opacity:.78; transform:scale(1);} 50%{opacity:1; transform:scale(1.09);} }
+
+  /* international: globe zooms into Hispaniola */
+  .globe .globe-grp{ transform-box:fill-box; transform-origin:center;
+    animation:globeZoom 3.1s cubic-bezier(.5,.08,.35,1) forwards; }
+  @keyframes globeZoom{ 0%{opacity:1; transform:scale(1) translate(0,0);}
+    55%{opacity:1; transform:scale(2.3) translate(40px,-150px);}
+    100%{opacity:0; transform:scale(3.4) translate(70px,-210px);} }
+  .globe .island-grp{ transform-box:fill-box; transform-origin:center; opacity:0;
+    animation:islandIn 3.1s ease forwards; }
+  @keyframes islandIn{ 0%,42%{opacity:0; transform:scale(.5);} 72%{opacity:1;} 100%{opacity:1; transform:scale(1);} }
+  .globe .marker{ transform-box:fill-box; transform-origin:center; animation:doorPulse 1.3s ease-in-out infinite; }
+  .globe .stars{ animation:slowIn 2s ease both; }
+</style>
+</head>
+<body>
+
+  <!-- FRONT WALL -->
+  <div id="wall">
+    <div class="masthead">Our Vision</div>
+    <div class="hint">choose one · click to enter</div>
+  </div>
+
+  <!-- SHATTER LAYER -->
+  <div id="shatter"></div>
+
+  <!-- SECTION VIEW -->
+  <div id="section">
+    <div class="secglow"></div>
+    <button id="back">← back</button>
+    <div class="sectitle"></div>
+    <button class="chev" id="prev">‹</button>
+    <div id="stage"></div>
+    <button class="chev" id="next">›</button>
+    <div id="dots"></div>
+    <div class="sechint">drag · arrows · scroll to explore · tap center to enter</div>
+  </div>
+
+  <!-- ITEM SCENE (experimental) -->
+  <div id="scene">
+    <button id="sback">← back</button>
+    <div id="sceneart"></div>
+  </div>
+
+<script>
+const SECTIONS = [
+  { id:"encounter", title:"Encounter God",
+    accent:"#9d8cff", glow:"rgba(120,100,255,0.34)",
+    items:[
+      {word:"Worship",  blurb:"Sunday gatherings and nights of worship in His presence.", scene:"worship"},
+      {word:"The Word", blurb:"Teaching, preaching, and the Scriptures opened together."},
+      {word:"Prayer",   blurb:"Encounter nights and a people who seek His face.", placeholder:true},
+    ]},
+  { id:"transform", title:"Be Transformed",
+    accent:"#ffb24d", glow:"rgba(255,150,40,0.30)",
+    items:[
+      {word:"Formation App", blurb:"Daily rhythms of prayer, Scripture, and reflection."},
+      {word:"Life Groups",   blurb:"Real community in homes across the city."},
+      {word:"Discipleship",  blurb:"Classes and mentoring that grow deep roots.", placeholder:true},
+    ]},
+  { id:"change", title:"Change the World",
+    accent:"#4fd6b8", glow:"rgba(60,210,180,0.28)",
+    items:[
+      {word:"International",   blurb:"Global mission partnerships across the nations.", scene:"international"},
+      {word:"Local",          blurb:"Serving our city and loving our neighbors."},
+      {word:"Ambassador Teams", blurb:"Short-term teams carrying the good news out."},
+    ]},
+];
+
+// deterministic-ish pseudo random (seedless ok for prototype)
+function rand(){ return Math.random(); }
+
+/* ---------- Build the front wall ---------- */
+const wall = document.getElementById("wall");
+SECTIONS.forEach((s,i)=>{
+  const band = document.createElement("div");
+  band.className = "band";
+  band.style.setProperty("--accent", s.accent);
+  band.style.setProperty("--accent-glow", s.glow);
+  band.innerHTML = `
+    <div class="glow"></div>
+    <div class="idx">0${i+1}</div>
+    <div class="phrase">${s.title}</div>
+    <div class="enter">enter</div>`;
+  band.addEventListener("click",(e)=> enter(i, e.clientX, e.clientY));
+  wall.appendChild(band);
+});
+
+/* ---------- Shatter transition ---------- */
+const shatterEl = document.getElementById("shatter");
+
+function buildShards(ix, iy, W, H, section){
+  shatterEl.innerHTML = "";
+  shatterEl.classList.remove("go");
+  shatterEl.style.display = "block";
+
+  const maxR = Math.hypot(Math.max(ix,W-ix), Math.max(iy,H-iy)) * 1.12;
+  const spokes = 7, rings = 3;   // fewer = bigger, chunkier shards
+  const ringR = [];
+  for(let k=0;k<=rings;k++) ringR.push((k/rings)*maxR);
+
+  // grid of points pts[k][j]
+  const pts = [];
+  for(let k=0;k<=rings;k++){
+    const row=[];
+    for(let j=0;j<spokes;j++){
+      const a=(j/spokes)*Math.PI*2 + (rand()-0.5)*0.20 + k*0.05;
+      let r = ringR[k];
+      if(k>0 && k<rings) r += (rand()-0.5)*(maxR/rings)*0.55;
+      if(k===0) r=0;
+      row.push([ ix + r*Math.cos(a), iy + r*Math.sin(a) ]);
+    }
+    pts.push(row);
+  }
+
+  const sceneHTML = `<div class="scene" style="--accent-glow:${section.glow}">
+      <div class="glow"></div><div class="phrase">${section.title}</div></div>`;
+
+  for(let k=0;k<rings;k++){
+    for(let j=0;j<spokes;j++){
+      const j2=(j+1)%spokes;
+      let poly;
+      if(k===0) poly=[[ix,iy], pts[1][j], pts[1][j2]];
+      else poly=[ pts[k][j], pts[k][j2], pts[k+1][j2], pts[k+1][j] ];
+
+      const cx = poly.reduce((s,p)=>s+p[0],0)/poly.length;
+      const cy = poly.reduce((s,p)=>s+p[1],0)/poly.length;
+      const ang = Math.atan2(cy-iy, cx-ix);
+      const dist = Math.hypot(cx-ix, cy-iy);
+      const mag = 70 + k*45 + dist*0.28;          // gentle outward spread
+      const gravity = 220 + k*190;                 // pull DOWN, outer pieces fall further
+      const dx = Math.cos(ang)*mag;
+      const dy = Math.sin(ang)*mag + gravity;      // net motion is down + away
+      const scl = Math.max(0.6, 0.86 - k*0.09);    // shrink = recede INTO the opening, not toward you
+
+      const clip = poly.map(p=> `${(p[0]/W*100).toFixed(2)}% ${(p[1]/H*100).toFixed(2)}%`).join(", ");
+      const shard = document.createElement("div");
+      shard.className="shard";
+      shard.style.clipPath = `polygon(${clip})`;
+      shard.style.setProperty("--dx", `${dx.toFixed(1)}px`);
+      shard.style.setProperty("--dy", `${dy.toFixed(1)}px`);
+      shard.style.setProperty("--rot", `${((rand()-0.5)*55).toFixed(1)}deg`);
+      shard.style.setProperty("--scl", scl.toFixed(2));
+      shard.style.transitionDelay = `${(k*55 + rand()*40).toFixed(0)}ms`;
+      shard.innerHTML = sceneHTML;
+      shatterEl.appendChild(shard);
+    }
+  }
+}
+
+let busy = false;
+function enter(i, x, y){
+  if(busy) return; busy = true;
+  const s = SECTIONS[i];
+  const W = window.innerWidth, H = window.innerHeight;
+  const ix = x ?? W/2, iy = y ?? H/2;
+
+  buildSection(i);                 // prep section underneath (hidden)
+  buildShards(ix, iy, W, H, s);    // build the glass on top
+
+  // reveal section + fire shatter on next frame
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    wall.style.display = "none";
+    sectionEl.style.display = "block";
+    shatterEl.classList.add("go");
+    requestAnimationFrame(()=> sectionEl.classList.add("show"));
+  }));
+
+  setTimeout(()=>{
+    shatterEl.style.display="none";
+    shatterEl.classList.remove("go");
+    shatterEl.innerHTML="";
+    busy = false;
+  }, 1450);
+}
+
+/* ---------- Section / carousel ---------- */
+const sectionEl = document.getElementById("section");
+const stage = document.getElementById("stage");
+const dotsEl = document.getElementById("dots");
+const titleEl = sectionEl.querySelector(".sectitle");
+let cur = 0, active = 0, dragFrac = 0;
+
+function buildSection(i){
+  cur = i; active = 0; dragFrac = 0;
+  const s = SECTIONS[i];
+  sectionEl.style.setProperty("--accent", s.accent);
+  sectionEl.style.setProperty("--accent-glow", s.glow);
+  titleEl.textContent = s.title;
+
+  stage.innerHTML = "";
+  s.items.forEach((it,idx)=>{
+    const el = document.createElement("div");
+    el.className="item";
+    el.innerHTML = `<div class="word">${it.word}</div>
+      <div class="blurb">${it.blurb}</div>
+      ${it.placeholder ? '<div class="ph">placeholder — confirm</div>' : ''}`;
+    stage.appendChild(el);   // taps/drag handled on the track via pointer events (capture breaks per-item click)
+  });
+  dotsEl.innerHTML = "";
+  s.items.forEach((_,idx)=>{
+    const d=document.createElement("div"); d.className="dot"+(idx===0?" on":"");
+    d.addEventListener("click",()=>{ active=idx; layout(); });
+    dotsEl.appendChild(d);
+  });
+  layout();
+}
+
+function layout(){
+  const items = [...stage.children];
+  const spacing = Math.min(window.innerWidth*0.46, 470);
+  items.forEach((el,idx)=>{
+    const off = idx - active - dragFrac;
+    const a = Math.abs(off);
+    const deg = Math.max(-2,Math.min(2,off)) * -18;
+    const scale = Math.max(0.5, 1 - a*0.32);
+    const op = Math.max(0, 1 - a*0.5);
+    const blur = Math.min(9, a*4.2);
+    el.style.transform = `translate(-50%,-50%) translateX(${off*spacing}px) rotateY(${deg}deg) scale(${scale})`;
+    el.style.opacity = op;
+    el.style.filter = `blur(${blur}px)`;
+    el.style.zIndex = 200 - Math.round(a*10);
+    el.style.pointerEvents = a < 1.4 ? "auto" : "none";
+  });
+  [...dotsEl.children].forEach((d,idx)=> d.classList.toggle("on", idx===active));
+}
+
+function pulse(el){
+  const w = el.querySelector(".word");
+  w.animate([{textShadow:"0 0 0px transparent"},{textShadow:`0 0 50px ${SECTIONS[cur].accent}`},{textShadow:"0 0 0px transparent"}],{duration:600});
+}
+function move(dir){
+  const n = SECTIONS[cur].items.length;
+  active = Math.max(0, Math.min(n-1, active+dir));
+  layout();
+}
+document.getElementById("prev").addEventListener("click",()=>move(-1));
+document.getElementById("next").addEventListener("click",()=>move(1));
+
+/* keyboard */
+window.addEventListener("keydown",(e)=>{
+  if(sceneOpen){ if(e.key==="Escape") closeScene(); return; }
+  if(sectionEl.style.display!=="block") return;
+  if(e.key==="ArrowRight") move(1);
+  else if(e.key==="ArrowLeft") move(-1);
+  else if(e.key==="Escape") goBack();
+});
+
+/* wheel / trackpad — fire ONCE per gesture (momentum sends a long burst) */
+let wheelArmed=true, wheelIdle=null;
+sectionEl.addEventListener("wheel",(e)=>{
+  e.preventDefault();
+  const d = Math.abs(e.deltaX)>Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+  if(wheelArmed && Math.abs(d)>8){ move(d>0?1:-1); wheelArmed=false; }
+  clearTimeout(wheelIdle);
+  wheelIdle=setTimeout(()=>{ wheelArmed=true; }, 220);   // re-arm only after the swipe + momentum fully stop
+},{passive:false});
+
+/* drag + tap — handled together on the track (pointer capture redirects click, so we detect taps here) */
+let dragging=false, startX=0, dragMoved=false, pressIdx=-1;
+const clamp=(v,lo,hi)=>Math.max(lo,Math.min(hi,v));
+stage.addEventListener("pointerdown",(e)=>{
+  dragging=true; dragMoved=false; startX=e.clientX;
+  const it=e.target.closest(".item");
+  pressIdx = it ? [...stage.children].indexOf(it) : -1;
+  stage.setPointerCapture(e.pointerId);
+});
+stage.addEventListener("pointermove",(e)=>{
+  if(!dragging) return;
+  if(Math.abs(e.clientX-startX)>6) dragMoved=true;
+  const spacing = Math.min(window.innerWidth*0.46, 470);
+  dragFrac = (startX - e.clientX)/spacing;
+  layout();
+});
+function endDrag(){
+  if(!dragging) return; dragging=false;
+  const n = SECTIONS[cur].items.length;
+  if(dragMoved){                                   // a real swipe → snap to nearest
+    active = clamp(Math.round(active+dragFrac),0,n-1);
+  } else if(pressIdx>=0){                           // a tap
+    if(pressIdx===active){
+      const cit = SECTIONS[cur].items[active];
+      if(cit.scene) openScene(cit.scene); else pulse(stage.children[active]);
+    } else { active=pressIdx; }
+  }
+  dragFrac=0; pressIdx=-1; layout();
+}
+stage.addEventListener("pointerup",endDrag);
+stage.addEventListener("pointercancel",endDrag);
+
+/* back */
+function goBack(){
+  if(busy) return; busy=true;
+  sectionEl.classList.add("leaving");
+  sectionEl.classList.remove("show");
+  setTimeout(()=>{
+    sectionEl.style.display="none";
+    sectionEl.classList.remove("leaving");
+    wall.style.display="flex";
+    busy=false;
+  },520);
+}
+document.getElementById("back").addEventListener("click",goBack);
+
+/* ---------- Item scenes (experimental) ---------- */
+const sceneEl = document.getElementById("scene");
+const sceneArt = document.getElementById("sceneart");
+let sceneOpen = false;
+
+function stars(n,w,h,maxOp){
+  let s="";
+  for(let i=0;i<n;i++){
+    s += `<circle cx="${(rand()*w).toFixed(0)}" cy="${(rand()*h).toFixed(0)}" r="${(rand()*1.4+0.3).toFixed(1)}" fill="#fff" opacity="${(rand()*maxOp+0.1).toFixed(2)}"/>`;
+  }
+  return s;
+}
+
+function artWorship(){
+  return `<div class="scene-art worship">
+    <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" class="art-svg">
+      <defs>
+        <linearGradient id="wsky" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#080a1e"/><stop offset=".5" stop-color="#1d1640"/>
+          <stop offset=".8" stop-color="#3c2a58"/><stop offset="1" stop-color="#7a5168"/></linearGradient>
+        <radialGradient id="whalo" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#ffd98a" stop-opacity=".85"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient>
+        <radialGradient id="wdoor" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#fff7e6"/><stop offset=".45" stop-color="#ffd98a"/><stop offset="1" stop-color="#e89a3c" stop-opacity="0"/></radialGradient>
+        <filter id="wblur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="16"/></filter>
+      </defs>
+      <rect width="1000" height="700" fill="url(#wsky)"/>
+      <g>${stars(70,1000,420,0.9)}</g>
+      <circle class="halo" cx="540" cy="412" r="200" fill="url(#whalo)"/>
+      <path d="M0,420 C200,372 360,396 540,356 C720,320 850,372 1000,352 L1000,700 L0,700 Z" fill="#241c40"/>
+      <path d="M0,492 C180,464 380,514 560,464 C760,414 880,476 1000,462 L1000,700 L0,700 Z" fill="#181230"/>
+      <circle class="doorglow" cx="540" cy="430" r="115" fill="url(#wdoor)" filter="url(#wblur)"/>
+      <path d="M518,472 L518,410 Q540,374 562,410 L562,472 Z" fill="url(#wdoor)" stroke="#fff2cf" stroke-width="2"/>
+      <path d="M474,700 C504,622 520,560 537,496" stroke="#caa6d6" stroke-width="30" fill="none" stroke-linecap="round" opacity=".32"/>
+      <path d="M474,700 C504,622 520,560 537,496" stroke="#f3e6ff" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="1 22" opacity=".7"/>
+      <path d="M0,556 C220,516 360,602 540,540 C740,472 860,560 1000,540 L1000,700 L0,700 Z" fill="#0b0818"/>
+    </svg>
+    <div class="art-verse">&ldquo;Taste and see that the Lord is good.&rdquo;</div>
+  </div>`;
+}
+
+function artGlobe(){
+  return `<div class="scene-art globe">
+    <svg viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" class="art-svg">
+      <defs>
+        <radialGradient id="gocean" cx=".4" cy=".34" r=".75">
+          <stop offset="0" stop-color="#1c5170"/><stop offset=".7" stop-color="#0b2a44"/><stop offset="1" stop-color="#05182b"/></radialGradient>
+        <radialGradient id="gatm" cx=".5" cy=".5" r=".5">
+          <stop offset=".72" stop-color="#4fd6b8" stop-opacity="0"/><stop offset=".93" stop-color="#4fd6b8" stop-opacity=".45"/><stop offset="1" stop-color="#4fd6b8" stop-opacity="0"/></radialGradient>
+        <radialGradient id="gisle" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#9affe4" stop-opacity=".9"/><stop offset="1" stop-color="#4fd6b8" stop-opacity="0"/></radialGradient>
+        <filter id="gblur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="10"/></filter>
+      </defs>
+      <rect width="1000" height="700" fill="#03060e"/>
+      <g class="stars">${stars(90,1000,700,0.9)}</g>
+      <g class="globe-grp">
+        <circle cx="500" cy="350" r="298" fill="url(#gatm)"/>
+        <circle cx="500" cy="350" r="270" fill="url(#gocean)"/>
+        <g fill="#1f6f4d" opacity=".9">
+          <path d="M360,170 C330,210 330,250 350,280 C320,300 330,340 360,360 C340,400 360,430 400,440 C380,470 410,500 440,500 L470,470 C440,430 460,400 440,360 C470,330 450,300 470,270 C440,240 460,200 430,180 Z"/>
+          <path d="M470,470 C500,520 520,560 540,560 C560,520 560,480 540,450 C560,430 540,400 510,410 Z"/>
+          <path d="M600,250 C650,240 700,260 720,300 C700,330 660,330 630,320 C620,290 600,280 600,250 Z"/>
+        </g>
+        <g stroke="#4fd6b8" stroke-opacity=".16" fill="none">
+          <ellipse cx="500" cy="350" rx="270" ry="90"/><ellipse cx="500" cy="350" rx="270" ry="180"/>
+          <ellipse cx="500" cy="350" rx="90" ry="270"/><ellipse cx="500" cy="350" rx="180" ry="270"/>
+          <line x1="500" y1="80" x2="500" y2="620"/>
+        </g>
+        <circle class="marker" cx="470" cy="452" r="7" fill="#9affe4"/>
+      </g>
+      <g class="island-grp">
+        <ellipse cx="500" cy="352" rx="250" ry="150" fill="url(#gisle)" opacity=".5" filter="url(#gblur)"/>
+        <g filter="url(#gblur)" opacity=".9">
+          <path d="M330,350 L362,333 L398,343 L408,325 L432,335 L458,355 L472,353 L472,377 L432,383 L396,375 L360,381 L334,367 Z" fill="#9affe4"/>
+          <path d="M472,353 L504,335 L548,337 L604,349 L664,345 L704,363 L664,381 L602,383 L540,387 L490,381 L472,375 Z" fill="#9affe4"/>
+        </g>
+        <path d="M330,350 L362,333 L398,343 L408,325 L432,335 L458,355 L472,353 L472,377 L432,383 L396,375 L360,381 L334,367 Z" fill="#16c79a" stroke="#eafff8" stroke-width="2"/>
+        <path d="M472,353 L504,335 L548,337 L604,349 L664,345 L704,363 L664,381 L602,383 L540,387 L490,381 L472,375 Z" fill="#1fae86" stroke="#eafff8" stroke-width="2"/>
+        <line x1="472" y1="335" x2="472" y2="387" stroke="#021b14" stroke-width="2" stroke-opacity=".5"/>
+        <text x="392" y="314" text-anchor="middle" fill="#eafff8" font-family="Inter" font-size="15" letter-spacing="3">HAITI</text>
+        <text x="600" y="412" text-anchor="middle" fill="#eafff8" font-family="Inter" font-size="15" letter-spacing="3">DOMINICAN REPUBLIC</text>
+      </g>
+    </svg>
+    <div class="art-verse">&ldquo;Here am I. Send me.&rdquo;</div>
+  </div>`;
+}
+
+function openScene(type){
+  if(busy) return;
+  const html = type==="worship" ? artWorship() : type==="international" ? artGlobe() : "";
+  if(!html) return;
+  sceneArt.innerHTML = html;
+  sceneEl.style.display = "block";
+  requestAnimationFrame(()=> sceneEl.classList.add("show"));
+  sceneOpen = true;
+}
+function closeScene(){
+  sceneEl.classList.remove("show");
+  setTimeout(()=>{ sceneEl.style.display="none"; sceneArt.innerHTML=""; sceneOpen=false; }, 600);
+}
+document.getElementById("sback").addEventListener("click",closeScene);
+
+window.addEventListener("resize",()=>{ if(sectionEl.style.display==="block") layout(); });
+</script>
+</body>
+</html>
