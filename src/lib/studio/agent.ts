@@ -94,7 +94,7 @@ function buildInstruction(message: string, ctx: PageContext): string {
 		"Page sources live in src/pages/*.astro (homepage = src/pages/index.astro; most interior pages use src/layouts/Interior.astro). The shared header/nav and footer are in src/layouts/Interior.astro (and the homepage's own header in src/pages/index.astro). Shared text/data is in src/data/site.ts and content/site.json.",
 		"",
 		"You MAY edit: src/pages/** (except src/pages/api/**), src/layouts/**, src/components/** (except StudioDock.astro), src/data/**, src/styles/**, content/**. You may add, rename, or move page files and update the navigation and links to match.",
-		"You MUST NOT modify: any config (astro.config.*, package.json, tsconfig, vercel.json), the editor's own code (src/lib/studio/**, src/pages/api/studio/**, src/components/StudioDock.astro), or tina/**. Do not run shell commands.",
+		"You MUST NOT modify: any config (astro.config.*, package.json, package-lock.json, tsconfig, vercel.json), the editor's own code (src/lib/studio/**, src/pages/api/studio/**, src/components/StudioDock.astro), or tina/**. Do not run shell commands.",
 		"",
 		"Preserve the site's existing visual style, tone, and structure. Make the smallest change that fulfills the request, and keep the code valid so the site still builds.",
 		"",
