@@ -109,7 +109,54 @@ import { values, vision } from "../data/site";
 		</div>
 	</section>
 
-	<!-- Section 5 — What this means (and what it doesn't) -->
+	<!-- Section 5 — How we treat the people around us -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal">The people around us</p>
+			<h2 class="prose-block__title reveal">How we treat the people around us.</h2>
+			<div class="prose-block__body">
+				<p class="reveal">
+					We don't hand you a statement of faith. We'll tell you what we owe the people we meet.
+				</p>
+			</div>
+			<div class="relate-grid">
+				<article class="relate-card reveal">
+					<h3>Welcome</h3>
+					<p class="relate-card__who">wherever your journey has led</p>
+					<p class="relate-card__body">
+						Maybe you're still seeking. Maybe your faith journey doesn't acknowledge Jesus as Lord.
+						Either way, you're welcome here — and we would love nothing more than to introduce you to
+						Jesus, and to welcome you into the broader family of Christ and the life of our local
+						community.
+					</p>
+				</article>
+				<article class="relate-card reveal" style="--delay:80ms">
+					<h3>Fellowship</h3>
+					<p class="relate-card__who">for every believer</p>
+					<p class="relate-card__body">
+						If you confess Christ crucified and risen, you're family. We pray with you, honor you,
+						eat with you and worship alongside you, and we refuse to treat you as an outsider — even
+						in the face of substantial differences in theology and practice.
+					</p>
+				</article>
+				<article class="relate-card reveal" style="--delay:160ms">
+					<h3>Partnership</h3>
+					<p class="relate-card__who">for anyone we build with</p>
+					<p class="relate-card__body">
+						When we collaborate on specific work — whether you're family, strangers, or friends —
+						it's a practical question: can we do this well side by side? Sometimes yes; sometimes
+						it's better done apart.
+					</p>
+				</article>
+			</div>
+			<p class="rest-pull reveal">
+				The disagreements that come with all of it, we work out in person — over a table, not on a
+				webpage.
+			</p>
+		</div>
+	</section>
+
+	<!-- Section 6 — What this means (and what it doesn't) -->
 	<section class="section prose-block">
 		<div class="container">
 			<p class="eyebrow reveal">What this means</p>
@@ -127,31 +174,6 @@ import { values, vision } from "../data/site";
 					<li class="reveal">The honest test isn't whether you can tolerate people outside the faith. It's whether you can pray with a brother or sister <em>inside</em> it who disagrees with you.</li>
 				</ul>
 			</div>
-		</div>
-	</section>
-
-	<!-- Section 6 — Fellowship and partnership -->
-	<section class="section prose-block">
-		<div class="container">
-			<p class="eyebrow reveal">One more distinction</p>
-			<h2 class="prose-block__title reveal">Fellowship and partnership aren't the same thing.</h2>
-			<div class="prose-block__body">
-				<p class="reveal">
-					Fellowship is what we owe every believer: if you confess Christ crucified and risen,
-					you're family — we pray with you, honor you, and refuse to treat you as an enemy, no
-					matter where you land on the rest.
-				</p>
-				<p class="reveal">
-					Partnership is narrower. The question is practical: can we do this particular work well
-					together, or would our differences keep getting in the way? Often they don't, and we
-					build. Sometimes they'd put our people in the middle of conflict the work doesn't need —
-					and holding back there isn't a verdict on anyone's faithfulness, just honesty that it's
-					better done apart.
-				</p>
-			</div>
-			<p class="rest-pull reveal">
-				Fellowship is never the price of agreement; partnership is simply matched to the task.
-			</p>
 		</div>
 	</section>
 
@@ -583,6 +605,37 @@ import { values, vision } from "../data/site";
 		content: "·";
 		color: var(--gold);
 		margin-left: 1.4rem;
+	}
+
+	/* --- "How we treat people" cards --- */
+	.relate-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1.1rem;
+		margin-top: 2.2rem;
+	}
+	.relate-card {
+		padding: 1.9rem;
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		background: var(--panel);
+	}
+	.relate-card h3 {
+		font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-size: clamp(1.55rem, 2.6vw, 1.95rem);
+		margin: 0;
+	}
+	.relate-card__who {
+		color: var(--gold);
+		font-size: 0.82rem;
+		letter-spacing: 0.03em;
+		margin: 0.35rem 0 1rem;
+	}
+	.relate-card__body {
+		color: var(--muted);
+		font-size: clamp(0.95rem, 1.3vw, 1.02rem);
+		line-height: 1.6;
+		margin: 0;
 	}
 
 	/* --- Scoped motion: rise-in on scroll --- */
