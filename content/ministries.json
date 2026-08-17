@@ -2132,7 +2132,7 @@
 				"high-school",
 				"middle-school"
 			],
-			"summary": "Middle and high school students, meeting midweek.",
+			"summary": "Middle and high school students, meeting midweek. We read their announcements each week.",
 			"why": null,
 			"bestFor": null,
 			"area": "Grand Rapids Public Schools",
@@ -2141,15 +2141,15 @@
 			"href": null,
 			"website": "https://www.berkleyhills.org/",
 			"handoff": {
-				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"how": "Their dates are not published in a way we can pull automatically, so we check their announcements each week. Ask us and we will confirm the next one and introduce you.",
 				"person": null
 			},
 			"calendar": {
-				"url": "https://www.berkleyhills.org/kids-ministry-nb5th-grade",
-				"format": "page",
+				"url": null,
+				"format": "watched",
 				"cadence": "weekly",
-				"sync": "page-current",
-				"evidence": "church-curation pass, Aug 2026"
+				"sync": "watched",
+				"evidence": "no feed; their pages are scoured weekly and confirmed by a person"
 			},
 			"status": "proposed",
 			"verified": null,
@@ -2274,7 +2274,7 @@
 				"high-school",
 				"middle-school"
 			],
-			"summary": "Students on Sunday evenings through the school year.",
+			"summary": "Students on Sunday evenings through the school year. We read their announcements each week.",
 			"why": null,
 			"bestFor": null,
 			"area": "Grand Rapids Public Schools",
@@ -2283,15 +2283,15 @@
 			"href": null,
 			"website": "https://localchurchgr.org/",
 			"handoff": {
-				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"how": "Their dates are not published in a way we can pull automatically, so we check their announcements each week. Ask us and we will confirm the next one and introduce you.",
 				"person": null
 			},
 			"calendar": {
-				"url": "https://my.localchurchgr.org/events",
-				"format": "page",
+				"url": null,
+				"format": "watched",
 				"cadence": "weekly",
-				"sync": "page-current",
-				"evidence": "church-curation pass, Aug 2026"
+				"sync": "watched",
+				"evidence": "no feed; their pages are scoured weekly and confirmed by a person"
 			},
 			"status": "proposed",
 			"verified": null,
@@ -2906,42 +2906,6 @@
 			"lng": -85.661778
 		},
 		{
-			"slug": "bauer-youth-group",
-			"name": "Youth Group",
-			"org": null,
-			"venue": "Bauer Christian Reformed Church",
-			"venueUrl": "https://bauercrc.org/",
-			"house": "out",
-			"tier": "partner-church",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"summary": "Youth group serving the Hudsonville district, with dates published as they come.",
-			"why": null,
-			"bestFor": null,
-			"area": "Hudsonville Public School District",
-			"city": "Hudsonville",
-			"rhythm": null,
-			"href": null,
-			"website": "https://bauercrc.org/",
-			"handoff": {
-				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
-				"person": null
-			},
-			"calendar": {
-				"url": "https://calendar.google.com/calendar/ical/bauercrc.org_4iamaivnt1vc077d5h22jp0030%40group.calendar.google.com/public/basic.ics",
-				"format": "ics",
-				"cadence": "weekly",
-				"sync": "available",
-				"evidence": "live feed, 21 events in the next 70 days"
-			},
-			"status": "proposed",
-			"verified": null,
-			"lat": 42.9203346,
-			"lng": -85.9066222
-		},
-		{
 			"slug": "crossroads-outpost",
 			"name": "Outpost",
 			"org": null,
@@ -3083,42 +3047,6 @@
 			"verified": null,
 			"lat": 42.8819205,
 			"lng": -85.8532563
-		},
-		{
-			"slug": "st-nicholas-soyo",
-			"name": "SOYO Night",
-			"org": "Antiochian Orthodox",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"venueUrl": "https://www.stnicholasgr.com/",
-			"house": "out",
-			"tier": "partner-church",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"summary": "The teen fellowship at Saint Nicholas, meeting on Sunday evenings.",
-			"why": null,
-			"bestFor": null,
-			"area": "Forest Hills Public Schools",
-			"city": "Kentwood",
-			"rhythm": "Sunday evenings, 5pm",
-			"href": null,
-			"website": "https://www.stnicholasgr.com/",
-			"handoff": {
-				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
-				"person": null
-			},
-			"calendar": {
-				"url": null,
-				"format": "ics",
-				"cadence": "weekly",
-				"sync": "available",
-				"evidence": "published on The Church Map's Grand Rapids calendar"
-			},
-			"status": "proposed",
-			"verified": null,
-			"lat": 42.9207,
-			"lng": -85.5847
 		}
 	]
 }

@@ -1,0 +1,27 @@
+{
+	"_comment": "Ministries we want on the calendar that publish no feed we can read. Their own pages get scoured on a schedule and whatever comes back is held for a human to confirm before it reaches the site. Add a ministry here when it is worth carrying but has nothing machine-readable.",
+	"watched": [
+		{
+			"slug": "lc-local-youth",
+			"name": "Local Youth",
+			"venue": "The Local Church GR",
+			"pages": [
+				"https://my.localchurchgr.org/events",
+				"https://localchurchgr.org/"
+			],
+			"look_for": ["youth", "student", "local youth", "middle school", "high school"],
+			"note": "Their events page carries real upcoming dates. Sunday nights during the school year."
+		},
+		{
+			"slug": "bh-student-ministry",
+			"name": "Student Ministry",
+			"venue": "Berkley Hills Church",
+			"pages": [
+				"https://www.berkleyhills.org/student-ministry",
+				"https://www.berkleyhills.org/"
+			],
+			"look_for": ["student", "youth", "wednesday", "middle school", "high school"],
+			"note": "Standing midweek rhythm rather than dated events. Watch for one-off announcements."
+		}
+	]
+}
