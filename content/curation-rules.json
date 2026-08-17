@@ -171,7 +171,7 @@
 		}
 	},
 	"websitesTheMapIsMissing": {
-		"note": "Three prayed-for churches had no website on their Church Map record, and none of them could be found by guessing a domain from the name. Every one uses a domain that does not match what it calls itself — which is why an automated crawl misses them and a person finds them in seconds.",
+		"note": "Three prayed-for churches had no website on their Church Map record, and all three have live sites. The map had already searched for all three and got each one wrong in a different way: a false negative on the initialism, a confusable different organisation stored unverified, and a real domain with one letter missing that was marked unreachable and then left. So the gap is not that nobody searches. It is that the searching is imprecise on exactly the shapes below — a church whose domain does not match what it calls itself.",
 		"found": [
 			{
 				"church": "Mosaic Life Church",

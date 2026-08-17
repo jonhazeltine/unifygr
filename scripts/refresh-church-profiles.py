@@ -54,19 +54,30 @@ def main():
 
     cache = {}
 
+    dlat = radius / 69.0
+    dlng = radius / (69.0 * math.cos(math.radians(centre["lat"])))
+
     def resolve(name):
         """The record for this church that is actually near us.
 
         Church names are not unique nationally. Matching on name alone once put
-        a church in Sanford, North Carolina onto a New Life page, so every
-        lookup is constrained by distance and the nearest match with a
-        description wins.
+        a church in Sanford, North Carolina onto a New Life page.
+
+        The distance filter has to happen in the query, not after it. Asking for
+        25 rows named "Mosaic Church" and then keeping the local ones returns
+        nothing, because there are 44 of them and not one of the first 25 is in
+        Michigan. "Grace Church" has 438. Filtering afterwards fails silently and
+        in the worst possible way: it reports the church as not being on the map
+        at all, when it is on the map and we simply never asked for it.
         """
         if name in cache:
             return cache[name]
         try:
             rows = api("churches?select=id,name,city,state,description,denomination,url_path,"
-                       f"display_lat,display_lng&name=eq.{urllib.parse.quote(name)}&limit=25")
+                       f"display_lat,display_lng&name=eq.{urllib.parse.quote(name)}"
+                       f"&display_lat=gte.{centre['lat'] - dlat}&display_lat=lte.{centre['lat'] + dlat}"
+                       f"&display_lng=gte.{centre['lng'] - dlng}&display_lng=lte.{centre['lng'] + dlng}"
+                       "&limit=25")
         except Exception:
             rows = []
         near = [

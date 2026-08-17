@@ -29,6 +29,10 @@ Berkley Hills. That account runs three churches — it is titled "Berkley Hills,
 Frost Creek & Knapp Valley Churches" and tags its events BH / FC / KV. Anybody
 can see that by opening the page, and knowing it is useful when we talk to them.
 
+Eight of the churches we care about run Planning Center, so the thing standing
+between our people and their ministries is one click that only they can make.
+That ask now sits on the Curated Partnerships page with their names under it.
+
 What we may not do is fetch it. The Church Map investigated this exact route on
 26 July 2026 and closed it: `docs/plans/church-center-calendar-findings.md` in
 that repo. Four clauses of Planning Center's Terms of Service bite, and one of

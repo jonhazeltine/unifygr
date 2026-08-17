@@ -2395,7 +2395,7 @@
 		{
 			"slug": "anc-midweek",
 			"name": "Midweek Gathering",
-			"org": null,
+			"org": "Church of God",
 			"venue": "All Nations Church",
 			"venueUrl": "https://www.goallnations.com/",
 			"house": "out",
@@ -2730,7 +2730,7 @@
 		{
 			"slug": "sunshine-youth",
 			"name": "Middle School & High School Youth",
-			"org": null,
+			"org": "christian_reformed_church_in_north_america",
 			"venue": "Sunshine Community Church",
 			"venueUrl": "https://sunshine.church/",
 			"house": "out",
@@ -3064,8 +3064,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.0865234,
+			"lng": -85.5749492,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
@@ -3074,7 +3074,7 @@
 			"name": "Rooted - Women's Bible Study",
 			"org": null,
 			"venue": "Cedar Creek Community Church",
-			"venueUrl": null,
+			"venueUrl": "http://cedarcreekmi.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3102,8 +3102,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.1764107,
+			"lng": -85.5970086,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/church/mi/algoma-township/cedar-creek-community-church"
 		},
@@ -3112,7 +3112,7 @@
 			"name": "Dude's Night",
 			"org": null,
 			"venue": "Community Christian Church",
-			"venueUrl": null,
+			"venueUrl": "https://communitycc.com/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3139,14 +3139,15 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
-			"relationship": "not-yet-spoken-to"
+			"lat": 42.927246,
+			"lng": -85.663345,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/community-christian-church"
 		},
 		{
 			"slug": "faith-community-christian-reformed-church-free-drive-thru-do",
 			"name": "Free Drive-Thru Donut Dash",
-			"org": null,
+			"org": "Christian Reformed",
 			"venue": "Faith Community Christian Reformed Church",
 			"venueUrl": "http://www.faithcommunitycrc.org/",
 			"house": "out",
@@ -3183,7 +3184,7 @@
 		{
 			"slug": "grace-christian-reformed-church-public-reading-of-scripture",
 			"name": "Public Reading of Scripture",
-			"org": null,
+			"org": "Reformed",
 			"venue": "Grace Christian Reformed Church",
 			"venueUrl": "https://gracegr.org/",
 			"house": "out",
@@ -3221,7 +3222,7 @@
 		{
 			"slug": "grace-christian-reformed-church-food-pantry",
 			"name": "Food Pantry",
-			"org": null,
+			"org": "Reformed",
 			"venue": "Grace Christian Reformed Church",
 			"venueUrl": "https://gracegr.org/",
 			"house": "out",
@@ -3261,7 +3262,7 @@
 			"name": "Mosaic Young Adults (ages 18-29) Bible Study",
 			"org": "evangelical",
 			"venue": "Mosaic Church",
-			"venueUrl": null,
+			"venueUrl": "https://www.mosaicgr.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3288,9 +3289,10 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
-			"relationship": "not-yet-spoken-to"
+			"lat": 42.949812,
+			"lng": -85.65823842,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/mosaic-church"
 		},
 		{
 			"slug": "set-free-ministries-sf-ministry-center-michigan-warrior-wedn",
@@ -3333,7 +3335,7 @@
 		{
 			"slug": "sunshine-community-church-60-up-breakfast-bunch",
 			"name": "60 & Up Breakfast Bunch",
-			"org": null,
+			"org": "christian_reformed_church_in_north_america",
 			"venue": "Sunshine Community Church",
 			"venueUrl": null,
 			"house": "out",
@@ -3371,7 +3373,7 @@
 		{
 			"slug": "sunshine-community-church-young-adults-bible-study",
 			"name": "Young Adults Bible Study",
-			"org": null,
+			"org": "christian_reformed_church_in_north_america",
 			"venue": "Sunshine Community Church",
 			"venueUrl": null,
 			"house": "out",
@@ -3438,8 +3440,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.0865234,
+			"lng": -85.5749492,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
@@ -3476,8 +3478,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.0865234,
+			"lng": -85.5749492,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
@@ -3513,8 +3515,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.0865234,
+			"lng": -85.5749492,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
@@ -3551,8 +3553,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 43.0865234,
+			"lng": -85.5749492,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
@@ -3634,7 +3636,7 @@
 		{
 			"slug": "faith-community-christian-reformed-church-fall-kick-off-comm",
 			"name": "Fall Kick-Off Community Event",
-			"org": null,
+			"org": "Christian Reformed",
 			"venue": "Faith Community Christian Reformed Church",
 			"venueUrl": "http://www.faithcommunitycrc.org/",
 			"house": "out",
@@ -3673,7 +3675,7 @@
 			"name": "I SCREAM (for ice cream)!",
 			"org": null,
 			"venue": "Messiah Christian Reformed Church",
-			"venueUrl": null,
+			"venueUrl": "http://www.messiahcrc.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3700,8 +3702,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 42.8819205,
+			"lng": -85.8532563,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
 		},
@@ -3710,7 +3712,7 @@
 			"name": "M.I.S.T. Seniors Group Monthly Breakfast",
 			"org": null,
 			"venue": "Messiah Christian Reformed Church",
-			"venueUrl": null,
+			"venueUrl": "http://www.messiahcrc.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3737,8 +3739,8 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
+			"lat": 42.8819205,
+			"lng": -85.8532563,
 			"relationship": "not-yet-spoken-to",
 			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
 		},
@@ -3747,7 +3749,7 @@
 			"name": "Seidman BGC - Back to School Bash",
 			"org": "evangelical",
 			"venue": "Mosaic Church",
-			"venueUrl": null,
+			"venueUrl": "https://www.mosaicgr.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -3774,14 +3776,15 @@
 			},
 			"status": "proposed",
 			"verified": null,
-			"lat": null,
-			"lng": null,
-			"relationship": "not-yet-spoken-to"
+			"lat": 42.949812,
+			"lng": -85.65823842,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/mosaic-church"
 		},
 		{
 			"slug": "sunshine-community-church-sunshine-sewing-group-stitches-of-",
 			"name": "Sunshine Sewing Group & Stitches of Hope",
-			"org": null,
+			"org": "christian_reformed_church_in_north_america",
 			"venue": "Sunshine Community Church",
 			"venueUrl": null,
 			"house": "out",
@@ -3819,7 +3822,7 @@
 		{
 			"slug": "sunshine-community-church-kids-courtyard-grand-opening",
 			"name": "Kids' Courtyard Grand Opening",
-			"org": null,
+			"org": "christian_reformed_church_in_north_america",
 			"venue": "Sunshine Community Church",
 			"venueUrl": null,
 			"house": "out",
