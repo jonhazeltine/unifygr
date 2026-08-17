@@ -66,9 +66,10 @@
 		"allowAsLastResort": true
 	},
 	"alwaysExclude": {
-		"note": "Asked for by name, across every ministry area.",
+		"note": "Churches held off this site for a reason worth writing down. Bauer Christian Reformed was asked for by name. Coit Community Church is a real Christian Reformed church whose Church Map record currently carries Sunshine Community Church's website and calendar feed, so its events are not its own; confirmed by The Church Map, Aug 2026. Remove this line once their feed is corrected, and Coit becomes a candidate like any other.",
 		"churches": [
-			"Bauer Christian Reformed Church"
+			"Bauer Christian Reformed Church",
+			"Coit Community Church"
 		]
 	},
 	"prefer": {
@@ -138,7 +139,28 @@
 			"St Nicholas Church": "Saint Nicholas Antiochian Orthodox Church",
 			"Wright Church": "Wright Seventh-day Adventist Church",
 			"Blythefield Hills Baptist Church - Northview Campus": "Magnify Church",
-			"Calvary Assembly Of God": "Calvary Assembly of God"
+			"Calvary Assembly Of God": "Calvary Assembly of God",
+			"Sunshine Community Church (Beltline)": "Sunshine Community Church"
 		}
+	},
+	"prayedFor": {
+		"note": "Churches New Life has prayed for by name in a prayer journey on The Church Map. A warmer starting point for partnership conversations than calendar quality, because the relationship already has something real in it.",
+		"churches": [
+			"Knapp Valley Church",
+			"Faith Church of Grand Rapids",
+			"North Park Baptist Church",
+			"Berean Baptist Church",
+			"Providence Reformed Church",
+			"New City Church",
+			"Monroe Community Church",
+			"Indwelling Community Church",
+			"Crossroads Bible Church",
+			"Bethlehem Lutheran Church",
+			"City Life Church",
+			"Tabernacle Community Church",
+			"Crosswinds Community Church",
+			"Buck Creek Community Church",
+			"Mosaic Life Church"
+		]
 	}
 }
