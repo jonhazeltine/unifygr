@@ -2,24 +2,28 @@
 	"_comment": "The directory. `house: in` = we run it. `house: out` = someone else runs it and we send people. Every out-of-house entry starts at status `proposed` until a human at New Life confirms it. Never move an entry to `verified` from a web page alone.",
 	"standard": {
 		"eyebrow": "How a ministry gets on this list",
-		"title": "Four things we look for.",
+		"title": "We put our name next to these.",
 		"body": "This list is not a phone book. Every ministry on it has to clear the same four tests before we will put our name next to it.",
 		"tests": [
 			{
 				"name": "Close enough to actually go",
-				"body": "A ministry two hours away is a fact, not an option. We look for the best thing you can reach on a weeknight, and we tell you where it meets before we tell you anything else."
+				"body": "A ministry two hours away is a fact, not an option. We look for the best thing you can reach on a weeknight, and we tell you where it meets before we tell you anything else.",
+				"short": "The best thing you can reach on a weeknight, and we tell you where it meets first."
 			},
 			{
 				"name": "A real person on the other end",
-				"body": "We are not looking for a referral form. We are looking for someone we can call, who knows we are sending you, and who will still be there in six months."
+				"body": "We are not looking for a referral form. We are looking for someone we can call, who knows we are sending you, and who will still be there in six months.",
+				"short": "Someone we can call who knows we are sending you."
 			},
 			{
 				"name": "Better at this than we would be",
-				"body": "If a ministry has been doing one thing for 20 years, our version of it would be worse. That is the whole point. We would rather send you to excellence than keep you inside our building."
+				"body": "If a ministry has been doing one thing for 20 years, our version of it would be worse. That is the whole point. We would rather send you to excellence than keep you inside our building.",
+				"short": "A ministry that has done this for years does it better than our version would."
 			},
 			{
 				"name": "A calendar they actually keep",
-				"body": "If a ministry publishes real dates and keeps them current, we can pull their calendar straight onto this site and you will always see what is next. Ministries that keep a live calendar are the ones we can carry best."
+				"body": "If a ministry publishes real dates and keeps them current, we can pull their calendar straight onto this site and you will always see what is next. Ministries that keep a live calendar are the ones we can carry best.",
+				"short": "Dates they keep current, so we can carry their calendar here."
 			}
 		]
 	},
@@ -55,7 +59,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "corporate-prayer",
@@ -90,7 +97,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "prayer-chain",
@@ -122,7 +132,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "childrens-ministry",
@@ -155,7 +168,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "pastoral-care",
@@ -189,7 +205,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "hospitality-connections",
@@ -221,7 +240,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "spiritual-formation-path",
@@ -289,7 +311,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "unify-gr",
@@ -323,7 +348,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "outreach",
@@ -356,7 +384,10 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
 		},
 		{
 			"slug": "guiding-light",
@@ -375,7 +406,18 @@
 			"area": "Downtown",
 			"city": "Grand Rapids",
 			"website": "https://guidinglightworks.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "255 Division Ave S Grand Rapids, MI 49503",
+			"lat": 42.95821,
+			"lng": -85.66809,
+			"geocodedAs": "255 Division Avenue South, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "mel-trotter",
@@ -394,7 +436,18 @@
 			"area": "Downtown",
 			"city": "Grand Rapids",
 			"website": "https://www.meltrotter.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.meltrotter.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-stale",
+				"evidence": "3 dates, years ['2026']"
+			},
+			"address": "225 Commerce Avenue SW, Grand Rapids, MI 49503",
+			"lat": 42.95904,
+			"lng": -85.66939,
+			"geocodedAs": "225 Commerce Avenue Southwest, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "degage",
@@ -412,7 +465,18 @@
 			"area": "Downtown",
 			"city": "Grand Rapids",
 			"website": "https://www.degageministries.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "139 Sheldon Ave SE, Grand Rapids, MI 49503",
+			"lat": 42.95973,
+			"lng": -85.66701,
+			"geocodedAs": "139 Sheldon Boulevard Southeast, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "set-free-ministries",
@@ -430,7 +494,14 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://setfreemin.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "pine-rest",
@@ -449,7 +520,18 @@
 			"area": "Cutlerville",
 			"city": "Grand Rapids",
 			"website": "https://www.pinerest.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "3292 N. Evergreen Dr. NE Grand Rapids, MI 49525",
+			"lat": 43.01749,
+			"lng": -85.5855,
+			"geocodedAs": "3292 North Evergreen Drive Northeast, Grand Rapids, Michigan 49525, United States"
 		},
 		{
 			"slug": "wedgwood",
@@ -468,7 +550,18 @@
 			"area": "Southeast",
 			"city": "Grand Rapids",
 			"website": "https://www.wedgwood.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "3300 36th St. SE, Grand Rapids, MI 49512",
+			"lat": 42.89704,
+			"lng": -85.58549,
+			"geocodedAs": "3300 36th Street Southeast, Grand Rapids, Michigan 49512, United States"
 		},
 		{
 			"slug": "bethany-christian-services",
@@ -487,7 +580,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://bethany.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "901 Eastern Ave NE Grand Rapids, MI 49503",
+			"lat": 42.98054,
+			"lng": -85.65068,
+			"geocodedAs": "901 Eastern Avenue Northeast, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "da-blodgett-st-johns",
@@ -506,7 +610,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.dabsj.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "2172 Dean Lake Avenue NE Grand Rapids, MI 49505",
+			"lat": 43.00209,
+			"lng": -85.61392,
+			"geocodedAs": "2172 Dean Lake Avenue Northeast, Grand Rapids, Michigan 49505, United States"
 		},
 		{
 			"slug": "alpha-grand-rapids",
@@ -525,7 +640,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://alphagrandrapids.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "1725 Division Avenue S Grand Rapids, MI 49507",
+			"lat": 42.93234,
+			"lng": -85.66742,
+			"geocodedAs": "1725 Division Avenue South, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "war-international",
@@ -542,11 +668,22 @@
 			"area": "Wyoming",
 			"city": "Grand Rapids",
 			"website": "https://warinternational.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://warinternational.org/upcoming-events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "97 dates, years ['2024', '2025', '2026', '2027']"
+			},
+			"address": "2790 44th St SW Wyoming, MI 49519",
+			"lat": 42.8841,
+			"lng": -85.73323,
+			"geocodedAs": "2790 44th Street Southwest, Wyoming, Michigan 49519, United States"
 		},
 		{
 			"slug": "forgotten-man-ministries",
-			"name": "Forgotten Man Ministries",
+			"name": "Reach The Forgotten Jail Ministry",
 			"house": "out",
 			"tier": "recommended",
 			"categories": [
@@ -558,12 +695,24 @@
 			"bestFor": "Anyone with a heart for prisoners, and families of the incarcerated.",
 			"area": "West Michigan",
 			"city": "Grand Rapids",
-			"website": "https://www.forgottenman.org",
-			"status": "proposed"
+			"website": "https://jailministry.org",
+			"status": "proposed",
+			"calendar": {
+				"url": "https://jailministry.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "17 dates, years ['2024', '2026']"
+			},
+			"org": "Formerly Forgotten Man Ministries",
+			"address": "1480 Buchanan Ave SW Grand Rapids, MI 49507",
+			"lat": 42.93614,
+			"lng": -85.67137,
+			"geocodedAs": "1480 Buchanan Avenue Southwest, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "70x7-life-recovery",
-			"name": "70x7 Life Recovery",
+			"name": "70x7 Path to Forgiveness",
 			"house": "out",
 			"tier": "recommended",
 			"categories": [
@@ -577,7 +726,14 @@
 			"area": "Holland",
 			"city": "Holland",
 			"website": "https://70x7.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "treetops-collective",
@@ -594,7 +750,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://treetopscollective.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "906 Division Ave S Grand Rapids, MI 49507",
+			"lat": 42.94651,
+			"lng": -85.66712,
+			"geocodedAs": "906 Division Avenue South, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "samaritas",
@@ -613,7 +780,14 @@
 			"area": "Michigan",
 			"city": "Grand Rapids",
 			"website": "https://www.samaritas.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "literacy-center-wm",
@@ -630,7 +804,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.literacycenterwm.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://literacycenterwm.org/events",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "17 dates, years ['2024', '2026']"
+			},
+			"address": "207 Fulton St E, Suite 4000, Grand Rapids, MI, 49503",
+			"lat": 42.9634,
+			"lng": -85.66387,
+			"geocodedAs": "207 Fulton Street East, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "kids-food-basket",
@@ -647,7 +832,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.kidsfoodbasket.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "1300 Plymouth Ave. NE Grand Rapids, MI 49505",
+			"lat": 42.98578,
+			"lng": -85.62291,
+			"geocodedAs": "1300 Plymouth Avenue Northeast, Grand Rapids, Michigan 49505, United States"
 		},
 		{
 			"slug": "feeding-america-wm",
@@ -663,7 +859,18 @@
 			"area": "Comstock Park",
 			"city": "Comstock Park",
 			"website": "https://feedwm.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "3070 Shaffer Ave SE Kentwood, MI 49512",
+			"lat": 42.90745,
+			"lng": -85.58657,
+			"geocodedAs": "3070 Shaffer Avenue Southeast, Kentwood, Michigan 49512, United States"
 		},
 		{
 			"slug": "in-the-image",
@@ -680,11 +887,22 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://intheimage.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "4255 Kalamazoo Ave SE Grand Rapids, MI 49508",
+			"lat": 42.88598,
+			"lng": -85.62865,
+			"geocodedAs": "4255 Kalamazoo Avenue Southeast, Grand Rapids, Michigan 49508, United States"
 		},
 		{
 			"slug": "streams-of-hope",
-			"name": "Streams of Hope",
+			"name": "Streams",
 			"house": "out",
 			"tier": "listed",
 			"categories": [
@@ -698,7 +916,15 @@
 			"area": "Kentwood",
 			"city": "Grand Rapids",
 			"website": "https://streamsgr.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"org": "Formerly Streams of Hope"
 		},
 		{
 			"slug": "baxter-community-center",
@@ -717,7 +943,14 @@
 			"area": "Southeast",
 			"city": "Grand Rapids",
 			"website": "https://wearebaxter.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "unreachable",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "the-other-way",
@@ -736,7 +969,18 @@
 			"area": "West Side",
 			"city": "Grand Rapids",
 			"website": "https://theotherway.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "839 Sibley St NW Grand Rapids, MI 49504",
+			"lat": 42.96746,
+			"lng": -85.68914,
+			"geocodedAs": "839 Sibley Street Northwest, Grand Rapids, Michigan 49504, United States"
 		},
 		{
 			"slug": "iccf",
@@ -754,7 +998,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.iccf.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://iccf.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "7 dates, years ['2026']"
+			},
+			"address": "400 Martin Luther King Jr. St. SE Grand Rapids, MI 49507",
+			"lat": 42.94839,
+			"lng": -85.65873,
+			"geocodedAs": "400 Martin Luther King Jr Street Southeast, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "habitat-kent",
@@ -771,7 +1026,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.habitatkent.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.habitatkent.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "74 dates, years ['2026']"
+			},
+			"address": "1739 Elizabeth Ave NW Grand Rapids, MI 49504",
+			"lat": 42.9951,
+			"lng": -85.68267,
+			"geocodedAs": "1739 Elizabeth Avenue Northwest, Grand Rapids, Michigan 49504, United States"
 		},
 		{
 			"slug": "home-repair-services",
@@ -787,11 +1053,22 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.homerepairservices.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.homerepairservices.org/events/lunch-learn-794/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "13 dates, years ['2026']"
+			},
+			"address": "1100 South Division Avenue Grand Rapids, Michigan 49507",
+			"lat": 42.94333,
+			"lng": -85.6667,
+			"geocodedAs": "1100 Division Avenue South, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "family-promise-gr",
-			"name": "Family Promise of Grand Rapids",
+			"name": "Family Promise of West Michigan",
 			"house": "out",
 			"tier": "recommended",
 			"categories": [
@@ -804,8 +1081,19 @@
 			"bestFor": "Families facing eviction, and churches ready to host.",
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
-			"website": "https://familypromisegr.org",
-			"status": "proposed"
+			"website": "https://www.familypromisewm.org",
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.familypromisewm.org/news-and-events/category/events-fundraisers/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "11 dates, years ['2025', '2026']"
+			},
+			"address": "516 Cherry St SE Grand Rapids, MI 49503",
+			"lat": 42.95907,
+			"lng": -85.65588,
+			"geocodedAs": "516 Cherry Street Southeast, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "exalta-health",
@@ -823,7 +1111,18 @@
 			"area": "Wyoming",
 			"city": "Grand Rapids",
 			"website": "https://exaltahealth.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://exaltahealth.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "23 dates, years ['2025', '2026']"
+			},
+			"address": "2060 Division Ave S, Grand Rapids, MI 49507",
+			"lat": 42.92577,
+			"lng": -85.66605,
+			"geocodedAs": "2060 Division Avenue South, Grand Rapids, Michigan 49507, United States"
 		},
 		{
 			"slug": "cherry-health",
@@ -841,23 +1140,42 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://cherryhealth.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://cherryhealth.org/donate/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "9 dates, years ['2025', '2026']"
+			},
+			"address": "1001 33rd St SE Grand Rapids, MI 49508",
+			"lat": 42.9042,
+			"lng": -85.64096,
+			"geocodedAs": "1001 33rd Street Southeast, Grand Rapids, Michigan 49508, United States"
 		},
 		{
 			"slug": "friendship-ministries",
-			"name": "Friendship Ministries",
+			"name": "With Ministries",
 			"house": "out",
 			"tier": "recommended",
 			"categories": [
 				"disability"
 			],
-			"summary": "Curriculum and training so churches can include people with intellectual disabilities in real discipleship.",
+			"summary": "Curriculum and training so churches can include people with intellectual disabilities in real discipleship. Friendship Ministries merged with All Belong's church division to become With Ministries.",
 			"why": "Headquartered in Grand Rapids and used in dozens of countries. If a church wants to do disability ministry well, this is the starting point.",
 			"bestFor": "Families with a loved one with disabilities, and churches wanting to include them.",
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
-			"website": "https://friendshipministries.org",
-			"status": "proposed"
+			"website": "https://withministries.org",
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"org": "Formerly Friendship Ministries"
 		},
 		{
 			"slug": "hope-network",
@@ -876,7 +1194,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://hopenetwork.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://hopenetwork.org/foundation/events/2026-spirits-of-hope-gr",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "38 dates, years ['2024', '2025', '2026']"
+			},
+			"address": "975 Ottawa Avenue NW, Grand Rapids MI 49503",
+			"lat": 42.97977,
+			"lng": -85.67081,
+			"geocodedAs": "975 Ottawa Avenue Northwest, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "benjamins-hope",
@@ -893,7 +1222,18 @@
 			"area": "Holland",
 			"city": "Holland",
 			"website": "https://benjaminshope.net",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "15468 RILEY ST. HOLLAND, MI 49424",
+			"lat": 42.8233,
+			"lng": -86.1641,
+			"geocodedAs": "15468 Riley Street, Holland, Michigan 49424, United States"
 		},
 		{
 			"slug": "emmanuel-hospice",
@@ -911,7 +1251,14 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.emmanuelhospice.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "eles-place",
@@ -929,7 +1276,14 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://elesplace.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.elesplace.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "11 dates, years ['2026']"
+			}
 		},
 		{
 			"slug": "winning-at-home",
@@ -949,11 +1303,22 @@
 			"area": "Zeeland",
 			"city": "Zeeland",
 			"website": "https://winningathome.com",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://winningathome.com/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "27 dates, years ['2026']"
+			},
+			"address": "21 West 16th Street Holland, MI 49423",
+			"lat": 42.78319,
+			"lng": -86.10815,
+			"geocodedAs": "21 West 16th Street, Holland, Michigan 49423, United States"
 		},
 		{
 			"slug": "young-life-west-michigan",
-			"name": "Young Life West Michigan",
+			"name": "Young Life Greater Grand Rapids",
 			"house": "out",
 			"tier": "recommended",
 			"categories": [
@@ -962,13 +1327,20 @@
 				"youth-mentoring",
 				"student-camps"
 			],
-			"summary": "Leaders who show up in high schools, plus club, campaigners, and summer camp.",
+			"summary": "Leaders who show up in local high schools, plus club, campaigners, and summer camp, across nine Greater Grand Rapids areas.",
 			"why": "We do not run a youth group right now. Young Life leaders are already at your kid's school this week.",
 			"bestFor": "Middle and high schoolers, and adults who want to lead them.",
-			"area": "West Michigan",
+			"area": "Greater Grand Rapids",
 			"city": "Grand Rapids",
-			"website": "https://westmichigan.younglife.org",
-			"status": "proposed"
+			"website": "https://grandrapids.younglife.org",
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "youth-for-christ-wm",
@@ -987,7 +1359,14 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://wmyfc.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "fca-west-michigan",
@@ -1005,7 +1384,14 @@
 			"area": "West Michigan",
 			"city": "Grand Rapids",
 			"website": "https://www.fca.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "cru-gvsu",
@@ -1023,7 +1409,14 @@
 			"area": "Allendale",
 			"city": "Allendale",
 			"website": "https://www.cru.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "camp-roger",
@@ -1041,7 +1434,18 @@
 			"area": "Rockford",
 			"city": "Rockford",
 			"website": "https://www.camproger.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "8356 Belding Road NE Rockford, MI 49341",
+			"lat": 43.0822,
+			"lng": -85.45896,
+			"geocodedAs": "8356 Belding Road Northeast, Rockford, Michigan 49341, United States"
 		},
 		{
 			"slug": "cran-hill-ranch",
@@ -1059,7 +1463,18 @@
 			"area": "Rodney",
 			"city": "Rodney",
 			"website": "https://cranhillranch.com",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "14444 17 Mile Road, Rodney, US-Michigan, 49342",
+			"lat": 43.71681,
+			"lng": -85.37367,
+			"geocodedAs": "14444 17 Mile Road, Rodney, Michigan 49342, United States"
 		},
 		{
 			"slug": "springhill-camps",
@@ -1077,7 +1492,18 @@
 			"area": "Evart",
 			"city": "Evart",
 			"website": "https://www.springhillcamps.com",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "7717 95th Ave Evart, MI 49631",
+			"lat": 43.92457,
+			"lng": -85.27964,
+			"geocodedAs": "7717 95th Avenue, Evart, Michigan 49631, United States"
 		},
 		{
 			"slug": "grand-rapids-christian-schools",
@@ -1094,7 +1520,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.grcs.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.grcs.org/about-us/calendars-and-schedules",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "84 dates, years ['2026', '2027']"
+			},
+			"address": "1050 Iroquois Dr. SE Grand Rapids, MI 49506",
+			"lat": 42.94358,
+			"lng": -85.6325,
+			"geocodedAs": "1050 Iroquois Drive Southeast, Grand Rapids, Michigan 49506, United States"
 		},
 		{
 			"slug": "potters-house",
@@ -1112,7 +1549,18 @@
 			"area": "Southwest",
 			"city": "Grand Rapids",
 			"website": "https://tphgr.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "810 Van Raalte Dr SW Grand Rapids, MI 49509",
+			"lat": 42.93701,
+			"lng": -85.68681,
+			"geocodedAs": "810 Van Raalte Drive Southwest, Grand Rapids, Michigan 49509, United States"
 		},
 		{
 			"slug": "northpointe-christian",
@@ -1129,11 +1577,22 @@
 			"area": "Northeast",
 			"city": "Grand Rapids",
 			"website": "https://www.npchristian.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "540 Russwood St. NE, Grand Rapids, MI 49505",
+			"lat": 43.01203,
+			"lng": -85.65603,
+			"geocodedAs": "540 Russwood Street Northeast, Grand Rapids, Michigan 49505, United States"
 		},
 		{
 			"slug": "grand-rapids-theological-seminary",
-			"name": "Grand Rapids Theological Seminary",
+			"name": "Cornerstone Theological Seminary",
 			"house": "out",
 			"tier": "listed",
 			"categories": [
@@ -1146,8 +1605,20 @@
 			"bestFor": "Anyone sensing a call to vocational ministry or counseling.",
 			"area": "Northeast",
 			"city": "Grand Rapids",
-			"website": "https://www.cornerstone.edu/grts",
-			"status": "proposed"
+			"website": "https://www.cornerstone.edu/seminary",
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.cornerstone.edu/news-events-blogs/events/wisdom-conversations/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "9 dates, years ['2024', '2026']"
+			},
+			"org": "Cornerstone University",
+			"address": "1001 East Beltline Ave NE, Grand Rapids, MI, 49525",
+			"lat": 42.98213,
+			"lng": -85.59332,
+			"geocodedAs": "1001 East Beltline Avenue Northeast, Grand Rapids, Michigan 49525, United States"
 		},
 		{
 			"slug": "calvin-theological-seminary",
@@ -1164,7 +1635,18 @@
 			"area": "Southeast",
 			"city": "Grand Rapids",
 			"website": "https://calvinseminary.edu",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://calvinseminary.edu/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "25 dates, years ['2026']"
+			},
+			"address": "3233 Burton St SE Grand Rapids, MI 49546",
+			"lat": 42.92798,
+			"lng": -85.5864,
+			"geocodedAs": "3233 Burton Street Southeast, Grand Rapids, Michigan 49546, United States"
 		},
 		{
 			"slug": "kuyper-college",
@@ -1181,7 +1663,18 @@
 			"area": "Northeast",
 			"city": "Grand Rapids",
 			"website": "https://www.kuyper.edu",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.kuyper.edu/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "12 dates, years ['2024', '2025', '2026']"
+			},
+			"address": "3333 East Beltline Ave. NE Grand Rapids, MI 49525",
+			"lat": 43.02245,
+			"lng": -85.59217,
+			"geocodedAs": "3333 East Beltline Avenue Northeast, Grand Rapids, Michigan 49525, United States"
 		},
 		{
 			"slug": "acton-institute",
@@ -1199,7 +1692,14 @@
 			"area": "Downtown",
 			"city": "Grand Rapids",
 			"website": "https://www.acton.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.acton.org/events",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "10 dates, years ['2026']"
+			}
 		},
 		{
 			"slug": "partners-worldwide",
@@ -1217,7 +1717,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://partnersworldwide.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "6139 Tahoe Dr SE, Grand Rapids, MI 49546",
+			"lat": 42.90992,
+			"lng": -85.51552,
+			"geocodedAs": "6139 Tahoe Drive Southeast, Grand Rapids, Michigan 49546, United States"
 		},
 		{
 			"slug": "words-of-hope",
@@ -1235,7 +1746,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://woh.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"address": "700 Ball Avenue NE Grand Rapids, Michigan 49503",
+			"lat": 42.97589,
+			"lng": -85.62925,
+			"geocodedAs": "700 Ball Avenue Northeast, Grand Rapids, Michigan 49503, United States"
 		},
 		{
 			"slug": "resonate-global-mission",
@@ -1254,7 +1776,14 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.resonateglobalmission.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.resonateglobalmission.org/get-involved/events",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "17 dates, years ['2026']"
+			}
 		},
 		{
 			"slug": "mission-of-hope",
@@ -1272,7 +1801,14 @@
 			"area": "Caribbean",
 			"city": "Jarabacoa, Dominican Republic",
 			"website": "https://www.mohhaiti.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "griefshare",
@@ -1289,7 +1825,14 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://www.griefshare.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "celebrate-recovery-wm",
@@ -1308,11 +1851,18 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://www.celebraterecovery.com",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "mops-international",
-			"name": "MOPS",
+			"name": "The MomCo",
 			"house": "out",
 			"tier": "listed",
 			"categories": [
@@ -1326,7 +1876,15 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://www.mops.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"org": "Formerly MOPS"
 		},
 		{
 			"slug": "awana",
@@ -1343,7 +1901,14 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://www.awana.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "trail-life-usa",
@@ -1361,7 +1926,14 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://www.traillifeusa.com",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "american-heritage-girls",
@@ -1378,7 +1950,14 @@
 			"area": "Various",
 			"city": "Grand Rapids",
 			"website": "https://americanheritagegirls.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "holland-home",
@@ -1396,7 +1975,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://www.hollandhome.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://hollandhome.org/foundation/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "17 dates, years ['2024', '2025', '2026']"
+			},
+			"address": "2772 Pfeiffer Woods Dr. Grand Rapids, MI 49512",
+			"lat": 42.89223,
+			"lng": -85.5975,
+			"geocodedAs": "2772 Pfeiffer Woods Drive Southeast, Grand Rapids, Michigan 49512, United States"
 		},
 		{
 			"slug": "safe-haven-ministries",
@@ -1414,7 +2004,18 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://safehavenministries.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://safehavenministries.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "27 dates, years ['2025', '2026', '2027']"
+			},
+			"address": "2627 Birchcrest Dr SE Grand Rapids, MI 49506",
+			"lat": 42.91555,
+			"lng": -85.61419,
+			"geocodedAs": "2627 Birchcrest Drive Southeast, Grand Rapids, Michigan 49506, United States"
 		},
 		{
 			"slug": "prison-fellowship",
@@ -1432,7 +2033,14 @@
 			"area": "National",
 			"city": "National",
 			"website": "https://www.prisonfellowship.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			}
 		},
 		{
 			"slug": "bible-league-international",
@@ -1450,7 +2058,14 @@
 			"area": "National",
 			"city": "Crete, Illinois",
 			"website": "https://www.bibleleague.org",
-			"status": "proposed"
+			"status": "proposed",
+			"calendar": {
+				"url": "https://www.bibleleague.org/events/",
+				"format": "page",
+				"cadence": null,
+				"sync": "page-current",
+				"evidence": "14 dates, years ['2025', '2026', '2027']"
+			}
 		}
 	]
 }

@@ -33,8 +33,10 @@ export type CalendarLink = {
 	/** ics | google | thechurches | page — how we would pull their dates in. */
 	format: string | null;
 	cadence: string | null;
-	/** none | available | synced */
+	/** available | page-current | page-stale | none | unreachable */
 	sync: string | null;
+	/** What the enrichment pass actually saw, so a claim can be checked. */
+	evidence?: string | null;
 };
 
 export type Entry = {
@@ -55,6 +57,10 @@ export type Entry = {
 	bestFor?: string | null;
 	area?: string | null;
 	city?: string | null;
+	lat?: number | null;
+	lng?: number | null;
+	/** What the geocoder matched, so a wrong pin can be spotted. */
+	geocodedAs?: string | null;
 	rhythm?: string | null;
 	href?: string | null;
 	website?: string | null;
@@ -65,7 +71,18 @@ export type Entry = {
 	verified?: { by: string | null; on: string | null } | null;
 };
 
-export type CurationTest = { name: string; body: string };
+export type CurationTest = { name: string; body: string; short: string };
+
+/**
+ * Calendar freshness, measured rather than assumed. Set by the enrichment pass
+ * that reads each ministry's own site:
+ *   available    — a real feed (.ics / Google) we can pull straight in
+ *   page-current — an events page carrying dates in the current year
+ *   page-stale   — an events page, but the dates have gone off
+ *   none         — nothing published
+ *   unreachable  — their site did not answer
+ */
+export const LIVE_CALENDAR = new Set(["available", "page-current"]);
 
 export const families: Family[] = taxonomyJson.families as Family[];
 export const entries: Entry[] = directoryJson.entries as Entry[];
@@ -142,12 +159,25 @@ export const counts = {
 	uncovered: categories.filter((c) => entriesInCategory(c.slug).length === 0).length,
 	/** Out-of-house entries a human at New Life has not confirmed yet. */
 	awaitingVerification: outOfHouse.filter((e) => e.status !== "live").length,
-	/** Ministries whose calendar we could pull straight onto this site. */
-	syncable: entries.filter((e) => e.calendar?.sync === "available" || e.calendar?.sync === "synced").length,
+	/** Ministries whose dates we could pull straight onto this site. */
+	syncable: entries.filter((e) => LIVE_CALENDAR.has(e.calendar?.sync ?? "")).length,
 };
 
 export function familyCount(familySlug: string): number {
 	return entriesInFamily(familySlug).length;
+}
+
+export function hasLiveCalendar(entry: Entry): boolean {
+	return LIVE_CALENDAR.has(entry.calendar?.sync ?? "");
+}
+
+/** Every ministry whose dates we could actually carry, ours first. */
+export function withLiveCalendar(): Entry[] {
+	return sortEntries(entries.filter(hasLiveCalendar));
+}
+
+export function familyCalendarCount(familySlug: string): number {
+	return entriesInFamily(familySlug).filter(hasLiveCalendar).length;
 }
 
 // ---- Geography ----

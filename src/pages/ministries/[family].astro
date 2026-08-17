@@ -1,10 +1,12 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
+import MinistryMap from "../../components/MinistryMap.astro";
 import {
 	families,
 	entriesInCategory,
 	entriesInFamily,
+	familyCalendarCount,
 	sortEntries,
 	type Family,
 } from "../../data/ministries";
@@ -23,7 +25,9 @@ const groups = family.categories.map((category) => ({
 	entries: sortEntries(entriesInCategory(category.slug)),
 }));
 
-const total = entriesInFamily(family.slug).length;
+const inFamily = entriesInFamily(family.slug);
+const total = inFamily.length;
+const cal = familyCalendarCount(family.slug);
 const empty = groups.filter((g) => g.entries.length === 0);
 const filled = groups.filter((g) => g.entries.length > 0);
 ---
@@ -39,7 +43,14 @@ const filled = groups.filter((g) => g.entries.length > 0);
 		<div class="container">
 			<p class="min-breadcrumb reveal is-visible">
 				<a href="/ministries">All ministries</a> · {total} listed across {family.categories.length} categories
+				{cal > 0 && <> · <a href="/ministries/calendar">{cal} keep a live calendar</a></>}
 			</p>
+
+			{total > 0 && (
+				<div class="min-mapblock reveal is-visible">
+					<MinistryMap entries={inFamily} map={family.slug} label={family.name} />
+				</div>
+			)}
 
 			{filled.map(({ category, entries }) => (
 				<div class="min-cat reveal is-visible">
