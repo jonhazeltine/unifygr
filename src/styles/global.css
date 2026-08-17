@@ -2672,3 +2672,4 @@ strong {
 @media (max-width: 620px) { .min-devlist li { grid-template-columns: 2rem 1fr; } .min-devlist__why { display: none; } }
 .min-bio__links { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0.5rem 0 0; }
 .min-bio__links a { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--gold); }
+.min-bio__nobio { margin: 0; color: rgba(246, 240, 231, 0.38); font-size: 0.86rem; line-height: 1.6; font-style: italic; }
