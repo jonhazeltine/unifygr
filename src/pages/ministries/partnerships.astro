@@ -172,7 +172,14 @@ function areaOf(v: Venue) {
 							{[v.org, v.area ?? v.city].filter(Boolean).join(" · ")}
 						</p>
 
-						{v.bio && <p class="min-bio__text">{v.bio}</p>}
+						{v.bio ? (
+							<p class="min-bio__text">{v.bio}</p>
+						) : (
+							<p class="min-bio__nobio">
+								We do not write these. This one is blank because their Church Map profile is,
+								{v.churchMapUrl ? " and it fills in here the moment they write it." : " and they are not on the map yet."}
+							</p>
+						)}
 
 						<div class="min-bio__runs">
 							<span class="min-bio__label">What we carry from them</span>
