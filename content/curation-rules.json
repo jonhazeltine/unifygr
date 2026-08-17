@@ -1,0 +1,108 @@
+{
+	"_comment": "The rules the curation runs on, set by New Life. These are editorial judgements, not data problems, so they live in one place where they can be read and argued with rather than buried in a script.",
+	"scope": {
+		"centre": {
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"label": "New Life, Knapp's Corner"
+		},
+		"radiusMiles": 20,
+		"reaches": "Rockford, Sparta, Cedar Springs, Lowell, Caledonia, Byron Center, Hudsonville, Allendale, Coopersville"
+	},
+	"knappsCorner": {
+		"note": "Churches sharing our own campus. A prayer or worship gathering here is ours to point at; the same gathering across town competes with what we already do.",
+		"withinMiles": 0.3,
+		"churches": [
+			"New Life Grand Rapids",
+			"New Life",
+			"Ignite USA",
+			"Life Center Church of Apostolic"
+		]
+	},
+	"noOverlapWithOurSignature": {
+		"note": "We already do these well. Carrying somebody else's version of them divides our own people rather than adding anything.",
+		"themes": [
+			"sunday_service",
+			"worship_music",
+			"prayer"
+		],
+		"exceptAtKnappsCorner": true
+	},
+	"traditionsToAvoid": {
+		"note": "Kept off unless a category has no other option at all, in which case the best available is carried and flagged.",
+		"patterns": [
+			"latter[- ]day",
+			"\\blds\\b",
+			"\\bmormon\\b",
+			"seventh[- ]day adventist",
+			"\\bsda\\b",
+			"\\badventist\\b",
+			"\\bcatholic\\b",
+			"\\borthodox\\b",
+			"\\bantiochian\\b",
+			"\\bsynagogue\\b",
+			"\\bmessianic\\b",
+			"\\bunity\\b",
+			"\\bunitarian\\b",
+			"\\buniversalist\\b",
+			"science of mind",
+			"\\bscientolog"
+		],
+		"allowAsLastResort": true
+	},
+	"alwaysExclude": {
+		"note": "Asked for by name, across every ministry area.",
+		"churches": [
+			"Bauer Christian Reformed Church"
+		]
+	},
+	"prefer": {
+		"charismatic": {
+			"note": "Lean toward churches whose own language and tradition sit close to ours, where there is a choice.",
+			"traditionFamilies": [
+				"pentecostal",
+				"charismatic_network",
+				"apostolic_oneness",
+				"holiness"
+			],
+			"weight": 3
+		},
+		"midweekDispersion": {
+			"note": "Midweek is where geography decides whether a family can actually go, so spread these across the map rather than stacking them downtown.",
+			"themes": [
+				"youth",
+				"kids",
+				"bible_study",
+				"mens",
+				"womens",
+				"young_adults"
+			],
+			"maxPerAreaPerTheme": 2
+		}
+	},
+	"needsHumanHandling": {
+		"note": "Flagged by New Life for a person to decide rather than a rule.",
+		"churches": [
+			"Ignite USA",
+			"Mosaic Life Church",
+			"Mosaic Church"
+		]
+	},
+	"junkRecords": {
+		"note": "Test rows sitting in the church data near our own address. They are not churches and must never reach a page.",
+		"patterns": [
+			"^test\\b",
+			"\\btest church\\b",
+			"\\btest chruch\\b",
+			"\\btest churchy\\b",
+			"^the test\\b",
+			"busters big",
+			"big mikes",
+			"hazeltine test",
+			"best church ever",
+			"2st turkey",
+			"\\bbert church\\b",
+			"test church 2"
+		]
+	}
+}

@@ -1,5 +1,5 @@
 {
-	"_comment": "New Life's own calendar, curated from The Church Map's published Grand Rapids events. Regenerate with scripts/build-curated-calendar.py.",
+	"_comment": "New Life's own calendar, curated from The Church Map's published Grand Rapids events under content/curation-rules.json. Regenerate with scripts/build-curated-calendar.py.",
 	"source": "https://thechurchmap.com/grandrapids/events",
 	"scope": {
 		"radiusMiles": 20,
@@ -8,29 +8,29 @@
 	"days": 60,
 	"themes": {
 		"Sport": 2,
-		"Bible study": 23,
-		"Young adults": 18,
-		"Worship": 27,
-		"Food & fellowship": 33,
-		"Women": 20,
+		"Young adults": 9,
+		"Worship": 2,
+		"Food & fellowship": 29,
+		"Women": 10,
 		"Serve": 5,
 		"Seniors": 7,
-		"Family": 13,
-		"Kids": 26,
-		"Men": 21,
-		"Prayer": 47,
+		"Bible study": 14,
+		"Family": 12,
+		"Kids": 24,
+		"Men": 15,
 		"Youth": 4,
-		"Sunday service": 14,
 		"Arts": 8,
-		"Classes": 7,
+		"Sunday service": 8,
+		"Classes": 6,
+		"Care & support": 1,
 		"Everything else": 6,
-		"Care & support": 8,
 		"Mission trips": 1
 	},
 	"events": [
 		{
 			"title": "27th Annual Grace Golf Classic",
 			"miles": 7.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-17",
 			"time": "8am",
 			"venue": "Grace Christian University (Chapel)",
@@ -41,26 +41,13 @@
 				"adult-sports"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-17T08:00:00"
-		},
-		{
-			"title": "Cross Connected Online Bible Study",
-			"miles": 8.7,
-			"date": "2026-08-17",
-			"time": "10am",
-			"venue": "Grand Rapids Central Seventh-day Adventist Church",
-			"city": "Walker",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-17T10:00:00"
 		},
 		{
 			"title": "Walking Club",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-08-17",
 			"time": "10am",
 			"venue": "Bostwick Lake Congregational Church",
@@ -71,11 +58,13 @@
 				"adult-sports"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-17T10:00:00"
 		},
 		{
 			"title": "Mosaic Young Adults (ages 18-29) Bible Study",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-17",
 			"time": "12:15pm",
 			"venue": "Mosaic Church",
@@ -86,11 +75,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-17T12:15:00"
 		},
 		{
 			"title": "Worship & Prayer Night",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-17",
 			"time": "6:30pm",
 			"venue": "New Life Grand Rapids",
@@ -102,11 +93,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-17T18:30:00"
 		},
 		{
 			"title": "Book Club",
 			"miles": 5.5,
+			"needsHumanHandling": false,
 			"date": "2026-08-17",
 			"time": "6:30pm",
 			"venue": "Blythefield Christian Reformed Church",
@@ -117,11 +110,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-17T18:30:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-17",
 			"time": "7pm",
 			"venue": "Sunshine Community Church",
@@ -132,11 +127,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-17T19:00:00"
 		},
 		{
 			"title": "Women's Summer Gatherings",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": null,
 			"venue": "Magnify Church - Northview Campus",
@@ -148,11 +145,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-18T00:00:00"
 		},
 		{
 			"title": "Women's Summer Gatherings",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": null,
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -164,11 +163,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-18T00:00:00"
 		},
 		{
 			"title": "Food Pantry",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": "9:30am",
 			"venue": "Grace Christian Reformed Church",
@@ -179,11 +180,13 @@
 				"local-outreach"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-18T09:30:00"
 		},
 		{
 			"title": "Senior's Ministry Brunch @ New Beginnings Restaurant",
 			"miles": 9.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": "10am",
 			"venue": "Remembrance Church",
@@ -194,11 +197,13 @@
 				"senior-adults"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-18T10:00:00"
 		},
 		{
 			"title": "Bible Study",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": "10am",
 			"venue": "Bostwick Lake Congregational Church",
@@ -209,11 +214,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-18T10:00:00"
 		},
 		{
 			"title": "Seidman BGC - Back to School Bash",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-18",
 			"time": "4pm",
 			"venue": "Mosaic Church",
@@ -224,11 +231,13 @@
 				"parenting"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-18T16:00:00"
 		},
 		{
 			"title": "Kids' Courtyard Grand Opening",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": "5pm",
 			"venue": "Sunshine Community Church",
@@ -240,58 +249,13 @@
 				"nursery"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-18T17:00:00"
-		},
-		{
-			"title": "Pathfinder Drum Corps",
-			"miles": 8.7,
-			"date": "2026-08-18",
-			"time": "5:45pm",
-			"venue": "Grand Rapids Central Seventh-day Adventist Church",
-			"city": "Walker",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-18T17:45:00"
-		},
-		{
-			"title": "Pathfinder Meeting",
-			"miles": 8.7,
-			"date": "2026-08-18",
-			"time": "6:30pm",
-			"venue": "Grand Rapids Central Seventh-day Adventist Church",
-			"city": "Walker",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-18T18:30:00"
-		},
-		{
-			"title": "Young Adults",
-			"miles": 5.9,
-			"date": "2026-08-18",
-			"time": "7pm",
-			"venue": "Community Christian Church",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-18T19:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-18",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -302,11 +266,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-18T20:00:00"
 		},
 		{
 			"title": "Men's | Band of Brothers",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-19",
 			"time": "6am",
 			"venue": "Crossroads Bible Church",
@@ -317,27 +283,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-19T06:00:00"
-		},
-		{
-			"title": "Prayer Group",
-			"miles": 10.2,
-			"date": "2026-08-19",
-			"time": "9:45am",
-			"venue": "Ideal Park Christian Reformed Church",
-			"city": "Wyoming",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T09:45:00"
 		},
 		{
 			"title": "Rooted - Women's Bible Study",
 			"miles": 12.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-19",
 			"time": "10:30am",
 			"venue": "Cedar Creek Community Church",
@@ -349,11 +301,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-19T10:30:00"
 		},
 		{
 			"title": "Senior Bible Study",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-19",
 			"time": "12pm",
 			"venue": "New Hope Lutheran Church",
@@ -364,11 +318,13 @@
 				"senior-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-19T12:00:00"
 		},
 		{
 			"title": "Outpost (Middle School) | Bible Study",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-19",
 			"time": "1:30pm",
 			"venue": "Crossroads Bible Church",
@@ -380,58 +336,13 @@
 				"middle-school"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-19T13:30:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-08-19",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-08-19",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T18:30:00"
-		},
-		{
-			"title": "Prayer Meeting / Bible Study",
-			"miles": 8.7,
-			"date": "2026-08-19",
-			"time": "7pm",
-			"venue": "Grand Rapids Central Seventh-day Adventist Church",
-			"city": "Walker",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T19:00:00"
 		},
 		{
 			"title": "Dude's Night",
 			"miles": 5.9,
+			"needsHumanHandling": false,
 			"date": "2026-08-19",
 			"time": "7pm",
 			"venue": "Community Christian Church",
@@ -442,58 +353,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-19T19:00:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-08-19",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-08-19",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T19:00:00"
-		},
-		{
-			"title": "Men's Bible Study and Breakfast",
-			"miles": 3.0,
-			"date": "2026-08-20",
-			"time": "7am",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-20T07:00:00"
 		},
 		{
 			"title": "Public Reading of Scripture",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-20",
 			"time": "12pm",
 			"venue": "Grace Christian Reformed Church",
@@ -504,11 +370,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-20T12:00:00"
 		},
 		{
 			"title": "Outpost (6th-12th) | End of Summer Party",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-20",
 			"time": "1pm",
 			"venue": "Crossroads Bible Church",
@@ -520,27 +388,13 @@
 				"middle-school"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-20T13:00:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-08-20",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-20T19:00:00"
 		},
 		{
 			"title": "60 & Up Breakfast Bunch",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-21",
 			"time": "8:30am",
 			"venue": "Sunshine Community Church",
@@ -551,27 +405,13 @@
 				"senior-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-21T08:30:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-08-21",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-21T18:00:00"
 		},
 		{
 			"title": "Summer Jam - Northview",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-21",
 			"time": "6pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -583,11 +423,13 @@
 				"nursery"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-21T18:00:00"
 		},
 		{
 			"title": "Summer Jam - Northview",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-21",
 			"time": "6pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -599,26 +441,13 @@
 				"nursery"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-21T18:00:00"
-		},
-		{
-			"title": "Men's Community Group",
-			"miles": 3.0,
-			"date": "2026-08-21",
-			"time": "6:30pm",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-21T18:30:00"
 		},
 		{
 			"title": "Men's | Avenue Group",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-22",
 			"time": "7:30am",
 			"venue": "Crossroads Bible Church",
@@ -629,26 +458,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-22T07:30:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-08-22",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-22T09:30:00"
 		},
 		{
 			"title": "HOMEMADE - Ice Cream Social",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": null,
 			"venue": "New Life Baptist Church",
@@ -659,58 +475,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-23T00:00:00"
-		},
-		{
-			"title": "Sunday Morning Prayer",
-			"miles": 4.1,
-			"date": "2026-08-23",
-			"time": "7:45am",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-23T07:45:00"
-		},
-		{
-			"title": "Sunday Gatherings",
-			"miles": 4.1,
-			"date": "2026-08-23",
-			"time": "8:45am",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-23T08:45:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-08-23",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-23T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -722,42 +493,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "99 Years Special Worship Service",
-			"miles": 10.2,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "Ideal Park Christian Reformed Church",
-			"city": "Wyoming",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-23T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 12.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "10am",
 			"venue": "Cedar Creek Community Church",
@@ -769,26 +511,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "Outdoor Worship Service",
-			"miles": 2.1,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "St. Luke's Lutheran Church",
-			"city": "Northview",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-23T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -800,11 +529,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-23T10:00:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-23",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -815,11 +546,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-23T10:30:00"
 		},
 		{
 			"title": "Worship and Children's Worship",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "10:30am",
 			"venue": "Grace Christian Reformed Church",
@@ -830,11 +563,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-23T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -845,26 +580,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-08-23T11:00:00"
-		},
-		{
-			"title": "Joint Worship at St. James",
-			"miles": 3.9,
-			"date": "2026-08-23",
-			"time": "11am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-23T11:00:00"
 		},
 		{
 			"title": "Serve Sunday!",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-23",
 			"time": "11:30am",
 			"venue": "Mosaic Church",
@@ -875,11 +597,13 @@
 				"local-outreach"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-23T11:30:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -890,27 +614,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-23T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-08-23",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-23T12:00:00"
 		},
 		{
 			"title": "The Post | Beach Day",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-23",
 			"time": "2pm",
 			"venue": "Crossroads Bible Church",
@@ -921,27 +631,13 @@
 				"parenting"
 			],
 			"cadence": "one_off",
-			"sort": "2026-08-23T14:00:00"
-		},
-		{
-			"title": "Servicio de Adoraci\u00f3n en Espa\u00f1ol",
-			"miles": 5.9,
-			"date": "2026-08-23",
-			"time": "2pm",
-			"venue": "Community Christian Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-23T14:00:00"
 		},
 		{
 			"title": "Communion/Potluck Sabbath",
 			"miles": 6.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-24",
 			"time": null,
 			"venue": "All Nations Church",
@@ -952,27 +648,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
-			"sort": "2026-08-24T00:00:00"
-		},
-		{
-			"title": "Week of Prayer",
-			"miles": 5.5,
-			"date": "2026-08-24",
-			"time": "12am",
-			"venue": "Grand Rapids Northwest Spanish SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-24T00:00:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-24",
 			"time": "7pm",
 			"venue": "Sunshine Community Church",
@@ -983,11 +665,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-24T19:00:00"
 		},
 		{
 			"title": "First Half Day of School (Y5 -8th Grade)",
 			"miles": 11.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": null,
 			"venue": "Religious Education",
@@ -999,11 +683,13 @@
 				"nursery"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-25T00:00:00"
 		},
 		{
 			"title": "Food Pantry",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": "9:30am",
 			"venue": "Grace Christian Reformed Church",
@@ -1014,11 +700,13 @@
 				"local-outreach"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-25T09:30:00"
 		},
 		{
 			"title": "Women's Fall Kickoff",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": "6:30pm",
 			"venue": "Crossroads Bible Church",
@@ -1030,42 +718,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-25T18:30:00"
-		},
-		{
-			"title": "Young Adults",
-			"miles": 5.9,
-			"date": "2026-08-25",
-			"time": "7pm",
-			"venue": "Community Christian Church",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-25T19:00:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.5,
-			"date": "2026-08-25",
-			"time": "8pm",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-25T20:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -1076,11 +735,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-25T20:00:00"
 		},
 		{
 			"title": "Financial Planning Ministry Webinar",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": "8pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -1091,11 +752,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-25T20:00:00"
 		},
 		{
 			"title": "Financial Planning Ministry Webinar",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-25",
 			"time": "8pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -1106,11 +769,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-25T20:00:00"
 		},
 		{
 			"title": "Men's | Band of Brothers",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-26",
 			"time": "6am",
 			"venue": "Crossroads Bible Church",
@@ -1121,27 +786,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-26T06:00:00"
-		},
-		{
-			"title": "Prayer Group",
-			"miles": 10.2,
-			"date": "2026-08-26",
-			"time": "9:45am",
-			"venue": "Ideal Park Christian Reformed Church",
-			"city": "Wyoming",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T09:45:00"
 		},
 		{
 			"title": "Rooted - Women's Bible Study",
 			"miles": 12.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-26",
 			"time": "10:30am",
 			"venue": "Cedar Creek Community Church",
@@ -1153,43 +804,30 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-26T10:30:00"
 		},
 		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-08-26",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
+			"title": "Open Circle - Reflective Listening",
+			"miles": 8.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-26",
 			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
+			"venue": "Unity Spiritual Community Church",
+			"city": "Forest Hills",
+			"theme": "care_support",
+			"themeLabel": "Care & support",
 			"categories": [
-				"prayer-meetings",
-				"intercession"
+				"grief-support"
 			],
 			"cadence": "recurring_group",
+			"lastResort": true,
 			"sort": "2026-08-26T18:30:00"
 		},
 		{
 			"title": "Dude's Night",
 			"miles": 5.9,
+			"needsHumanHandling": false,
 			"date": "2026-08-26",
 			"time": "7pm",
 			"venue": "Community Christian Church",
@@ -1200,58 +838,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-26T19:00:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-08-26",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-08-26",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T19:00:00"
-		},
-		{
-			"title": "Men's Bible Study and Breakfast",
-			"miles": 3.0,
-			"date": "2026-08-27",
-			"time": "7am",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-27T07:00:00"
 		},
 		{
 			"title": "Public Reading of Scripture",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-27",
 			"time": "12pm",
 			"venue": "Grace Christian Reformed Church",
@@ -1262,11 +855,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-27T12:00:00"
 		},
 		{
 			"title": "Bible Study Rohrer",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-27",
 			"time": "6:30pm",
 			"venue": "New Hope Lutheran Church",
@@ -1277,43 +872,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-27T18:30:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-08-27",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-27T19:00:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-08-28",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-28T18:00:00"
 		},
 		{
 			"title": "Battle Creek SDB Church at the Camp",
 			"miles": 6.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-29",
 			"time": null,
 			"venue": "All Nations Church",
@@ -1322,11 +887,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-29T00:00:00"
 		},
 		{
 			"title": "Men's | Avenue Group",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-29",
 			"time": "7:30am",
 			"venue": "Crossroads Bible Church",
@@ -1337,73 +904,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-29T07:30:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-08-29",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-29T09:30:00"
-		},
-		{
-			"title": "Sunday Morning Prayer",
-			"miles": 4.1,
-			"date": "2026-08-30",
-			"time": "7:45am",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-30T07:45:00"
-		},
-		{
-			"title": "Sunday Gatherings",
-			"miles": 4.1,
-			"date": "2026-08-30",
-			"time": "8:45am",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-30T08:45:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-08-30",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-30T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -1415,27 +922,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-08-30T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-08-30",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 12.2,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10am",
 			"venue": "Cedar Creek Community Church",
@@ -1447,11 +940,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -1463,11 +958,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:00:00"
 		},
 		{
 			"title": "Family Connects - Ensley",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10:10am",
 			"venue": "Magnify Church - Northview Campus",
@@ -1478,11 +975,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:10:00"
 		},
 		{
 			"title": "Family Connects - Ensley",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10:10am",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -1493,11 +992,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:10:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-30",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -1508,11 +1009,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T10:30:00"
 		},
 		{
 			"title": "Worship and Children's Worship",
 			"miles": 4.6,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10:30am",
 			"venue": "Grace Christian Reformed Church",
@@ -1523,11 +1026,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T10:30:00"
 		},
 		{
 			"title": "House Church Info Meeting",
 			"miles": 4.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "10:45am",
 			"venue": "Crossroads Bible Church",
@@ -1536,11 +1041,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T10:45:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -1551,11 +1058,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -1566,11 +1075,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-08-30T11:30:00"
 		},
 		{
 			"title": "Cookout Sunday",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-08-30",
 			"time": "12pm",
 			"venue": "Mosaic Church",
@@ -1581,11 +1092,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T12:00:00"
 		},
 		{
 			"title": "IBH Picnic",
 			"miles": 8.5,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "12pm",
 			"venue": "Maplelawn Baptist Church",
@@ -1596,43 +1109,13 @@
 				"parenting"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T12:00:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-08-30",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-30T12:00:00"
-		},
-		{
-			"title": "Servicio de Adoraci\u00f3n en Espa\u00f1ol",
-			"miles": 5.9,
-			"date": "2026-08-30",
-			"time": "2pm",
-			"venue": "Community Christian Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-30T14:00:00"
 		},
 		{
 			"title": "I SCREAM (for ice cream)!",
 			"miles": 15.1,
+			"needsHumanHandling": false,
 			"date": "2026-08-30",
 			"time": "6pm",
 			"venue": "Messiah Christian Reformed Church",
@@ -1643,11 +1126,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-30T18:00:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-08-31",
 			"time": "7pm",
 			"venue": "Sunshine Community Church",
@@ -1658,26 +1143,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-08-31T19:00:00"
-		},
-		{
-			"title": "Young Marrieds Kickoff",
-			"miles": 4.1,
-			"date": "2026-08-31",
-			"time": "7pm",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-08-31T19:00:00"
 		},
 		{
 			"title": "Fellowship Potluck",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-01",
 			"time": "12:15pm",
 			"venue": "Wyoming Church of God",
@@ -1688,11 +1160,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-01T12:15:00"
 		},
 		{
 			"title": "Gather and Grow",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-01",
 			"time": "6:30pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -1703,11 +1177,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-01T18:30:00"
 		},
 		{
 			"title": "Gather and Grow",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-01",
 			"time": "6:30pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -1718,11 +1194,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-01T18:30:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-01",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -1733,11 +1211,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-01T20:00:00"
 		},
 		{
 			"title": "M.I.S.T. Seniors Group Monthly Breakfast",
 			"miles": 15.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-02",
 			"time": "8:30am",
 			"venue": "Messiah Christian Reformed Church",
@@ -1748,11 +1228,13 @@
 				"senior-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-02T08:30:00"
 		},
 		{
 			"title": "Michigan Warrior Wednesday \u2013 Sam and Jennifer Stitt IV, Speakers",
 			"miles": 10.4,
+			"needsHumanHandling": false,
 			"date": "2026-09-02",
 			"time": "6pm",
 			"venue": "Set Free Ministries (SF Ministry Center)",
@@ -1763,75 +1245,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-02T18:00:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-09-02",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-02T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-09-02",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-02T18:30:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-09-02",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-02T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-09-02",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-02T19:00:00"
 		},
 		{
 			"title": "The Lunch Bunch",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-03",
 			"time": "11:30am",
 			"venue": "Bostwick Lake Congregational Church",
@@ -1842,11 +1262,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-03T11:30:00"
 		},
 		{
 			"title": "Mosaic Young Adults (ages 18-29) Pizza & Games",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-03",
 			"time": "12:15pm",
 			"venue": "Mosaic Church",
@@ -1857,58 +1279,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-03T12:15:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-09-03",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-03T19:00:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-09-04",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-04T18:00:00"
-		},
-		{
-			"title": "Pot Luck after church",
-			"miles": 15.2,
-			"date": "2026-09-05",
-			"time": "12am",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-05T00:00:00"
 		},
 		{
 			"title": "Sunshine Sewing Group & Stitches of Hope",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-05",
 			"time": "9am",
 			"venue": "Sunshine Community Church",
@@ -1919,42 +1296,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-05T09:00:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-09-05",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-05T09:30:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-09-06",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-06T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -1966,27 +1314,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-09-06T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-09-06",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -1998,11 +1332,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T10:00:00"
 		},
 		{
 			"title": "Family Connects - Northview",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "10:10am",
 			"venue": "Magnify Church - Northview Campus",
@@ -2013,11 +1349,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T10:10:00"
 		},
 		{
 			"title": "Family Connects - Northview",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "10:10am",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2028,11 +1366,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T10:10:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-06",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -2043,11 +1383,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-06T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -2058,11 +1400,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-06T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -2073,27 +1417,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-09-06",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-06T12:00:00"
 		},
 		{
 			"title": "Middle School & High School Youth Group",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-06",
 			"time": "5:30pm",
 			"venue": "Sunshine Community Church",
@@ -2105,11 +1435,13 @@
 				"middle-school"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-06T17:30:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-07",
 			"time": "7pm",
 			"venue": "Sunshine Community Church",
@@ -2120,26 +1452,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-07T19:00:00"
 		},
 		{
 			"title": "Men's Fish Fry - Ensley",
-			"miles": 2.8,
-			"date": "2026-09-08",
-			"time": "6pm",
-			"venue": "Magnify Church - Northview Campus",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-08T18:00:00"
-		},
-		{
-			"title": "Men's Fish Fry - Ensley",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-08",
 			"time": "6pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2150,11 +1469,13 @@
 				"mens-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-08T18:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-08",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -2165,26 +1486,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-08T20:00:00"
-		},
-		{
-			"title": "Grief Support Group",
-			"miles": 4.5,
-			"date": "2026-09-09",
-			"time": "1pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T13:00:00"
 		},
 		{
 			"title": "Car Show",
 			"miles": 15.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "5:30pm",
 			"venue": "Messiah Christian Reformed Church",
@@ -2193,27 +1501,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-09T17:30:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-09-09",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T18:00:00"
 		},
 		{
 			"title": "Fall Kick-Off Community Event",
 			"miles": 10.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "6:30pm",
 			"venue": "Faith Community Christian Reformed Church",
@@ -2224,11 +1518,13 @@
 				"local-outreach"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-09T18:30:00"
 		},
 		{
 			"title": "Awana - Ensley",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "6:30pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -2240,11 +1536,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-09T18:30:00"
 		},
 		{
 			"title": "Life Group Leader Gathering - Rockford",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "6:30pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -2255,11 +1553,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-09T18:30:00"
 		},
 		{
 			"title": "Awana - Ensley",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "6:30pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2271,11 +1571,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-09T18:30:00"
 		},
 		{
 			"title": "Life Group Leader Gathering - Rockford",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-09",
 			"time": "6:30pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2286,135 +1588,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-09T18:30:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-09-09",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T18:30:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-09-09",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-09-09",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T19:00:00"
-		},
-		{
-			"title": "Book Club",
-			"miles": 2.2,
-			"date": "2026-09-10",
-			"time": "1pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-10T13:00:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-09-10",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-10T13:30:00"
-		},
-		{
-			"title": "Men's Cursillo Weekend",
-			"miles": 4.5,
-			"date": "2026-09-10",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-10T19:00:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-09-10",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-10T19:00:00"
-		},
-		{
-			"title": "Alpha for Young Adults",
-			"miles": 4.5,
-			"date": "2026-09-10",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-10T19:00:00"
 		},
 		{
 			"title": "DONUT SUNDAY",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-11",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -2425,42 +1605,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-11T11:30:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-09-11",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-11T18:00:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-09-12",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-12T09:30:00"
 		},
 		{
 			"title": "Tract Blitz",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-12",
 			"time": "10am",
 			"venue": "New Life Baptist Church",
@@ -2471,11 +1622,13 @@
 				"local-outreach"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-12T10:00:00"
 		},
 		{
 			"title": "Women's Fall Bible Study",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": null,
 			"venue": "Magnify Church - Northview Campus",
@@ -2487,11 +1640,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T00:00:00"
 		},
 		{
 			"title": "Women's Fall Bible Study",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": null,
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2503,27 +1658,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T00:00:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-09-13",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-13T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -2535,27 +1676,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-09-13T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-09-13",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -2567,11 +1694,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T10:00:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-13",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -2582,11 +1711,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-13T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -2597,11 +1728,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-13T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -2612,27 +1745,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-09-13",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-13T12:00:00"
 		},
 		{
 			"title": "Life Group Leader Gathering - Northview",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "6:30pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -2643,11 +1762,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T18:30:00"
 		},
 		{
 			"title": "Life Group Leader Gathering - Northview",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-13",
 			"time": "6:30pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2658,11 +1779,13 @@
 				"bible-study"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-13T18:30:00"
 		},
 		{
 			"title": "New Hope Knitting Group",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-14",
 			"time": "3pm",
 			"venue": "New Hope Lutheran Church",
@@ -2673,26 +1796,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-14T15:00:00"
-		},
-		{
-			"title": "Discerning the Diaconate Info Night",
-			"miles": 4.5,
-			"date": "2026-09-14",
-			"time": "6:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "class_training",
-			"themeLabel": "Classes",
-			"categories": [
-				"discipleship-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-14T18:30:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-14",
 			"time": "7pm",
 			"venue": "Sunshine Community Church",
@@ -2703,11 +1813,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-14T19:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-15",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -2718,75 +1830,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-15T20:00:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-09-16",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-09-16",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T18:30:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-09-16",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-09-16",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T19:00:00"
 		},
 		{
 			"title": "Mosaic Young Adults (ages 18-29) Bible Study",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-17",
 			"time": "12:15pm",
 			"venue": "Mosaic Church",
@@ -2797,26 +1847,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-17T12:15:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-09-17",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-17T13:30:00"
 		},
 		{
 			"title": "Worship & Prayer Night",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-17",
 			"time": "6:30pm",
 			"venue": "New Life Grand Rapids",
@@ -2828,42 +1865,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-17T18:30:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-09-17",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-17T19:00:00"
-		},
-		{
-			"title": "Alpha for Young Adults",
-			"miles": 4.5,
-			"date": "2026-09-17",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-17T19:00:00"
 		},
 		{
 			"title": "60 & Up Breakfast Bunch",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-18",
 			"time": "8:30am",
 			"venue": "Sunshine Community Church",
@@ -2874,57 +1882,13 @@
 				"senior-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-18T08:30:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-09-18",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-18T18:00:00"
-		},
-		{
-			"title": "Men's Community Group",
-			"miles": 3.0,
-			"date": "2026-09-18",
-			"time": "6:30pm",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-18T18:30:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-09-19",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-19T09:30:00"
 		},
 		{
 			"title": "To Know and To Be Known Women's Daytreat - Ensley",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-19",
 			"time": "10am",
 			"venue": "Magnify Church - Northview Campus",
@@ -2936,11 +1900,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-19T10:00:00"
 		},
 		{
 			"title": "To Know and To Be Known Women's Daytreat - Ensley",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-19",
 			"time": "10am",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -2952,11 +1918,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-19T10:00:00"
 		},
 		{
 			"title": "Ladies Secret Sister Reveal",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-19",
 			"time": "11:15am",
 			"venue": "New Life Baptist Church",
@@ -2968,11 +1936,13 @@
 				"womens-bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-19T11:15:00"
 		},
 		{
 			"title": "Senior Bible Study",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-19",
 			"time": "12pm",
 			"venue": "New Hope Lutheran Church",
@@ -2983,26 +1953,13 @@
 				"senior-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-19T12:00:00"
-		},
-		{
-			"title": "Springs of Love - Mass and Picnic for Foster and Adoptive Families",
-			"miles": 4.5,
-			"date": "2026-09-19",
-			"time": "4pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-19T16:00:00"
 		},
 		{
 			"title": "A-\"Men\" Sunday",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": null,
 			"venue": "New Life Baptist Church",
@@ -3013,27 +1970,13 @@
 				"mens-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T00:00:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-09-20",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-20T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -3045,11 +1988,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T10:00:00"
 		},
 		{
 			"title": "2026-2027 Ministry Year Kick Off",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10am",
 			"venue": "Sunshine Community Church",
@@ -3058,27 +2003,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
-			"sort": "2026-09-20T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-09-20",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -3090,11 +2021,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T10:00:00"
 		},
 		{
 			"title": "Family Connects - Rockford",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10:10am",
 			"venue": "Magnify Church - Northview Campus",
@@ -3105,11 +2038,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T10:10:00"
 		},
 		{
 			"title": "Family Connects - Rockford",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10:10am",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -3120,11 +2055,13 @@
 				"parenting"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T10:10:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-20",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -3135,11 +2072,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T10:30:00"
 		},
 		{
 			"title": "Missions Conference",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "10:45am",
 			"venue": "New Life Baptist Church",
@@ -3150,11 +2089,13 @@
 				"short-term-missions"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T10:45:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -3165,11 +2106,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -3180,11 +2123,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T11:30:00"
 		},
 		{
 			"title": "Pastor Meet & Greet",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "11:30am",
 			"venue": "Sunshine Community Church",
@@ -3193,27 +2138,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-09-20",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-20T12:00:00"
 		},
 		{
 			"title": "Life Group Launch - Rockford",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "5:30pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -3224,11 +2155,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T17:30:00"
 		},
 		{
 			"title": "Middle School & High School Youth Group",
 			"miles": 3.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "5:30pm",
 			"venue": "Sunshine Community Church",
@@ -3240,11 +2173,13 @@
 				"middle-school"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-20T17:30:00"
 		},
 		{
 			"title": "Life Group Launch - Rockford",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-20",
 			"time": "5:30pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -3255,11 +2190,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-20T17:30:00"
 		},
 		{
 			"title": "RE Classes Begin",
 			"miles": 11.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-21",
 			"time": null,
 			"venue": "Religious Education",
@@ -3270,26 +2207,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-21T00:00:00"
-		},
-		{
-			"title": "Young Adults Bible Study",
-			"miles": 3.5,
-			"date": "2026-09-21",
-			"time": "7pm",
-			"venue": "Coit Community Church",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-21T19:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-22",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -3300,11 +2224,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-22T20:00:00"
 		},
 		{
 			"title": "Wednesday Night Dinner",
 			"miles": 5.4,
+			"needsHumanHandling": false,
 			"date": "2026-09-23",
 			"time": "5:45pm",
 			"venue": "Family of Christ Church",
@@ -3315,11 +2241,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-23T17:45:00"
 		},
 		{
 			"title": "Wednesday Night Dinner",
 			"miles": 10.9,
+			"needsHumanHandling": false,
 			"date": "2026-09-23",
 			"time": "5:45pm",
 			"venue": "Faith Community Christian Reformed Church",
@@ -3330,75 +2258,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-23T17:45:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-09-23",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-23T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-09-23",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-23T18:30:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-09-23",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-23T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-09-23",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-23T19:00:00"
 		},
 		{
 			"title": "Communion/Potluck Sabbath",
 			"miles": 6.2,
+			"needsHumanHandling": false,
 			"date": "2026-09-24",
 			"time": null,
 			"venue": "All Nations Church",
@@ -3409,57 +2275,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-24T00:00:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-09-24",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-24T13:30:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-09-24",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-24T19:00:00"
-		},
-		{
-			"title": "Alpha for Young Adults",
-			"miles": 4.5,
-			"date": "2026-09-24",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-24T19:00:00"
 		},
 		{
 			"title": "Harvestfest",
 			"miles": 11.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-25",
 			"time": null,
 			"venue": "Religious Education",
@@ -3470,74 +2292,13 @@
 				"parenting"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-25T00:00:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-09-25",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-25T18:00:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.5,
-			"date": "2026-09-25",
-			"time": "8pm",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-25T20:00:00"
-		},
-		{
-			"title": "Sabbath School",
-			"miles": 4.8,
-			"date": "2026-09-26",
-			"time": "9:30am",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-26T09:30:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-09-27",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-27T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -3549,27 +2310,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-09-27T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-09-27",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-27T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -3581,11 +2328,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-27T10:00:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-09-27",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -3596,11 +2345,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-27T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -3611,11 +2362,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-27T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -3626,42 +2379,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-27T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-09-27",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-27T12:00:00"
-		},
-		{
-			"title": "Catholic Inquiry Class",
-			"miles": 3.9,
-			"date": "2026-09-27",
-			"time": "3:15pm",
-			"venue": "Cathedral Of Saint Andrew",
-			"city": "Grand Rapids",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-27T15:15:00"
 		},
 		{
 			"title": "Life Group Launch - Northview",
 			"miles": 2.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "6pm",
 			"venue": "Magnify Church - Northview Campus",
@@ -3672,11 +2396,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-27T18:00:00"
 		},
 		{
 			"title": "Life Group Launch - Northview",
 			"miles": 6.1,
+			"needsHumanHandling": false,
 			"date": "2026-09-27",
 			"time": "6pm",
 			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
@@ -3687,11 +2413,13 @@
 				"bible-study"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-27T18:00:00"
 		},
 		{
 			"title": "Legacy Society Event",
 			"miles": 11.8,
+			"needsHumanHandling": false,
 			"date": "2026-09-29",
 			"time": null,
 			"venue": "Religious Education",
@@ -3702,11 +2430,13 @@
 				"senior-adults"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-09-29T00:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-09-29",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -3717,75 +2447,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-09-29T20:00:00"
-		},
-		{
-			"title": "Prayer Meeting",
-			"miles": 4.8,
-			"date": "2026-09-30",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-30T18:00:00"
-		},
-		{
-			"title": "Prayer Time",
-			"miles": 15.1,
-			"date": "2026-09-30",
-			"time": "6:30pm",
-			"venue": "Messiah Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-30T18:30:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-09-30",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-30T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-09-30",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-30T19:00:00"
 		},
 		{
 			"title": "Fellowship Potluck",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-10-01",
 			"time": "12:15pm",
 			"venue": "Wyoming Church of God",
@@ -3796,104 +2464,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-01T12:15:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-10-01",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-01T13:30:00"
-		},
-		{
-			"title": "Women's Cursillo Weekend",
-			"miles": 4.5,
-			"date": "2026-10-01",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-01T19:00:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-10-01",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-01T19:00:00"
-		},
-		{
-			"title": "Alpha for Young Adults",
-			"miles": 4.5,
-			"date": "2026-10-01",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-01T19:00:00"
-		},
-		{
-			"title": "Vespers",
-			"miles": 4.8,
-			"date": "2026-10-02",
-			"time": "6pm",
-			"venue": "Grand Rapids Bethel Seventh-day Adventist Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-02T18:00:00"
-		},
-		{
-			"title": "Pot Luck after church",
-			"miles": 15.2,
-			"date": "2026-10-03",
-			"time": "12am",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-03T00:00:00"
 		},
 		{
 			"title": "Free Drive-Thru Donut Dash",
 			"miles": 10.9,
+			"needsHumanHandling": false,
 			"date": "2026-10-03",
 			"time": "9am",
 			"venue": "Faith Community Christian Reformed Church",
@@ -3904,11 +2481,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-03T09:00:00"
 		},
 		{
 			"title": "Mosaic Young Adults (ages 18-29) Pizza & Games",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-10-03",
 			"time": "12:15pm",
 			"venue": "Mosaic Church",
@@ -3919,42 +2498,13 @@
 				"young-adults"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-03T12:15:00"
-		},
-		{
-			"title": "Anniversary Sunday",
-			"miles": 8.9,
-			"date": "2026-10-04",
-			"time": null,
-			"venue": "New Life Baptist Church",
-			"city": "Walker",
-			"theme": "sunday_service",
-			"themeLabel": "Sunday service",
-			"categories": [
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-04T00:00:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-10-04",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-04T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-10-04",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -3966,27 +2516,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-10-04T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-10-04",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-04T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-04",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -3998,11 +2534,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-04T10:00:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-10-04",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -4013,11 +2551,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-04T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-10-04",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -4028,11 +2568,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-04T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-04",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -4043,27 +2585,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-04T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-10-04",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-04T12:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-10-06",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -4074,11 +2602,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-06T20:00:00"
 		},
 		{
 			"title": "Michigan Warrior Wednesday - Adam Chambers, Speaker",
 			"miles": 10.4,
+			"needsHumanHandling": false,
 			"date": "2026-10-07",
 			"time": "6pm",
 			"venue": "Set Free Ministries (SF Ministry Center)",
@@ -4089,89 +2619,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-07T18:00:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-10-07",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-07T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-10-07",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-07T19:00:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-10-08",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-08T13:30:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-10-08",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-08T19:00:00"
-		},
-		{
-			"title": "Alpha for Young Adults",
-			"miles": 4.5,
-			"date": "2026-10-08",
-			"time": "7pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-08T19:00:00"
 		},
 		{
 			"title": "Free Drive-Thru Donut Dash",
 			"miles": 10.9,
+			"needsHumanHandling": false,
 			"date": "2026-10-10",
 			"time": "9am",
 			"venue": "Faith Community Christian Reformed Church",
@@ -4182,11 +2636,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-10T09:00:00"
 		},
 		{
 			"title": "Harvest Party",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-10-10",
 			"time": "12pm",
 			"venue": "New Life Baptist Church",
@@ -4195,26 +2651,13 @@
 			"themeLabel": "Everything else",
 			"categories": [],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-10T12:00:00"
-		},
-		{
-			"title": "Book Club",
-			"miles": 2.2,
-			"date": "2026-10-10",
-			"time": "1pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-10T13:00:00"
 		},
 		{
 			"title": "Chili Cook-Off",
 			"miles": 8.9,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": null,
 			"venue": "New Life Baptist Church",
@@ -4225,27 +2668,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-11T00:00:00"
-		},
-		{
-			"title": "Traditional Worship",
-			"miles": 3.9,
-			"date": "2026-10-11",
-			"time": "9:30am",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-11T09:30:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 7.8,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": "10am",
 			"venue": "Wyoming Church of God",
@@ -4257,27 +2686,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
-			"sort": "2026-10-11T10:00:00"
-		},
-		{
-			"title": "Mosaic Prayer Time",
-			"miles": 4.5,
-			"date": "2026-10-11",
-			"time": "10am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-11T10:00:00"
 		},
 		{
 			"title": "Sunday School",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": "10am",
 			"venue": "New Hope Lutheran Church",
@@ -4289,11 +2704,13 @@
 				"nursery"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-11T10:00:00"
 		},
 		{
 			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-10-11",
 			"time": "10:30am",
 			"venue": "Mosaic Church",
@@ -4304,11 +2721,13 @@
 				"arts-ministry"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-11T10:30:00"
 		},
 		{
 			"title": "New Life Service",
 			"miles": 0.0,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": "11am",
 			"venue": "New Life Grand Rapids",
@@ -4319,11 +2738,13 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-11T11:00:00"
 		},
 		{
 			"title": "Fellowship Hour",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -4334,11 +2755,13 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-11T11:30:00"
 		},
 		{
 			"title": "DONUT SUNDAY",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-11",
 			"time": "11:30am",
 			"venue": "New Hope Lutheran Church",
@@ -4349,27 +2772,13 @@
 				"small-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-11T11:30:00"
-		},
-		{
-			"title": "Contemporary Worship",
-			"miles": 3.9,
-			"date": "2026-10-11",
-			"time": "12pm",
-			"venue": "Immanuel Lutheran Church",
-			"city": "Grand Rapids",
-			"theme": "worship_music",
-			"themeLabel": "Worship",
-			"categories": [
-				"worship-nights",
-				"corporate-worship"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-11T12:00:00"
 		},
 		{
 			"title": "Mosaic Vision Meeting (All are invited, childcare and lunch provided)",
 			"miles": 4.5,
+			"needsHumanHandling": true,
 			"date": "2026-10-11",
 			"time": "12:30pm",
 			"venue": "Mosaic Church",
@@ -4380,11 +2789,13 @@
 				"discipleship-groups"
 			],
 			"cadence": "one_off",
+			"lastResort": false,
 			"sort": "2026-10-11T12:30:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
+			"needsHumanHandling": false,
 			"date": "2026-10-13",
 			"time": "8pm",
 			"venue": "Stones Church",
@@ -4395,26 +2806,13 @@
 				"mens-ministry"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-13T20:00:00"
-		},
-		{
-			"title": "Grief Support Group",
-			"miles": 4.5,
-			"date": "2026-10-14",
-			"time": "1pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-14T13:00:00"
 		},
 		{
 			"title": "New Hope Knitting Group",
 			"miles": 15.3,
+			"needsHumanHandling": false,
 			"date": "2026-10-14",
 			"time": "3pm",
 			"venue": "New Hope Lutheran Church",
@@ -4425,70 +2823,8 @@
 				"small-groups"
 			],
 			"cadence": "recurring_group",
+			"lastResort": false,
 			"sort": "2026-10-14T15:00:00"
-		},
-		{
-			"title": "Servicio de Oraci\u00f3n y Testimonios",
-			"miles": 6.3,
-			"date": "2026-10-14",
-			"time": "7pm",
-			"venue": "Grand Rapids Spanish Maranatha SDA",
-			"city": "Grand Rapids",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-14T19:00:00"
-		},
-		{
-			"title": "prayer meeting",
-			"miles": 15.2,
-			"date": "2026-10-14",
-			"time": "7pm",
-			"venue": "Wright Seventh-day Adventist Church",
-			"city": "Coopersville",
-			"theme": "prayer",
-			"themeLabel": "Prayer",
-			"categories": [
-				"prayer-meetings",
-				"intercession"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-14T19:00:00"
-		},
-		{
-			"title": "GriefShare Support Group",
-			"miles": 4.5,
-			"date": "2026-10-15",
-			"time": "1:30pm",
-			"venue": "Roman Catholic Diocese of Grand Rapids",
-			"city": "Grand Rapids",
-			"theme": "care_support",
-			"themeLabel": "Care & support",
-			"categories": [
-				"grief-support"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-15T13:30:00"
-		},
-		{
-			"title": "Revive Ladies Basketball",
-			"miles": 2.2,
-			"date": "2026-10-15",
-			"time": "7pm",
-			"venue": "Blessed Sacrament Catholic Church",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-15T19:00:00"
 		}
 	]
 }

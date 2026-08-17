@@ -25,6 +25,7 @@ import json, math, os, re, subprocess, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "content/curated-events.json")
 FUNNEL = os.path.join(ROOT, "content/church-funnel.json")
+RULES = os.path.join(ROOT, "content/curation-rules.json")
 API = "https://thechurchmap.com/api/platforms/grandrapids/events"
 CENTER = (42.999923, -85.601454)   # New Life, Knapp's Corner
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -147,7 +148,18 @@ def resolve_distances(church_ids):
 
 def main():
     funnel = json.load(open(FUNNEL))
-    radius = funnel["radiusMiles"]
+    rules = json.load(open(RULES))
+    radius = rules["scope"]["radiusMiles"]
+
+    avoid = re.compile("|".join(rules["traditionsToAvoid"]["patterns"]), re.I)
+    junk = re.compile("|".join(rules["junkRecords"]["patterns"]), re.I)
+    banned = {c.lower() for c in rules["alwaysExclude"]["churches"]}
+    knapps = {c.lower() for c in rules["knappsCorner"]["churches"]}
+    overlap = set(rules["noOverlapWithOurSignature"]["themes"])
+    flagged = {c.lower() for c in rules["needsHumanHandling"]["churches"]}
+    disperse = rules["prefer"]["midweekDispersion"]
+    disperse_themes = set(disperse["themes"])
+    per_area_cap = disperse["maxPerAreaPerTheme"]
 
     raw, meta = fetch_all()
     # The platform reaches further than we do (Muskegon, Holland, Allegan), so
@@ -156,31 +168,16 @@ def main():
     print(f"published by The Church Map for {meta['platform']['name']}: {len(raw)} events "
           f"over {meta['days']} days")
 
-    events, dropped, out_of_scope, seen = [], 0, 0, set()
-    for ev in raw:
-        title = (ev.get("title") or "").strip()
-        church = (ev.get("churchName") or "").strip()
-        if not title or not church:
-            continue
-        miles = distance.get(ev.get("churchId"))
-        if miles is None or miles > radius:
-            out_of_scope += 1
-            continue
-        if EXCLUDE_CHURCH.search(church) or ev.get("theme") in SKIP_THEMES or DENY.search(title):
-            dropped += 1
-            continue
-        day = (ev.get("localStart") or "")[:10]
-        # One congregation appears under more than one record upstream, so fold
-        # on what a reader would see rather than on the church id.
-        key = (day, title.lower(), (ev.get("city") or "").lower())
-        if key in seen:
-            continue
-        seen.add(key)
-        theme = ev.get("theme") or "other"
-        events.append({
-            "title": re.sub(r"\s+", " ", title)[:90],
+    events, seen, held = [], set(), []
+    counts = {"scope": 0, "overlap": 0, "junk": 0, "housekeeping": 0, "spread": 0}
+    spread = {}
+
+    def shape(ev, church, theme, miles, last_resort=False):
+        return {
+            "title": re.sub(r"\s+", " ", (ev.get("title") or "").strip())[:90],
             "miles": miles,
-            "date": day,
+            "needsHumanHandling": church.lower() in flagged,
+            "date": (ev.get("localStart") or "")[:10],
             "time": clock(ev),
             "venue": church,
             "city": ev.get("city"),
@@ -188,8 +185,69 @@ def main():
             "themeLabel": THEME_LABEL.get(theme, theme.replace("_", " ").title()),
             "categories": THEME_CATEGORIES.get(theme, []),
             "cadence": ev.get("cadence"),
-            "sort": ev.get("localStart") or day,
-        })
+            "lastResort": last_resort,
+            "sort": ev.get("localStart") or "",
+        }
+
+    for ev in raw:
+        title = (ev.get("title") or "").strip()
+        church = (ev.get("churchName") or "").strip()
+        if not title or not church:
+            continue
+        low = church.lower()
+        theme = ev.get("theme") or "other"
+
+        miles = distance.get(ev.get("churchId"))
+        if miles is None or miles > radius:
+            counts["scope"] += 1
+            continue
+        if junk.search(church):
+            counts["junk"] += 1
+            continue
+        if low in banned or theme in SKIP_THEMES or DENY.search(title):
+            counts["housekeeping"] += 1
+            continue
+        # We already do Sundays, worship and prayer. Someone else's version
+        # divides our own people, unless it is on our own campus.
+        if theme in overlap and low not in knapps:
+            counts["overlap"] += 1
+            continue
+        # Traditions we stay away from wait, in case a category has nothing else.
+        if avoid.search(church):
+            held.append((church, theme, miles, ev))
+            continue
+
+        day = (ev.get("localStart") or "")[:10]
+        # One congregation appears under more than one record upstream, so fold
+        # on what a reader would see rather than on the church id.
+        key = (day, title.lower(), (ev.get("city") or "").lower())
+        if key in seen:
+            continue
+        seen.add(key)
+
+        # Midweek is where geography decides whether a family can go, so no one
+        # part of town is allowed to fill a category on its own. The cap is on
+        # how many CHURCHES an area contributes, not how many dates they run:
+        # once a church is carried, all of its dates are carried.
+        if theme in disperse_themes and low not in knapps:
+            bucket = (theme, (ev.get("city") or "").lower())
+            carried = spread.setdefault(bucket, set())
+            if church not in carried and len(carried) >= per_area_cap:
+                counts["spread"] += 1
+                continue
+            carried.add(church)
+
+        events.append(shape(ev, church, theme, miles))
+
+    # Last resort: a category with nothing at all gets the best we held back.
+    covered = {e["theme"] for e in events}
+    rescued = 0
+    for church, theme, miles, ev in held:
+        if theme in covered:
+            continue
+        events.append(shape(ev, church, theme, miles, last_resort=True))
+        covered.add(theme)
+        rescued += 1
 
     events.sort(key=lambda e: e["sort"])
     by_theme = {}
@@ -198,7 +256,8 @@ def main():
 
     json.dump({
         "_comment": "New Life's own calendar, curated from The Church Map's published "
-                    "Grand Rapids events. Regenerate with scripts/build-curated-calendar.py.",
+                    "Grand Rapids events under content/curation-rules.json. "
+                    "Regenerate with scripts/build-curated-calendar.py.",
         "source": "https://thechurchmap.com/grandrapids/events",
         "scope": {"radiusMiles": radius, "churchesInFunnel": funnel["churchCount"]},
         "days": meta.get("days"),
@@ -208,8 +267,13 @@ def main():
     open(OUT, "a").write("\n")
 
     venues = {e["venue"] for e in events}
-    print(f"kept {len(events)} gatherings across {len(venues)} churches; "
-          f"left off {dropped} as not an offering, {out_of_scope} as outside our 20 miles")
+    print(f"kept {len(events)} gatherings across {len(venues)} churches")
+    print(f"  {counts['scope']:4} outside our {radius} miles")
+    print(f"  {counts['overlap']:4} overlapping our own Sundays, worship or prayer")
+    print(f"  {counts['housekeeping']:4} housekeeping, or a church excluded by name")
+    print(f"  {counts['junk']:4} junk records in the church data")
+    print(f"  {counts['spread']:4} trimmed so one part of town cannot fill a category")
+    print(f"  {len(held):4} held back from traditions we avoid; {rescued} carried as a last resort")
     for label, n in sorted(by_theme.items(), key=lambda kv: -kv[1]):
         print(f"   {n:5}  {label}")
 
