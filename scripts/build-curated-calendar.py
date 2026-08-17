@@ -72,9 +72,13 @@ DENY = re.compile(
     r"|(-\s*(gym|library|music room|fellowship hall|kitchen|basement)\b)"
     r"|(\broom \d)", re.I)
 
-# Congregations outside historic Christian orthodoxy, however good the calendar.
+# Churches we do not carry. Two reasons sit in this one list: congregations
+# outside historic Christian orthodoxy, and individual churches New Life has
+# asked to leave off. Both are editorial calls, not data problems.
 EXCLUDE_CHURCH = re.compile(
-    r"\b(unity|unitarian|universalist|science of mind|latter[- ]day|scientolog)\b", re.I)
+    r"\b(unity|unitarian|universalist|science of mind|latter[- ]day|scientolog"
+    r"|orthodox|antiochian"
+    r"|bauer christian reformed)\b", re.I)
 
 # A saint's feast day is not something we are offering anyone.
 SKIP_THEMES = {"liturgical"}

@@ -7,19 +7,19 @@
 	},
 	"days": 60,
 	"themes": {
-		"Men": 34,
-		"Sport": 3,
-		"Bible study": 24,
+		"Sport": 2,
+		"Bible study": 23,
 		"Young adults": 18,
-		"Serve": 9,
 		"Worship": 27,
-		"Food & fellowship": 58,
-		"Women": 40,
-		"Seniors": 10,
+		"Food & fellowship": 33,
+		"Women": 20,
+		"Serve": 5,
+		"Seniors": 7,
 		"Family": 13,
-		"Kids": 27,
+		"Kids": 26,
+		"Men": 21,
 		"Prayer": 47,
-		"Youth": 11,
+		"Youth": 4,
 		"Sunday service": 14,
 		"Arts": 8,
 		"Classes": 7,
@@ -28,21 +28,6 @@
 		"Mission trips": 1
 	},
 	"events": [
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-08-17",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-17T06:00:00"
-		},
 		{
 			"title": "27th Annual Grace Golf Classic",
 			"miles": 7.1,
@@ -102,21 +87,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-08-17T12:15:00"
-		},
-		{
-			"title": "FOCUS GR Fundraising Dinner",
-			"miles": 5.6,
-			"date": "2026-08-17",
-			"time": "4pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "serve_outreach",
-			"themeLabel": "Serve",
-			"categories": [
-				"local-outreach"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-17T16:00:00"
 		},
 		{
 			"title": "Worship & Prayer Night",
@@ -195,21 +165,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-08-18T00:00:00"
-		},
-		{
-			"title": "Baking Day: Meat Pies",
-			"miles": 5.6,
-			"date": "2026-08-18",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-08-18T09:00:00"
 		},
 		{
 			"title": "Food Pantry",
@@ -381,21 +336,6 @@
 			"sort": "2026-08-19T09:45:00"
 		},
 		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-08-19",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T10:00:00"
-		},
-		{
 			"title": "Rooted - Women's Bible Study",
 			"miles": 12.2,
 			"date": "2026-08-19",
@@ -457,22 +397,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-08-19T18:00:00"
-		},
-		{
-			"title": "Kids Hope Meeting",
-			"miles": 16.3,
-			"date": "2026-08-19",
-			"time": "6:30pm",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-19T18:30:00"
 		},
 		{
 			"title": "Prayer Time",
@@ -723,21 +647,6 @@
 			"sort": "2026-08-22T09:30:00"
 		},
 		{
-			"title": "Foundations in Faith",
-			"miles": 5.6,
-			"date": "2026-08-22",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "bible_study",
-			"themeLabel": "Bible study",
-			"categories": [
-				"bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-22T17:00:00"
-		},
-		{
 			"title": "HOMEMADE - Ice Cream Social",
 			"miles": 8.9,
 			"date": "2026-08-23",
@@ -924,38 +833,6 @@
 			"sort": "2026-08-23T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-08-23",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-23T10:45:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-08-23",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-23T11:00:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-08-23",
@@ -1092,21 +969,6 @@
 			],
 			"cadence": "one_off",
 			"sort": "2026-08-24T00:00:00"
-		},
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-08-24",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-24T06:00:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
@@ -1262,21 +1124,6 @@
 			"sort": "2026-08-26T06:00:00"
 		},
 		{
-			"title": "Jolly Seniors (off campus)",
-			"miles": 16.3,
-			"date": "2026-08-26",
-			"time": "8:30am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "seniors",
-			"themeLabel": "Seniors",
-			"categories": [
-				"senior-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T08:30:00"
-		},
-		{
 			"title": "Prayer Group",
 			"miles": 10.2,
 			"date": "2026-08-26",
@@ -1291,21 +1138,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-08-26T09:45:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-08-26",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-26T10:00:00"
 		},
 		{
 			"title": "Rooted - Women's Bible Study",
@@ -1462,21 +1294,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-08-27T19:00:00"
-		},
-		{
-			"title": "St. Xenia's Circle",
-			"miles": 5.6,
-			"date": "2026-08-28",
-			"time": "11am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-28T11:00:00"
 		},
 		{
 			"title": "Vespers",
@@ -1709,22 +1526,6 @@
 			"sort": "2026-08-30T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-08-30",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-30T10:45:00"
-		},
-		{
 			"title": "House Church Info Meeting",
 			"miles": 4.1,
 			"date": "2026-08-30",
@@ -1736,22 +1537,6 @@
 			"categories": [],
 			"cadence": "one_off",
 			"sort": "2026-08-30T10:45:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-08-30",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-30T11:00:00"
 		},
 		{
 			"title": "New Life Service",
@@ -1861,21 +1646,6 @@
 			"sort": "2026-08-30T18:00:00"
 		},
 		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-08-31",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-08-31T06:00:00"
-		},
-		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.0,
 			"date": "2026-08-31",
@@ -1979,21 +1749,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-02T08:30:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-09-02",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-02T10:00:00"
 		},
 		{
 			"title": "Michigan Warrior Wednesday \u2013 Sam and Jennifer Stitt IV, Speakers",
@@ -2121,22 +1876,6 @@
 			"sort": "2026-09-03T19:00:00"
 		},
 		{
-			"title": "Widows In Touch",
-			"miles": 16.3,
-			"date": "2026-09-04",
-			"time": "11:30am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-04T11:30:00"
-		},
-		{
 			"title": "Vespers",
 			"miles": 4.8,
 			"date": "2026-09-04",
@@ -2196,21 +1935,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-05T09:30:00"
-		},
-		{
-			"title": "JOY Night",
-			"miles": 5.6,
-			"date": "2026-09-05",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-05T17:00:00"
 		},
 		{
 			"title": "Traditional Worship",
@@ -2322,22 +2046,6 @@
 			"sort": "2026-09-06T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-09-06",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-06T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-09-06",
@@ -2350,22 +2058,6 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-09-06T11:00:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-09-06",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
 			"sort": "2026-09-06T11:00:00"
 		},
 		{
@@ -2400,22 +2092,6 @@
 			"sort": "2026-09-06T12:00:00"
 		},
 		{
-			"title": "SOYO Night",
-			"miles": 5.6,
-			"date": "2026-09-06",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-06T17:00:00"
-		},
-		{
 			"title": "Middle School & High School Youth Group",
 			"miles": 3.0,
 			"date": "2026-09-06",
@@ -2430,21 +2106,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-06T17:30:00"
-		},
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-09-07",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-07T06:00:00"
 		},
 		{
 			"title": "Young Adults Bible Study",
@@ -2505,21 +2166,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-08T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-09-09",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-09T10:00:00"
 		},
 		{
 			"title": "Grief Support Group",
@@ -2798,36 +2444,6 @@
 			"sort": "2026-09-11T18:00:00"
 		},
 		{
-			"title": "Baking Day: Meatballs",
-			"miles": 5.6,
-			"date": "2026-09-12",
-			"time": "8am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-12T08:00:00"
-		},
-		{
-			"title": "ProjectGR ICCF Workday",
-			"miles": 5.6,
-			"date": "2026-09-12",
-			"time": "8:30am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "serve_outreach",
-			"themeLabel": "Serve",
-			"categories": [
-				"local-outreach"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-12T08:30:00"
-		},
-		{
 			"title": "Sabbath School",
 			"miles": 4.8,
 			"date": "2026-09-12",
@@ -2856,22 +2472,6 @@
 			],
 			"cadence": "one_off",
 			"sort": "2026-09-12T10:00:00"
-		},
-		{
-			"title": "Widows In Touch",
-			"miles": 16.3,
-			"date": "2026-09-12",
-			"time": "11:30am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-12T11:30:00"
 		},
 		{
 			"title": "Women's Fall Bible Study",
@@ -2985,22 +2585,6 @@
 			"sort": "2026-09-13T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-09-13",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-13T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-09-13",
@@ -3013,22 +2597,6 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-09-13T11:00:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-09-13",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
 			"sort": "2026-09-13T11:00:00"
 		},
 		{
@@ -3063,37 +2631,6 @@
 			"sort": "2026-09-13T12:00:00"
 		},
 		{
-			"title": "JOY Night",
-			"miles": 5.6,
-			"date": "2026-09-13",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-13T17:00:00"
-		},
-		{
-			"title": "SOYO Night",
-			"miles": 5.6,
-			"date": "2026-09-13",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-13T17:00:00"
-		},
-		{
 			"title": "Life Group Leader Gathering - Northview",
 			"miles": 2.8,
 			"date": "2026-09-13",
@@ -3122,36 +2659,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-13T18:30:00"
-		},
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-09-14",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-14T06:00:00"
-		},
-		{
-			"title": "St. Xenia's Circle",
-			"miles": 5.6,
-			"date": "2026-09-14",
-			"time": "12pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-14T12:00:00"
 		},
 		{
 			"title": "New Hope Knitting Group",
@@ -3212,36 +2719,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-15T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-09-16",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T10:00:00"
-		},
-		{
-			"title": "Forerunners Monthly Lunch and Activity",
-			"miles": 5.6,
-			"date": "2026-09-16",
-			"time": "1pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "seniors",
-			"themeLabel": "Seniors",
-			"categories": [
-				"senior-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-16T13:00:00"
 		},
 		{
 			"title": "Prayer Meeting",
@@ -3400,21 +2877,6 @@
 			"sort": "2026-09-18T08:30:00"
 		},
 		{
-			"title": "Baking Day: Baklawa (Nuts & Syrup)",
-			"miles": 5.6,
-			"date": "2026-09-18",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-18T09:00:00"
-		},
-		{
 			"title": "Vespers",
 			"miles": 4.8,
 			"date": "2026-09-18",
@@ -3444,22 +2906,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-18T18:30:00"
-		},
-		{
-			"title": "High School Campout",
-			"miles": 16.3,
-			"date": "2026-09-19",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-19T00:00:00"
 		},
 		{
 			"title": "Sabbath School",
@@ -3553,22 +2999,6 @@
 			],
 			"cadence": "one_off",
 			"sort": "2026-09-19T16:00:00"
-		},
-		{
-			"title": "High School Campout",
-			"miles": 16.3,
-			"date": "2026-09-20",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-20T00:00:00"
 		},
 		{
 			"title": "A-\"Men\" Sunday",
@@ -3708,22 +3138,6 @@
 			"sort": "2026-09-20T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-09-20",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-20T10:45:00"
-		},
-		{
 			"title": "Missions Conference",
 			"miles": 8.9,
 			"date": "2026-09-20",
@@ -3751,22 +3165,6 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-09-20T11:00:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-09-20",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
 			"sort": "2026-09-20T11:00:00"
 		},
 		{
@@ -3812,21 +3210,6 @@
 			],
 			"cadence": "one_off",
 			"sort": "2026-09-20T12:00:00"
-		},
-		{
-			"title": "St. Nick vs. St. George Softball Game",
-			"miles": 5.6,
-			"date": "2026-09-20",
-			"time": "1pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "sports_recreation",
-			"themeLabel": "Sport",
-			"categories": [
-				"adult-sports"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-20T13:00:00"
 		},
 		{
 			"title": "Life Group Launch - Rockford",
@@ -3890,21 +3273,6 @@
 			"sort": "2026-09-21T00:00:00"
 		},
 		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-09-21",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-21T06:00:00"
-		},
-		{
 			"title": "Young Adults Bible Study",
 			"miles": 3.5,
 			"date": "2026-09-21",
@@ -3920,21 +3288,6 @@
 			"sort": "2026-09-21T19:00:00"
 		},
 		{
-			"title": "Baking Day: Cheese Bread",
-			"miles": 5.6,
-			"date": "2026-09-22",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-22T09:00:00"
-		},
-		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
 			"date": "2026-09-22",
@@ -3948,21 +3301,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-22T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-09-23",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-23T10:00:00"
 		},
 		{
 			"title": "Wednesday Night Dinner",
@@ -4059,21 +3397,6 @@
 			"sort": "2026-09-23T19:00:00"
 		},
 		{
-			"title": "DeColores Men's Weekend",
-			"miles": 16.3,
-			"date": "2026-09-24",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-24T00:00:00"
-		},
-		{
 			"title": "Communion/Potluck Sabbath",
 			"miles": 6.2,
 			"date": "2026-09-24",
@@ -4135,21 +3458,6 @@
 			"sort": "2026-09-24T19:00:00"
 		},
 		{
-			"title": "DeColores Men's Weekend",
-			"miles": 16.3,
-			"date": "2026-09-25",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-25T00:00:00"
-		},
-		{
 			"title": "Harvestfest",
 			"miles": 11.8,
 			"date": "2026-09-25",
@@ -4197,66 +3505,6 @@
 			"sort": "2026-09-25T20:00:00"
 		},
 		{
-			"title": "DeColores Men's Weekend",
-			"miles": 16.3,
-			"date": "2026-09-26",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-26T00:00:00"
-		},
-		{
-			"title": "Jolly Seniors (off campus)",
-			"miles": 16.3,
-			"date": "2026-09-26",
-			"time": "8:30am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "seniors",
-			"themeLabel": "Seniors",
-			"categories": [
-				"senior-adults"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-26T08:30:00"
-		},
-		{
-			"title": "Baking Day: Cheese Bread",
-			"miles": 5.6,
-			"date": "2026-09-26",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-26T09:00:00"
-		},
-		{
-			"title": "Car Care Event at HT Auto",
-			"miles": 16.3,
-			"date": "2026-09-26",
-			"time": "9am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "serve_outreach",
-			"themeLabel": "Serve",
-			"categories": [
-				"local-outreach"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-26T09:00:00"
-		},
-		{
 			"title": "Sabbath School",
 			"miles": 4.8,
 			"date": "2026-09-26",
@@ -4270,21 +3518,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-26T09:30:00"
-		},
-		{
-			"title": "DeColores Men's Weekend",
-			"miles": 16.3,
-			"date": "2026-09-27",
-			"time": null,
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-27T00:00:00"
 		},
 		{
 			"title": "Traditional Worship",
@@ -4366,22 +3599,6 @@
 			"sort": "2026-09-27T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-09-27",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-27T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-09-27",
@@ -4394,22 +3611,6 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-09-27T11:00:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-09-27",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
 			"sort": "2026-09-27T11:00:00"
 		},
 		{
@@ -4489,52 +3690,6 @@
 			"sort": "2026-09-27T18:00:00"
 		},
 		{
-			"title": "Youth Group Kick Off",
-			"miles": 16.3,
-			"date": "2026-09-27",
-			"time": "6pm",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-27T18:00:00"
-		},
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-09-28",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-28T06:00:00"
-		},
-		{
-			"title": "St. Xenia's Circle",
-			"miles": 5.6,
-			"date": "2026-09-28",
-			"time": "11am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-28T11:00:00"
-		},
-		{
 			"title": "Legacy Society Event",
 			"miles": 11.8,
 			"date": "2026-09-29",
@@ -4550,21 +3705,6 @@
 			"sort": "2026-09-29T00:00:00"
 		},
 		{
-			"title": "Baking Day: Cheese Bread",
-			"miles": 5.6,
-			"date": "2026-09-29",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-29T09:00:00"
-		},
-		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
 			"date": "2026-09-29",
@@ -4578,37 +3718,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-09-29T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-09-30",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-09-30T10:00:00"
-		},
-		{
-			"title": "Women's Ministry Kick Off Dinner",
-			"miles": 16.3,
-			"date": "2026-09-30",
-			"time": "6pm",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "one_off",
-			"sort": "2026-09-30T18:00:00"
 		},
 		{
 			"title": "Prayer Meeting",
@@ -4750,21 +3859,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-10-01T19:00:00"
-		},
-		{
-			"title": "Baking Day: Baklawa (Baking)",
-			"miles": 5.6,
-			"date": "2026-10-02",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-02T09:00:00"
 		},
 		{
 			"title": "Vespers",
@@ -4922,38 +4016,6 @@
 			"sort": "2026-10-04T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-10-04",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-04T10:45:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-10-04",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-04T11:00:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-10-04",
@@ -4984,22 +4046,6 @@
 			"sort": "2026-10-04T11:30:00"
 		},
 		{
-			"title": "Widows In Touch",
-			"miles": 16.3,
-			"date": "2026-10-04",
-			"time": "11:30am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-04T11:30:00"
-		},
-		{
 			"title": "Contemporary Worship",
 			"miles": 3.9,
 			"date": "2026-10-04",
@@ -5016,52 +4062,6 @@
 			"sort": "2026-10-04T12:00:00"
 		},
 		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-10-05",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-05T06:00:00"
-		},
-		{
-			"title": "JOY Night",
-			"miles": 5.6,
-			"date": "2026-10-05",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-05T17:00:00"
-		},
-		{
-			"title": "SOYO Night",
-			"miles": 5.6,
-			"date": "2026-10-06",
-			"time": "5pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-06T17:00:00"
-		},
-		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
 			"date": "2026-10-06",
@@ -5075,21 +4075,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-10-06T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-10-07",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-07T10:00:00"
 		},
 		{
 			"title": "Michigan Warrior Wednesday - Adam Chambers, Speaker",
@@ -5183,21 +4168,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-10-08T19:00:00"
-		},
-		{
-			"title": "Baking Day: Baklawa (Cutting)",
-			"miles": 5.6,
-			"date": "2026-10-09",
-			"time": "9am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-09T09:00:00"
 		},
 		{
 			"title": "Free Drive-Thru Donut Dash",
@@ -5337,22 +4307,6 @@
 			"sort": "2026-10-11T10:30:00"
 		},
 		{
-			"title": "Women's Prayer and Scriptures",
-			"miles": 16.3,
-			"date": "2026-10-11",
-			"time": "10:45am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-11T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"date": "2026-10-11",
@@ -5365,22 +4319,6 @@
 				"corporate-worship"
 			],
 			"cadence": "one_off",
-			"sort": "2026-10-11T11:00:00"
-		},
-		{
-			"title": "Sermon Recap for Women",
-			"miles": 16.3,
-			"date": "2026-10-11",
-			"time": "11am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
 			"sort": "2026-10-11T11:00:00"
 		},
 		{
@@ -5445,67 +4383,6 @@
 			"sort": "2026-10-11T12:30:00"
 		},
 		{
-			"title": "Youth Group",
-			"miles": 16.3,
-			"date": "2026-10-11",
-			"time": "6pm",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "youth",
-			"themeLabel": "Youth",
-			"categories": [
-				"high-school",
-				"middle-school"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-11T18:00:00"
-		},
-		{
-			"title": "Men's Prayer Group",
-			"miles": 16.3,
-			"date": "2026-10-12",
-			"time": "6am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-12T06:00:00"
-		},
-		{
-			"title": "Special Collection for Orthodox Seminaries",
-			"miles": 5.6,
-			"date": "2026-10-12",
-			"time": "11am",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "serve_outreach",
-			"themeLabel": "Serve",
-			"categories": [
-				"local-outreach"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-12T11:00:00"
-		},
-		{
-			"title": "Middle Eastern Dinner",
-			"miles": 5.6,
-			"date": "2026-10-13",
-			"time": "4pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"sort": "2026-10-13T16:00:00"
-		},
-		{
 			"title": "Men of Valor Rm 406",
 			"miles": 11.0,
 			"date": "2026-10-13",
@@ -5519,36 +4396,6 @@
 			],
 			"cadence": "recurring_group",
 			"sort": "2026-10-13T20:00:00"
-		},
-		{
-			"title": "Coffee Fellowship",
-			"miles": 16.3,
-			"date": "2026-10-14",
-			"time": "10am",
-			"venue": "Bauer Christian Reformed Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-14T10:00:00"
-		},
-		{
-			"title": "St. Xenia's Circle",
-			"miles": 5.6,
-			"date": "2026-10-14",
-			"time": "12pm",
-			"venue": "Saint Nicholas Antiochian Orthodox Church",
-			"city": "Kentwood",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"sort": "2026-10-14T12:00:00"
 		},
 		{
 			"title": "Grief Support Group",

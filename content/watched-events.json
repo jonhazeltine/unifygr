@@ -1,0 +1,58 @@
+{
+	"_comment": "Found by scouring the pages of ministries that publish no feed. Nothing here reaches the site until confirmed is true. Refresh with scripts/watch-announcements.py.",
+	"checkedOn": "2026-08-17T14:52",
+	"ministries": [
+		{
+			"slug": "lc-local-youth",
+			"name": "Local Youth",
+			"venue": "The Local Church GR",
+			"note": "Their events page carries real upcoming dates. Sunday nights during the school year.",
+			"finds": [
+				{
+					"kind": "dated",
+					"date": "2026-08-20",
+					"time": "4:30pm",
+					"context": "en Women Youth Adults Families Kids Volunteer Sherwood Elementary Back-To-School Carnival August 20 - 4:30PM Help us welcome Sherwood Park Elementary students and families back to school wi",
+					"source": "https://my.localchurchgr.org/events",
+					"confirmed": false,
+					"firstSeen": "2026-08-17"
+				},
+				{
+					"kind": "dated",
+					"date": "2026-08-23",
+					"time": "9:00am",
+					"context": "ill be offered during both the 9:00 AM and 10:45 AM s... read more Local Youth Pool Party August 23 - 12:30PM What a summer! Let's close it out strong, with a fun afternoon at the Britton's",
+					"source": "https://my.localchurchgr.org/events",
+					"confirmed": false,
+					"firstSeen": "2026-08-17"
+				},
+				{
+					"kind": "dated",
+					"date": "2026-08-30",
+					"time": "6:00pm",
+					"context": "ervices to meet our Lead Pastor and... read more Local Youth Escape Room Board Game Night August 30 - 6:00PM Join us for a night of teamwork and fun!Bring your friends and come ready to put",
+					"source": "https://my.localchurchgr.org/events",
+					"confirmed": false,
+					"firstSeen": "2026-08-17"
+				}
+			]
+		},
+		{
+			"slug": "bh-student-ministry",
+			"name": "Student Ministry",
+			"venue": "Berkley Hills Church",
+			"note": "Standing midweek rhythm rather than dated events. Watch for one-off announcements.",
+			"finds": [
+				{
+					"kind": "dated",
+					"date": "2027-06-21",
+					"time": null,
+					"context": "mps, reach out to your small group leader or Gannon and let\u2019s get you signed up. NTS Camp June 21-25 Sunday Night Youth Group We meet on Sunday evening during the school year. First we ha",
+					"source": "https://www.berkleyhills.org/student-ministry",
+					"confirmed": false,
+					"firstSeen": "2026-08-17"
+				}
+			]
+		}
+	]
+}

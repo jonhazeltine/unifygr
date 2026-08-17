@@ -181,7 +181,13 @@ export function familyCount(familySlug: string): number {
  * real and worth knowing, but it is a reference list, not an offering.
  */
 export function isOffering(entry: Entry): boolean {
-	return entry.house === "in" || entry.calendar?.format === "ics";
+	return (
+		entry.house === "in" ||
+		entry.calendar?.format === "ics" ||
+		// No feed, but we read their announcements every week and a person
+		// confirms them, which is a slower version of the same promise.
+		entry.calendar?.format === "watched"
+	);
 }
 
 export function splitOffering(list: Entry[]): { offering: Entry[]; specialized: Entry[] } {
