@@ -1,0 +1,138 @@
+---
+import Interior from "../../layouts/Interior.astro";
+import { withLiveCalendar, outOfHouse, familyOf } from "../../data/ministries";
+import { church } from "../../data/site";
+
+const live = withLiveCalendar();
+const ours = live.filter((e) => e.house === "in");
+const theirs = live.filter((e) => e.house === "out");
+
+// Grouped by family so the calendar reads the same way the directory does.
+const groups = new Map<string, typeof theirs>();
+for (const entry of theirs) {
+	const family = familyOf(entry.categories[0]);
+	const key = family?.name ?? "Elsewhere";
+	if (!groups.has(key)) groups.set(key, []);
+	groups.get(key)!.push(entry);
+}
+const grouped = [...groups.entries()].sort((a, b) => b[1].length - a[1].length);
+
+const stale = outOfHouse.filter((e) => e.calendar?.sync === "page-stale");
+const silent = outOfHouse.filter(
+	(e) => !e.calendar?.sync || e.calendar.sync === "none" || e.calendar.sync === "unreachable",
+);
+---
+
+<Interior
+	title="Curated Calendar | New Life Grand Rapids"
+	description="What's coming up across the ministries we lead and the ministries we trust."
+	kicker="Ministries"
+	heading="The Curated Calendar"
+	lede="What's coming up across the ministries we lead and the ministries we send you to."
+>
+	<section class="section">
+		<div class="container">
+			<div class="min-calbar reveal is-visible">
+				<div>
+					<strong>{live.length}</strong>
+					<span>keep their dates current</span>
+				</div>
+				<div>
+					<strong>{stale.length}</strong>
+					<span>publish dates that have gone off</span>
+				</div>
+				<div>
+					<strong>{silent.length}</strong>
+					<span>post nothing we can follow</span>
+				</div>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				We checked every ministry's own site to see which ones keep a calendar people can rely on.
+				The ones below do. Each link goes straight to their dates.
+			</p>
+		</div>
+	</section>
+
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Ours</p>
+				<h2>At Knapp's Corner.</h2>
+			</div>
+			<div class="min-callist reveal is-visible">
+				<a class="min-calrow" href="/visit">
+					<span class="min-calrow__name">Sunday Worship</span>
+					<span class="min-calrow__when">Sundays at 10am</span>
+					<span class="min-calrow__go">Plan a visit →</span>
+				</a>
+				{ours.map((entry) => (
+					<a class="min-calrow" href={`/ministry/${entry.slug}`}>
+						<span class="min-calrow__name">{entry.name}</span>
+						<span class="min-calrow__when">{entry.rhythm}</span>
+						<span class="min-calrow__go">Details →</span>
+					</a>
+				))}
+				<a class="min-calrow" href={church.external.churchesCalendar} target="_blank" rel="noopener">
+					<span class="min-calrow__name">City-wide calendar</span>
+					<span class="min-calrow__when">Every Unify GR church</span>
+					<span class="min-calrow__go">thechurches.co →</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Theirs</p>
+				<h2>Across the city.</h2>
+			</div>
+			{grouped.map(([family, list]) => (
+				<div class="min-calgroup reveal is-visible">
+					<h3>{family}<span>{list.length}</span></h3>
+					<div class="min-callist">
+						{list.map((entry) => (
+							<a
+								class="min-calrow"
+								href={entry.calendar?.url ?? entry.website ?? `/ministry/${entry.slug}`}
+								target="_blank"
+								rel="noopener"
+							>
+								<span class="min-calrow__name">{entry.name}</span>
+								<span class="min-calrow__when">
+									{entry.calendar?.sync === "available" ? "Live feed" : "Events page"}
+									{entry.area ? ` · ${entry.area}` : ""}
+								</span>
+								<span class="min-calrow__go">See their dates →</span>
+							</a>
+						))}
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">Next for this page</p>
+			<h2 class="prose-block__title reveal is-visible">Their dates, on our page.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Right now each ministry above links to its own calendar. The next step is pulling those
+					dates in directly, so this page lists what is happening this week without anybody leaving
+					the site. That works cleanly for ministries publishing a real calendar feed, and needs a
+					conversation with the rest.
+				</p>
+				<p class="reveal is-visible">
+					If you lead one of these ministries and you keep a calendar, we would like to carry it.
+				</p>
+			</div>
+			<div class="min-cta reveal is-visible">
+				<a class="button button--primary" href="/ministries">All ministries</a>
+				<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
+					Get in touch
+				</a>
+			</div>
+		</div>
+	</section>
+</Interior>

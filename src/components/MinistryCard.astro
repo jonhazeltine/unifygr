@@ -1,5 +1,5 @@
 ---
-import { TIER_LABEL, STATUS_LABEL, type Entry } from "../data/ministries";
+import { TIER_LABEL, STATUS_LABEL, hasLiveCalendar, type Entry } from "../data/ministries";
 
 interface Props {
 	entry: Entry;
@@ -33,6 +33,7 @@ const unverified = entry.status !== "live";
 	<div class="min-card__meta">
 		{entry.rhythm && <span>{entry.rhythm}</span>}
 		{entry.city && entry.city !== "Grand Rapids" && <span>{entry.city}</span>}
+		{hasLiveCalendar(entry) && <span class="min-card__live">Live calendar</span>}
 	</div>
 
 	{unverified && (

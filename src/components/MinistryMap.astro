@@ -1,0 +1,202 @@
+---
+// Ministries plotted on a real Grand Rapids basemap.
+//
+// The basemap is a static image rendered ahead of time by
+// scripts/build-ministry-maps.py, so no map token or map library is needed in
+// the browser. content/ministry-maps.json records the exact centre and zoom of
+// each image; we repeat the same Web Mercator maths here to place the pins,
+// which keeps them real links rather than pixels baked into a picture.
+import maps from "../../content/ministry-maps.json";
+import type { Entry } from "../data/ministries";
+
+interface Props {
+	entries: Entry[];
+	/** Key into content/ministry-maps.json — a family slug, or "all". */
+	map: string;
+	label?: string;
+}
+
+const { entries, map, label } = Astro.props;
+const frame = (maps as Record<string, { src: string; lat: number; lng: number; zoom: number; w: number; h: number }>)[map];
+
+const CHURCH = { lat: 42.999923, lng: -85.601454 };
+const MI_PER_DEG = 69.0;
+const cosLat = Math.cos((CHURCH.lat * Math.PI) / 180);
+
+function project(lat: number, lng: number, zoom: number) {
+	const world = 512 * 2 ** zoom;
+	const x = ((lng + 180) / 360) * world;
+	const s = Math.sin((lat * Math.PI) / 180);
+	const y = (0.5 - Math.log((1 + s) / (1 - s)) / (4 * Math.PI)) * world;
+	return { x, y };
+}
+
+const out = entries.filter((e) => e.house === "out");
+const measured = out
+	.filter((e) => typeof e.lat === "number" && typeof e.lng === "number")
+	.map((e) => {
+		const dx = (e.lng! - CHURCH.lng) * MI_PER_DEG * cosLat;
+		const dy = (e.lat! - CHURCH.lat) * MI_PER_DEG;
+		return { ...e, dist: Math.hypot(dx, dy) };
+	})
+	.sort((a, b) => a.dist - b.dist);
+
+const unlocated = out.filter((e) => typeof e.lat !== "number");
+
+// Place each pin as a percentage of the image, then split out anything the
+// frame does not actually cover so we never draw a pin off the edge.
+const centre = frame ? project(frame.lat, frame.lng, frame.zoom) : null;
+const plotted: (typeof measured[number] & { n: number; px: number; py: number; left: number; top: number })[] = [];
+const offMap: typeof measured = [];
+
+for (const e of measured) {
+	if (!frame || !centre) {
+		offMap.push(e);
+		continue;
+	}
+	const p = project(e.lat!, e.lng!, frame.zoom);
+	const px = p.x - centre.x + frame.w / 2;
+	const py = p.y - centre.y + frame.h / 2;
+	if (px < 8 || px > frame.w - 8 || py < 8 || py > frame.h - 8) {
+		offMap.push(e);
+		continue;
+	}
+	plotted.push({ ...e, n: plotted.length + 1, px, py, left: 0, top: 0 });
+}
+
+// Several ministries share a block downtown, so their pins land on top of each
+// other. Nudge them apart just enough to be clickable, capped tightly so a pin
+// never drifts far enough to sit on the wrong street.
+const MIN_GAP = 26;
+const MAX_SHIFT = 15;
+const origin = plotted.map((p) => ({ x: p.px, y: p.py }));
+for (let pass = 0; pass < 40; pass++) {
+	let moved = false;
+	for (let i = 0; i < plotted.length; i++) {
+		for (let j = i + 1; j < plotted.length; j++) {
+			const a = plotted[i];
+			const b = plotted[j];
+			let dx = b.px - a.px;
+			let dy = b.py - a.py;
+			let d = Math.hypot(dx, dy);
+			if (d >= MIN_GAP) continue;
+			if (d < 0.01) {
+				const angle = (i * 2.39996 + j) % (Math.PI * 2);
+				dx = Math.cos(angle);
+				dy = Math.sin(angle);
+				d = 1;
+			}
+			const push = (MIN_GAP - d) / 2 / d;
+			a.px -= dx * push;
+			a.py -= dy * push;
+			b.px += dx * push;
+			b.py += dy * push;
+			moved = true;
+		}
+	}
+	if (!moved) break;
+}
+plotted.forEach((p, i) => {
+	const dx = p.px - origin[i].x;
+	const dy = p.py - origin[i].y;
+	const d = Math.hypot(dx, dy);
+	if (d > MAX_SHIFT) {
+		p.px = origin[i].x + (dx / d) * MAX_SHIFT;
+		p.py = origin[i].y + (dy / d) * MAX_SHIFT;
+	}
+	p.left = (p.px / frame!.w) * 100;
+	p.top = (p.py / frame!.h) * 100;
+});
+
+const churchPt = frame && centre ? project(CHURCH.lat, CHURCH.lng, frame.zoom) : null;
+const churchPos = churchPt && frame && centre
+	? {
+			left: ((churchPt.x - centre.x + frame.w / 2) / frame.w) * 100,
+			top: ((churchPt.y - centre.y + frame.h / 2) / frame.h) * 100,
+		}
+	: null;
+---
+
+<div class="minmap">
+	<div class="minmap__plot">
+		{frame ? (
+			<div class="minmap__frame" style={`aspect-ratio:${frame.w}/${frame.h}`}>
+				<img
+					src={frame.src}
+					width={frame.w}
+					height={frame.h}
+					loading="lazy"
+					decoding="async"
+					alt={`Map of Grand Rapids showing ${label ?? "curated ministries"}`}
+				/>
+				<div class="minmap__wash" aria-hidden="true"></div>
+
+				{churchPos && (
+					<div class="minmap__here" style={`left:${churchPos.left}%;top:${churchPos.top}%`}>
+						<span class="minmap__hereDot"></span>
+						<span class="minmap__hereLabel">New Life</span>
+					</div>
+				)}
+
+				{plotted.map((p) => (
+					<a
+						class="minmap__pin"
+						href={`/ministry/${p.slug}`}
+						style={`left:${p.left}%;top:${p.top}%`}
+						title={`${p.name} · ${p.dist < 1 ? "under a mile" : `${p.dist.toFixed(1)} miles`} from us`}
+					>
+						<span class="minmap__num">{p.n}</span>
+					</a>
+				))}
+			</div>
+		) : (
+			<p class="minmap__missing">Map not generated yet for this category.</p>
+		)}
+	</div>
+
+	<div class="minmap__key">
+		{plotted.length > 0 && (
+			<>
+				<p class="minmap__keyhead">On the map</p>
+				<ol class="minmap__list">
+					{plotted.map((p) => (
+						<li>
+							<span class="minmap__n">{p.n}</span>
+							<a href={`/ministry/${p.slug}`}>{p.name}</a>
+							<span class="minmap__d">{p.dist < 1 ? "<1 mi" : `${p.dist.toFixed(0)} mi`}</span>
+						</li>
+					))}
+				</ol>
+			</>
+		)}
+
+		{offMap.length > 0 && (
+			<div class="minmap__rest">
+				<p class="minmap__keyhead">Worth the drive</p>
+				<ol class="minmap__list">
+					{offMap.map((p) => (
+						<li>
+							<span class="minmap__n minmap__n--plain">·</span>
+							<a href={`/ministry/${p.slug}`}>{p.name}</a>
+							<span class="minmap__d">{p.city}</span>
+						</li>
+					))}
+				</ol>
+			</div>
+		)}
+
+		{unlocated.length > 0 && (
+			<div class="minmap__rest">
+				<p class="minmap__keyhead">Hosted at many locations</p>
+				<ol class="minmap__list">
+					{unlocated.map((p) => (
+						<li>
+							<span class="minmap__n minmap__n--plain">·</span>
+							<a href={`/ministry/${p.slug}`}>{p.name}</a>
+						</li>
+					))}
+				</ol>
+			</div>
+		)}
+	</div>
+</div>
