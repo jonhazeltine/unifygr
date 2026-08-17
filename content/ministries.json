@@ -2516,7 +2516,7 @@
 			"slug": "pw-kids",
 			"name": "Kids Ministry",
 			"org": null,
-			"venue": "Pennellwood Church",
+			"venue": "Pennellwood Church Of God",
 			"venueUrl": "https://pennellwoodchurch.org/",
 			"house": "out",
 			"tier": "partner-church",
@@ -2909,7 +2909,7 @@
 			"slug": "bauer-youth-group",
 			"name": "Youth Group",
 			"org": null,
-			"venue": "Bauer CRC",
+			"venue": "Bauer Christian Reformed Church",
 			"venueUrl": "https://bauercrc.org/",
 			"house": "out",
 			"tier": "partner-church",
@@ -2950,14 +2950,15 @@
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
+				"high-school",
 				"middle-school"
 			],
-			"summary": "Middle school ministry, meeting alongside the church's Bible studies.",
+			"summary": "Students in 6th through 12th grade, meeting midweek.",
 			"why": null,
 			"bestFor": null,
 			"area": "Grand Rapids Public Schools",
 			"city": "Grand Rapids",
-			"rhythm": null,
+			"rhythm": "Wednesdays",
 			"href": null,
 			"website": "http://www.crossroads-bible.org/",
 			"handoff": {
@@ -3051,7 +3052,7 @@
 			"slug": "messiah-seasoned-sisters",
 			"name": "Seasoned Sisters",
 			"org": null,
-			"venue": "Messiah CRC",
+			"venue": "Messiah Christian Reformed Church",
 			"venueUrl": "http://www.messiahcrc.org/",
 			"house": "out",
 			"tier": "partner-church",
@@ -3082,6 +3083,42 @@
 			"verified": null,
 			"lat": 42.8819205,
 			"lng": -85.8532563
+		},
+		{
+			"slug": "st-nicholas-soyo",
+			"name": "SOYO Night",
+			"org": "Antiochian Orthodox",
+			"venue": "Saint Nicholas Antiochian Orthodox Church",
+			"venueUrl": "https://www.stnicholasgr.com/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "The teen fellowship at Saint Nicholas, meeting on Sunday evenings.",
+			"why": null,
+			"bestFor": null,
+			"area": "Forest Hills Public Schools",
+			"city": "Kentwood",
+			"rhythm": "Sunday evenings, 5pm",
+			"href": null,
+			"website": "https://www.stnicholasgr.com/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "published on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9207,
+			"lng": -85.5847
 		}
 	]
 }
