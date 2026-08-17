@@ -29,8 +29,6 @@ const { family, category } = Astro.props as { family: Family; category: Category
 
 const list = sortEntries(entriesInCategory(category.slug));
 const { offering, specialized } = splitOffering(list);
-const ours = offering.filter((e) => e.house === "in");
-const elsewhere = offering.filter((e) => e.house === "out");
 
 type Ev = {
 	title: string; date: string; time: string | null;
@@ -43,7 +41,9 @@ const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).s
 
 
 // Where a category sits inside school districts, that is the useful grouping.
-const districts = [...new Set(elsewhere.map((e) => e.area).filter(Boolean))].sort();
+const districts = [
+	...new Set(offering.filter((e) => e.house === "out").map((e) => e.area).filter(Boolean)),
+].sort();
 
 const siblings = family.categories.filter((c) => c.slug !== category.slug);
 
@@ -75,7 +75,7 @@ function dayLabel(iso: string) {
 				{offering.length > 0 && <> · <a href="/ministries/calendar">on our calendar</a></>}
 			</p>
 
-			{elsewhere.length > 0 && (
+			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">
 					<MinistryMap entries={offering} label={category.name} />
 				</div>
@@ -104,26 +104,14 @@ function dayLabel(iso: string) {
 				</div>
 			)}
 
-			{ours.length > 0 && (
+			{offering.length > 0 && (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
-						<h2>At Knapp's Corner</h2>
-						<span>{ours.length}</span>
+						<h2>You can turn up to these</h2>
+						<span>{offering.length}</span>
 					</div>
 					<div class="min-grid">
-						{ours.map((entry) => <MinistryCard entry={entry} full={true} />)}
-					</div>
-				</div>
-			)}
-
-			{elsewhere.length > 0 && (
-				<div class="min-cat reveal is-visible">
-					<div class="min-cat__head">
-						<h2>Elsewhere in the city</h2>
-						<span>{elsewhere.length}</span>
-					</div>
-					<div class="min-grid">
-						{elsewhere.map((entry) => <MinistryCard entry={entry} full={true} />)}
+						{offering.map((entry) => <MinistryCard entry={entry} full={true} />)}
 					</div>
 				</div>
 			)}
@@ -131,12 +119,12 @@ function dayLabel(iso: string) {
 			{specialized.length > 0 && (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
-						<h2>Also worth knowing</h2>
+						<h2>We know these, not their dates</h2>
 						<span>{specialized.length}</span>
 					</div>
 					<p class="min-cat__note">
-						These are real and we would happily point you to them, but they do not publish dates we
-						can carry, so they are not on our calendar yet.
+						We would send our own family to any of these. They just do not publish a calendar we can
+						read, so we cannot tell you when the next one is without asking. Ask us and we will.
 					</p>
 					<div class="min-grid">
 						{specialized.map((entry) => <MinistryCard entry={entry} />)}
@@ -164,7 +152,7 @@ function dayLabel(iso: string) {
 			<div class="container">
 				<div class="section-heading reveal is-visible">
 					<p class="eyebrow">Also in {family.name}</p>
-					<h2>Nearby ages and stages.</h2>
+					<h2>The rest of {family.name.toLowerCase()}.</h2>
 				</div>
 				<div class="min-next reveal is-visible">
 					{siblings.map((c) => (
