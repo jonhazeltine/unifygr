@@ -2052,3 +2052,316 @@ strong {
 .watch-status[data-state="live"] .watch-status__live { display: inline-flex; color: #ff5d5d; }
 .watch-status[data-state="live"] { animation: liveBlink 1.4s ease-in-out infinite; }
 @keyframes liveBlink { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* ------------------------------------------------------------------
+   Ministry directory — Signature Ministries & Curated Partnerships
+   ------------------------------------------------------------------ */
+
+/* The two halves */
+.min-halves {
+	display: grid;
+	gap: 1.4rem;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+.min-half {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.55rem;
+	padding: 2rem 1.9rem 1.7rem;
+	border: 1px solid var(--line);
+	border-radius: 22px;
+	background: var(--panel);
+	overflow: hidden;
+	transition: transform 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+.min-half::before {
+	content: "";
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 3px;
+	background: linear-gradient(180deg, var(--gold), transparent);
+}
+.min-half--out::before { background: linear-gradient(180deg, var(--blue), transparent); }
+.min-half:hover { transform: translateY(-4px); border-color: var(--gold-soft); background: var(--panel-strong); }
+.min-half__label {
+	font-size: 0.72rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+.min-half__title {
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 1.7rem;
+	letter-spacing: -0.03em;
+	color: var(--text);
+}
+.min-half__count {
+	position: absolute;
+	top: 1.6rem;
+	right: 1.9rem;
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 2.6rem;
+	line-height: 1;
+	color: var(--gold);
+	opacity: 0.55;
+}
+.min-half p { color: var(--muted); max-width: 46ch; }
+.min-half__go {
+	margin-top: auto;
+	padding-top: 0.6rem;
+	color: var(--gold);
+	font-size: 0.78rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+}
+
+/* Jon's quote */
+.min-quote {
+	margin: 1.6rem 0 1.4rem;
+	padding: 1.6rem 1.9rem;
+	border-left: 2px solid var(--gold-soft);
+	background: var(--panel);
+	border-radius: 0 18px 18px 0;
+	max-width: 68ch;
+}
+.min-quote p {
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 1.2rem;
+	line-height: 1.6;
+	letter-spacing: -0.01em;
+	color: var(--text);
+}
+.min-quote cite {
+	display: block;
+	margin-top: 0.9rem;
+	font-style: normal;
+	font-size: 0.78rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--gold);
+}
+
+/* The four tests */
+.min-tests {
+	margin-top: 2rem;
+	display: grid;
+	gap: 1.2rem;
+	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+.min-test {
+	padding: 1.5rem;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	background: var(--panel);
+}
+.min-test__n {
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 0.85rem;
+	letter-spacing: 0.2em;
+	color: var(--gold);
+}
+.min-test h3 { margin: 0.4rem 0 0.5rem; font-size: 1.1rem; letter-spacing: -0.02em; }
+.min-test p { color: var(--muted); font-size: 0.95rem; }
+
+/* Entry cards */
+.min-grid {
+	margin-top: 1.6rem;
+	display: grid;
+	gap: 1.1rem;
+	grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+.min-card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	background: var(--panel);
+	transition: transform 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+.min-card:hover { transform: translateY(-4px); border-color: var(--gold-soft); background: var(--panel-strong); }
+.min-card__top { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; }
+.min-card__area { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em; }
+.min-card__name {
+	font-family: "Iowan Old Style", Georgia, serif;
+	font-size: 1.25rem;
+	letter-spacing: -0.03em;
+	margin: 0.15rem 0 0;
+}
+.min-card__name a { color: var(--text); }
+.min-card__name a:hover { color: var(--gold); }
+.min-card__org { font-size: 0.8rem; color: var(--muted); margin: 0; }
+.min-card__summary { color: var(--muted); font-size: 0.95rem; }
+.min-card__why { font-size: 0.92rem; color: var(--muted); border-top: 1px solid var(--line); padding-top: 0.7rem; }
+.min-card__why span { color: var(--gold); letter-spacing: 0.02em; }
+.min-card__meta {
+	margin-top: auto;
+	padding-top: 0.4rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.9rem;
+	font-size: 0.78rem;
+	color: var(--muted);
+}
+.min-card__flag {
+	margin: 0.3rem 0 0;
+	font-size: 0.72rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: rgba(246, 240, 231, 0.45);
+}
+
+/* Tags */
+.min-tag {
+	display: inline-block;
+	padding: 0.3rem 0.7rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	font-size: 0.68rem;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--muted);
+	white-space: nowrap;
+}
+.min-tag--in { border-color: var(--gold-soft); color: var(--gold); }
+.min-tag--out { border-color: rgba(132, 185, 255, 0.28); color: var(--blue); }
+.min-tag--cat { text-transform: none; letter-spacing: 0.04em; font-size: 0.75rem; }
+.min-tag--cat:hover { border-color: var(--gold-soft); color: var(--gold); }
+
+/* Family browse */
+.min-families {
+	margin-top: 2rem;
+	display: grid;
+	gap: 1.1rem;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.min-family {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	background: var(--panel);
+	transition: transform 240ms ease, border-color 240ms ease, background 240ms ease;
+}
+.min-family:hover { transform: translateY(-4px); border-color: var(--gold-soft); background: var(--panel-strong); }
+.min-family__head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.min-family h3 { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.2rem; letter-spacing: -0.03em; margin: 0; }
+.min-family__n { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.5rem; color: var(--gold); }
+.min-family__n--empty { color: rgba(246, 240, 231, 0.28); }
+.min-family p { color: var(--muted); font-size: 0.92rem; }
+.min-family__cats { margin-top: auto; padding-top: 0.6rem; font-size: 0.76rem; color: rgba(246, 240, 231, 0.45); }
+
+/* Geography */
+.min-areas {
+	margin-top: 2rem;
+	display: grid;
+	gap: 1.1rem;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.min-area { padding: 1.3rem 1.4rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+.min-area h3 {
+	display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem;
+	font-family: "Iowan Old Style", Georgia, serif; font-size: 1.05rem; letter-spacing: -0.02em; margin: 0 0 0.7rem;
+}
+.min-area h3 span { color: var(--gold); font-size: 0.9rem; }
+.min-area ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.35rem; }
+.min-area li { font-size: 0.88rem; }
+.min-area li a { color: var(--muted); }
+.min-area li a:hover { color: var(--gold); }
+.min-area__more { color: rgba(246, 240, 231, 0.4); font-size: 0.8rem; }
+
+/* Category pages */
+.min-breadcrumb { font-size: 0.85rem; color: var(--muted); margin-bottom: 2rem; }
+.min-breadcrumb a { color: var(--gold); }
+.min-cat { margin-bottom: 3rem; }
+.min-cat__head { display: flex; align-items: baseline; gap: 0.9rem; border-bottom: 1px solid var(--line); padding-bottom: 0.6rem; }
+.min-cat__head h2 { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.5rem; letter-spacing: -0.03em; margin: 0; max-width: none; }
+.min-cat__head span { color: var(--gold); font-size: 0.9rem; }
+.min-gaps { padding: 1.8rem; border: 1px dashed var(--line); border-radius: 18px; background: rgba(255, 255, 255, 0.02); }
+.min-gaps h2 { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.4rem; letter-spacing: -0.03em; margin: 0 0 0.6rem; max-width: none; }
+.min-gaps p { color: var(--muted); max-width: 60ch; }
+.min-gaps ul { list-style: none; padding: 0; margin: 1.1rem 0 1.4rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.min-gaps li {
+	padding: 0.35rem 0.8rem; border: 1px solid var(--line); border-radius: 999px;
+	font-size: 0.82rem; color: var(--muted);
+}
+.min-next { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.min-next a {
+	display: flex; flex-direction: column; gap: 0.2rem;
+	padding: 1rem 1.5rem; border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+	transition: border-color 220ms ease, transform 220ms ease;
+}
+.min-next a:hover { border-color: var(--gold-soft); transform: translateY(-2px); }
+.min-next strong { font-family: "Iowan Old Style", Georgia, serif; letter-spacing: -0.03em; }
+.min-next span { font-size: 0.76rem; color: var(--muted); }
+
+/* Detail page */
+.min-detail { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.9fr); gap: 2.5rem; align-items: start; }
+.min-detail__org { color: var(--muted); font-size: 0.95rem; margin: 0 0 1rem; }
+.min-detail__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.8rem; }
+.min-detail__h { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.35rem; letter-spacing: -0.03em; margin: 0 0 0.7rem; max-width: none; }
+.min-detail__bestfor strong { color: var(--gold); font-weight: 400; }
+.min-handoff {
+	margin-top: 2rem; padding: 1.5rem 1.7rem;
+	border: 1px solid var(--gold-soft); border-radius: 18px; background: rgba(242, 210, 162, 0.05);
+}
+.min-handoff__how { font-size: 1.05rem; margin: 0.5rem 0 0; }
+.min-handoff__who { color: var(--muted); margin: 0.5rem 0 0; }
+.min-handoff__who strong { color: var(--gold); font-weight: 400; }
+.min-notice {
+	margin-top: 1.6rem; padding: 1.2rem 1.4rem;
+	border: 1px solid var(--line); border-radius: 14px;
+	color: var(--muted); font-size: 0.9rem; line-height: 1.6;
+}
+.min-notice strong { color: var(--text); font-weight: 400; }
+.min-facts { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.1rem; margin: 0 0 1.6rem; }
+.min-facts dt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.min-facts dd { margin: 0; font-size: 0.95rem; }
+.min-facts dd a { color: var(--gold); }
+.min-actions { display: grid; gap: 0.6rem; }
+.min-actions .button { justify-content: center; text-align: center; }
+
+.min-cta { display: flex; flex-wrap: wrap; gap: 0.9rem; margin-top: 2rem; }
+
+@media (max-width: 860px) {
+	.min-detail { grid-template-columns: 1fr; gap: 2rem; }
+	.min-half__count { font-size: 2rem; top: 1.3rem; right: 1.4rem; }
+}
+
+/* ------------------------------------------------------------------
+   Prose blocks — used by the Page Builder's Prose block and the
+   ministry pages. Beliefs keeps its own scoped copy at hero scale.
+   ------------------------------------------------------------------ */
+.prose-block { padding: 6rem 0; }
+.prose-block--tinted {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
+	border-top: 1px solid var(--line);
+	border-bottom: 1px solid var(--line);
+}
+.prose-block__title {
+	font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	font-weight: 600;
+	letter-spacing: -0.038em;
+	line-height: 1.05;
+	font-size: clamp(2rem, 4.4vw, 3.2rem);
+	max-width: 20ch;
+	margin: 0;
+}
+.prose-block__body {
+	max-width: 62ch;
+	margin-top: 2rem;
+	display: grid;
+	gap: 1.3rem;
+}
+.prose-block__body p {
+	color: var(--muted);
+	font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+	line-height: 1.8;
+}
+.prose-block__body em { color: var(--text); font-style: italic; }
+.prose-block__body strong { color: var(--text); }
