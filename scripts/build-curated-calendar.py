@@ -1,216 +1,164 @@
 #!/usr/bin/env python3
-"""Pull the curated ministries' calendar feeds into one calendar: ours.
+"""Build our calendar from The Church Map's published Grand Rapids events.
 
-This is not a directory of other people's calendars. Every event that comes back
-is folded into a single New Life calendar, tagged with the ministry it belongs to
-and the place it meets.
+The Church Map already gathers the calendars Grand Rapids churches publish
+themselves, parses them, and sorts them into themes:
+
+    https://thechurchmap.com/grandrapids/events
+    https://thechurchmap.com/api/platforms/grandrapids/events
+
+We read that rather than re-parsing the same ICS files, which is both less work
+and a better read of the data.
+
+This is still not a mirror. Every event that survives is curated into one New
+Life calendar: a building's own housekeeping is dropped, congregations outside
+historic Christian orthodoxy are left out, duplicate church records are folded
+together, and each event is tagged with the categories it belongs to on our
+pages.
 
     python3 scripts/build-curated-calendar.py
 
 Writes content/curated-events.json.
 """
 import json, os, re, urllib.request
-from datetime import date, datetime, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "content/curated-events.json")
-HORIZON_DAYS = 70
+API = "https://thechurchmap.com/api/platforms/grandrapids/events"
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
-WEEKDAYS = {"MO": 0, "TU": 1, "WE": 2, "TH": 3, "FR": 4, "SA": 5, "SU": 6}
 
-# This calendar is curated, not mirrored. Two filters decide what belongs.
-#
-# DENY strips a church's internal housekeeping and the outside groups that rent
-# its building. A weight-loss group meeting in the gym is not a ministry we are
-# offering anyone.
+# The Church Map's themes, mapped onto our own categories.
+THEME_CATEGORIES = {
+    "youth": ["high-school", "middle-school"],
+    "kids": ["childrens-ministry", "nursery"],
+    "young_adults": ["young-adults"],
+    "womens": ["womens-ministry", "womens-bible-study"],
+    "mens": ["mens-ministry"],
+    "prayer": ["prayer-meetings", "intercession"],
+    "bible_study": ["bible-study"],
+    "worship_music": ["worship-nights", "corporate-worship"],
+    "sunday_service": ["corporate-worship"],
+    "family": ["parenting"],
+    "seniors": ["senior-adults"],
+    "serve_outreach": ["local-outreach"],
+    "care_support": ["grief-support"],
+    "class_training": ["discipleship-groups"],
+    "sports_recreation": ["adult-sports"],
+    "arts_culture": ["arts-ministry"],
+    "missions_trip": ["short-term-missions"],
+    "fellowship_food": ["small-groups"],
+}
+THEME_LABEL = {
+    "youth": "Youth", "kids": "Kids", "young_adults": "Young adults",
+    "womens": "Women", "mens": "Men", "prayer": "Prayer",
+    "bible_study": "Bible study", "worship_music": "Worship",
+    "sunday_service": "Sunday service", "family": "Family",
+    "seniors": "Seniors", "serve_outreach": "Serve",
+    "care_support": "Care & support", "class_training": "Classes",
+    "sports_recreation": "Sport", "arts_culture": "Arts",
+    "missions_trip": "Mission trips", "fellowship_food": "Food & fellowship",
+    "other": "Everything else",
+}
+
+# A church's own housekeeping, and the outside groups that rent its building.
 DENY = re.compile(
     r"(^(office hours|board|staff|elders?|council|deacons?|trustee|committee|"
-    r"building use|private|setup|set up|clean ?up|rehearsal|practice|maintenance|"
-    r"tops\b|aa\b|al-?anon|scouts?|boy ?scouts|girl ?scouts|networkers|"
-    r"senior neighbors|blood drive|voting|polling))"
-    r"|(-\s*(gym|library|music room|fellowship hall|room|kitchen|nursery|chapel|"
-    r"sanctuary|gymnasium|basement)\b)"
+    r"building use|private|setup|set up|clean ?up|rehearsal|maintenance|"
+    r"tops\b|al-?anon|networkers|senior neighbors|blood drive|voting|polling|"
+    r"activity center rental|library public hours|water aerobics|euchre|rental))"
+    r"|(-\s*(gym|library|music room|fellowship hall|kitchen|basement)\b)"
     r"|(\broom \d)", re.I)
 
-# ALLOW keeps what a person could actually turn up to. Anything matching neither
-# list is left off rather than guessed at.
-ALLOW = re.compile(
-    r"\b(worship|service|prayer|youth|teen|student|kids?|children|nursery|"
-    r"unite|nazateens|nazkidz|awana|sunday school|bible study|small group|"
-    r"life group|community group|men'?s|women'?s|young adult|communion|baptism|"
-    r"outreach|potluck|conference|retreat|camp|vbs|celebration|night of worship)\b",
-    re.I)
+# Congregations outside historic Christian orthodoxy, however good the calendar.
+EXCLUDE_CHURCH = re.compile(
+    r"\b(unity|unitarian|universalist|science of mind|latter[- ]day|scientolog)\b", re.I)
+
+# A saint's feast day is not something we are offering anyone.
+SKIP_THEMES = {"liturgical"}
 
 
-def unfold(text):
-    return re.sub(r"\r?\n[ \t]", "", text)
+def get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.loads(resp.read())
 
 
-def parse_dt(value):
-    v = value.strip()
-    if v.endswith("Z"):
-        v = v[:-1]
-    try:
-        if "T" in v:
-            return datetime.strptime(v[:15], "%Y%m%dT%H%M%S"), True
-        return datetime.strptime(v[:8], "%Y%m%d"), False
-    except ValueError:
-        return None, False
+def fetch_all():
+    events, offset = [], 0
+    while True:
+        page = get(f"{API}?theme=all&limit=100&offset={offset}")
+        events += page["events"]
+        if not page.get("hasMore"):
+            return events, page
+        offset += 100
 
 
-def expand(start, rrule, window_start, window_end, all_day):
-    """Return occurrences inside the window. Handles the rules churches use."""
-    if not rrule:
-        return [start] if window_start <= start.date() <= window_end else []
-    parts = dict(
-        p.split("=", 1) for p in rrule.split(";") if "=" in p
-    )
-    freq = parts.get("FREQ", "")
-    interval = int(parts.get("INTERVAL", 1) or 1)
-    until = None
-    if parts.get("UNTIL"):
-        until, _ = parse_dt(parts["UNTIL"])
-    count = int(parts["COUNT"]) if parts.get("COUNT", "").isdigit() else None
-    days = [WEEKDAYS[d[-2:]] for d in parts.get("BYDAY", "").split(",")
-            if d and d[-2:] in WEEKDAYS]
-
-    out, emitted = [], 0
-    cur = start
-    guard = 0
-    while guard < 1500:
-        guard += 1
-        if until and cur > until:
-            break
-        if count is not None and emitted >= count:
-            break
-        if cur.date() > window_end:
-            break
-        if cur.date() >= window_start:
-            if freq == "WEEKLY" and days:
-                if cur.weekday() in days:
-                    out.append(cur)
-            else:
-                out.append(cur)
-        emitted += 1
-        if freq == "DAILY":
-            cur += timedelta(days=interval)
-        elif freq == "WEEKLY":
-            cur += timedelta(days=1 if days else 7 * interval)
-        elif freq == "MONTHLY":
-            month = cur.month + interval
-            year = cur.year + (month - 1) // 12
-            month = (month - 1) % 12 + 1
-            day = min(cur.day, 28)
-            cur = cur.replace(year=year, month=month, day=day)
-        elif freq == "YEARLY":
-            cur = cur.replace(year=cur.year + interval)
-        else:
-            break
-    return out
-
-
-def events_from(ics, window_start, window_end):
-    out = []
-    for block in re.findall(r"BEGIN:VEVENT(.*?)END:VEVENT", unfold(ics), re.S):
-        def field(name):
-            m = re.search(rf"^{name}[^:\r\n]*:(.*)$", block, re.M)
-            return m.group(1).strip() if m else None
-
-        summary = field("SUMMARY")
-        dtstart = field("DTSTART")
-        if not summary or not dtstart:
-            continue
-        if DENY.search(summary) or not ALLOW.search(summary):
-            continue
-        start, timed = parse_dt(dtstart)
-        if not start:
-            continue
-        rrule = field("RRULE")
-        for occ in expand(start, rrule, window_start, window_end, not timed):
-            out.append({
-                "title": re.sub(r"\s+", " ", summary)[:90],
-                "date": occ.date().isoformat(),
-                "time": occ.strftime("%-I:%M%p").lower().replace(":00", "") if timed else None,
-                "sort": occ.isoformat(),
-            })
-    return out
-
-
-STOP = {"the", "and", "for", "our", "ministry", "ministries", "group", "groups",
-        "church", "night", "nights", "gathering", "team", "class", "classes"}
-
-
-def tokens(text):
-    return {w for w in re.findall(r"[a-z]+", text.lower()) if len(w) > 3 and w not in STOP}
-
-
-def match_ministry(title, owners):
-    """Attach an event to the ministry it belongs to, where the name says so.
-
-    A building's feed carries every ministry that meets there, so "NazaTeens"
-    should land on the high-school page while "Sunday School" stays general.
-    """
-    t = tokens(title)
-    if not t:
+def clock(ev):
+    if ev.get("allDay") or not ev.get("timeConfident"):
         return None
-    best, best_score = None, 0
-    for o in owners:
-        score = len(t & tokens(o["name"]))
-        if score > best_score:
-            best, best_score = o, score
-    return best if best_score else None
+    start = ev.get("localStart") or ""
+    if len(start) < 16:
+        return None
+    hh, mm = int(start[11:13]), start[14:16]
+    suffix = "am" if hh < 12 else "pm"
+    return f"{hh % 12 or 12}:{mm}{suffix}".replace(":00", "")
 
 
 def main():
-    directory = json.load(open(os.path.join(ROOT, "content/ministries.json")))
-    today = date.today()
-    horizon = today + timedelta(days=HORIZON_DAYS)
+    raw, meta = fetch_all()
+    print(f"published by The Church Map for {meta['platform']['name']}: {len(raw)} events "
+          f"over {meta['days']} days")
 
-    # One feed may serve several ministries at the same church; fetch it once.
-    by_feed = {}
-    for e in directory["entries"]:
-        cal = e.get("calendar") or {}
-        url = cal.get("url")
-        if not url or cal.get("format") != "ics":
+    events, dropped, seen = [], 0, set()
+    for ev in raw:
+        title = (ev.get("title") or "").strip()
+        church = (ev.get("churchName") or "").strip()
+        if not title or not church:
             continue
-        by_feed.setdefault(url, []).append(e)
-
-    events, sources = [], []
-    for url, owners in by_feed.items():
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": UA})
-            ics = urllib.request.urlopen(req, timeout=40).read().decode("utf-8", "ignore")
-        except Exception as ex:
-            sources.append({"url": url, "ok": False, "error": str(ex)[:90]})
+        if EXCLUDE_CHURCH.search(church) or ev.get("theme") in SKIP_THEMES or DENY.search(title):
+            dropped += 1
             continue
-        found = events_from(ics, today, horizon)
-        owner = owners[0]
-        for ev in found:
-            match = match_ministry(ev["title"], owners)
-            ev["ministry"] = match["name"] if match else None
-            ev["ministrySlug"] = match["slug"] if match else None
-            ev["venue"] = owner.get("venue") or owner.get("name")
-            ev["area"] = (match or owner).get("area")
-            events.append(ev)
-        sources.append({"url": url, "ok": True, "events": len(found),
-                        "venue": owner.get("venue")})
+        day = (ev.get("localStart") or "")[:10]
+        # One congregation appears under more than one record upstream, so fold
+        # on what a reader would see rather than on the church id.
+        key = (day, title.lower(), (ev.get("city") or "").lower())
+        if key in seen:
+            continue
+        seen.add(key)
+        theme = ev.get("theme") or "other"
+        events.append({
+            "title": re.sub(r"\s+", " ", title)[:90],
+            "date": day,
+            "time": clock(ev),
+            "venue": church,
+            "city": ev.get("city"),
+            "theme": theme,
+            "themeLabel": THEME_LABEL.get(theme, theme.replace("_", " ").title()),
+            "categories": THEME_CATEGORIES.get(theme, []),
+            "cadence": ev.get("cadence"),
+            "sort": ev.get("localStart") or day,
+        })
 
     events.sort(key=lambda e: e["sort"])
+    by_theme = {}
+    for e in events:
+        by_theme[e["themeLabel"]] = by_theme.get(e["themeLabel"], 0) + 1
+
     json.dump({
-        "_comment": "New Life's own calendar, gathered from the curated ministries' feeds. "
-                    "Regenerate with scripts/build-curated-calendar.py.",
-        "generatedOn": today.isoformat(),
-        "horizon": horizon.isoformat(),
-        "sources": sources,
+        "_comment": "New Life's own calendar, curated from The Church Map's published "
+                    "Grand Rapids events. Regenerate with scripts/build-curated-calendar.py.",
+        "source": "https://thechurchmap.com/grandrapids/events",
+        "days": meta.get("days"),
+        "themes": by_theme,
         "events": events,
     }, open(OUT, "w"), indent="\t")
     open(OUT, "a").write("\n")
 
-    print(f"feeds: {len(by_feed)}  ok: {sum(1 for s in sources if s['ok'])}")
-    print(f"events in the next {HORIZON_DAYS} days: {len(events)}")
-    for e in events[:18]:
-        print(f"   {e['date']} {str(e['time'] or ''):>8}  {e['title'][:40]:<40} {e['venue']}")
+    venues = {e["venue"] for e in events}
+    print(f"kept {len(events)} gatherings across {len(venues)} churches, left off {dropped}")
+    for label, n in sorted(by_theme.items(), key=lambda kv: -kv[1]):
+        print(f"   {n:5}  {label}")
 
 
 main()

@@ -8,13 +8,19 @@ type Ev = {
 	title: string;
 	date: string;
 	time: string | null;
-	ministry: string | null;
-	ministrySlug: string | null;
 	venue: string | null;
-	area: string | null;
+	city: string | null;
+	theme: string;
+	themeLabel: string;
+	categories: string[];
 };
 
-const data = calendarData as { generatedOn: string; horizon: string; events: Ev[] };
+const data = calendarData as {
+	source: string;
+	days: number;
+	themes: Record<string, number>;
+	events: Ev[];
+};
 
 // Our own weekly rhythms sit in the same list as everything else, because it is
 // one calendar.
@@ -27,7 +33,8 @@ for (const ev of data.events) {
 	if (!byDate.has(ev.date)) byDate.set(ev.date, []);
 	byDate.get(ev.date)!.push(ev);
 }
-const days = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(0, 32);
+const days = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(0, 21);
+const themes = Object.entries(data.themes).sort((a, b) => b[1] - a[1]);
 
 function label(iso: string) {
 	const d = new Date(`${iso}T12:00:00`);
@@ -62,6 +69,11 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 					<strong>{ours.length}</strong>
 					<span>of them at Knapp's Corner</span>
 				</div>
+			</div>
+			<div class="min-themes reveal is-visible">
+				{themes.map(([label, n]) => (
+					<span class="min-theme"><strong>{n}</strong> {label}</span>
+				))}
 			</div>
 			<p class="lead-copy reveal is-visible">
 				This is one calendar, not a list of other people's. We do not carry everything that happens
@@ -116,9 +128,13 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 											<span class="min-ev__time">{ev.time ?? "All day"}</span>
 											<span class="min-ev__body">
 												<span class="min-ev__title">{ev.title}</span>
-												{ev.venue && <span class="min-ev__venue">at {ev.venue}</span>}
+												{ev.venue && (
+													<span class="min-ev__venue">
+														at {ev.venue}{ev.city ? `, ${ev.city}` : ""}
+													</span>
+												)}
 											</span>
-											{ev.area && <span class="min-ev__area">{ev.area}</span>}
+											<span class="min-ev__area">{ev.themeLabel}</span>
 										</li>
 									))}
 								</ul>

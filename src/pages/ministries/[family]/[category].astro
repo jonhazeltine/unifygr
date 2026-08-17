@@ -34,13 +34,12 @@ const elsewhere = offering.filter((e) => e.house === "out");
 
 type Ev = {
 	title: string; date: string; time: string | null;
-	ministrySlug: string | null; venue: string | null; area: string | null;
+	venue: string | null; city: string | null; categories: string[]; themeLabel: string;
 };
 const allEvents = (calendarData as { events: Ev[] }).events;
 
 // Only this category's gatherings belong on this page's calendar.
-const slugs = new Set(list.map((e) => e.slug));
-const events = allEvents.filter((ev) => ev.ministrySlug && slugs.has(ev.ministrySlug)).slice(0, 12);
+const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).slice(0, 12);
 
 
 // Where a category sits inside school districts, that is the useful grouping.
@@ -91,7 +90,11 @@ function dayLabel(iso: string) {
 								<span class="min-ev__time">{dayLabel(ev.date)}</span>
 								<span class="min-ev__body">
 									<span class="min-ev__title">{ev.title}</span>
-									{ev.venue && <span class="min-ev__venue">at {ev.venue}</span>}
+									{ev.venue && (
+										<span class="min-ev__venue">
+											at {ev.venue}{ev.city ? `, ${ev.city}` : ""}
+										</span>
+									)}
 								</span>
 								<span class="min-ev__area">{ev.time ?? ""}</span>
 							</li>
