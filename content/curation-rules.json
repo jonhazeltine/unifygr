@@ -20,13 +20,27 @@
 		]
 	},
 	"noOverlapWithOurSignature": {
-		"note": "We already do these well. Carrying somebody else's version of them divides our own people rather than adding anything.",
+		"note": "We already do these well. Carrying somebody else's version divides our own people rather than adding anything. Sunday morning is the clearest case: our own service, our own kids ministry.",
 		"themes": [
 			"sunday_service",
 			"worship_music",
 			"prayer"
 		],
-		"exceptAtKnappsCorner": true
+		"exceptAtKnappsCorner": true,
+		"sundayMorningIsOurs": {
+			"note": "Anything on a Sunday morning competes with our own service and our own children's ministry, whatever it is called. Sunday School and Sunday-morning kids programmes go with it.",
+			"beforeHour": 13
+		},
+		"oursByName": {
+			"note": "Things we run ourselves whatever day they fall on. Nursery and childcare are ours; a parent looking for those is looking for our building.",
+			"titlePatterns": [
+				"\\bnursery\\b",
+				"\\bchildcare\\b",
+				"\\bchild care\\b",
+				"\\bcradle roll\\b",
+				"\\bnursing mothers?\\b"
+			]
+		}
 	},
 	"traditionsToAvoid": {
 		"note": "Kept off unless a category has no other option at all, in which case the best available is carried and flagged.",
@@ -46,7 +60,8 @@
 			"\\bunitarian\\b",
 			"\\buniversalist\\b",
 			"science of mind",
-			"\\bscientolog"
+			"\\bscientolog",
+			"^religious education$"
 		],
 		"allowAsLastResort": true
 	},
@@ -103,6 +118,26 @@
 			"2st turkey",
 			"\\bbert church\\b",
 			"test church 2"
+		]
+	},
+	"schoolCalendarNoise": {
+		"note": "School term dates that ride along in a parish calendar. Not a gathering anyone turns up to.",
+		"titlePatterns": [
+			"half day of school",
+			"first day of school",
+			"last day of school",
+			"no school",
+			"early dismissal",
+			"report cards",
+			"parent[- ]teacher",
+			"school year begins"
+		]
+	},
+	"specialisedOnly": {
+		"note": "The line: a category area stays in the curated browse if at least one ministry in it publishes dates we can carry. If nobody does, it moves to the specialised list. That is self-maintaining — as curation fills an area, it comes back on its own. The list below forces an area onto the shelf even when it does have offerings.",
+		"rule": "an area with zero offerings is specialised",
+		"alsoForce": [
+			"mental-health"
 		]
 	}
 }

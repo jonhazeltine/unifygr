@@ -21,6 +21,7 @@ pages.
 Writes content/curated-events.json.
 """
 import json, math, os, re, subprocess, urllib.request
+from datetime import datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "content/curated-events.json")
@@ -108,6 +109,24 @@ def fetch_all():
         offset += 100
 
 
+def is_sunday_morning(ev, before_hour):
+    start = ev.get("localStart") or ""
+    if len(start) < 10:
+        return False
+    try:
+        when = datetime.strptime(start[:10], "%Y-%m-%d")
+    except ValueError:
+        return False
+    if when.weekday() != 6:          # Sunday
+        return False
+    if ev.get("allDay") or len(start) < 13:
+        return True
+    try:
+        return int(start[11:13]) < before_hour
+    except ValueError:
+        return True
+
+
 def clock(ev):
     if ev.get("allDay") or not ev.get("timeConfident"):
         return None
@@ -156,6 +175,11 @@ def main():
     banned = {c.lower() for c in rules["alwaysExclude"]["churches"]}
     knapps = {c.lower() for c in rules["knappsCorner"]["churches"]}
     overlap = set(rules["noOverlapWithOurSignature"]["themes"])
+    sunday_am = rules["noOverlapWithOurSignature"]["sundayMorningIsOurs"]["beforeHour"]
+    school_noise = re.compile(
+        "|".join(rules["schoolCalendarNoise"]["titlePatterns"]), re.I)
+    ours_by_name = re.compile(
+        "|".join(rules["noOverlapWithOurSignature"]["oursByName"]["titlePatterns"]), re.I)
     flagged = {c.lower() for c in rules["needsHumanHandling"]["churches"]}
     disperse = rules["prefer"]["midweekDispersion"]
     disperse_themes = set(disperse["themes"])
@@ -204,12 +228,21 @@ def main():
         if junk.search(church):
             counts["junk"] += 1
             continue
-        if low in banned or theme in SKIP_THEMES or DENY.search(title):
+        if low in banned or theme in SKIP_THEMES or DENY.search(title) or school_noise.search(title):
             counts["housekeeping"] += 1
             continue
         # We already do Sundays, worship and prayer. Someone else's version
         # divides our own people, unless it is on our own campus.
         if theme in overlap and low not in knapps:
+            counts["overlap"] += 1
+            continue
+        # Sunday morning is ours too: our service and our children's ministry.
+        # Whatever a Sunday-morning gathering is called, it competes with them.
+        if low not in knapps and is_sunday_morning(ev, sunday_am):
+            counts["overlap"] += 1
+            continue
+        # Nursery and childcare are ours on any day.
+        if low not in knapps and ours_by_name.search(title):
             counts["overlap"] += 1
             continue
         # Traditions we stay away from wait, in case a category has nothing else.

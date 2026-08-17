@@ -7,7 +7,7 @@ import MinistryCard from "../../../components/MinistryCard.astro";
 import MinistryMap from "../../../components/MinistryMap.astro";
 import calendarData from "../../../../content/curated-events.json";
 import {
-	families,
+	allFamiliesIncludingSpecialised as families,
 	entriesInCategory,
 	sortEntries,
 	splitOffering,
@@ -47,6 +47,15 @@ const districts = [
 
 const siblings = family.categories.filter((c) => c.slug !== category.slug);
 
+// A family choosing a youth group is really choosing around a school run, so
+// this is the one place the district is worth spelling out.
+const BY_DISTRICT = new Set(["middle-school", "high-school"]);
+const districtNote = BY_DISTRICT.has(category.slug)
+	? offering
+			.filter((e) => e.house === "out" && e.area)
+			.map((e) => ({ name: e.name, area: e.area! }))
+	: [];
+
 function dayLabel(iso: string) {
 	const d = new Date(`${iso}T12:00:00`);
 	return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
@@ -60,11 +69,9 @@ function dayLabel(iso: string) {
 	heading={category.name}
 	lede={
 		offering.length
-			? `${offering.length} ${offering.length === 1 ? "offering" : "offerings"} with real dates${
-					specialized.length ? `, plus ${specialized.length} more worth knowing` : ""
-				}.`
+			? `${offering.length} ${offering.length === 1 ? "offering" : "offerings"} you can turn up to.`
 			: specialized.length
-				? `Nothing with live dates yet, but ${specialized.length} worth knowing.`
+				? "Nothing with dates we can carry yet."
 				: "Nobody is on our list for this yet."
 	}
 >
@@ -78,6 +85,21 @@ function dayLabel(iso: string) {
 			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">
 					<MinistryMap entries={offering} label={category.name} />
+				</div>
+			)}
+
+			{districtNote.length > 0 && (
+				<div class="min-districts reveal is-visible">
+					<p class="eyebrow">By school district</p>
+					<p>
+						Most families pick a youth group around the school run rather than the map, so here is
+						which district each one sits in.
+					</p>
+					<ul>
+						{districtNote.map((d) => (
+							<li><strong>{d.area}</strong><span>{d.name}</span></li>
+						))}
+					</ul>
 				</div>
 			)}
 
@@ -117,19 +139,11 @@ function dayLabel(iso: string) {
 			)}
 
 			{specialized.length > 0 && (
-				<div class="min-cat reveal is-visible">
-					<div class="min-cat__head">
-						<h2>We know these, not their dates</h2>
-						<span>{specialized.length}</span>
-					</div>
-					<p class="min-cat__note">
-						We would send our own family to any of these. They just do not publish a calendar we can
-						read, so we cannot tell you when the next one is without asking. Ask us and we will.
-					</p>
-					<div class="min-grid">
-						{specialized.map((entry) => <MinistryCard entry={entry} />)}
-					</div>
-				</div>
+				<p class="min-shelf reveal is-visible">
+					{specialized.length} specialised {specialized.length === 1 ? "ministry" : "ministries"} also
+					work in this area. They do not publish dates we can carry, so they sit on the
+					{" "}<a href="/ministries/specialized">specialised list</a>.
+				</p>
 			)}
 
 			{list.length === 0 && (

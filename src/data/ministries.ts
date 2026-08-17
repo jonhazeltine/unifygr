@@ -10,6 +10,7 @@
 
 import taxonomyJson from "../../content/ministry-taxonomy.json";
 import directoryJson from "../../content/ministries.json";
+import rulesJson from "../../content/curation-rules.json";
 
 export type Category = {
 	slug: string;
@@ -87,7 +88,14 @@ export type CurationTest = { name: string; body: string; short: string };
  */
 export const LIVE_CALENDAR = new Set(["available", "page-current"]);
 
-export const families: Family[] = taxonomyJson.families as Family[];
+const allFamilies: Family[] = taxonomyJson.families as Family[];
+
+const forced = new Set<string>(
+	(rulesJson as { specialisedOnly?: { alsoForce?: string[] } }).specialisedOnly?.alsoForce ?? [],
+);
+
+/** Every family, including the specialised ones. */
+export const allFamiliesIncludingSpecialised: Family[] = allFamilies;
 export const entries: Entry[] = directoryJson.entries as Entry[];
 export const standard = directoryJson.standard as {
 	eyebrow: string;
@@ -98,17 +106,17 @@ export const standard = directoryJson.standard as {
 
 // ---- Lookups ----
 
-export const categories: Category[] = families.flatMap((f) => f.categories);
+export const categories: Category[] = allFamilies.flatMap((f) => f.categories);
 
 const familyByCategory = new Map<string, Family>();
-for (const family of families) {
+for (const family of allFamilies) {
 	for (const category of family.categories) {
 		familyByCategory.set(category.slug, family);
 	}
 }
 
 export function getFamily(slug: string): Family | undefined {
-	return families.find((f) => f.slug === slug);
+	return allFamilies.find((f) => f.slug === slug);
 }
 
 export function getCategory(slug: string): Category | undefined {
@@ -161,7 +169,7 @@ export const counts = {
 	entries: entries.length,
 	inHouse: inHouse.length,
 	outOfHouse: outOfHouse.length,
-	families: families.length,
+	get families() { return families.length; },
 	categories: categories.length,
 	/** Categories nobody on this list covers yet — the honest gaps. */
 	uncovered: categories.filter((c) => entriesInCategory(c.slug).length === 0).length,
@@ -171,9 +179,26 @@ export const counts = {
 	syncable: entries.filter((e) => LIVE_CALENDAR.has(e.calendar?.sync ?? "")).length,
 };
 
+/** What the browse counts: things you could turn up to, not the whole shelf. */
 export function familyCount(familySlug: string): number {
-	return entriesInFamily(familySlug).length;
+	return entriesInFamily(familySlug).filter(isOffering).length;
 }
+
+/**
+ * The line between the curated browse and the specialised list.
+ *
+ * An area stays in the browse if at least one ministry in it publishes dates we
+ * can carry. If nobody does, it moves to the shelf. That maintains itself: as
+ * curation fills an area, it comes back on its own.
+ */
+export const specialisedFamilies = new Set<string>(
+	allFamilies
+		.filter((f) => forced.has(f.slug) || familyCount(f.slug) === 0)
+		.map((f) => f.slug),
+);
+
+/** The families someone browses. */
+export const families: Family[] = allFamilies.filter((f) => !specialisedFamilies.has(f.slug));
 
 /**
  * An offering is something a person can actually turn up to: ours, or a

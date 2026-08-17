@@ -148,7 +148,7 @@ const homePos = { left: (home.px / frame.w) * 100, top: (home.py / frame.h) * 10
 						<strong>{p.name}</strong>
 						{p.venue && <span class="minmap__tipVenue">at {p.venue}</span>}
 						{p.rhythm && <span class="minmap__tipWhen">{p.rhythm}</span>}
-						{p.area && <span class="minmap__tipArea">{p.area}</span>}
+						{p.city && <span class="minmap__tipArea">{p.city}</span>}
 					</span>
 				</a>
 			))}
@@ -164,7 +164,7 @@ const homePos = { left: (home.px / frame.w) * 100, top: (home.py / frame.h) * 10
 						<li>
 							<span class="minmap__n">{p.n}</span>
 							<a href={`/ministry/${p.slug}`}>{p.name}</a>
-							<span class="minmap__d">{p.area}</span>
+							<span class="minmap__d">{p.venue ?? p.city}</span>
 						</li>
 					))}
 				</ol>

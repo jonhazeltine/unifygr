@@ -10,21 +10,19 @@
 		"Sport": 2,
 		"Young adults": 9,
 		"Worship": 2,
-		"Food & fellowship": 29,
-		"Women": 10,
-		"Serve": 5,
-		"Seniors": 7,
+		"Food & fellowship": 17,
+		"Women": 8,
+		"Serve": 4,
+		"Seniors": 6,
 		"Bible study": 14,
-		"Family": 12,
-		"Kids": 24,
-		"Men": 15,
+		"Family": 2,
+		"Kids": 5,
+		"Men": 14,
 		"Youth": 4,
-		"Arts": 8,
 		"Sunday service": 8,
-		"Classes": 6,
+		"Classes": 4,
 		"Care & support": 1,
-		"Everything else": 6,
-		"Mission trips": 1
+		"Everything else": 3
 	},
 	"events": [
 		{
@@ -462,111 +460,6 @@
 			"sort": "2026-08-22T07:30:00"
 		},
 		{
-			"title": "HOMEMADE - Ice Cream Social",
-			"miles": 8.9,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": null,
-			"venue": "New Life Baptist Church",
-			"city": "Walker",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-23T00:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 12.2,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "Cedar Creek Community Church",
-			"city": "Algoma township",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-23T10:00:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-08-23",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-23T10:30:00"
-		},
-		{
-			"title": "Worship and Children's Worship",
-			"miles": 4.6,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": "10:30am",
-			"venue": "Grace Christian Reformed Church",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-23T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -582,40 +475,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-08-23T11:00:00"
-		},
-		{
-			"title": "Serve Sunday!",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-08-23",
-			"time": "11:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "serve_outreach",
-			"themeLabel": "Serve",
-			"categories": [
-				"local-outreach"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-23T11:30:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-08-23",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-23T11:30:00"
 		},
 		{
 			"title": "The Post | Beach Day",
@@ -667,24 +526,6 @@
 			"cadence": "recurring_group",
 			"lastResort": false,
 			"sort": "2026-08-24T19:00:00"
-		},
-		{
-			"title": "First Half Day of School (Y5 -8th Grade)",
-			"miles": 11.8,
-			"needsHumanHandling": false,
-			"date": "2026-08-25",
-			"time": null,
-			"venue": "Religious Education",
-			"city": "Cutlerville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-25T00:00:00"
 		},
 		{
 			"title": "Food Pantry",
@@ -908,143 +749,6 @@
 			"sort": "2026-08-29T07:30:00"
 		},
 		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 12.2,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10am",
-			"venue": "Cedar Creek Community Church",
-			"city": "Algoma township",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:00:00"
-		},
-		{
-			"title": "Family Connects - Ensley",
-			"miles": 2.8,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10:10am",
-			"venue": "Magnify Church - Northview Campus",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:10:00"
-		},
-		{
-			"title": "Family Connects - Ensley",
-			"miles": 6.1,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10:10am",
-			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
-			"city": "Rockford",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:10:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-08-30",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-30T10:30:00"
-		},
-		{
-			"title": "Worship and Children's Worship",
-			"miles": 4.6,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10:30am",
-			"venue": "Grace Christian Reformed Church",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T10:30:00"
-		},
-		{
-			"title": "House Church Info Meeting",
-			"miles": 4.1,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "10:45am",
-			"venue": "Crossroads Bible Church",
-			"city": "Grand Rapids",
-			"theme": "other",
-			"themeLabel": "Everything else",
-			"categories": [],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-30T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -1060,57 +764,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-08-30T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-08-30T11:30:00"
-		},
-		{
-			"title": "Cookout Sunday",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-08-30",
-			"time": "12pm",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-30T12:00:00"
-		},
-		{
-			"title": "IBH Picnic",
-			"miles": 8.5,
-			"needsHumanHandling": false,
-			"date": "2026-08-30",
-			"time": "12pm",
-			"venue": "Maplelawn Baptist Church",
-			"city": "Wyoming",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-08-30T12:00:00"
 		},
 		{
 			"title": "I SCREAM (for ice cream)!",
@@ -1300,93 +953,6 @@
 			"sort": "2026-09-05T09:00:00"
 		},
 		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-06",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-06T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-06",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-06T10:00:00"
-		},
-		{
-			"title": "Family Connects - Northview",
-			"miles": 2.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-06",
-			"time": "10:10am",
-			"venue": "Magnify Church - Northview Campus",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-06T10:10:00"
-		},
-		{
-			"title": "Family Connects - Northview",
-			"miles": 6.1,
-			"needsHumanHandling": false,
-			"date": "2026-09-06",
-			"time": "10:10am",
-			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
-			"city": "Rockford",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-06T10:10:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-09-06",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-06T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -1402,23 +968,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-06T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-06",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-06T11:30:00"
 		},
 		{
 			"title": "Middle School & High School Youth Group",
@@ -1626,95 +1175,6 @@
 			"sort": "2026-09-12T10:00:00"
 		},
 		{
-			"title": "Women's Fall Bible Study",
-			"miles": 2.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-13",
-			"time": null,
-			"venue": "Magnify Church - Northview Campus",
-			"city": "Grand Rapids",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-13T00:00:00"
-		},
-		{
-			"title": "Women's Fall Bible Study",
-			"miles": 6.1,
-			"needsHumanHandling": false,
-			"date": "2026-09-13",
-			"time": null,
-			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
-			"city": "Rockford",
-			"theme": "womens",
-			"themeLabel": "Women",
-			"categories": [
-				"womens-ministry",
-				"womens-bible-study"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-13T00:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-13",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-13T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-13",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-13T10:00:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-09-13",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-13T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -1730,23 +1190,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-13T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-13",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-13T11:30:00"
 		},
 		{
 			"title": "Life Group Leader Gathering - Northview",
@@ -1957,142 +1400,6 @@
 			"sort": "2026-09-19T12:00:00"
 		},
 		{
-			"title": "A-\"Men\" Sunday",
-			"miles": 8.9,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": null,
-			"venue": "New Life Baptist Church",
-			"city": "Walker",
-			"theme": "mens",
-			"themeLabel": "Men",
-			"categories": [
-				"mens-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-20T00:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-20T10:00:00"
-		},
-		{
-			"title": "2026-2027 Ministry Year Kick Off",
-			"miles": 3.0,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10am",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "other",
-			"themeLabel": "Everything else",
-			"categories": [],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-20T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-20T10:00:00"
-		},
-		{
-			"title": "Family Connects - Rockford",
-			"miles": 2.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10:10am",
-			"venue": "Magnify Church - Northview Campus",
-			"city": "Grand Rapids",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-20T10:10:00"
-		},
-		{
-			"title": "Family Connects - Rockford",
-			"miles": 6.1,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10:10am",
-			"venue": "Blythefield Hills Baptist Church: Rockford Campus",
-			"city": "Rockford",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-20T10:10:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-09-20",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-20T10:30:00"
-		},
-		{
-			"title": "Missions Conference",
-			"miles": 8.9,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "10:45am",
-			"venue": "New Life Baptist Church",
-			"city": "Walker",
-			"theme": "missions_trip",
-			"themeLabel": "Mission trips",
-			"categories": [
-				"short-term-missions"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-20T10:45:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -2108,38 +1415,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-20T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-20T11:30:00"
-		},
-		{
-			"title": "Pastor Meet & Greet",
-			"miles": 3.0,
-			"needsHumanHandling": false,
-			"date": "2026-09-20",
-			"time": "11:30am",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "other",
-			"themeLabel": "Everything else",
-			"categories": [],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-20T11:30:00"
 		},
 		{
 			"title": "Life Group Launch - Rockford",
@@ -2192,23 +1467,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-20T17:30:00"
-		},
-		{
-			"title": "RE Classes Begin",
-			"miles": 11.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-21",
-			"time": null,
-			"venue": "Religious Education",
-			"city": "Cutlerville",
-			"theme": "class_training",
-			"themeLabel": "Classes",
-			"categories": [
-				"discipleship-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-21T00:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
@@ -2279,76 +1537,6 @@
 			"sort": "2026-09-24T00:00:00"
 		},
 		{
-			"title": "Harvestfest",
-			"miles": 11.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-25",
-			"time": null,
-			"venue": "Religious Education",
-			"city": "Cutlerville",
-			"theme": "family",
-			"themeLabel": "Family",
-			"categories": [
-				"parenting"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-25T00:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-27",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-27T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-27",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-27T10:00:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-09-27",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-27T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -2364,23 +1552,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-27T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-09-27",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-27T11:30:00"
 		},
 		{
 			"title": "Life Group Launch - Northview",
@@ -2415,23 +1586,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-27T18:00:00"
-		},
-		{
-			"title": "Legacy Society Event",
-			"miles": 11.8,
-			"needsHumanHandling": false,
-			"date": "2026-09-29",
-			"time": null,
-			"venue": "Religious Education",
-			"city": "Cutlerville",
-			"theme": "seniors",
-			"themeLabel": "Seniors",
-			"categories": [
-				"senior-adults"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-09-29T00:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
@@ -2502,59 +1656,6 @@
 			"sort": "2026-10-03T12:15:00"
 		},
 		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-10-04",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-04T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-10-04",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-04T10:00:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-10-04",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-10-04T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -2570,23 +1671,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-10-04T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-10-04",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-04T11:30:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
@@ -2655,76 +1739,6 @@
 			"sort": "2026-10-10T12:00:00"
 		},
 		{
-			"title": "Chili Cook-Off",
-			"miles": 8.9,
-			"needsHumanHandling": false,
-			"date": "2026-10-11",
-			"time": null,
-			"venue": "New Life Baptist Church",
-			"city": "Walker",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-10-11T00:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 7.8,
-			"needsHumanHandling": false,
-			"date": "2026-10-11",
-			"time": "10am",
-			"venue": "Wyoming Church of God",
-			"city": "Wyoming",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-11T10:00:00"
-		},
-		{
-			"title": "Sunday School",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-10-11",
-			"time": "10am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "kids",
-			"themeLabel": "Kids",
-			"categories": [
-				"childrens-ministry",
-				"nursery"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-11T10:00:00"
-		},
-		{
-			"title": "Mosaic Church YouTube Livestream https://www.youtube.com/@mosaicgr",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-10-11",
-			"time": "10:30am",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "arts_culture",
-			"themeLabel": "Arts",
-			"categories": [
-				"arts-ministry"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-10-11T10:30:00"
-		},
-		{
 			"title": "New Life Service",
 			"miles": 0.0,
 			"needsHumanHandling": false,
@@ -2740,57 +1754,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-10-11T11:00:00"
-		},
-		{
-			"title": "Fellowship Hour",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-10-11",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-10-11T11:30:00"
-		},
-		{
-			"title": "DONUT SUNDAY",
-			"miles": 15.3,
-			"needsHumanHandling": false,
-			"date": "2026-10-11",
-			"time": "11:30am",
-			"venue": "New Hope Lutheran Church",
-			"city": "Hudsonville",
-			"theme": "fellowship_food",
-			"themeLabel": "Food & fellowship",
-			"categories": [
-				"small-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-10-11T11:30:00"
-		},
-		{
-			"title": "Mosaic Vision Meeting (All are invited, childcare and lunch provided)",
-			"miles": 4.5,
-			"needsHumanHandling": true,
-			"date": "2026-10-11",
-			"time": "12:30pm",
-			"venue": "Mosaic Church",
-			"city": "Grand Rapids",
-			"theme": "class_training",
-			"themeLabel": "Classes",
-			"categories": [
-				"discipleship-groups"
-			],
-			"cadence": "one_off",
-			"lastResort": false,
-			"sort": "2026-10-11T12:30:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",

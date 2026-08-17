@@ -1,6 +1,6 @@
 {
 	"_comment": "Found by scouring the pages of ministries that publish no feed. Nothing here reaches the site until confirmed is true. Refresh with scripts/watch-announcements.py.",
-	"checkedOn": "2026-08-17T14:52",
+	"checkedOn": "2026-08-17T15:19",
 	"ministries": [
 		{
 			"slug": "lc-local-youth",
@@ -53,6 +53,20 @@
 					"firstSeen": "2026-08-17"
 				}
 			]
+		},
+		{
+			"slug": "gr-dream-center",
+			"name": "Grand Rapids Dream Center",
+			"venue": "Grand Rapids Dream Center",
+			"note": "Weekly neighbourhood outreaches. Their site blocks automated readers, so this may need a person.",
+			"finds": []
+		},
+		{
+			"slug": "serve-gr",
+			"name": "SERVE GR",
+			"venue": "SERVE GR",
+			"note": "Project days through the year.",
+			"finds": []
 		}
 	]
 }
