@@ -10,12 +10,52 @@ Run it again with `scripts/curation/` when the candidate list changes.
 
 | Route | Churches | What it is | Cost |
 |---|---|---|---|
+| **churchcenter** | 42 accounts | Planning Center's public API | trivial, and the biggest |
 | **ics** | 1 | A real calendar feed | trivial |
 | **bulletin** | 3 | A weekly PDF or dated page | cheap, needs `pdftotext` |
 | **events** | 2 | Dates on a page, no feed | cheap |
 | **ministry** | 4 | Ministries named, no dates | cheap, no calendar value |
 | **social** | 5 | Nothing on their own site | expensive, low yield |
 | **no website** | 3 | Not on record | nothing to do |
+
+### churchcenter — 42 churches, and the reason to rewrite this page
+
+Found by following a hunch of Jon's: Knapp Valley's GIVE button points at
+`berkleyhills.churchcenter.com`. It turned out to be one Planning Center account
+running three churches — the page is titled "Berkley Hills, Frost Creek & Knapp
+Valley Churches" — and Knapp Valley's events are in there, prefixed KV.
+
+A Church Center page is an empty React shell that fills itself in from an API,
+so fetching the HTML returns nothing and every crawler concludes the church
+publishes nothing. The Church Map has 168 links into churchcenter.com from
+churches inside our radius, across 44 accounts, and **every single one is filed
+"unreachable"**. Nationally it holds 6,453 such rows, 11% of every calendar feed
+it has ever recorded, and none of them work.
+
+The site hands out its own key. Two calls, no login and no browser:
+
+```
+POST https://<account>.churchcenter.com/sessions/tokens   -> a bearer token
+GET  https://api.churchcenter.com/groups/v2/groups        with that token
+```
+
+42 of 44 accounts answered: **229 published events and 350 public groups.**
+
+Groups are the find. An event is a one-off; a group is a standing ministry with
+its rhythm written on it in the church's own words — "Wings and Witness (Men's
+group), Weekly, Tuesdays @ 5:30 p.m." 173 of them carry a real day of the week.
+That includes 35 men's and 28 women's groups, which is the hole Jon flagged when
+he said he could only see two.
+
+It also corrects this page. Knapp Valley and Tabernacle were both filed under
+"social — nothing on their own site." Tabernacle has 30 public groups and Knapp
+Valley publishes through Berkley Hills. Neither was quiet; we were reading the
+wrong door.
+
+**Be a polite client.** Planning Center throttles hard — asking all 44 accounts
+at once with ten workers earned a 403 for every one of them. `fetch-churchcenter.py`
+goes one at a time with a pause and caches every answer, so a re-run costs the
+churches nothing.
 
 ### ics — Crossroads Bible Church
 Feed linked from the homepage. Already flowing into our calendar.
@@ -73,14 +113,19 @@ simply missing it. That is a Church Map fix, not an extraction problem.
 
 ## What Railway has to be able to do
 
-Only three techniques earn their place:
+Four techniques earn their place:
 
-1. **Fetch an ICS feed.** Plain HTTP.
-2. **Fetch a bulletin and read a PDF.** Plain HTTP plus `poppler-utils` for
+1. **Ask Church Center for its groups and events.** Two plain HTTP calls per
+   church, no browser, no credentials, no per-church configuration. This is the
+   one that scales: 1,705 distinct Church Center accounts are already on record
+   nationally, and one polite pass over all of them is about 1.4 hours
+   single-threaded.
+2. **Fetch an ICS feed.** Plain HTTP.
+3. **Fetch a bulletin and read a PDF.** Plain HTTP plus `poppler-utils` for
    `pdftotext`. Needs to find the newest bulletin, not just any.
-3. **Fetch a page and pull dates and standing rhythms.** Plain HTTP.
+4. **Fetch a page and pull dates and standing rhythms.** Plain HTTP.
 
-All three are plain Python and one system package. **No browser required**, which
+All four are plain Python and one system package. **No browser required**, which
 keeps the job small and cheap — that only changes if we ever decide Facebook is
 worth it, and today it is not.
 
