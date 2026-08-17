@@ -123,15 +123,20 @@ export function getEntry(slug: string): Entry | undefined {
 	return entries.find((e) => e.slug === slug);
 }
 
+/** Held back from browsing until someone gets us a time and a place. */
+export function isListable(entry: Entry): boolean {
+	return entry.status !== "no-details";
+}
+
 export function entriesInCategory(categorySlug: string): Entry[] {
-	return entries.filter((e) => e.categories.includes(categorySlug));
+	return entries.filter((e) => e.categories.includes(categorySlug) && isListable(e));
 }
 
 export function entriesInFamily(familySlug: string): Entry[] {
 	const family = getFamily(familySlug);
 	if (!family) return [];
 	const slugs = new Set(family.categories.map((c) => c.slug));
-	return entries.filter((e) => e.categories.some((c) => slugs.has(c)));
+	return entries.filter((e) => e.categories.some((c) => slugs.has(c)) && isListable(e));
 }
 
 // In-house first, then the ones we vouch for hardest, then the rest.
