@@ -1,0 +1,134 @@
+---
+import Interior from "../../layouts/Interior.astro";
+import MinistryCard from "../../components/MinistryCard.astro";
+import {
+	entries,
+	getCategory,
+	familyOf,
+	entriesInCategory,
+	sortEntries,
+	TIER_LABEL,
+	STATUS_LABEL,
+	type Entry,
+} from "../../data/ministries";
+
+export function getStaticPaths() {
+	return entries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props as { entry: Entry };
+
+const inHouse = entry.house === "in";
+const unverified = entry.status !== "live";
+const cats = entry.categories.map((slug) => ({
+	category: getCategory(slug),
+	family: familyOf(slug),
+}));
+
+// Other options in the same categories, so nobody hits a dead end.
+const seen = new Set([entry.slug]);
+const alternatives: Entry[] = [];
+for (const slug of entry.categories) {
+	for (const other of sortEntries(entriesInCategory(slug))) {
+		if (seen.has(other.slug)) continue;
+		seen.add(other.slug);
+		alternatives.push(other);
+	}
+}
+
+const primary = cats[0];
+const kicker = inHouse ? "Signature Ministry" : "Curated Partnership";
+---
+
+<Interior
+	title={`${entry.name} | New Life Grand Rapids`}
+	description={entry.summary}
+	kicker={kicker}
+	heading={entry.name}
+	lede={entry.summary}
+>
+	<section class="section">
+		<div class="container min-detail">
+			<div class="min-detail__main">
+				{entry.org && entry.org !== entry.name && <p class="min-detail__org">{entry.org}</p>}
+
+				<div class="min-detail__tags reveal is-visible">
+					<span class={`min-tag ${inHouse ? "min-tag--in" : "min-tag--out"}`}>
+						{TIER_LABEL[entry.tier] ?? entry.tier}
+					</span>
+					{cats.map(({ category, family }) =>
+						category && family ? (
+							<a class="min-tag min-tag--cat" href={`/ministries/${family.slug}#${category.slug}`}>
+								{category.name}
+							</a>
+						) : null,
+					)}
+				</div>
+
+				<div class="prose-block__body reveal is-visible">
+					<h2 class="min-detail__h">Why we point people here</h2>
+					<p>{entry.why}</p>
+					{entry.bestFor && (
+						<p class="min-detail__bestfor"><strong>Best for.</strong> {entry.bestFor}</p>
+					)}
+				</div>
+
+				{entry.handoff?.how && (
+					<div class="min-handoff reveal is-visible">
+						<p class="eyebrow">Your first step</p>
+						<p class="min-handoff__how">{entry.handoff.how}</p>
+						{entry.handoff.person && (
+							<p class="min-handoff__who">Ask for <strong>{entry.handoff.person}</strong>.</p>
+						)}
+					</div>
+				)}
+
+				{unverified && (
+					<div class="min-notice reveal is-visible">
+						<strong>{STATUS_LABEL[entry.status] ?? entry.status}.</strong>
+						We put this ministry on the list from our own knowledge of the city. Nobody at New Life
+						has spoken with them about it yet. Check their own site for current details, and if you
+						have first-hand experience of them, good or bad, we want to hear it.
+					</div>
+				)}
+			</div>
+
+			<aside class="min-detail__side reveal is-visible">
+				<dl class="min-facts">
+					{entry.area && (<><dt>Where</dt><dd>{entry.area}{entry.city && entry.city !== entry.area ? `, ${entry.city}` : ""}</dd></>)}
+					{entry.rhythm && (<><dt>When</dt><dd>{entry.rhythm}</dd></>)}
+					{primary?.family && (<><dt>Category</dt><dd><a href={`/ministries/${primary.family.slug}`}>{primary.family.name}</a></dd></>)}
+					{entry.calendar?.cadence && entry.calendar.cadence !== "none" && (
+						<><dt>Calendar</dt><dd>{entry.calendar.sync === "synced" ? "Synced to this site" : `Published ${entry.calendar.cadence}`}</dd></>
+					)}
+				</dl>
+				<div class="min-actions">
+					{entry.href && <a class="button button--primary" href={entry.href}>Learn more</a>}
+					{entry.website && (
+						<a class="button button--secondary" href={entry.website} target="_blank" rel="noopener">
+							Visit their site
+						</a>
+					)}
+					<a class="button button--secondary" href="/ministries">All ministries</a>
+				</div>
+			</aside>
+		</div>
+	</section>
+
+	{alternatives.length > 0 && (
+		<section class="section prose-block prose-block--tinted">
+			<div class="container">
+				<div class="section-heading reveal is-visible">
+					<p class="eyebrow">Also in this category</p>
+					<h2>If this one is not the fit.</h2>
+				</div>
+				<div class="min-grid reveal is-visible">
+					{alternatives.slice(0, 6).map((other) => <MinistryCard entry={other} />)}
+				</div>
+			</div>
+		</section>
+	)}
+</Interior>

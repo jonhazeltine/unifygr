@@ -1,0 +1,89 @@
+---
+import Interior from "../../layouts/Interior.astro";
+import MinistryCard from "../../components/MinistryCard.astro";
+import {
+	families,
+	entriesInCategory,
+	entriesInFamily,
+	sortEntries,
+	type Family,
+} from "../../data/ministries";
+
+export function getStaticPaths() {
+	return families.map((family) => ({
+		params: { family: family.slug },
+		props: { family },
+	}));
+}
+
+const { family } = Astro.props as { family: Family };
+
+const groups = family.categories.map((category) => ({
+	category,
+	entries: sortEntries(entriesInCategory(category.slug)),
+}));
+
+const total = entriesInFamily(family.slug).length;
+const empty = groups.filter((g) => g.entries.length === 0);
+const filled = groups.filter((g) => g.entries.length > 0);
+---
+
+<Interior
+	title={`${family.name} | Ministries | New Life Grand Rapids`}
+	description={family.blurb}
+	kicker="Ministries"
+	heading={family.name}
+	lede={family.blurb}
+>
+	<section class="section">
+		<div class="container">
+			<p class="min-breadcrumb reveal is-visible">
+				<a href="/ministries">All ministries</a> · {total} listed across {family.categories.length} categories
+			</p>
+
+			{filled.map(({ category, entries }) => (
+				<div class="min-cat reveal is-visible">
+					<div class="min-cat__head">
+						<h2 id={category.slug}>{category.name}</h2>
+						<span>{entries.length}</span>
+					</div>
+					<div class="min-grid">
+						{entries.map((entry) => <MinistryCard entry={entry} full={true} />)}
+					</div>
+				</div>
+			))}
+
+			{empty.length > 0 && (
+				<div class="min-gaps reveal is-visible">
+					<h2>Still open</h2>
+					<p>
+						Nobody is on our list for these yet. If you know a ministry in Grand Rapids that does
+						one of them well, that is exactly what we are looking for.
+					</p>
+					<ul>
+						{empty.map(({ category }) => <li>{category.name}</li>)}
+					</ul>
+					<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
+						Suggest a ministry
+					</a>
+				</div>
+			)}
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="min-next reveal is-visible">
+				{families
+					.filter((f) => f.slug !== family.slug)
+					.slice(0, 4)
+					.map((f) => (
+						<a href={`/ministries/${f.slug}`}>
+							<strong>{f.name}</strong>
+							<span>{f.categories.length} categories</span>
+						</a>
+					))}
+			</div>
+		</div>
+	</section>
+</Interior>

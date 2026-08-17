@@ -1,0 +1,1456 @@
+{
+	"_comment": "The directory. `house: in` = we run it. `house: out` = someone else runs it and we send people. Every out-of-house entry starts at status `proposed` until a human at New Life confirms it. Never move an entry to `verified` from a web page alone.",
+	"standard": {
+		"eyebrow": "How a ministry gets on this list",
+		"title": "Four things we look for.",
+		"body": "This list is not a phone book. Every ministry on it has to clear the same four tests before we will put our name next to it.",
+		"tests": [
+			{
+				"name": "Close enough to actually go",
+				"body": "A ministry two hours away is a fact, not an option. We look for the best thing you can reach on a weeknight, and we tell you where it meets before we tell you anything else."
+			},
+			{
+				"name": "A real person on the other end",
+				"body": "We are not looking for a referral form. We are looking for someone we can call, who knows we are sending you, and who will still be there in six months."
+			},
+			{
+				"name": "Better at this than we would be",
+				"body": "If a ministry has been doing one thing for 20 years, our version of it would be worse. That is the whole point. We would rather send you to excellence than keep you inside our building."
+			},
+			{
+				"name": "A calendar they actually keep",
+				"body": "If a ministry publishes real dates and keeps them current, we can pull their calendar straight onto this site and you will always see what is next. Ministries that keep a live calendar are the ones we can carry best."
+			}
+		]
+	},
+	"entries": [
+		{
+			"slug": "new-life-worship",
+			"name": "Sunday Worship",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"corporate-worship",
+				"worship-nights"
+			],
+			"summary": "Sunday morning worship built around hosting the presence of God, with a team that carries the room rather than performs to it.",
+			"why": "This is the thing we have given 30 years to. If you want to know what New Life is, come on a Sunday.",
+			"bestFor": "Anyone. Start here.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays at 10am",
+			"href": "/visit",
+			"handoff": {
+				"how": "Just come. Park anywhere, walk in the main doors, and someone will find you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "weekly",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "corporate-prayer",
+			"name": "Corporate Prayer",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"prayer-meetings",
+				"intercession",
+				"healing-prayer",
+				"prophetic"
+			],
+			"summary": "A praying team that gathers to intercede for the church and the city, and prays with people who ask.",
+			"why": "Prayer is not a program here. It is the engine, and it has been running longer than most of our other ministries have existed.",
+			"bestFor": "Anyone who wants to be prayed for, and anyone ready to pray for others.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Ongoing",
+			"href": null,
+			"handoff": {
+				"how": "Ask at the Connections desk on a Sunday, or use the connect card.",
+				"person": "Elizabeth Bish"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "weekly",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "prayer-chain",
+			"name": "Prayer Chain",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"intercession"
+			],
+			"summary": "Send a request and it goes out to people who will pray the same day.",
+			"why": "The fastest way to get a room full of people praying for your situation.",
+			"bestFor": "Anyone in the middle of something urgent.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Always on",
+			"href": null,
+			"handoff": {
+				"how": "Send your request through the connect card and it goes out the same day.",
+				"person": "Elizabeth Bish"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "none",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "childrens-ministry",
+			"name": "Children's Ministry",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"nursery",
+				"childrens-ministry"
+			],
+			"summary": "Nursery through elementary on Sunday mornings, led by a director who has built this for years.",
+			"why": "Your kids get their own space, their own teaching, and adults who know their names.",
+			"bestFor": "Families with kids from infants through 5th grade.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays at 10am",
+			"href": null,
+			"handoff": {
+				"how": "Check in at the kids desk when you arrive on Sunday.",
+				"person": "Allie Seif"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "weekly",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "pastoral-care",
+			"name": "Pastoral Care",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"hospital-visitation",
+				"grief-support",
+				"homebound"
+			],
+			"summary": "Trusted ministers who will pray with you, visit you when you are sick, and stay with you through a hard season.",
+			"why": "This is the team that shows up at the hospital. It is not outsourced and it never has been.",
+			"bestFor": "Anyone in crisis, illness, or grief.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "As needed",
+			"href": "/staff",
+			"handoff": {
+				"how": "Call the church office or tell any staff member. Someone will call you back.",
+				"person": "Tory & Allie Seif"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "none",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "hospitality-connections",
+			"name": "Hospitality & Connections",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"local-outreach"
+			],
+			"summary": "Hosts, ushers, and a connections lead whose whole job is making sure you are not standing alone in a lobby.",
+			"why": "The single biggest reason people stay is that somebody talked to them. We staff for that.",
+			"bestFor": "First-time visitors, and anyone who wants to serve on a Sunday.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays",
+			"href": "/visit",
+			"handoff": {
+				"how": "Find the Connections desk in the lobby.",
+				"person": "Elizabeth Bish"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "weekly",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "spiritual-formation-path",
+			"name": "The Welcome Path",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"discipleship-groups",
+				"membership-baptism"
+			],
+			"summary": "A guided path in the New Life app that walks you from brand new to your next step.",
+			"why": "Most churches hand you a brochure. This walks with you.",
+			"bestFor": "New people, and anyone who has been here a while without a clear next step.",
+			"area": "Online",
+			"city": "Grand Rapids",
+			"rhythm": "Self-paced",
+			"href": "/spiritual-formation",
+			"website": "https://theformation.app/m/welcome-to-new-life",
+			"handoff": {
+				"how": "Start the path online, then Elizabeth follows up personally.",
+				"person": "Elizabeth Bish"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "none",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "mission-of-hope-trips",
+			"name": "Caribbean Mission Trips",
+			"org": "New Life Grand Rapids with Mission of Hope",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"short-term-missions",
+				"student-missions",
+				"global-missions"
+			],
+			"summary": "Annual teams to Jarabacoa, Dominican Republic, working alongside Mission of Hope. New Life has sent teams since 2015.",
+			"why": "We did not want a sending agency that organizes trips on our behalf. We wanted a ministry partner on the ground, and after 11 years we have one. This is a ministry share: we lead it, and any church in the city can send their people.",
+			"bestFor": "Families with kids, high school students, retirees. Genuinely everyone.",
+			"area": "Knapp's Corner",
+			"city": "Jarabacoa, Dominican Republic",
+			"rhythm": "Every summer",
+			"href": "/mission-trips",
+			"handoff": {
+				"how": "Read the trip page, then talk to Stacy. She has led these for over a decade.",
+				"person": "Stacy Hazeltine"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "annual",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "unify-gr",
+			"name": "Unify GR",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"city-unity",
+				"pastor-care",
+				"church-planting"
+			],
+			"summary": "A growing movement to knit the churches of Grand Rapids together so the city sees one witness.",
+			"why": "This whole page exists because of Unify GR. If the Body is one, then the ministry down the road is already ours, and yours.",
+			"bestFor": "Pastors, church staff, and anyone who is tired of churches competing.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Ongoing",
+			"href": "/unify-gr",
+			"handoff": {
+				"how": "Reach out to Jon directly.",
+				"person": "Jon Hazeltine"
+			},
+			"calendar": {
+				"url": "https://thechurches.co",
+				"format": "page",
+				"cadence": "monthly",
+				"sync": "available"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "outreach",
+			"name": "Local Outreach",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "core",
+			"categories": [
+				"local-outreach",
+				"street-ministry"
+			],
+			"summary": "Serving our neighborhood and the city, directed by an ordained minister with deep community outreach experience.",
+			"why": "Rebecca has spent her ministry doing this. When we serve the city, she is the one who knows where to point us.",
+			"bestFor": "Anyone who wants their hands in something.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Seasonal",
+			"href": null,
+			"handoff": {
+				"how": "Ask for Rebecca at the Connections desk.",
+				"person": "Rebecca Taylor"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "seasonal",
+				"sync": "none"
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			}
+		},
+		{
+			"slug": "guiding-light",
+			"name": "Guiding Light",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"residential-recovery",
+				"addiction-recovery",
+				"job-training",
+				"homelessness"
+			],
+			"summary": "Residential recovery and back-to-work programs for men, plus Iron House recovery housing.",
+			"why": "One of the few places in this city that walks a man all the way from detox to a job to a home.",
+			"bestFor": "Men in addiction who need more than a weekly meeting.",
+			"area": "Downtown",
+			"city": "Grand Rapids",
+			"website": "https://guidinglightworks.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "mel-trotter",
+			"name": "Mel Trotter Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"homelessness",
+				"hot-meals",
+				"clothing",
+				"addiction-recovery"
+			],
+			"summary": "Emergency shelter, meals, recovery programs, and thrift stores across West Michigan.",
+			"why": "When someone has nowhere to sleep tonight, this is the call. They have been doing it for over a century.",
+			"bestFor": "Anyone facing homelessness, and anyone who wants to serve a meal.",
+			"area": "Downtown",
+			"city": "Grand Rapids",
+			"website": "https://www.meltrotter.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "degage",
+			"name": "Degage Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"hot-meals",
+				"homelessness",
+				"benefits-navigation"
+			],
+			"summary": "Meals, showers, mail, ID help, and the Open Door women's center in Heartside.",
+			"why": "Degage treats people as neighbors rather than cases. That is rarer than it should be.",
+			"bestFor": "Anyone in Heartside, and volunteers who want to know their neighbors by name.",
+			"area": "Downtown",
+			"city": "Grand Rapids",
+			"website": "https://www.degageministries.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "set-free-ministries",
+			"name": "Set Free Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"inner-healing",
+				"trauma-healing",
+				"healing-prayer"
+			],
+			"summary": "Freedom appointments and discipleship counseling for people carrying things prayer alone has not moved.",
+			"why": "We believe in the ministry of the Spirit, and Set Free has built a careful, trained process around it.",
+			"bestFor": "Anyone stuck in a pattern they cannot explain.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://setfreemin.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "pine-rest",
+			"name": "Pine Rest Christian Mental Health Services",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"christian-counseling",
+				"psychiatry",
+				"crisis-intervention",
+				"child-adolescent-therapy"
+			],
+			"summary": "Full-scale Christian mental health care: counseling, psychiatry, inpatient, and a 24-hour crisis line.",
+			"why": "This is the largest behavioral health system in the region and it was founded by the church. Clinical care and faith in the same building.",
+			"bestFor": "Anyone who needs licensed care, including in a crisis tonight.",
+			"area": "Cutlerville",
+			"city": "Grand Rapids",
+			"website": "https://www.pinerest.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "wedgwood",
+			"name": "Wedgwood Christian Services",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"at-risk-youth",
+				"human-trafficking",
+				"child-adolescent-therapy",
+				"trauma-healing"
+			],
+			"summary": "Residential and outpatient care for teenagers, plus the Manasseh Project for trafficking survivors.",
+			"why": "When a family is out of options with a teenager, Wedgwood is who we would call.",
+			"bestFor": "Families in crisis with a child or teen.",
+			"area": "Southeast",
+			"city": "Grand Rapids",
+			"website": "https://www.wedgwood.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "bethany-christian-services",
+			"name": "Bethany Christian Services",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"foster-care",
+				"adoption",
+				"refugee",
+				"foster-support"
+			],
+			"summary": "Foster care, adoption, and refugee resettlement, headquartered here in Grand Rapids.",
+			"why": "The biggest name in this work is based in our own city. There is no reason for a family here to start anywhere else.",
+			"bestFor": "Families considering foster care or adoption, and anyone wanting to welcome refugees.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://bethany.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "da-blodgett-st-johns",
+			"name": "D.A. Blodgett – St. John's",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"foster-care",
+				"adoption",
+				"child-advocacy",
+				"youth-mentoring"
+			],
+			"summary": "Foster care, adoption, mentoring, and court advocacy for Kent County children.",
+			"why": "They have been caring for the children of this county since 1887. Their mentoring program is the easiest yes on this whole list.",
+			"bestFor": "Anyone with two hours a month for a kid who needs an adult.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.dabsj.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "alpha-grand-rapids",
+			"name": "Alpha Grand Rapids",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"crisis-pregnancy",
+				"maternal-health",
+				"teen-parents",
+				"post-abortion"
+			],
+			"summary": "Free pregnancy services, parenting education, and material support for mothers.",
+			"why": "They stay with a mother past the delivery, which is the test of whether a pregnancy ministry means it.",
+			"bestFor": "Anyone facing an unplanned pregnancy, and new parents who need help.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://alphagrandrapids.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "war-international",
+			"name": "Women At Risk, International",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"human-trafficking",
+				"domestic-violence"
+			],
+			"summary": "Rescue, safe houses, and dignified work for women and children at risk, run out of West Michigan with global reach.",
+			"why": "A world-scale anti-trafficking ministry operating from our own back yard.",
+			"bestFor": "Anyone who wants to fight trafficking with more than a hashtag.",
+			"area": "Wyoming",
+			"city": "Grand Rapids",
+			"website": "https://warinternational.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "forgotten-man-ministries",
+			"name": "Forgotten Man Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"prison-ministry",
+				"reentry"
+			],
+			"summary": "Chaplains placed inside Michigan county jails, with Bible studies and reentry support on the way out.",
+			"why": "They are already inside the jails. If you want to reach prisoners, you do not need to build a new thing.",
+			"bestFor": "Anyone with a heart for prisoners, and families of the incarcerated.",
+			"area": "West Michigan",
+			"city": "Grand Rapids",
+			"website": "https://www.forgottenman.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "70x7-life-recovery",
+			"name": "70x7 Life Recovery",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"reentry",
+				"job-training",
+				"addiction-recovery"
+			],
+			"summary": "Mentoring, jobs, and community for people coming out of incarceration.",
+			"why": "The first 90 days after release decide everything, and 70x7 is built entirely around those 90 days.",
+			"bestFor": "Returning citizens and the people who love them.",
+			"area": "Holland",
+			"city": "Holland",
+			"website": "https://70x7.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "treetops-collective",
+			"name": "Treetops Collective",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"refugee",
+				"esl-literacy"
+			],
+			"summary": "Walking with refugee women as they build a new life in West Michigan.",
+			"why": "Resettlement agencies hand off after a few months. Treetops stays for years.",
+			"bestFor": "Women who want to befriend a new neighbor for the long haul.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://treetopscollective.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "samaritas",
+			"name": "Samaritas",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"refugee",
+				"foster-care",
+				"affordable-housing",
+				"senior-adults"
+			],
+			"summary": "Refugee resettlement, foster care, senior living, and housing across Michigan.",
+			"why": "One of the state's largest faith-rooted human service agencies.",
+			"bestFor": "Refugee families and anyone wanting to sponsor one.",
+			"area": "Michigan",
+			"city": "Grand Rapids",
+			"website": "https://www.samaritas.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "literacy-center-wm",
+			"name": "Literacy Center of West Michigan",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"esl-literacy",
+				"job-training"
+			],
+			"summary": "Adult literacy and English tutoring, with volunteer tutors trained and matched.",
+			"why": "Reading is the difference between a job and no job. They will train you to tutor in a weekend.",
+			"bestFor": "Volunteers with a couple of hours a week.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.literacycenterwm.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "kids-food-basket",
+			"name": "Kids' Food Basket",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"food-pantry",
+				"tutoring"
+			],
+			"summary": "Evening meals packed and delivered to thousands of West Michigan kids every school day.",
+			"why": "The easiest place in this city to bring your whole family to serve, including young kids.",
+			"bestFor": "Families, small groups, anyone with an evening.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.kidsfoodbasket.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "feeding-america-wm",
+			"name": "Feeding America West Michigan",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"food-pantry"
+			],
+			"summary": "The regional food bank behind most local pantries and mobile food trucks.",
+			"why": "If your neighborhood needs a mobile pantry, this is where it comes from.",
+			"bestFor": "Churches wanting to host a food distribution.",
+			"area": "Comstock Park",
+			"city": "Comstock Park",
+			"website": "https://feedwm.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "in-the-image",
+			"name": "In The Image",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"clothing",
+				"furniture-household"
+			],
+			"summary": "Clothing and household goods given with dignity to neighbors in need.",
+			"why": "They set it up like a store rather than a handout, and that difference is the ministry.",
+			"bestFor": "Families setting up a home from nothing, and anyone with things to give.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://intheimage.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "streams-of-hope",
+			"name": "Streams of Hope",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"food-pantry",
+				"tutoring",
+				"benefits-navigation"
+			],
+			"summary": "A neighborhood hub on the southeast side with a food pantry, kids programs, and health services.",
+			"why": "Rooted in one neighborhood and doing everything that neighborhood needs.",
+			"bestFor": "Southeast side families and volunteers.",
+			"area": "Kentwood",
+			"city": "Grand Rapids",
+			"website": "https://streamsgr.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "baxter-community-center",
+			"name": "Baxter Community Center",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"tutoring",
+				"preschool-childcare",
+				"food-pantry",
+				"free-clinic"
+			],
+			"summary": "Childcare, a market, a clinic, and youth programs in the Baxter neighborhood.",
+			"why": "A century of presence in one neighborhood. That kind of staying power cannot be started from scratch.",
+			"bestFor": "Baxter neighborhood families and volunteers.",
+			"area": "Southeast",
+			"city": "Grand Rapids",
+			"website": "https://wearebaxter.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "the-other-way",
+			"name": "The Other Way Ministries",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"youth-mentoring",
+				"job-training",
+				"affordable-housing",
+				"local-outreach"
+			],
+			"summary": "Neighbor-led ministry on the west side working in housing, youth, and employment.",
+			"why": "Led by the neighborhood rather than for it.",
+			"bestFor": "West side neighbors and volunteers.",
+			"area": "West Side",
+			"city": "Grand Rapids",
+			"website": "https://theotherway.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "iccf",
+			"name": "ICCF Community Homes",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"affordable-housing",
+				"rent-utility-help",
+				"financial-coaching"
+			],
+			"summary": "Affordable housing, homebuyer education, and rental support, started by a group of churches.",
+			"why": "This is what happens when churches decide housing is their problem. It started in 1974 and it is still going.",
+			"bestFor": "Families trying to get into a stable home.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.iccf.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "habitat-kent",
+			"name": "Habitat for Humanity of Kent County",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"affordable-housing",
+				"home-repair"
+			],
+			"summary": "Building and repairing homes with families, plus the ReStore.",
+			"why": "A build site is the best place we know to put a group of people who want to work.",
+			"bestFor": "Groups looking for a Saturday that matters.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.habitatkent.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "home-repair-services",
+			"name": "Home Repair Services",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"home-repair"
+			],
+			"summary": "Repairs, a tool library, and do-it-yourself classes for low-income homeowners.",
+			"why": "A furnace in January is a spiritual issue. This is who fixes it.",
+			"bestFor": "Homeowners who cannot afford a contractor, and handy volunteers.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.homerepairservices.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "family-promise-gr",
+			"name": "Family Promise of Grand Rapids",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"homelessness",
+				"transitional-housing",
+				"rent-utility-help"
+			],
+			"summary": "Keeping families with children out of shelter and into housing, hosted through a network of churches.",
+			"why": "It is built to be run by churches. If New Life ever hosts, this is the model.",
+			"bestFor": "Families facing eviction, and churches ready to host.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://familypromisegr.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "exalta-health",
+			"name": "Exalta Health",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"free-clinic",
+				"dental-vision",
+				"christian-counseling"
+			],
+			"summary": "Low-cost medical, dental, vision, and counseling care given in Jesus' name, regardless of insurance.",
+			"why": "They pray with patients and they take the uninsured. Both, without apology.",
+			"bestFor": "Anyone without insurance who needs a doctor.",
+			"area": "Wyoming",
+			"city": "Grand Rapids",
+			"website": "https://exaltahealth.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "cherry-health",
+			"name": "Cherry Health",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"free-clinic",
+				"dental-vision",
+				"psychiatry"
+			],
+			"summary": "Michigan's largest community health center, with sliding-scale medical, dental, and behavioral health.",
+			"why": "The widest safety net in the county for people without coverage.",
+			"bestFor": "Anyone who needs care and cannot pay full price.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://cherryhealth.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "friendship-ministries",
+			"name": "Friendship Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"disability"
+			],
+			"summary": "Curriculum and training so churches can include people with intellectual disabilities in real discipleship.",
+			"why": "Headquartered in Grand Rapids and used in dozens of countries. If a church wants to do disability ministry well, this is the starting point.",
+			"bestFor": "Families with a loved one with disabilities, and churches wanting to include them.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://friendshipministries.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "hope-network",
+			"name": "Hope Network",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"disability",
+				"chronic-illness",
+				"job-training",
+				"transportation"
+			],
+			"summary": "Rehabilitation, residential services, and employment support for people with disabilities and brain injuries.",
+			"why": "A Christian organization at real scale, serving thousands across Michigan.",
+			"bestFor": "Families navigating a disability or a brain injury.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://hopenetwork.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "benjamins-hope",
+			"name": "Benjamin's Hope",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"disability",
+				"autism-neurodiversity"
+			],
+			"summary": "A live-work-play community for adults with autism and other developmental disabilities.",
+			"why": "Worth the drive to Holland. There is nothing else quite like it in West Michigan.",
+			"bestFor": "Families raising a child with autism who are thinking about adulthood.",
+			"area": "Holland",
+			"city": "Holland",
+			"website": "https://benjaminshope.net",
+			"status": "proposed"
+		},
+		{
+			"slug": "emmanuel-hospice",
+			"name": "Emmanuel Hospice",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"hospice",
+				"caregiver-support",
+				"grief-support"
+			],
+			"summary": "Faith-based hospice care with chaplains, music therapy, and grief support for families after.",
+			"why": "Founded by faith-based partners in this city specifically to bring the spiritual back into end-of-life care.",
+			"bestFor": "Families facing a terminal diagnosis.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.emmanuelhospice.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "eles-place",
+			"name": "Ele's Place West Michigan",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"grief-support",
+				"suicide-loss",
+				"child-adolescent-therapy"
+			],
+			"summary": "Free peer support groups for grieving children, teens, and their families.",
+			"why": "A grieving 9-year-old needs other grieving 9-year-olds. Almost nobody else provides that.",
+			"bestFor": "Any family that has lost someone and has kids at home.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://elesplace.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "winning-at-home",
+			"name": "Winning At Home",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"marriage-enrichment",
+				"marriage-crisis",
+				"parenting",
+				"blended-families",
+				"christian-counseling"
+			],
+			"summary": "Marriage and family counseling, coaching, and resources across West Michigan.",
+			"why": "Decades of marriage work in this region, with counselors who will take you before the crisis rather than after.",
+			"bestFor": "Couples at any stage, including the ones who think it is too late.",
+			"area": "Zeeland",
+			"city": "Zeeland",
+			"website": "https://winningathome.com",
+			"status": "proposed"
+		},
+		{
+			"slug": "young-life-west-michigan",
+			"name": "Young Life West Michigan",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"high-school",
+				"middle-school",
+				"youth-mentoring",
+				"student-camps"
+			],
+			"summary": "Leaders who show up in high schools, plus club, campaigners, and summer camp.",
+			"why": "We do not run a youth group right now. Young Life leaders are already at your kid's school this week.",
+			"bestFor": "Middle and high schoolers, and adults who want to lead them.",
+			"area": "West Michigan",
+			"city": "Grand Rapids",
+			"website": "https://westmichigan.younglife.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "youth-for-christ-wm",
+			"name": "Youth for Christ West Michigan",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"at-risk-youth",
+				"high-school",
+				"youth-mentoring",
+				"reentry"
+			],
+			"summary": "Campus life, juvenile justice ministry, and mentoring for teenagers on the margins.",
+			"why": "They go into the detention center. Very few ministries do.",
+			"bestFor": "Teens in trouble, and adults willing to mentor them.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://wmyfc.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "fca-west-michigan",
+			"name": "Fellowship of Christian Athletes",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"sports-evangelism",
+				"high-school",
+				"campus-ministry"
+			],
+			"summary": "Huddles, camps, and coach ministry in West Michigan schools.",
+			"why": "For a kid whose whole life is a team, this is the front door.",
+			"bestFor": "Student athletes and coaches.",
+			"area": "West Michigan",
+			"city": "Grand Rapids",
+			"website": "https://www.fca.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "cru-gvsu",
+			"name": "Cru at Grand Valley",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"campus-ministry",
+				"young-adults",
+				"evangelism-training"
+			],
+			"summary": "Weekly gatherings, Bible studies, and discipleship for GVSU students.",
+			"why": "If your college student is at Grand Valley, they should not be spiritually alone on that campus.",
+			"bestFor": "College students and their parents.",
+			"area": "Allendale",
+			"city": "Allendale",
+			"website": "https://www.cru.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "camp-roger",
+			"name": "Camp Roger",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"kids-camps",
+				"camps-retreat-centers",
+				"adventure-outdoors"
+			],
+			"summary": "Summer camp and outdoor education in Rockford, plus retreat facilities.",
+			"why": "Twenty minutes from our building, and generations of West Michigan kids met God there.",
+			"bestFor": "Kids in summer, churches in every other season.",
+			"area": "Rockford",
+			"city": "Rockford",
+			"website": "https://www.camproger.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "cran-hill-ranch",
+			"name": "Cran-Hill Ranch",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"kids-camps",
+				"camps-retreat-centers",
+				"adventure-outdoors"
+			],
+			"summary": "Camp, horses, family camp, and retreat space in Rodney.",
+			"why": "One of the few places a whole family can go to camp together.",
+			"bestFor": "Families and church retreats.",
+			"area": "Rodney",
+			"city": "Rodney",
+			"website": "https://cranhillranch.com",
+			"status": "proposed"
+		},
+		{
+			"slug": "springhill-camps",
+			"name": "SpringHill Camps",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"kids-camps",
+				"student-camps",
+				"camps-retreat-centers"
+			],
+			"summary": "Overnight and day camps in Evart with a heavy adventure program.",
+			"why": "The scale and the adventure programming are hard to match anywhere in Michigan.",
+			"bestFor": "Kids and students who need to be outside.",
+			"area": "Evart",
+			"city": "Evart",
+			"website": "https://www.springhillcamps.com",
+			"status": "proposed"
+		},
+		{
+			"slug": "grand-rapids-christian-schools",
+			"name": "Grand Rapids Christian Schools",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"christian-schools",
+				"preschool-childcare"
+			],
+			"summary": "Preschool through high school across several Grand Rapids campuses.",
+			"why": "The largest Christian school system in the city.",
+			"bestFor": "Families choosing a school.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.grcs.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "potters-house",
+			"name": "The Potter's House",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"christian-schools",
+				"tutoring",
+				"esl-literacy"
+			],
+			"summary": "A tuition-based-on-income Christian school serving one of the most diverse student bodies in the city.",
+			"why": "They took the barrier of money off the table. That decision changed who gets a Christian education here.",
+			"bestFor": "Families who assumed Christian school was out of reach.",
+			"area": "Southwest",
+			"city": "Grand Rapids",
+			"website": "https://tphgr.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "northpointe-christian",
+			"name": "NorthPointe Christian Schools",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"christian-schools",
+				"preschool-childcare"
+			],
+			"summary": "Preschool through 12th grade on the northeast side.",
+			"why": "The closest Christian school to our building.",
+			"bestFor": "Northeast side families.",
+			"area": "Northeast",
+			"city": "Grand Rapids",
+			"website": "https://www.npchristian.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "grand-rapids-theological-seminary",
+			"name": "Grand Rapids Theological Seminary",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"seminary-theology",
+				"ministry-school",
+				"leadership-development"
+			],
+			"summary": "Graduate theological education at Cornerstone University, with counseling and ministry degrees.",
+			"why": "Serious theological training without leaving the city.",
+			"bestFor": "Anyone sensing a call to vocational ministry or counseling.",
+			"area": "Northeast",
+			"city": "Grand Rapids",
+			"website": "https://www.cornerstone.edu/grts",
+			"status": "proposed"
+		},
+		{
+			"slug": "calvin-theological-seminary",
+			"name": "Calvin Theological Seminary",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"seminary-theology",
+				"apologetics"
+			],
+			"summary": "Graduate theological study on Calvin's campus.",
+			"why": "Depth of scholarship, right here.",
+			"bestFor": "Students who want the academic end of the pool.",
+			"area": "Southeast",
+			"city": "Grand Rapids",
+			"website": "https://calvinseminary.edu",
+			"status": "proposed"
+		},
+		{
+			"slug": "kuyper-college",
+			"name": "Kuyper College",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"ministry-school",
+				"seminary-theology"
+			],
+			"summary": "A small Christian college focused on ministry, social work, and business.",
+			"why": "Half a mile from our building.",
+			"bestFor": "Students who want ministry training in an undergraduate degree.",
+			"area": "Northeast",
+			"city": "Grand Rapids",
+			"website": "https://www.kuyper.edu",
+			"status": "proposed"
+		},
+		{
+			"slug": "acton-institute",
+			"name": "Acton Institute",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"marketplace-ministry",
+				"business-as-mission",
+				"leadership-development"
+			],
+			"summary": "Study and events on faith, work, and economics, based downtown.",
+			"why": "For the person who wants to think Christianly about their business rather than just their devotional life.",
+			"bestFor": "Business owners and marketplace leaders.",
+			"area": "Downtown",
+			"city": "Grand Rapids",
+			"website": "https://www.acton.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "partners-worldwide",
+			"name": "Partners Worldwide",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"business-as-mission",
+				"global-missions",
+				"job-training"
+			],
+			"summary": "Coming alongside entrepreneurs in developing economies with capital, mentoring, and networks.",
+			"why": "Business as mission done seriously, and run from Grand Rapids.",
+			"bestFor": "Business people looking for a way to use what they actually know.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://partnersworldwide.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "words-of-hope",
+			"name": "Words of Hope",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"global-missions",
+				"unreached-peoples",
+				"bible-translation"
+			],
+			"summary": "Gospel media and church planting in unreached languages, headquartered in Grand Rapids.",
+			"why": "Reaching people groups whose language has never had a broadcast.",
+			"bestFor": "Anyone burdened for the unreached.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://woh.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "resonate-global-mission",
+			"name": "Resonate Global Mission",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"global-missions",
+				"church-planting",
+				"campus-ministry",
+				"missionary-care"
+			],
+			"summary": "Sending missionaries, planting churches, and running campus ministries worldwide.",
+			"why": "A long-term sending body with real missionary care behind it.",
+			"bestFor": "People considering long-term missions.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.resonateglobalmission.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "mission-of-hope",
+			"name": "Mission of Hope",
+			"house": "out",
+			"tier": "partner",
+			"categories": [
+				"global-missions",
+				"short-term-missions",
+				"orphan-care-global"
+			],
+			"summary": "Life transformation work across Haiti, the Dominican Republic, and the Caribbean. New Life's mission partner since 2015.",
+			"why": "We were not looking for a sending agency. We wanted a ministry partner on the ground, and we found one. Eleven years of teams say it was the right call.",
+			"bestFor": "Anyone considering a first mission trip.",
+			"area": "Caribbean",
+			"city": "Jarabacoa, Dominican Republic",
+			"website": "https://www.mohhaiti.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "griefshare",
+			"name": "GriefShare",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"grief-support",
+				"divorce-recovery"
+			],
+			"summary": "A 13-week grief support group curriculum hosted by churches all over West Michigan.",
+			"why": "Whatever week you are in, there is a group starting near you. Use the site's map to find the closest one.",
+			"bestFor": "Anyone who has lost someone.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://www.griefshare.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "celebrate-recovery-wm",
+			"name": "Celebrate Recovery",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"celebrate-recovery",
+				"addiction-recovery",
+				"sexual-integrity",
+				"family-of-addicts"
+			],
+			"summary": "Christ-centered 12-step groups hosted weekly by churches across the area.",
+			"why": "New Life ran this years ago and does not today. Several churches nearby run it well right now, and Thursday night is Thursday night wherever you go.",
+			"bestFor": "Anyone with a hurt, a habit, or a hang-up.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://www.celebraterecovery.com",
+			"status": "proposed"
+		},
+		{
+			"slug": "mops-international",
+			"name": "MOPS",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"motherhood",
+				"parenting",
+				"single-parents"
+			],
+			"summary": "Mothers of Preschoolers groups hosted by churches, with childcare during meetings.",
+			"why": "The childcare is the ministry. A mother of a two-year-old cannot go to a Bible study without it.",
+			"bestFor": "Mothers of young children.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://www.mops.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "awana",
+			"name": "Awana",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"kids-clubs",
+				"childrens-ministry"
+			],
+			"summary": "Midweek scripture memory clubs for kids, hosted by churches across the area.",
+			"why": "We do not run a midweek kids club. Several churches within 10 minutes of us do.",
+			"bestFor": "Kids from preschool through middle school.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://www.awana.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "trail-life-usa",
+			"name": "Trail Life USA",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"kids-clubs",
+				"adventure-outdoors",
+				"middle-school"
+			],
+			"summary": "Christian outdoor adventure and character program for boys, chartered by local churches.",
+			"why": "For a boy who needs the woods more than another classroom.",
+			"bestFor": "Boys from kindergarten through high school.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://www.traillifeusa.com",
+			"status": "proposed"
+		},
+		{
+			"slug": "american-heritage-girls",
+			"name": "American Heritage Girls",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"kids-clubs",
+				"adventure-outdoors"
+			],
+			"summary": "Christ-centered scouting for girls, chartered by local churches.",
+			"why": "The counterpart to Trail Life, same model, same local charters.",
+			"bestFor": "Girls from kindergarten through high school.",
+			"area": "Various",
+			"city": "Grand Rapids",
+			"website": "https://americanheritagegirls.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "holland-home",
+			"name": "Holland Home",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"senior-adults",
+				"assisted-living",
+				"hospice"
+			],
+			"summary": "Senior living, memory care, and Faith Hospice, rooted in the Christian community here.",
+			"why": "The largest faith-rooted senior care presence in the region.",
+			"bestFor": "Families making decisions about aging parents.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://www.hollandhome.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "safe-haven-ministries",
+			"name": "Safe Haven Ministries",
+			"house": "out",
+			"tier": "recommended",
+			"categories": [
+				"domestic-violence",
+				"trauma-healing",
+				"transitional-housing"
+			],
+			"summary": "Shelter, counseling, and advocacy for survivors of domestic abuse, plus training for churches.",
+			"why": "They train churches specifically, because churches have historically handled this badly.",
+			"bestFor": "Anyone in an abusive relationship, and any church leader who wants to respond well.",
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"website": "https://safehavenministries.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "prison-fellowship",
+			"name": "Prison Fellowship",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"prison-ministry",
+				"reentry",
+				"at-risk-youth"
+			],
+			"summary": "In-prison discipleship, Angel Tree for prisoners' children, and reentry support.",
+			"why": "Angel Tree at Christmas is one of the simplest ways a family can touch a prisoner's family.",
+			"bestFor": "Anyone who wants to serve prisoners or their children.",
+			"area": "National",
+			"city": "National",
+			"website": "https://www.prisonfellowship.org",
+			"status": "proposed"
+		},
+		{
+			"slug": "bible-league-international",
+			"name": "Bible League International",
+			"house": "out",
+			"tier": "listed",
+			"categories": [
+				"bible-translation",
+				"unreached-peoples",
+				"global-missions"
+			],
+			"summary": "Bibles and church planter training for under-resourced churches worldwide.",
+			"why": "Straightforward and measurable: Bibles in hands that do not have one.",
+			"bestFor": "Givers who want a direct line between a gift and a Bible.",
+			"area": "National",
+			"city": "Crete, Illinois",
+			"website": "https://www.bibleleague.org",
+			"status": "proposed"
+		}
+	]
+}

@@ -1,0 +1,260 @@
+---
+import Interior from "../../layouts/Interior.astro";
+import MinistryCard from "../../components/MinistryCard.astro";
+import {
+	families,
+	standard,
+	counts,
+	inHouse,
+	familyCount,
+	byArea,
+	sortEntries,
+} from "../../data/ministries";
+
+const signature = sortEntries(inHouse).filter((e) => e.tier === "signature");
+const areas = byArea().slice(0, 8);
+---
+
+<Interior
+	title="Ministries | New Life Grand Rapids"
+	description="Signature ministries we run ourselves, and a curated list of the best ministries in Grand Rapids for everything we don't."
+	kicker="Signature Ministries & Curated Partnerships"
+	heading="Ministries"
+	lede="A few things we do well. For everything else, we will tell you who does it best, where they meet, and how to walk in the door."
+>
+	<!-- The case -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">The offering</p>
+			<h2 class="prose-block__title reveal is-visible">
+				You should not miss out on a ministry because we do not run one.
+			</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Ask most churches what they offer and you get a list of whatever fits inside their
+					building. Ours is short. We run {counts.inHouse} ministries here. The list of things a person
+					in Grand Rapids might actually be looking for runs to {counts.categories}.
+				</p>
+				<p class="reveal is-visible">
+					That gap is not a confession. It is true of every church in this city, including the
+					large ones. A church that tries to do all {counts.categories} does most of them badly, and the
+					person who needed the one it did badly is the one who pays for it.
+				</p>
+				<p class="reveal is-visible">
+					So we made a different decision. We are going to be excellent at a few things. For
+					everything else, we are going to tell you by name who does it best, where they meet, and
+					how to walk in the door.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Two halves -->
+	<section class="section">
+		<div class="container">
+			<div class="min-halves reveal is-visible">
+				<a class="min-half" href="#signature">
+					<span class="min-half__label">In house</span>
+					<strong class="min-half__title">Signature Ministries</strong>
+					<span class="min-half__count">{counts.inHouse}</span>
+					<p>
+						What we carry ourselves. Worship, prayer, our kids, our people, and the mission trips we
+						have led since 2015.
+					</p>
+					<span class="min-half__go">See what we run →</span>
+				</a>
+				<a class="min-half min-half--out" href="#browse">
+					<span class="min-half__label">Out of house</span>
+					<strong class="min-half__title">Curated Partnerships</strong>
+					<span class="min-half__count">{counts.outOfHouse}</span>
+					<p>
+						Ministries across Grand Rapids that do one thing better than we would. We send people to
+						them on purpose.
+					</p>
+					<span class="min-half__go">Browse all {counts.categories} categories →</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Where the idea came from — Jon's own words -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">Where this came from</p>
+			<h2 class="prose-block__title reveal is-visible">One church leads it. The rest send their people.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Years ago, while working out what real collaboration between two churches would look like,
+					Jon wrote this down:
+				</p>
+			</div>
+			<blockquote class="min-quote reveal is-visible">
+				<p>
+					A Ministry Share: Church A leads a ministry and opens it up to the other churches. These
+					are ministries that one church takes ownership over and shares with the others. The other
+					churches have no obligation to be involved in leading or administering. They can just send
+					their people. This is a great opportunity for churches to focus on their strengths and not
+					try to do everything.
+				</p>
+				<cite>Jon Hazeltine, Senior Leader</cite>
+			</blockquote>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					This page is that idea pointed outward. Not only the churches sharing our building, but
+					every ministry in this city that is genuinely excellent at one thing. If the Body is one,
+					then the recovery program on the other side of town is already ours. And yours.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- The curation standard -->
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">{standard.eyebrow}</p>
+				<h2>{standard.title}</h2>
+			</div>
+			<p class="lead-copy reveal is-visible">{standard.body}</p>
+			<div class="min-tests reveal is-visible">
+				{standard.tests.map((test, i) => (
+					<div class="min-test">
+						<span class="min-test__n">{String(i + 1).padStart(2, "0")}</span>
+						<h3>{test.name}</h3>
+						<p>{test.body}</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- The handoff -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">The handoff</p>
+			<h2 class="prose-block__title reveal is-visible">You get a name, not a link.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Referrals usually fail because they end at a website. Someone in the middle of a crisis is
+					not going to fill out a contact form at 10 o'clock on a Tuesday night.
+				</p>
+				<p class="reveal is-visible">
+					So every ministry on this list carries a first step written in plain English, and wherever
+					we have one, the name of a person who already knows we are sending you. Where we do not
+					have that person yet, our job is to go get one. Ask any of our staff to make the
+					introduction and they will.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Signature ministries -->
+	<section class="section" id="signature">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">In house</p>
+				<h2>What we carry ourselves.</h2>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				These are the ones we would invite the whole city into. Everything we run is listed under
+				its category below, alongside the partners.
+			</p>
+			<div class="min-grid reveal is-visible">
+				{signature.map((entry) => <MinistryCard entry={entry} full={true} />)}
+			</div>
+		</div>
+	</section>
+
+	<!-- Browse by category family -->
+	<section class="section" id="browse">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">The whole map</p>
+				<h2>Every category we could think of.</h2>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				{counts.categories} categories in {counts.families} families. Where a number is missing, nobody is on
+				that list yet. Those blanks are the work.
+			</p>
+			<div class="min-families reveal is-visible">
+				{families.map((family) => {
+					const n = familyCount(family.slug);
+					return (
+						<a class="min-family" href={`/ministries/${family.slug}`}>
+							<div class="min-family__head">
+								<h3>{family.name}</h3>
+								<span class={n ? "min-family__n" : "min-family__n min-family__n--empty"}>
+									{n || "—"}
+								</span>
+							</div>
+							<p>{family.blurb}</p>
+							<span class="min-family__cats">
+								{family.categories.slice(0, 4).map((c) => c.name).join(" · ")}
+								{family.categories.length > 4 && ` · +${family.categories.length - 4} more`}
+							</span>
+						</a>
+					);
+				})}
+			</div>
+		</div>
+	</section>
+
+	<!-- Geography -->
+	<section class="section prose-block prose-block--tinted" id="geography">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Where they are</p>
+				<h2>Close enough to actually go.</h2>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				Practicality decides whether a ministry is real to you. Here is where the curated list sits
+				across the area.
+			</p>
+			<div class="min-areas reveal is-visible">
+				{areas.map((group) => (
+					<div class="min-area">
+						<h3>{group.area}<span>{group.entries.length}</span></h3>
+						<ul>
+							{group.entries.slice(0, 6).map((entry) => (
+								<li><a href={`/ministry/${entry.slug}`}>{entry.name}</a></li>
+							))}
+							{group.entries.length > 6 && <li class="min-area__more">+{group.entries.length - 6} more</li>}
+						</ul>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Honest state -->
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Where this stands today</p>
+				<h2>Version one, and we are saying so.</h2>
+			</div>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					We built the structure first and filled it in from our own knowledge of the city.
+					{counts.outOfHouse} ministries are on the list, and not one of them has been confirmed by a
+					person at New Life yet. Every card says so until someone here has made the call and had the
+					conversation.
+				</p>
+				<p class="reveal is-visible">
+					{counts.uncovered} categories still have nobody in them at all. Those blanks are not an
+					oversight. They are the list of conversations we owe the city.
+				</p>
+				<p class="reveal is-visible">
+					If you lead one of these ministries, or you know one we are missing, tell us. This gets
+					better by people talking, not by us searching.
+				</p>
+			</div>
+			<div class="min-cta reveal is-visible">
+				<a class="button button--primary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
+					Tell us about a ministry
+				</a>
+				<a class="button button--secondary" href="/unify-gr">About Unify GR</a>
+			</div>
+		</div>
+	</section>
+</Interior>

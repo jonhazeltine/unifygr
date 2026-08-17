@@ -1,0 +1,729 @@
+{
+	"_comment": "The map of need. Every category a person in Grand Rapids might be looking for, whether or not New Life runs one. Families group categories for browsing. Editing this file changes the directory structure; entries live in content/ministries.json.",
+	"families": [
+		{
+			"slug": "worship-and-prayer",
+			"name": "Worship & Prayer",
+			"blurb": "Hosting His presence. Gathered worship, sustained prayer, and ministry that happens when the Spirit rests on a room.",
+			"categories": [
+				{
+					"slug": "corporate-worship",
+					"name": "Corporate Worship"
+				},
+				{
+					"slug": "worship-nights",
+					"name": "Worship Nights"
+				},
+				{
+					"slug": "prayer-meetings",
+					"name": "Prayer Gatherings"
+				},
+				{
+					"slug": "house-of-prayer",
+					"name": "Houses of Prayer"
+				},
+				{
+					"slug": "intercession",
+					"name": "Intercession"
+				},
+				{
+					"slug": "healing-prayer",
+					"name": "Healing Prayer"
+				},
+				{
+					"slug": "prophetic",
+					"name": "Prophetic Ministry"
+				},
+				{
+					"slug": "inner-healing",
+					"name": "Inner Healing & Deliverance"
+				},
+				{
+					"slug": "worship-training",
+					"name": "Worship Training"
+				},
+				{
+					"slug": "songwriting",
+					"name": "Songwriting"
+				}
+			]
+		},
+		{
+			"slug": "formation",
+			"name": "Formation & Discipleship",
+			"blurb": "Learning to hear His voice and obey His assignments. Study, training, and the long work of becoming like Jesus.",
+			"categories": [
+				{
+					"slug": "bible-study",
+					"name": "Bible Study"
+				},
+				{
+					"slug": "discipleship-groups",
+					"name": "Discipleship Groups"
+				},
+				{
+					"slug": "small-groups",
+					"name": "Small Groups & Life Groups"
+				},
+				{
+					"slug": "ministry-school",
+					"name": "Ministry & Leadership Schools"
+				},
+				{
+					"slug": "seminary-theology",
+					"name": "Seminary & Theological Study"
+				},
+				{
+					"slug": "apologetics",
+					"name": "Apologetics"
+				},
+				{
+					"slug": "spiritual-direction",
+					"name": "Spiritual Direction"
+				},
+				{
+					"slug": "retreats",
+					"name": "Retreats & Solitude"
+				},
+				{
+					"slug": "membership-baptism",
+					"name": "Membership & Baptism"
+				},
+				{
+					"slug": "bible-translation",
+					"name": "Bible Translation & Literacy"
+				}
+			]
+		},
+		{
+			"slug": "kids",
+			"name": "Kids",
+			"blurb": "Nursery through 5th grade, plus everything around a family raising young children.",
+			"categories": [
+				{
+					"slug": "nursery",
+					"name": "Nursery"
+				},
+				{
+					"slug": "childrens-ministry",
+					"name": "Children's Ministry"
+				},
+				{
+					"slug": "kids-clubs",
+					"name": "Midweek Kids Clubs"
+				},
+				{
+					"slug": "vbs",
+					"name": "Vacation Bible School"
+				},
+				{
+					"slug": "kids-camps",
+					"name": "Kids Camps"
+				},
+				{
+					"slug": "kids-sports",
+					"name": "Kids Sports Leagues"
+				},
+				{
+					"slug": "preschool-childcare",
+					"name": "Preschool & Childcare"
+				},
+				{
+					"slug": "christian-schools",
+					"name": "Christian Schools"
+				},
+				{
+					"slug": "homeschool",
+					"name": "Homeschool Co-ops"
+				},
+				{
+					"slug": "tutoring",
+					"name": "Tutoring & After-School"
+				}
+			]
+		},
+		{
+			"slug": "students",
+			"name": "Students & Young Adults",
+			"blurb": "Middle school through the twenties, the years most people decide what they actually believe.",
+			"categories": [
+				{
+					"slug": "middle-school",
+					"name": "Middle School"
+				},
+				{
+					"slug": "high-school",
+					"name": "High School"
+				},
+				{
+					"slug": "campus-ministry",
+					"name": "College & Campus Ministry"
+				},
+				{
+					"slug": "young-adults",
+					"name": "Young Adults"
+				},
+				{
+					"slug": "student-camps",
+					"name": "Student Camps & Conferences"
+				},
+				{
+					"slug": "student-missions",
+					"name": "Student Mission Trips"
+				},
+				{
+					"slug": "youth-mentoring",
+					"name": "Mentoring At-Risk Youth"
+				},
+				{
+					"slug": "teen-parents",
+					"name": "Teen Parents"
+				}
+			]
+		},
+		{
+			"slug": "marriage-family",
+			"name": "Marriage & Family",
+			"blurb": "Preparing for marriage, repairing one, raising kids, and surviving the seasons nobody prepares you for.",
+			"categories": [
+				{
+					"slug": "marriage-prep",
+					"name": "Premarital & Marriage Prep"
+				},
+				{
+					"slug": "marriage-enrichment",
+					"name": "Marriage Enrichment"
+				},
+				{
+					"slug": "marriage-crisis",
+					"name": "Marriage Crisis & Restoration"
+				},
+				{
+					"slug": "parenting",
+					"name": "Parenting"
+				},
+				{
+					"slug": "blended-families",
+					"name": "Blended Families"
+				},
+				{
+					"slug": "divorce-recovery",
+					"name": "Divorce Recovery"
+				},
+				{
+					"slug": "singles",
+					"name": "Singles"
+				},
+				{
+					"slug": "fatherhood",
+					"name": "Fatherhood"
+				},
+				{
+					"slug": "motherhood",
+					"name": "Motherhood & MOPS"
+				},
+				{
+					"slug": "single-parents",
+					"name": "Single Parents"
+				},
+				{
+					"slug": "infertility-loss",
+					"name": "Infertility & Pregnancy Loss"
+				},
+				{
+					"slug": "empty-nest",
+					"name": "Empty Nest"
+				}
+			]
+		},
+		{
+			"slug": "foster-adoption",
+			"name": "Foster Care & Adoption",
+			"blurb": "The children already in our county who need a family, and the families who say yes.",
+			"categories": [
+				{
+					"slug": "foster-care",
+					"name": "Foster Care"
+				},
+				{
+					"slug": "adoption",
+					"name": "Adoption"
+				},
+				{
+					"slug": "foster-support",
+					"name": "Foster & Adoptive Family Support"
+				},
+				{
+					"slug": "kinship-care",
+					"name": "Kinship Care"
+				},
+				{
+					"slug": "child-advocacy",
+					"name": "Court Advocacy for Children"
+				},
+				{
+					"slug": "orphan-care-global",
+					"name": "Global Orphan Care"
+				}
+			]
+		},
+		{
+			"slug": "men-women",
+			"name": "Men & Women",
+			"blurb": "Rooms where men and women get honest with each other and with God.",
+			"categories": [
+				{
+					"slug": "mens-ministry",
+					"name": "Men's Ministry"
+				},
+				{
+					"slug": "womens-ministry",
+					"name": "Women's Ministry"
+				},
+				{
+					"slug": "mens-accountability",
+					"name": "Men's Accountability"
+				},
+				{
+					"slug": "womens-bible-study",
+					"name": "Women's Bible Study"
+				},
+				{
+					"slug": "mens-retreats",
+					"name": "Men's Retreats & Conferences"
+				},
+				{
+					"slug": "womens-retreats",
+					"name": "Women's Retreats & Conferences"
+				}
+			]
+		},
+		{
+			"slug": "recovery",
+			"name": "Recovery & Freedom",
+			"blurb": "Addiction, compulsion, trauma, and grief. The places where people need more than a sermon.",
+			"categories": [
+				{
+					"slug": "addiction-recovery",
+					"name": "Addiction Recovery"
+				},
+				{
+					"slug": "celebrate-recovery",
+					"name": "Celebrate Recovery & 12-Step"
+				},
+				{
+					"slug": "residential-recovery",
+					"name": "Residential Recovery"
+				},
+				{
+					"slug": "sexual-integrity",
+					"name": "Sexual Integrity & Pornography"
+				},
+				{
+					"slug": "gambling-recovery",
+					"name": "Gambling Recovery"
+				},
+				{
+					"slug": "eating-disorders",
+					"name": "Eating Disorders"
+				},
+				{
+					"slug": "trauma-healing",
+					"name": "Trauma Healing"
+				},
+				{
+					"slug": "grief-support",
+					"name": "Grief & Loss"
+				},
+				{
+					"slug": "suicide-loss",
+					"name": "Suicide Loss & Prevention"
+				},
+				{
+					"slug": "family-of-addicts",
+					"name": "Families of Addicts"
+				}
+			]
+		},
+		{
+			"slug": "mental-health",
+			"name": "Mental Health & Counseling",
+			"blurb": "Licensed care that takes both the clinical and the spiritual seriously.",
+			"categories": [
+				{
+					"slug": "christian-counseling",
+					"name": "Christian Counseling"
+				},
+				{
+					"slug": "psychiatry",
+					"name": "Psychiatry & Medication"
+				},
+				{
+					"slug": "crisis-intervention",
+					"name": "Crisis & Suicide Intervention"
+				},
+				{
+					"slug": "support-groups",
+					"name": "Mental Health Support Groups"
+				},
+				{
+					"slug": "autism-neurodiversity",
+					"name": "Autism & Neurodiversity"
+				},
+				{
+					"slug": "dementia-caregivers",
+					"name": "Dementia & Caregiver Support"
+				},
+				{
+					"slug": "child-adolescent-therapy",
+					"name": "Child & Adolescent Therapy"
+				}
+			]
+		},
+		{
+			"slug": "practical-care",
+			"name": "Practical Care",
+			"blurb": "Food, housing, work, and the emergencies that decide whether a family stays together.",
+			"categories": [
+				{
+					"slug": "food-pantry",
+					"name": "Food Pantries"
+				},
+				{
+					"slug": "hot-meals",
+					"name": "Hot Meals"
+				},
+				{
+					"slug": "clothing",
+					"name": "Clothing"
+				},
+				{
+					"slug": "furniture-household",
+					"name": "Furniture & Household Goods"
+				},
+				{
+					"slug": "homelessness",
+					"name": "Homeless Shelter & Outreach"
+				},
+				{
+					"slug": "transitional-housing",
+					"name": "Transitional Housing"
+				},
+				{
+					"slug": "affordable-housing",
+					"name": "Affordable Housing"
+				},
+				{
+					"slug": "rent-utility-help",
+					"name": "Rent & Utility Assistance"
+				},
+				{
+					"slug": "home-repair",
+					"name": "Home Repair"
+				},
+				{
+					"slug": "transportation",
+					"name": "Transportation & Car Repair"
+				},
+				{
+					"slug": "financial-coaching",
+					"name": "Financial Coaching"
+				},
+				{
+					"slug": "job-training",
+					"name": "Job Training & Employment"
+				},
+				{
+					"slug": "legal-aid",
+					"name": "Legal Aid"
+				},
+				{
+					"slug": "benefits-navigation",
+					"name": "Benefits Navigation"
+				}
+			]
+		},
+		{
+			"slug": "health",
+			"name": "Health & Body",
+			"blurb": "Care for bodies. The clinic, the diagnosis, the disability, the last months of a life.",
+			"categories": [
+				{
+					"slug": "free-clinic",
+					"name": "Free & Low-Cost Clinics"
+				},
+				{
+					"slug": "dental-vision",
+					"name": "Dental & Vision"
+				},
+				{
+					"slug": "maternal-health",
+					"name": "Maternal & Infant Health"
+				},
+				{
+					"slug": "hospice",
+					"name": "Hospice & Palliative Care"
+				},
+				{
+					"slug": "disability",
+					"name": "Disability & Special Needs"
+				},
+				{
+					"slug": "deaf-ministry",
+					"name": "Deaf & Hard of Hearing"
+				},
+				{
+					"slug": "blind-ministry",
+					"name": "Blind & Low Vision"
+				},
+				{
+					"slug": "chronic-illness",
+					"name": "Chronic Illness"
+				},
+				{
+					"slug": "caregiver-support",
+					"name": "Caregiver Support"
+				},
+				{
+					"slug": "hospital-visitation",
+					"name": "Hospital Visitation"
+				}
+			]
+		},
+		{
+			"slug": "justice",
+			"name": "Justice & Rescue",
+			"blurb": "Where people are trapped, exploited, locked up, or newly arrived with nothing.",
+			"categories": [
+				{
+					"slug": "human-trafficking",
+					"name": "Human Trafficking"
+				},
+				{
+					"slug": "prison-ministry",
+					"name": "Prison & Jail Ministry"
+				},
+				{
+					"slug": "reentry",
+					"name": "Reentry & Returning Citizens"
+				},
+				{
+					"slug": "at-risk-youth",
+					"name": "At-Risk Youth"
+				},
+				{
+					"slug": "violence-intervention",
+					"name": "Violence Intervention"
+				},
+				{
+					"slug": "crisis-pregnancy",
+					"name": "Crisis Pregnancy"
+				},
+				{
+					"slug": "post-abortion",
+					"name": "Post-Abortion Healing"
+				},
+				{
+					"slug": "refugee",
+					"name": "Refugee Resettlement"
+				},
+				{
+					"slug": "immigration-legal",
+					"name": "Immigration Legal Help"
+				},
+				{
+					"slug": "esl-literacy",
+					"name": "ESL & Adult Literacy"
+				},
+				{
+					"slug": "racial-reconciliation",
+					"name": "Racial Reconciliation"
+				},
+				{
+					"slug": "veterans",
+					"name": "Veterans & Military Families"
+				},
+				{
+					"slug": "first-responders",
+					"name": "First Responders"
+				},
+				{
+					"slug": "disaster-relief",
+					"name": "Disaster Relief"
+				},
+				{
+					"slug": "domestic-violence",
+					"name": "Domestic Violence"
+				}
+			]
+		},
+		{
+			"slug": "mission",
+			"name": "Mission & Witness",
+			"blurb": "Bringing the light of heaven into every area of society, here and across the world.",
+			"categories": [
+				{
+					"slug": "local-outreach",
+					"name": "Local Outreach"
+				},
+				{
+					"slug": "street-ministry",
+					"name": "Street & Neighborhood Ministry"
+				},
+				{
+					"slug": "evangelism-training",
+					"name": "Evangelism Training"
+				},
+				{
+					"slug": "church-planting",
+					"name": "Church Planting"
+				},
+				{
+					"slug": "short-term-missions",
+					"name": "Short-Term Mission Trips"
+				},
+				{
+					"slug": "global-missions",
+					"name": "Global Missions Sending"
+				},
+				{
+					"slug": "unreached-peoples",
+					"name": "Unreached Peoples"
+				},
+				{
+					"slug": "missionary-care",
+					"name": "Missionary Care"
+				},
+				{
+					"slug": "marketplace-ministry",
+					"name": "Marketplace & Workplace Ministry"
+				},
+				{
+					"slug": "business-as-mission",
+					"name": "Business as Mission"
+				},
+				{
+					"slug": "sports-evangelism",
+					"name": "Sports Ministry"
+				}
+			]
+		},
+		{
+			"slug": "church-leaders",
+			"name": "Church Health & Leaders",
+			"blurb": "For pastors, staff, and the churches themselves, because a tired leader helps no one.",
+			"categories": [
+				{
+					"slug": "pastor-care",
+					"name": "Pastor Care"
+				},
+				{
+					"slug": "pastors-spouses",
+					"name": "Pastors' Spouses"
+				},
+				{
+					"slug": "leadership-development",
+					"name": "Leadership Development"
+				},
+				{
+					"slug": "church-revitalization",
+					"name": "Church Revitalization"
+				},
+				{
+					"slug": "church-admin",
+					"name": "Church Admin & Finance"
+				},
+				{
+					"slug": "church-tech",
+					"name": "Church Tech & Media"
+				},
+				{
+					"slug": "city-unity",
+					"name": "City Unity Networks"
+				},
+				{
+					"slug": "hospital-chaplaincy",
+					"name": "Hospital Chaplaincy"
+				},
+				{
+					"slug": "workplace-chaplaincy",
+					"name": "Workplace Chaplaincy"
+				},
+				{
+					"slug": "public-safety-chaplaincy",
+					"name": "Police & Fire Chaplaincy"
+				}
+			]
+		},
+		{
+			"slug": "creative",
+			"name": "Creative & Outdoors",
+			"blurb": "Artists, makers, athletes, and the places people go to meet God outside a building.",
+			"categories": [
+				{
+					"slug": "arts-ministry",
+					"name": "Visual Arts"
+				},
+				{
+					"slug": "film-media",
+					"name": "Film & Media"
+				},
+				{
+					"slug": "theatre-dance",
+					"name": "Theatre & Dance"
+				},
+				{
+					"slug": "writers",
+					"name": "Writers"
+				},
+				{
+					"slug": "musicians",
+					"name": "Musicians"
+				},
+				{
+					"slug": "camps-retreat-centers",
+					"name": "Camps & Retreat Centers"
+				},
+				{
+					"slug": "adventure-outdoors",
+					"name": "Adventure & Outdoors"
+				},
+				{
+					"slug": "adult-sports",
+					"name": "Adult Sports Leagues"
+				}
+			]
+		},
+		{
+			"slug": "seniors",
+			"name": "Seniors",
+			"blurb": "The generation that built the church, and the ones who can no longer get to it.",
+			"categories": [
+				{
+					"slug": "senior-adults",
+					"name": "Senior Adult Ministry"
+				},
+				{
+					"slug": "homebound",
+					"name": "Homebound Visitation"
+				},
+				{
+					"slug": "widows-widowers",
+					"name": "Widows & Widowers"
+				},
+				{
+					"slug": "assisted-living",
+					"name": "Assisted Living & Nursing Home Ministry"
+				},
+				{
+					"slug": "grandparenting",
+					"name": "Grandparenting"
+				},
+				{
+					"slug": "senior-transportation",
+					"name": "Senior Transportation & Errands"
+				}
+			]
+		}
+	]
+}
