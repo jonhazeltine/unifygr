@@ -1,0 +1,159 @@
+---
+// A page per category. Middle school, high school and college each get their
+// own map and their own calendar, because a family with a 7th grader is not
+// looking at the same thing as a family with a college student.
+import Interior from "../../../layouts/Interior.astro";
+import MinistryCard from "../../../components/MinistryCard.astro";
+import MinistryMap from "../../../components/MinistryMap.astro";
+import calendarData from "../../../../content/curated-events.json";
+import {
+	families,
+	entriesInCategory,
+	sortEntries,
+	hasLiveCalendar,
+	type Category,
+	type Entry,
+	type Family,
+} from "../../../data/ministries";
+
+export function getStaticPaths() {
+	return families.flatMap((family) =>
+		family.categories.map((category) => ({
+			params: { family: family.slug, category: category.slug },
+			props: { family, category },
+		})),
+	);
+}
+
+const { family, category } = Astro.props as { family: Family; category: Category };
+
+const list = sortEntries(entriesInCategory(category.slug));
+const ours = list.filter((e) => e.house === "in");
+const elsewhere = list.filter((e) => e.house === "out");
+
+type Ev = {
+	title: string; date: string; time: string | null;
+	ministrySlug: string | null; venue: string | null; area: string | null;
+};
+const allEvents = (calendarData as { events: Ev[] }).events;
+
+// Only this category's gatherings belong on this page's calendar.
+const slugs = new Set(list.map((e) => e.slug));
+const events = allEvents.filter((ev) => ev.ministrySlug && slugs.has(ev.ministrySlug)).slice(0, 12);
+
+const withCalendar = list.filter(hasLiveCalendar).length;
+
+// Where a category sits inside school districts, that is the useful grouping.
+const districts = [...new Set(elsewhere.map((e) => e.area).filter(Boolean))].sort();
+
+const siblings = family.categories.filter((c) => c.slug !== category.slug);
+
+function dayLabel(iso: string) {
+	const d = new Date(`${iso}T12:00:00`);
+	return d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" });
+}
+---
+
+<Interior
+	title={`${category.name} | New Life Grand Rapids`}
+	description={`${category.name} across our church family in Grand Rapids: where each one meets, and when.`}
+	kicker={family.name}
+	heading={category.name}
+	lede={
+		list.length
+			? `${list.length} ${list.length === 1 ? "ministry" : "ministries"} across the family${
+					districts.length ? `, in ${districts.length} ${districts.length === 1 ? "area" : "areas"}` : ""
+				}.`
+			: "Nobody is on our list for this yet."
+	}
+>
+	<section class="section">
+		<div class="container">
+			<p class="min-breadcrumb reveal is-visible">
+				<a href="/ministries">All ministries</a> · <a href={`/ministries/${family.slug}`}>{family.name}</a>
+				{withCalendar > 0 && <> · {withCalendar} on our calendar</>}
+			</p>
+
+			{elsewhere.length > 0 && (
+				<div class="min-mapblock reveal is-visible">
+					<MinistryMap entries={list} label={category.name} />
+				</div>
+			)}
+
+			{events.length > 0 && (
+				<div class="min-catcal reveal is-visible">
+					<h2>Coming up</h2>
+					<ul>
+						{events.map((ev) => (
+							<li>
+								<span class="min-ev__time">{dayLabel(ev.date)}</span>
+								<span class="min-ev__body">
+									<span class="min-ev__title">{ev.title}</span>
+									{ev.venue && <span class="min-ev__venue">at {ev.venue}</span>}
+								</span>
+								<span class="min-ev__area">{ev.time ?? ""}</span>
+							</li>
+						))}
+					</ul>
+					<a class="min-catcal__all" href="/ministries/calendar">See the whole calendar →</a>
+				</div>
+			)}
+
+			{ours.length > 0 && (
+				<div class="min-cat reveal is-visible">
+					<div class="min-cat__head">
+						<h2>At Knapp's Corner</h2>
+						<span>{ours.length}</span>
+					</div>
+					<div class="min-grid">
+						{ours.map((entry) => <MinistryCard entry={entry} full={true} />)}
+					</div>
+				</div>
+			)}
+
+			{elsewhere.length > 0 && (
+				<div class="min-cat reveal is-visible">
+					<div class="min-cat__head">
+						<h2>Elsewhere in the city</h2>
+						<span>{elsewhere.length}</span>
+					</div>
+					<div class="min-grid">
+						{elsewhere.map((entry) => <MinistryCard entry={entry} full={true} />)}
+					</div>
+				</div>
+			)}
+
+			{list.length === 0 && (
+				<div class="min-gaps reveal is-visible">
+					<h2>Still open</h2>
+					<p>
+						We have not found the right {category.name.toLowerCase()} to put our name next to yet. If
+						you know one, that is exactly what we are looking for.
+					</p>
+					<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
+						Tell us about one
+					</a>
+				</div>
+			)}
+		</div>
+	</section>
+
+	{siblings.length > 0 && (
+		<section class="section prose-block prose-block--tinted">
+			<div class="container">
+				<div class="section-heading reveal is-visible">
+					<p class="eyebrow">Also in {family.name}</p>
+					<h2>Nearby ages and stages.</h2>
+				</div>
+				<div class="min-next reveal is-visible">
+					{siblings.map((c) => (
+						<a href={`/ministries/${family.slug}/${c.slug}`}>
+							<strong>{c.name}</strong>
+							<span>{entriesInCategory(c.slug).length || "none yet"}</span>
+						</a>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+</Interior>

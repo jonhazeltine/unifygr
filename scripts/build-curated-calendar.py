@@ -137,6 +137,31 @@ def events_from(ics, window_start, window_end):
     return out
 
 
+STOP = {"the", "and", "for", "our", "ministry", "ministries", "group", "groups",
+        "church", "night", "nights", "gathering", "team", "class", "classes"}
+
+
+def tokens(text):
+    return {w for w in re.findall(r"[a-z]+", text.lower()) if len(w) > 3 and w not in STOP}
+
+
+def match_ministry(title, owners):
+    """Attach an event to the ministry it belongs to, where the name says so.
+
+    A building's feed carries every ministry that meets there, so "NazaTeens"
+    should land on the high-school page while "Sunday School" stays general.
+    """
+    t = tokens(title)
+    if not t:
+        return None
+    best, best_score = None, 0
+    for o in owners:
+        score = len(t & tokens(o["name"]))
+        if score > best_score:
+            best, best_score = o, score
+    return best if best_score else None
+
+
 def main():
     directory = json.load(open(os.path.join(ROOT, "content/ministries.json")))
     today = date.today()
@@ -162,10 +187,11 @@ def main():
         found = events_from(ics, today, horizon)
         owner = owners[0]
         for ev in found:
-            ev["ministry"] = owner["name"] if len(owners) == 1 else None
-            ev["ministrySlug"] = owner["slug"] if len(owners) == 1 else None
+            match = match_ministry(ev["title"], owners)
+            ev["ministry"] = match["name"] if match else None
+            ev["ministrySlug"] = match["slug"] if match else None
             ev["venue"] = owner.get("venue") or owner.get("name")
-            ev["area"] = owner.get("area")
+            ev["area"] = (match or owner).get("area")
             events.append(ev)
         sources.append({"url": url, "ok": True, "events": len(found),
                         "venue": owner.get("venue")})

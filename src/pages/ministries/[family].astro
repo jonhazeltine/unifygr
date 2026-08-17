@@ -55,8 +55,13 @@ const filled = groups.filter((g) => g.entries.length > 0);
 			{filled.map(({ category, entries }) => (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
-						<h2 id={category.slug}>{category.name}</h2>
+						<h2 id={category.slug}>
+							<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
+						</h2>
 						<span>{entries.length}</span>
+						<a class="min-cat__more" href={`/ministries/${family.slug}/${category.slug}`}>
+							Map &amp; calendar →
+						</a>
 					</div>
 					<div class="min-grid">
 						{entries.map((entry) => <MinistryCard entry={entry} full={true} />)}
@@ -72,7 +77,9 @@ const filled = groups.filter((g) => g.entries.length > 0);
 						one of them well, that is exactly what we are looking for.
 					</p>
 					<ul>
-						{empty.map(({ category }) => <li>{category.name}</li>)}
+						{empty.map(({ category }) => (
+							<li><a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a></li>
+						))}
 					</ul>
 					<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
 						Suggest a ministry

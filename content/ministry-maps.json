@@ -1,138 +1,49 @@
 {
-	"all": {
-		"src": "/art/maps/all.jpg",
-		"lat": 43.03846,
-		"lng": -85.596095,
-		"zoom": 9.75,
-		"w": 880,
-		"h": 540
-	},
-	"worship-and-prayer": {
-		"src": "/art/maps/worship-and-prayer.jpg",
-		"lat": 43.03846,
-		"lng": -85.60107,
-		"zoom": 9.75,
-		"w": 880,
-		"h": 540
-	},
-	"formation": {
-		"src": "/art/maps/formation.jpg",
-		"lat": 42.975215,
-		"lng": -85.607825,
-		"zoom": 10.75,
-		"w": 880,
-		"h": 540
-	},
-	"kids": {
-		"src": "/art/maps/kids.jpg",
-		"lat": 43.031035,
-		"lng": -85.572899,
-		"zoom": 9.75,
-		"w": 880,
-		"h": 540
-	},
-	"students": {
-		"src": "/art/maps/students.jpg",
-		"lat": 43.046725,
-		"lng": -85.635814,
-		"zoom": 9.75,
-		"w": 880,
-		"h": 540
-	},
-	"marriage-family": {
-		"src": "/art/maps/marriage-family.jpg",
-		"lat": 42.891557,
-		"lng": -85.854802,
-		"zoom": 9.75,
-		"w": 880,
-		"h": 540
-	},
-	"foster-adoption": {
-		"src": "/art/maps/foster-adoption.jpg",
-		"lat": 42.991315,
-		"lng": -85.626067,
-		"zoom": 12.5,
-		"w": 880,
-		"h": 540
-	},
-	"men-women": {
-		"src": "/art/maps/men-women.jpg",
-		"lat": 42.996419,
-		"lng": -85.615312,
-		"zoom": 12.5,
-		"w": 880,
-		"h": 540
-	},
-	"recovery": {
-		"src": "/art/maps/recovery.jpg",
-		"lat": 42.948481,
-		"lng": -85.62744,
-		"zoom": 10.75,
-		"w": 880,
-		"h": 540
-	},
-	"mental-health": {
-		"src": "/art/maps/mental-health.jpg",
-		"lat": 42.957265,
-		"lng": -85.62577,
-		"zoom": 10.5,
-		"w": 880,
-		"h": 540
-	},
-	"practical-care": {
-		"src": "/art/maps/practical-care.jpg",
-		"lat": 42.942952,
-		"lng": -85.60233,
-		"zoom": 10.5,
-		"w": 880,
-		"h": 540
-	},
-	"health": {
-		"src": "/art/maps/health.jpg",
-		"lat": 42.946077,
-		"lng": -85.634155,
-		"zoom": 10.75,
-		"w": 880,
-		"h": 540
-	},
-	"justice": {
-		"src": "/art/maps/justice.jpg",
-		"lat": 42.942011,
-		"lng": -85.65936,
-		"zoom": 10.5,
-		"w": 880,
-		"h": 540
-	},
-	"mission": {
-		"src": "/art/maps/mission.jpg",
-		"lat": 42.954921,
-		"lng": -85.60233,
-		"zoom": 11.0,
-		"w": 880,
-		"h": 540
-	},
-	"church-leaders": {
-		"src": "/art/maps/church-leaders.jpg",
-		"lat": 42.991027,
-		"lng": -85.597387,
-		"zoom": 12.5,
-		"w": 880,
-		"h": 540
-	},
-	"creative": {
-		"src": "/art/maps/creative.jpg",
-		"lat": 43.041061,
-		"lng": -85.530207,
-		"zoom": 11.0,
-		"w": 880,
-		"h": 540
-	},
-	"seniors": {
-		"src": "/art/maps/seniors.jpg",
-		"lat": 42.946077,
-		"lng": -85.599477,
-		"zoom": 10.75,
-		"w": 880,
-		"h": 540
-	}
+	"frames": [
+		{
+			"name": "near",
+			"src": "/art/maps/near.jpg",
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"zoom": 12.5,
+			"w": 880,
+			"h": 540
+		},
+		{
+			"name": "city",
+			"src": "/art/maps/city.jpg",
+			"lat": 42.98,
+			"lng": -85.64,
+			"zoom": 11.25,
+			"w": 880,
+			"h": 540
+		},
+		{
+			"name": "metro",
+			"src": "/art/maps/metro.jpg",
+			"lat": 42.955,
+			"lng": -85.64,
+			"zoom": 10.25,
+			"w": 880,
+			"h": 540
+		},
+		{
+			"name": "region",
+			"src": "/art/maps/region.jpg",
+			"lat": 42.98,
+			"lng": -85.65,
+			"zoom": 9.25,
+			"w": 880,
+			"h": 540
+		},
+		{
+			"name": "wide",
+			"src": "/art/maps/wide.jpg",
+			"lat": 42.93,
+			"lng": -85.7,
+			"zoom": 8.5,
+			"w": 880,
+			"h": 540
+		}
+	]
 }
