@@ -24,6 +24,7 @@ import json, os, re, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "content/curated-events.json")
+FUNNEL = os.path.join(ROOT, "content/church-funnel.json")
 API = "https://thechurchmap.com/api/platforms/grandrapids/events"
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/124 Safari/537.36")
@@ -106,15 +107,23 @@ def clock(ev):
 
 
 def main():
+    # The platform reaches further than we do (Muskegon, Holland, Allegan), so
+    # events are held to the churches inside our own 20-mile funnel.
+    funnel = json.load(open(FUNNEL))
+    in_scope = {c["id"]: c for c in funnel["churches"]}
+
     raw, meta = fetch_all()
     print(f"published by The Church Map for {meta['platform']['name']}: {len(raw)} events "
           f"over {meta['days']} days")
 
-    events, dropped, seen = [], 0, set()
+    events, dropped, out_of_scope, seen = [], 0, 0, set()
     for ev in raw:
         title = (ev.get("title") or "").strip()
         church = (ev.get("churchName") or "").strip()
         if not title or not church:
+            continue
+        if ev.get("churchId") not in in_scope:
+            out_of_scope += 1
             continue
         if EXCLUDE_CHURCH.search(church) or ev.get("theme") in SKIP_THEMES or DENY.search(title):
             dropped += 1
@@ -127,8 +136,10 @@ def main():
             continue
         seen.add(key)
         theme = ev.get("theme") or "other"
+        near = in_scope[ev["churchId"]]
         events.append({
             "title": re.sub(r"\s+", " ", title)[:90],
+            "miles": near["miles"],
             "date": day,
             "time": clock(ev),
             "venue": church,
@@ -149,6 +160,7 @@ def main():
         "_comment": "New Life's own calendar, curated from The Church Map's published "
                     "Grand Rapids events. Regenerate with scripts/build-curated-calendar.py.",
         "source": "https://thechurchmap.com/grandrapids/events",
+        "scope": {"radiusMiles": funnel["radiusMiles"], "churchesInFunnel": funnel["churchCount"]},
         "days": meta.get("days"),
         "themes": by_theme,
         "events": events,
@@ -156,7 +168,8 @@ def main():
     open(OUT, "a").write("\n")
 
     venues = {e["venue"] for e in events}
-    print(f"kept {len(events)} gatherings across {len(venues)} churches, left off {dropped}")
+    print(f"kept {len(events)} gatherings across {len(venues)} churches; "
+          f"left off {dropped} as not an offering, {out_of_scope} as outside our 20 miles")
     for label, n in sorted(by_theme.items(), key=lambda kv: -kv[1]):
         print(f"   {n:5}  {label}")
 
