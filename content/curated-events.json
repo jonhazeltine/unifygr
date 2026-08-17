@@ -1,0 +1,437 @@
+{
+	"_comment": "New Life's own calendar, gathered from the curated ministries' feeds. Regenerate with scripts/build-curated-calendar.py.",
+	"generatedOn": "2026-08-17",
+	"horizon": "2026-10-26",
+	"sources": [
+		{
+			"url": "https://spartanaz.ccbchurch.com/w_calendar_sub.ics",
+			"ok": true,
+			"events": 35,
+			"venue": "Sparta Church of the Nazarene"
+		},
+		{
+			"url": "https://calendar.google.com/calendar/ical/njd6bbgct3u2hqj46b6c2souss%40group.calendar.google.com/public/basic.ics",
+			"ok": true,
+			"events": 4,
+			"venue": "All Nations Church"
+		},
+		{
+			"url": "https://calendar.google.com/calendar/ical/pastorjeffransom%40gmail.com/public/basic.ics",
+			"ok": true,
+			"events": 2,
+			"venue": "Pennellwood Church"
+		}
+	],
+	"events": [
+		{
+			"title": "UNITE Kids",
+			"date": "2026-08-19",
+			"time": "5:30pm",
+			"sort": "2026-08-19T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-08-23",
+			"time": "9:15am",
+			"sort": "2026-08-23T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-08-23",
+			"time": "10:30am",
+			"sort": "2026-08-23T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Communion/Potluck Sabbath",
+			"date": "2026-08-24",
+			"time": null,
+			"sort": "2026-08-24T00:00:00",
+			"ministry": "Midweek Gathering",
+			"ministrySlug": "anc-midweek",
+			"venue": "All Nations Church",
+			"area": "Grand Rapids Public Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-08-26",
+			"time": "5:30pm",
+			"sort": "2026-08-26T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Fellowship Potluck",
+			"date": "2026-08-28",
+			"time": "12:15pm",
+			"sort": "2026-08-28T12:15:00",
+			"ministry": "Kids Ministry",
+			"ministrySlug": "pw-kids",
+			"venue": "Pennellwood Church",
+			"area": "Godwin Heights Public Schools"
+		},
+		{
+			"title": "Battle Creek SDB Church at the Camp",
+			"date": "2026-08-29",
+			"time": null,
+			"sort": "2026-08-29T00:00:00",
+			"ministry": "Midweek Gathering",
+			"ministrySlug": "anc-midweek",
+			"venue": "All Nations Church",
+			"area": "Grand Rapids Public Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-08-30",
+			"time": "9:15am",
+			"sort": "2026-08-30T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-08-30",
+			"time": "10:30am",
+			"sort": "2026-08-30T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-09-02",
+			"time": "5:30pm",
+			"sort": "2026-09-02T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-09-06",
+			"time": "9:15am",
+			"sort": "2026-09-06T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-09-06",
+			"time": "10:30am",
+			"sort": "2026-09-06T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-09-09",
+			"time": "5:30pm",
+			"sort": "2026-09-09T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-09-13",
+			"time": "9:15am",
+			"sort": "2026-09-13T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-09-13",
+			"time": "10:30am",
+			"sort": "2026-09-13T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-09-16",
+			"time": "5:30pm",
+			"sort": "2026-09-16T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-09-20",
+			"time": "9:15am",
+			"sort": "2026-09-20T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-09-20",
+			"time": "10:30am",
+			"sort": "2026-09-20T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-09-23",
+			"time": "5:30pm",
+			"sort": "2026-09-23T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Communion/Potluck Sabbath",
+			"date": "2026-09-24",
+			"time": null,
+			"sort": "2026-09-24T00:00:00",
+			"ministry": "Midweek Gathering",
+			"ministrySlug": "anc-midweek",
+			"venue": "All Nations Church",
+			"area": "Grand Rapids Public Schools"
+		},
+		{
+			"title": "Men's Retreat -INLC",
+			"date": "2026-09-25",
+			"time": null,
+			"sort": "2026-09-25T00:00:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Men's Retreat - INLC",
+			"date": "2026-09-26",
+			"time": null,
+			"sort": "2026-09-26T00:00:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Men's Retreat - INLC",
+			"date": "2026-09-27",
+			"time": null,
+			"sort": "2026-09-27T00:00:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-09-27",
+			"time": "9:15am",
+			"sort": "2026-09-27T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-09-27",
+			"time": "10:30am",
+			"sort": "2026-09-27T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Fellowship Potluck",
+			"date": "2026-09-28",
+			"time": "12:15pm",
+			"sort": "2026-09-28T12:15:00",
+			"ministry": "Kids Ministry",
+			"ministrySlug": "pw-kids",
+			"venue": "Pennellwood Church",
+			"area": "Godwin Heights Public Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-09-30",
+			"time": "5:30pm",
+			"sort": "2026-09-30T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-10-04",
+			"time": "9:15am",
+			"sort": "2026-10-04T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-10-04",
+			"time": "10:30am",
+			"sort": "2026-10-04T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-10-07",
+			"time": "5:30pm",
+			"sort": "2026-10-07T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-10-11",
+			"time": "9:15am",
+			"sort": "2026-10-11T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-10-11",
+			"time": "10:30am",
+			"sort": "2026-10-11T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-10-14",
+			"time": "5:30pm",
+			"sort": "2026-10-14T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Women's Retreat -ILNC",
+			"date": "2026-10-16",
+			"time": null,
+			"sort": "2026-10-16T00:00:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Women's Retreat - ILNC",
+			"date": "2026-10-17",
+			"time": null,
+			"sort": "2026-10-17T00:00:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-10-18",
+			"time": "9:15am",
+			"sort": "2026-10-18T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-10-18",
+			"time": "10:30am",
+			"sort": "2026-10-18T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "UNITE Kids",
+			"date": "2026-10-21",
+			"time": "5:30pm",
+			"sort": "2026-10-21T17:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Communion/Potluck Sabbath",
+			"date": "2026-10-24",
+			"time": null,
+			"sort": "2026-10-24T00:00:00",
+			"ministry": "Midweek Gathering",
+			"ministrySlug": "anc-midweek",
+			"venue": "All Nations Church",
+			"area": "Grand Rapids Public Schools"
+		},
+		{
+			"title": "Sunday School",
+			"date": "2026-10-25",
+			"time": "9:15am",
+			"sort": "2026-10-25T09:15:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		},
+		{
+			"title": "Worship",
+			"date": "2026-10-25",
+			"time": "10:30am",
+			"sort": "2026-10-25T10:30:00",
+			"ministry": null,
+			"ministrySlug": null,
+			"venue": "Sparta Church of the Nazarene",
+			"area": "Sparta Area Schools"
+		}
+	]
+}

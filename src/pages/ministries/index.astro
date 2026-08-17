@@ -23,7 +23,7 @@ const live = withLiveCalendar();
 	description="Ministries we lead, and ministries across Grand Rapids we trust enough to send you to."
 	kicker="Signature Ministries & Curated Partnerships"
 	heading="Ministries"
-	lede="Everything here is open to you. Some of it we lead. The rest is led by people we trust across the city."
+	lede="One church, meeting in a lot of different rooms. Everything here is open to you."
 >
 	<!-- One body, many rooms -->
 	<section class="section prose-block">
@@ -32,12 +32,13 @@ const live = withLiveCalendar();
 			<h2 class="prose-block__title reveal is-visible">The church in this city is bigger than our building.</h2>
 			<div class="prose-block__body">
 				<p class="reveal is-visible">
-					We lead {counts.inHouse} ministries at Knapp's Corner. Across Grand Rapids the same body runs
-					{counts.outOfHouse} more that we would gladly send you to, so we have put them here beside our own.
+					{counts.inHouse} of these ministries meet at Knapp's Corner. The other {counts.outOfHouse} meet in
+					buildings across the city, led by brothers and sisters. They sit on this page beside our own
+					because that is what they are: ours.
 				</p>
 				<p class="reveal is-visible">
-					They are their own communities, with their own leaders and their own front doors. Walk into
-					any of them as one of us.
+					Each one keeps its own leaders and its own front door. When something here meets somewhere
+					else, that is an address, not a distance.
 				</p>
 			</div>
 		</div>
@@ -48,17 +49,17 @@ const live = withLiveCalendar();
 		<div class="container">
 			<div class="min-halves reveal is-visible">
 				<a class="min-half" href="#signature">
-					<span class="min-half__label">In house</span>
+					<span class="min-half__label">At Knapp's Corner</span>
 					<strong class="min-half__title">Signature Ministries</strong>
 					<span class="min-half__count">{counts.inHouse}</span>
 					<p>Worship, prayer, our kids, our people, and the mission trips we have led since 2015.</p>
 					<span class="min-half__go">See what we lead →</span>
 				</a>
 				<a class="min-half min-half--out" href="#browse">
-					<span class="min-half__label">Out of house</span>
+					<span class="min-half__label">Elsewhere in the city</span>
 					<strong class="min-half__title">Curated Partnerships</strong>
 					<span class="min-half__count">{counts.outOfHouse}</span>
-					<p>Led by others across the city, chosen by us, open to you.</p>
+					<p>The same family, meeting in other rooms across the city.</p>
 					<span class="min-half__go">Browse {counts.categories} categories →</span>
 				</a>
 			</div>
@@ -69,8 +70,8 @@ const live = withLiveCalendar();
 	<section class="section" id="signature">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">In house</p>
-				<h2>What we lead.</h2>
+				<p class="eyebrow">At Knapp's Corner</p>
+				<h2>What meets in our building.</h2>
 			</div>
 			<div class="min-grid reveal is-visible">
 				{signature.map((entry) => <MinistryCard entry={entry} />)}
@@ -131,8 +132,8 @@ const live = withLiveCalendar();
 				<h2>The curated calendar.</h2>
 			</div>
 			<p class="lead-copy reveal is-visible">
-				{live.length} of these ministries keep their dates current. Their calendars sit alongside ours
-				and the city-wide calendar at thechurches.co.
+				One calendar for the whole family, wherever a gathering happens to meet. We carry the ones we
+				have chosen, not everything that goes on in these buildings.
 			</p>
 			<div class="min-cta reveal is-visible">
 				<a class="button button--primary" href="/ministries/calendar">Open the calendar</a>
@@ -149,8 +150,8 @@ const live = withLiveCalendar();
 				<h2>We put our name next to these.</h2>
 			</div>
 			<p class="lead-copy reveal is-visible">
-				Nobody pays to be on this list. A ministry is here because we would send our own family, and
-				you get a first step in plain English rather than a link and good luck.
+				Nobody pays to be on this list. A ministry is here because we would send our own family to it,
+				and you get a first step in plain English rather than a link and good luck.
 			</p>
 			<div class="min-tests reveal is-visible">
 				{standard.tests.map((test, i) => (

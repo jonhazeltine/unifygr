@@ -143,9 +143,17 @@ const churchPos = churchPt && frame && centre
 						class="minmap__pin"
 						href={`/ministry/${p.slug}`}
 						style={`left:${p.left}%;top:${p.top}%`}
-						title={`${p.name} · ${p.dist < 1 ? "under a mile" : `${p.dist.toFixed(1)} miles`} from us`}
+						aria-label={`${p.name}${p.venue ? `, at ${p.venue}` : ""}`}
 					>
 						<span class="minmap__num">{p.n}</span>
+						<span class="minmap__tip" role="tooltip">
+							<strong>{p.name}</strong>
+							{p.venue && <span class="minmap__tipVenue">at {p.venue}</span>}
+							{p.rhythm && <span class="minmap__tipWhen">{p.rhythm}</span>}
+							<span class="minmap__tipDist">
+								{p.dist < 1 ? "under a mile away" : `${p.dist.toFixed(1)} miles away`}
+							</span>
+						</span>
 					</a>
 				))}
 			</div>

@@ -53,7 +53,10 @@ export type Entry = {
 	tier: string;
 	categories: string[];
 	summary: string;
-	why: string;
+	why?: string | null;
+	/** Where this ministry meets. The church is the address, not the headline. */
+	venue?: string | null;
+	venueUrl?: string | null;
 	bestFor?: string | null;
 	area?: string | null;
 	city?: string | null;
@@ -201,15 +204,17 @@ export function byArea(): AreaGroup[] {
 
 // ---- Labels ----
 
+// One church meeting in many places, so these read as location and family
+// rather than as distance.
 export const TIER_LABEL: Record<string, string> = {
 	signature: "Signature",
 	core: "Ours",
 	partner: "Partner",
-	"partner-church": "Partner church",
-	"ministry-share": "Ministry Share",
-	joint: "Joint Ministry",
-	recommended: "We send people here",
-	listed: "Worth knowing",
+	"partner-church": "Family",
+	"ministry-share": "Ministry share",
+	joint: "Led together",
+	recommended: "Family",
+	listed: "Family",
 };
 
 export const STATUS_LABEL: Record<string, string> = {

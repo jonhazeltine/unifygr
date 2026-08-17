@@ -1,54 +1,72 @@
 ---
 import Interior from "../../layouts/Interior.astro";
-import { withLiveCalendar, outOfHouse, familyOf } from "../../data/ministries";
+import calendarData from "../../../content/curated-events.json";
+import { entries } from "../../data/ministries";
 import { church } from "../../data/site";
 
-const live = withLiveCalendar();
-const ours = live.filter((e) => e.house === "in");
-const theirs = live.filter((e) => e.house === "out");
+type Ev = {
+	title: string;
+	date: string;
+	time: string | null;
+	ministry: string | null;
+	ministrySlug: string | null;
+	venue: string | null;
+	area: string | null;
+};
 
-// Grouped by family so the calendar reads the same way the directory does.
-const groups = new Map<string, typeof theirs>();
-for (const entry of theirs) {
-	const family = familyOf(entry.categories[0]);
-	const key = family?.name ?? "Elsewhere";
-	if (!groups.has(key)) groups.set(key, []);
-	groups.get(key)!.push(entry);
+const data = calendarData as { generatedOn: string; horizon: string; events: Ev[] };
+
+// Our own weekly rhythms sit in the same list as everything else, because it is
+// one calendar.
+const ours = entries
+	.filter((e) => e.house === "in" && e.rhythm && e.status === "live")
+	.map((e) => ({ name: e.name, rhythm: e.rhythm!, slug: e.slug }));
+
+const byDate = new Map<string, Ev[]>();
+for (const ev of data.events) {
+	if (!byDate.has(ev.date)) byDate.set(ev.date, []);
+	byDate.get(ev.date)!.push(ev);
 }
-const grouped = [...groups.entries()].sort((a, b) => b[1].length - a[1].length);
+const days = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(0, 32);
 
-const stale = outOfHouse.filter((e) => e.calendar?.sync === "page-stale");
-const silent = outOfHouse.filter(
-	(e) => !e.calendar?.sync || e.calendar.sync === "none" || e.calendar.sync === "unreachable",
-);
+function label(iso: string) {
+	const d = new Date(`${iso}T12:00:00`);
+	return {
+		weekday: d.toLocaleDateString("en-US", { weekday: "long" }),
+		day: d.toLocaleDateString("en-US", { month: "long", day: "numeric" }),
+	};
+}
+
+const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 ---
 
 <Interior
-	title="Curated Calendar | New Life Grand Rapids"
-	description="What's coming up across the ministries we lead and the ministries we trust."
+	title="Our Calendar | New Life Grand Rapids"
+	description="One calendar for everything our church family is doing, wherever it meets."
 	kicker="Ministries"
-	heading="The Curated Calendar"
-	lede="What's coming up across the ministries we lead and the ministries we send you to."
+	heading="Our Calendar"
+	lede="Everything our family is doing over the coming weeks, whichever building it happens in."
 >
 	<section class="section">
 		<div class="container">
 			<div class="min-calbar reveal is-visible">
 				<div>
-					<strong>{live.length}</strong>
-					<span>keep their dates current</span>
+					<strong>{data.events.length}</strong>
+					<span>gatherings coming up</span>
 				</div>
 				<div>
-					<strong>{stale.length}</strong>
-					<span>publish dates that have gone off</span>
+					<strong>{venues.size}</strong>
+					<span>places we meet</span>
 				</div>
 				<div>
-					<strong>{silent.length}</strong>
-					<span>post nothing we can follow</span>
+					<strong>{ours.length}</strong>
+					<span>of them at Knapp's Corner</span>
 				</div>
 			</div>
 			<p class="lead-copy reveal is-visible">
-				We checked every ministry's own site to see which ones keep a calendar people can rely on.
-				The ones below do. Each link goes straight to their dates.
+				This is one calendar, not a list of other people's. We do not carry everything that happens
+				in these buildings, only the gatherings we have chosen. Every one here belongs to the same
+				family, and the church named underneath it is simply the address.
 			</p>
 		</div>
 	</section>
@@ -56,27 +74,17 @@ const silent = outOfHouse.filter(
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Ours</p>
-				<h2>At Knapp's Corner.</h2>
+				<p class="eyebrow">Every week</p>
+				<h2>The standing rhythms.</h2>
 			</div>
 			<div class="min-callist reveal is-visible">
-				<a class="min-calrow" href="/visit">
-					<span class="min-calrow__name">Sunday Worship</span>
-					<span class="min-calrow__when">Sundays at 10am</span>
-					<span class="min-calrow__go">Plan a visit →</span>
-				</a>
-				{ours.map((entry) => (
-					<a class="min-calrow" href={`/ministry/${entry.slug}`}>
-						<span class="min-calrow__name">{entry.name}</span>
-						<span class="min-calrow__when">{entry.rhythm}</span>
-						<span class="min-calrow__go">Details →</span>
+				{ours.map((o) => (
+					<a class="min-calrow" href={`/ministry/${o.slug}`}>
+						<span class="min-calrow__name">{o.name}</span>
+						<span class="min-calrow__when">{o.rhythm}</span>
+						<span class="min-calrow__go">Knapp's Corner →</span>
 					</a>
 				))}
-				<a class="min-calrow" href={church.external.churchesCalendar} target="_blank" rel="noopener">
-					<span class="min-calrow__name">City-wide calendar</span>
-					<span class="min-calrow__when">Every Unify GR church</span>
-					<span class="min-calrow__go">thechurches.co →</span>
-				</a>
 			</div>
 		</div>
 	</section>
@@ -84,53 +92,62 @@ const silent = outOfHouse.filter(
 	<section class="section">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Theirs</p>
-				<h2>Across the city.</h2>
+				<p class="eyebrow">What's on</p>
+				<h2>The next few weeks.</h2>
 			</div>
-			{grouped.map(([family, list]) => (
-				<div class="min-calgroup reveal is-visible">
-					<h3>{family}<span>{list.length}</span></h3>
-					<div class="min-callist">
-						{list.map((entry) => (
-							<a
-								class="min-calrow"
-								href={entry.calendar?.url ?? entry.website ?? `/ministry/${entry.slug}`}
-								target="_blank"
-								rel="noopener"
-							>
-								<span class="min-calrow__name">{entry.name}</span>
-								<span class="min-calrow__when">
-									{entry.calendar?.sync === "available" ? "Live feed" : "Events page"}
-									{entry.area ? ` · ${entry.area}` : ""}
-								</span>
-								<span class="min-calrow__go">See their dates →</span>
-							</a>
-						))}
-					</div>
+
+			{days.length === 0 ? (
+				<p class="lead-copy reveal is-visible">
+					Nothing is loaded right now. The calendar refreshes when the site is rebuilt.
+				</p>
+			) : (
+				<div class="min-days reveal is-visible">
+					{days.map(([iso, list]) => {
+						const l = label(iso);
+						return (
+							<div class="min-day">
+								<div class="min-day__head">
+									<span class="min-day__weekday">{l.weekday}</span>
+									<span class="min-day__date">{l.day}</span>
+								</div>
+								<ul class="min-day__events">
+									{list.map((ev) => (
+										<li>
+											<span class="min-ev__time">{ev.time ?? "All day"}</span>
+											<span class="min-ev__body">
+												<span class="min-ev__title">{ev.title}</span>
+												{ev.venue && <span class="min-ev__venue">at {ev.venue}</span>}
+											</span>
+											{ev.area && <span class="min-ev__area">{ev.area}</span>}
+										</li>
+									))}
+								</ul>
+							</div>
+						);
+					})}
 				</div>
-			))}
+			)}
 		</div>
 	</section>
 
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
-			<p class="eyebrow reveal is-visible">Next for this page</p>
-			<h2 class="prose-block__title reveal is-visible">Their dates, on our page.</h2>
+			<p class="eyebrow reveal is-visible">Adding to it</p>
+			<h2 class="prose-block__title reveal is-visible">More of the family, on here.</h2>
 			<div class="prose-block__body">
 				<p class="reveal is-visible">
-					Right now each ministry above links to its own calendar. The next step is pulling those
-					dates in directly, so this page lists what is happening this week without anybody leaving
-					the site. That works cleanly for ministries publishing a real calendar feed, and needs a
-					conversation with the rest.
+					Right now this calendar carries the ministries whose dates we can read automatically. Every
+					time another one of ours starts publishing a calendar we can follow, their gatherings
+					appear here beside the rest without anybody retyping anything.
 				</p>
 				<p class="reveal is-visible">
-					If you lead one of these ministries and you keep a calendar, we would like to carry it.
+					If you lead one of these ministries and keep a calendar, we would like to carry it.
 				</p>
 			</div>
 			<div class="min-cta reveal is-visible">
 				<a class="button button--primary" href="/ministries">All ministries</a>
-				<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
-					Get in touch
+				<a class="button button--secondary" href={church.external.churchesCalendar} target="_blank" rel="noopener">
+					City-wide calendar
 				</a>
 			</div>
 		</div>
