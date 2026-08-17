@@ -1,8 +1,16 @@
 {
 	"all": {
 		"src": "/art/maps/all.jpg",
-		"lat": 42.98315,
+		"lat": 43.03846,
 		"lng": -85.596095,
+		"zoom": 9.75,
+		"w": 880,
+		"h": 540
+	},
+	"worship-and-prayer": {
+		"src": "/art/maps/worship-and-prayer.jpg",
+		"lat": 43.03846,
+		"lng": -85.60107,
 		"zoom": 9.75,
 		"w": 880,
 		"h": 540
@@ -17,17 +25,17 @@
 	},
 	"kids": {
 		"src": "/art/maps/kids.jpg",
-		"lat": 43.009605,
-		"lng": -85.572885,
-		"zoom": 10.25,
+		"lat": 43.031035,
+		"lng": -85.572899,
+		"zoom": 9.75,
 		"w": 880,
 		"h": 540
 	},
 	"students": {
 		"src": "/art/maps/students.jpg",
-		"lat": 42.967215,
-		"lng": -85.645297,
-		"zoom": 11.25,
+		"lat": 43.046725,
+		"lng": -85.635814,
+		"zoom": 9.75,
 		"w": 880,
 		"h": 540
 	},
@@ -43,6 +51,14 @@
 		"src": "/art/maps/foster-adoption.jpg",
 		"lat": 42.991315,
 		"lng": -85.626067,
+		"zoom": 12.5,
+		"w": 880,
+		"h": 540
+	},
+	"men-women": {
+		"src": "/art/maps/men-women.jpg",
+		"lat": 42.996419,
+		"lng": -85.615312,
 		"zoom": 12.5,
 		"w": 880,
 		"h": 540

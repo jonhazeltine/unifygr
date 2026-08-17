@@ -132,7 +132,7 @@ export function entriesInFamily(familySlug: string): Entry[] {
 }
 
 // In-house first, then the ones we vouch for hardest, then the rest.
-const TIER_ORDER = ["signature", "core", "partner", "ministry-share", "joint", "recommended", "listed"];
+const TIER_ORDER = ["signature", "core", "partner", "partner-church", "ministry-share", "joint", "recommended", "listed"];
 
 export function sortEntries(list: Entry[]): Entry[] {
 	return [...list].sort((a, b) => {
@@ -205,6 +205,7 @@ export const TIER_LABEL: Record<string, string> = {
 	signature: "Signature",
 	core: "Ours",
 	partner: "Partner",
+	"partner-church": "Partner church",
 	"ministry-share": "Ministry Share",
 	joint: "Joint Ministry",
 	recommended: "We send people here",
