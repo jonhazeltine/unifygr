@@ -104,20 +104,10 @@
 		]
 	},
 	"junkRecords": {
-		"note": "Test rows sitting in the church data near our own address. They are not churches and must never reach a page.",
+		"note": "Two test rows on The Church Map are flagged approved=true and do reach public surfaces. The other seventeen are already excluded upstream and need no filter here. Verified against live prod, Aug 2026; remove these once the flags are corrected at source.",
 		"patterns": [
-			"^test\\b",
-			"\\btest church\\b",
-			"\\btest chruch\\b",
-			"\\btest churchy\\b",
-			"^the test\\b",
-			"busters big",
-			"big mikes",
-			"hazeltine test",
-			"best church ever",
-			"2st turkey",
-			"\\bbert church\\b",
-			"test church 2"
+			"^test chruch$",
+			"^the best church ever$"
 		]
 	},
 	"schoolCalendarNoise": {
@@ -141,13 +131,14 @@
 		]
 	},
 	"venueAliases": {
-		"note": "The same congregation under more than one record upstream. Folding them stops one ministry appearing twice under two names. The event titles carry the campus, so the campus is not lost.",
+		"note": "Records that carry the same congregation under more than one name, so one ministry does not appear twice. Blythefield Hills was renamed Magnify Church and both names survived across two campuses. Coit and Sunshine are deliberately NOT aliased: they are separate records at separate addresses and that is The Church Map's question to settle, not ours.",
 		"map": {
 			"Blythefield Hills Baptist Church: Rockford Campus": "Magnify Church",
 			"Magnify Church - Northview Campus": "Magnify Church",
-			"Coit Community Church": "Sunshine Community Church",
 			"St Nicholas Church": "Saint Nicholas Antiochian Orthodox Church",
-			"Wright Church": "Wright Seventh-day Adventist Church"
+			"Wright Church": "Wright Seventh-day Adventist Church",
+			"Blythefield Hills Baptist Church - Northview Campus": "Magnify Church",
+			"Calvary Assembly Of God": "Calvary Assembly of God"
 		}
 	}
 }

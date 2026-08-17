@@ -8,7 +8,7 @@
 	"days": 60,
 	"themes": {
 		"Sport": 2,
-		"Young adults": 10,
+		"Young adults": 9,
 		"Worship": 2,
 		"Food & fellowship": 17,
 		"Women": 8,
@@ -1467,23 +1467,6 @@
 			"cadence": "one_off",
 			"lastResort": false,
 			"sort": "2026-09-20T17:30:00"
-		},
-		{
-			"title": "Young Adults Bible Study",
-			"miles": 3.5,
-			"needsHumanHandling": false,
-			"date": "2026-09-21",
-			"time": "7pm",
-			"venue": "Sunshine Community Church",
-			"city": "Grand Rapids",
-			"theme": "young_adults",
-			"themeLabel": "Young adults",
-			"categories": [
-				"young-adults"
-			],
-			"cadence": "recurring_group",
-			"lastResort": false,
-			"sort": "2026-09-21T19:00:00"
 		},
 		{
 			"title": "Men of Valor Rm 406",
