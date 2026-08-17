@@ -2500,6 +2500,13 @@ strong {
 .min-gaps li a:hover { color: var(--gold); }
 .minmap__tipArea { color: rgba(246, 240, 231, 0.45); font-size: 0.72rem; margin-top: 0.15rem; }
 
+.min-themes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.6rem; }
+.min-theme {
+	padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px;
+	font-size: 0.8rem; color: var(--muted);
+}
+.min-theme strong { color: var(--gold); font-weight: 400; font-variant-numeric: tabular-nums; }
+
 /* ---- Our calendar: days and events ---- */
 .min-days { display: grid; gap: 1rem; }
 .min-day {
