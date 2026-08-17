@@ -53,7 +53,10 @@ export type Entry = {
 	tier: string;
 	categories: string[];
 	summary: string;
-	why: string;
+	why?: string | null;
+	/** Where this ministry meets. The church is the address, not the headline. */
+	venue?: string | null;
+	venueUrl?: string | null;
 	bestFor?: string | null;
 	area?: string | null;
 	city?: string | null;
@@ -132,7 +135,7 @@ export function entriesInFamily(familySlug: string): Entry[] {
 }
 
 // In-house first, then the ones we vouch for hardest, then the rest.
-const TIER_ORDER = ["signature", "core", "partner", "ministry-share", "joint", "recommended", "listed"];
+const TIER_ORDER = ["signature", "core", "partner", "partner-church", "ministry-share", "joint", "recommended", "listed"];
 
 export function sortEntries(list: Entry[]): Entry[] {
 	return [...list].sort((a, b) => {
@@ -201,19 +204,24 @@ export function byArea(): AreaGroup[] {
 
 // ---- Labels ----
 
+// One church meeting in many places, so these read as location and family
+// rather than as distance.
 export const TIER_LABEL: Record<string, string> = {
 	signature: "Signature",
 	core: "Ours",
 	partner: "Partner",
-	"ministry-share": "Ministry Share",
-	joint: "Joint Ministry",
-	recommended: "We send people here",
-	listed: "Worth knowing",
+	"partner-church": "Family",
+	"ministry-share": "Ministry share",
+	joint: "Led together",
+	recommended: "Family",
+	listed: "Family",
 };
 
 export const STATUS_LABEL: Record<string, string> = {
 	live: "Confirmed",
 	reviewing: "Being verified",
 	proposed: "Not yet verified",
+	/** Real ministry, but it publishes no time or place we could carry. */
+	"no-details": "Time and place not published",
 	dormant: "Paused",
 };

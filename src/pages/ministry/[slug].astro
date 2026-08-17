@@ -40,7 +40,7 @@ for (const slug of entry.categories) {
 }
 
 const primary = cats[0];
-const kicker = inHouse ? "Signature Ministry" : "Curated Partnership";
+const kicker = inHouse ? "Signature Ministry" : "Family";
 ---
 
 <Interior
@@ -69,8 +69,8 @@ const kicker = inHouse ? "Signature Ministry" : "Curated Partnership";
 				</div>
 
 				<div class="prose-block__body reveal is-visible">
-					<h2 class="min-detail__h">Why we point people here</h2>
-					<p>{entry.why}</p>
+					<h2 class="min-detail__h">About this ministry</h2>
+					{entry.why && <p>{entry.why}</p>}
 					{entry.bestFor && (
 						<p class="min-detail__bestfor"><strong>Best for.</strong> {entry.bestFor}</p>
 					)}
@@ -89,9 +89,8 @@ const kicker = inHouse ? "Signature Ministry" : "Curated Partnership";
 				{unverified && (
 					<div class="min-notice reveal is-visible">
 						<strong>{STATUS_LABEL[entry.status] ?? entry.status}.</strong>
-						We put this ministry on the list from our own knowledge of the city. Nobody at New Life
-						has spoken with them about it yet. Check their own site for current details, and if you
-						have first-hand experience of them, good or bad, we want to hear it.
+						We found this ministry ourselves and nobody here has sat down with them yet. Check the
+						details before you go, and if you know them already, tell us what you know.
 					</div>
 				)}
 			</div>

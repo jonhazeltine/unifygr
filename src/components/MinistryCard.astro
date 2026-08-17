@@ -1,40 +1,35 @@
 ---
-import { TIER_LABEL, STATUS_LABEL, hasLiveCalendar, type Entry } from "../data/ministries";
+// The ministry is the headline. The church it meets in is the address.
+import { STATUS_LABEL, hasLiveCalendar, type Entry } from "../data/ministries";
 
 interface Props {
 	entry: Entry;
-	/** Show the "why we point here" paragraph. Off in dense lists. */
+	/** Show the longer note. Off in dense lists. */
 	full?: boolean;
 }
 
 const { entry, full = false } = Astro.props;
 const inHouse = entry.house === "in";
-const tierLabel = TIER_LABEL[entry.tier] ?? entry.tier;
 const unverified = entry.status !== "live";
+const venue = entry.venue ?? (inHouse ? "New Life, Knapp's Corner" : entry.org);
 ---
 
 <article class={`min-card ${inHouse ? "min-card--in" : "min-card--out"}`}>
 	<div class="min-card__top">
-		<span class={`min-tag ${inHouse ? "min-tag--in" : "min-tag--out"}`}>{tierLabel}</span>
 		{entry.area && <span class="min-card__area">{entry.area}</span>}
+		{hasLiveCalendar(entry) && <span class="min-card__live">On our calendar</span>}
 	</div>
 
 	<h3 class="min-card__name">
 		<a href={`/ministry/${entry.slug}`}>{entry.name}</a>
 	</h3>
-	{entry.org && entry.org !== entry.name && <p class="min-card__org">{entry.org}</p>}
+
+	{venue && <p class="min-card__venue">at {venue}</p>}
+	{entry.rhythm && <p class="min-card__when">{entry.rhythm}</p>}
 
 	<p class="min-card__summary">{entry.summary}</p>
 
-	{full && entry.why && (
-		<p class="min-card__why"><span>Why we point here.</span> {entry.why}</p>
-	)}
-
-	<div class="min-card__meta">
-		{entry.rhythm && <span>{entry.rhythm}</span>}
-		{entry.city && entry.city !== "Grand Rapids" && <span>{entry.city}</span>}
-		{hasLiveCalendar(entry) && <span class="min-card__live">Live calendar</span>}
-	</div>
+	{full && entry.why && <p class="min-card__note">{entry.why}</p>}
 
 	{unverified && (
 		<p class="min-card__flag">{STATUS_LABEL[entry.status] ?? entry.status}</p>

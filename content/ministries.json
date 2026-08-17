@@ -62,7 +62,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "corporate-prayer",
@@ -100,7 +102,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "prayer-chain",
@@ -135,7 +139,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "childrens-ministry",
@@ -171,7 +177,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "pastoral-care",
@@ -208,7 +216,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "hospitality-connections",
@@ -243,7 +253,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "spiritual-formation-path",
@@ -277,7 +289,9 @@
 			"verified": {
 				"by": "New Life staff",
 				"on": "2026-08-17"
-			}
+			},
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "mission-of-hope-trips",
@@ -314,7 +328,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "unify-gr",
@@ -351,7 +367,9 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "outreach",
@@ -387,7 +405,50 @@
 			},
 			"lat": 42.999923,
 			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525"
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
+		},
+		{
+			"slug": "life-groups",
+			"name": "Life Groups",
+			"org": "New Life Grand Rapids",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"small-groups",
+				"discipleship-groups",
+				"bible-study"
+			],
+			"summary": "Groups that meet in homes through the week. Where people actually get known.",
+			"why": "We will point you to another church for almost anything. Not this. Belonging is the one thing a church cannot hand off, so life groups stay ours.",
+			"bestFor": "Anyone who has been coming a while and still feels like a visitor.",
+			"area": "Knapp's Corner",
+			"city": "Grand Rapids",
+			"rhythm": "Weekly, in homes",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "Tell Elizabeth at the Connections desk what part of town you live in and she will match you to a group.",
+				"person": "Elizabeth Bish"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "weekly",
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "live",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null
 		},
 		{
 			"slug": "guiding-light",
@@ -1317,32 +1378,6 @@
 			"geocodedAs": "21 West 16th Street, Holland, Michigan 49423, United States"
 		},
 		{
-			"slug": "young-life-west-michigan",
-			"name": "Young Life Greater Grand Rapids",
-			"house": "out",
-			"tier": "recommended",
-			"categories": [
-				"high-school",
-				"middle-school",
-				"youth-mentoring",
-				"student-camps"
-			],
-			"summary": "Leaders who show up in local high schools, plus club, campaigners, and summer camp, across nine Greater Grand Rapids areas.",
-			"why": "We do not run a youth group right now. Young Life leaders are already at your kid's school this week.",
-			"bestFor": "Middle and high schoolers, and adults who want to lead them.",
-			"area": "Greater Grand Rapids",
-			"city": "Grand Rapids",
-			"website": "https://grandrapids.younglife.org",
-			"status": "proposed",
-			"calendar": {
-				"url": null,
-				"format": null,
-				"cadence": null,
-				"sync": "none",
-				"evidence": null
-			}
-		},
-		{
 			"slug": "youth-for-christ-wm",
 			"name": "Youth for Christ West Michigan",
 			"house": "out",
@@ -1359,14 +1394,20 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://wmyfc.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Campus Life and City Life run at specific schools and sites that are not listed publicly. Ask us for an introduction.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "fca-west-michigan",
@@ -1384,14 +1425,20 @@
 			"area": "West Michigan",
 			"city": "Grand Rapids",
 			"website": "https://www.fca.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Huddles meet at individual schools and are not listed publicly. Ask us and we will find out whether your kid's school has one.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "cru-gvsu",
@@ -1409,14 +1456,20 @@
 			"area": "Allendale",
 			"city": "Allendale",
 			"website": "https://www.cru.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Meeting times are posted on campus each semester rather than online. Ask us and we will connect you.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "camp-roger",
@@ -2066,6 +2119,755 @@
 				"sync": "page-current",
 				"evidence": "14 dates, years ['2025', '2026', '2027']"
 			}
+		},
+		{
+			"slug": "bh-student-ministry",
+			"name": "Student Ministry",
+			"org": null,
+			"venue": "Berkley Hills Church",
+			"venueUrl": "https://www.berkleyhills.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Middle and high school students, meeting midweek.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Wednesdays, 6–7:30pm",
+			"href": null,
+			"website": "https://www.berkleyhills.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://www.berkleyhills.org/kids-ministry-nb5th-grade",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9929144,
+			"lng": -85.6291695
+		},
+		{
+			"slug": "bh-team-be-grown",
+			"name": "Team Be Grown",
+			"org": null,
+			"venue": "Berkley Hills Church",
+			"venueUrl": "https://www.berkleyhills.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids ministry from nursery through elementary.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays, 9 & 11am",
+			"href": null,
+			"website": "https://www.berkleyhills.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://www.berkleyhills.org/kids-ministry-nb5th-grade",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9929144,
+			"lng": -85.6291695
+		},
+		{
+			"slug": "bh-mens-group",
+			"name": "Heavenly Peace Men's Group",
+			"org": null,
+			"venue": "Berkley Hills Church",
+			"venueUrl": "https://www.berkleyhills.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"mens-ministry"
+			],
+			"summary": "Men meeting early before work.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Thursdays, 6:30am",
+			"href": null,
+			"website": "https://www.berkleyhills.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://www.berkleyhills.org/kids-ministry-nb5th-grade",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9929144,
+			"lng": -85.6291695
+		},
+		{
+			"slug": "bh-young-adults",
+			"name": "Young Adult Ministry",
+			"org": null,
+			"venue": "Berkley Hills Church",
+			"venueUrl": "https://www.berkleyhills.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"young-adults"
+			],
+			"summary": "Young adults, meeting monthly.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Monthly, Tuesdays 6:30–7:30pm",
+			"href": null,
+			"website": "https://www.berkleyhills.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://www.berkleyhills.org/kids-ministry-nb5th-grade",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9929144,
+			"lng": -85.6291695
+		},
+		{
+			"slug": "lc-local-youth",
+			"name": "Local Youth",
+			"org": null,
+			"venue": "The Local Church GR",
+			"venueUrl": "https://localchurchgr.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Students on Sunday evenings through the school year.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Sunday nights, 6–8pm during the school year",
+			"href": null,
+			"website": "https://localchurchgr.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://my.localchurchgr.org/events",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9404184,
+			"lng": -85.5824886
+		},
+		{
+			"slug": "lc-local-kids",
+			"name": "Local Kids",
+			"org": null,
+			"venue": "The Local Church GR",
+			"venueUrl": "https://localchurchgr.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids ministry running alongside both morning services.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays, 9 & 10:45am",
+			"href": null,
+			"website": "https://localchurchgr.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://my.localchurchgr.org/events",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9404184,
+			"lng": -85.5824886
+		},
+		{
+			"slug": "sn-nazateens",
+			"name": "NazaTeens",
+			"org": null,
+			"venue": "Sparta Church of the Nazarene",
+			"venueUrl": "https://www.spartanaz.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Students in grades 7 through 12.",
+			"why": null,
+			"bestFor": null,
+			"area": "Sparta Area Schools",
+			"city": "Sparta",
+			"rhythm": "Wednesdays, 5:30–7:30pm",
+			"href": null,
+			"website": "https://www.spartanaz.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://spartanaz.ccbchurch.com/w_calendar_sub.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.1611107,
+			"lng": -85.6868383
+		},
+		{
+			"slug": "sn-nazkidz",
+			"name": "NazKidz",
+			"org": null,
+			"venue": "Sparta Church of the Nazarene",
+			"venueUrl": "https://www.spartanaz.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids ministry, with NazKidz Jr. for the youngest.",
+			"why": null,
+			"bestFor": null,
+			"area": "Sparta Area Schools",
+			"city": "Sparta",
+			"rhythm": "Sundays, 9:15am",
+			"href": null,
+			"website": "https://www.spartanaz.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://spartanaz.ccbchurch.com/w_calendar_sub.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.1611107,
+			"lng": -85.6868383
+		},
+		{
+			"slug": "sn-wednesday-unite",
+			"name": "Wednesday UNITE",
+			"org": null,
+			"venue": "Sparta Church of the Nazarene",
+			"venueUrl": "https://www.spartanaz.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"kids-clubs"
+			],
+			"summary": "The whole-church midweek gathering, running alongside NazaTeens.",
+			"why": null,
+			"bestFor": null,
+			"area": "Sparta Area Schools",
+			"city": "Sparta",
+			"rhythm": "Wednesdays, 5:30–7:30pm",
+			"href": null,
+			"website": "https://www.spartanaz.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://spartanaz.ccbchurch.com/w_calendar_sub.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.1611107,
+			"lng": -85.6868383
+		},
+		{
+			"slug": "kcc-prayer-team",
+			"name": "Prayer Team",
+			"org": null,
+			"venue": "Kentwood Community Church",
+			"venueUrl": "https://www.kentwoodcommunitychurch.com/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"prayer-meetings",
+				"intercession"
+			],
+			"summary": "A weekly prayer gathering, open to anyone.",
+			"why": null,
+			"bestFor": null,
+			"area": "Kentwood",
+			"city": "Kentwood",
+			"rhythm": "Tuesdays, 8am in the Prayer Chapel",
+			"href": null,
+			"website": "https://www.kentwoodcommunitychurch.com/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://kentwoodcommunitychurch.com/events",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8525964,
+			"lng": -85.6332948
+		},
+		{
+			"slug": "anc-midweek",
+			"name": "Midweek Gathering",
+			"org": null,
+			"venue": "All Nations Church",
+			"venueUrl": "https://www.goallnations.com/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"kids-clubs"
+			],
+			"summary": "A midweek gathering. Their calendar feed carries the dates.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://www.goallnations.com/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://calendar.google.com/calendar/ical/njd6bbgct3u2hqj46b6c2souss%40group.calendar.google.com/public/basic.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.92257678,
+			"lng": -85.66375689
+		},
+		{
+			"slug": "pw-kids",
+			"name": "Kids Ministry",
+			"org": null,
+			"venue": "Pennellwood Church",
+			"venueUrl": "https://pennellwoodchurch.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry"
+			],
+			"summary": "Children's ministry in the Godwin Heights district.",
+			"why": null,
+			"bestFor": null,
+			"area": "Godwin Heights Public Schools",
+			"city": "Wyoming",
+			"rhythm": null,
+			"href": null,
+			"website": "https://pennellwoodchurch.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://calendar.google.com/calendar/ical/pastorjeffransom%40gmail.com/public/basic.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9009583,
+			"lng": -85.6675504
+		},
+		{
+			"slug": "cor-worship-nights",
+			"name": "Nights of Worship",
+			"org": null,
+			"venue": "City Of Refuge Church",
+			"venueUrl": "https://cityofrefugechurchgr.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"worship-nights",
+				"corporate-worship"
+			],
+			"summary": "Worship nights, posted on their events page as they come.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://cityofrefugechurchgr.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://cityofrefugechurchgr.org/events/",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.0032764,
+			"lng": -85.6550149
+		},
+		{
+			"slug": "cag-sunday",
+			"name": "Sunday Worship",
+			"org": null,
+			"venue": "Calvary Assembly of God",
+			"venueUrl": "http://cscalvary.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"corporate-worship"
+			],
+			"summary": "Sunday worship for the Cedar Springs area.",
+			"why": null,
+			"bestFor": null,
+			"area": "Cedar Springs Public Schools",
+			"city": "Cedar Springs",
+			"rhythm": "Sundays, 10:30am",
+			"href": null,
+			"website": "http://cscalvary.org/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://cscalvaryorg.wordpress.com/",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.2243236,
+			"lng": -85.5471255
+		},
+		{
+			"slug": "kcc-sunday",
+			"name": "Sunday Worship",
+			"org": null,
+			"venue": "Kentwood Community Church",
+			"venueUrl": "https://www.kentwoodcommunitychurch.com/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"corporate-worship"
+			],
+			"summary": "Sunday worship in Kentwood.",
+			"why": null,
+			"bestFor": null,
+			"area": "Kentwood",
+			"city": "Kentwood",
+			"rhythm": "Sundays, 10am",
+			"href": null,
+			"website": "https://www.kentwoodcommunitychurch.com/",
+			"handoff": {
+				"how": "Check the calendar for the next date and turn up. Ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://kentwoodcommunitychurch.com/events",
+				"format": "page",
+				"cadence": "weekly",
+				"sync": "page-current",
+				"evidence": "church-curation pass, Aug 2026"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8525964,
+			"lng": -85.6332948
+		},
+		{
+			"slug": "yl-forest-hills",
+			"name": "Young Life Forest Hills",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://foresthills.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Forest Hills Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Forest Hills Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://foresthills.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-rockford",
+			"name": "Young Life Rockford",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://rockford.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Rockford Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Rockford Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://rockford.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-kentwood",
+			"name": "Young Life Kentwood",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://kentwood.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Kentwood Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Kentwood Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://kentwood.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-gr-city",
+			"name": "Young Life Grand Rapids City",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://grandrapidscity.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Grand Rapids Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://grandrapidscity.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-gr-southwest",
+			"name": "Young Life Grand Rapids SouthWest",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://grsw.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Southwest Grand Rapids, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Southwest Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://grsw.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-northwest-gr",
+			"name": "Young Life Northwest Grand Rapids",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://northwestgrandrapids.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Northwest Grand Rapids, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Northwest Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://northwestgrandrapids.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
 		}
 	]
 }
