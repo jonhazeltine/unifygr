@@ -2868,6 +2868,220 @@
 			"verified": null,
 			"lat": null,
 			"lng": null
+		},
+		{
+			"slug": "sunshine-youth",
+			"name": "Middle School & High School Youth",
+			"org": null,
+			"venue": "Sunshine Community Church",
+			"venueUrl": "https://sunshine.church/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Middle and high schoolers together on Sunday evenings, on Coit Avenue.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays, 5:30pm",
+			"href": null,
+			"website": "https://sunshine.church/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://sunshine.church/events/?ical=1",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 22 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.973811,
+			"lng": -85.661778
+		},
+		{
+			"slug": "bauer-youth-group",
+			"name": "Youth Group",
+			"org": null,
+			"venue": "Bauer CRC",
+			"venueUrl": "https://bauercrc.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Youth group serving the Hudsonville district, with dates published as they come.",
+			"why": null,
+			"bestFor": null,
+			"area": "Hudsonville Public School District",
+			"city": "Hudsonville",
+			"rhythm": null,
+			"href": null,
+			"website": "https://bauercrc.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://calendar.google.com/calendar/ical/bauercrc.org_4iamaivnt1vc077d5h22jp0030%40group.calendar.google.com/public/basic.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 21 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9203346,
+			"lng": -85.9066222
+		},
+		{
+			"slug": "crossroads-outpost",
+			"name": "Outpost",
+			"org": null,
+			"venue": "Crossroads Bible Church",
+			"venueUrl": "http://www.crossroads-bible.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"middle-school"
+			],
+			"summary": "Middle school ministry, meeting alongside the church's Bible studies.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "http://www.crossroads-bible.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://crossroads-bible.ccbchurch.com/w_calendar_sub.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 4 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9773282,
+			"lng": -85.6766588
+		},
+		{
+			"slug": "crossroads-kids",
+			"name": "Crossroads Kids",
+			"org": null,
+			"venue": "Crossroads Bible Church",
+			"venueUrl": "http://www.crossroads-bible.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids ministry running alongside the Sunday morning service.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": "Sundays, 10:45am",
+			"href": null,
+			"website": "http://www.crossroads-bible.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://crossroads-bible.ccbchurch.com/w_calendar_sub.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 4 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9773282,
+			"lng": -85.6766588
+		},
+		{
+			"slug": "new-hope-sunday-school",
+			"name": "Sunday School",
+			"org": null,
+			"venue": "New Hope Lutheran Church",
+			"venueUrl": "http://www.nhlchurch.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry"
+			],
+			"summary": "Sunday school for kids in the Hudsonville district.",
+			"why": null,
+			"bestFor": null,
+			"area": "Hudsonville Public School District",
+			"city": "Hudsonville",
+			"rhythm": "Sundays, 9am",
+			"href": null,
+			"website": "http://www.nhlchurch.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "https://calendar.google.com/calendar/ical/nhlchurch.org_i7s1u45sg0gj3stl2uu64rm7gg%40group.calendar.google.com/public/basic.ics",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 24 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8869872,
+			"lng": -85.8626251
+		},
+		{
+			"slug": "messiah-seasoned-sisters",
+			"name": "Seasoned Sisters",
+			"org": null,
+			"venue": "Messiah CRC",
+			"venueUrl": "http://www.messiahcrc.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"womens-ministry",
+				"womens-bible-study"
+			],
+			"summary": "A midweek women's gathering in Hudsonville.",
+			"why": null,
+			"bestFor": null,
+			"area": "Hudsonville Public School District",
+			"city": "Hudsonville",
+			"rhythm": "Wednesdays, 10am",
+			"href": null,
+			"website": "http://www.messiahcrc.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": "http://messiahcrc.org/events/?ical=1",
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "live feed, 26 events in the next 70 days"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8819205,
+			"lng": -85.8532563
 		}
 	]
 }

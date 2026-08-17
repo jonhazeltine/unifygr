@@ -10,7 +10,7 @@ import {
 	families,
 	entriesInCategory,
 	sortEntries,
-	hasLiveCalendar,
+	splitOffering,
 	type Category,
 	type Entry,
 	type Family,
@@ -28,8 +28,9 @@ export function getStaticPaths() {
 const { family, category } = Astro.props as { family: Family; category: Category };
 
 const list = sortEntries(entriesInCategory(category.slug));
-const ours = list.filter((e) => e.house === "in");
-const elsewhere = list.filter((e) => e.house === "out");
+const { offering, specialized } = splitOffering(list);
+const ours = offering.filter((e) => e.house === "in");
+const elsewhere = offering.filter((e) => e.house === "out");
 
 type Ev = {
 	title: string; date: string; time: string | null;
@@ -41,7 +42,6 @@ const allEvents = (calendarData as { events: Ev[] }).events;
 const slugs = new Set(list.map((e) => e.slug));
 const events = allEvents.filter((ev) => ev.ministrySlug && slugs.has(ev.ministrySlug)).slice(0, 12);
 
-const withCalendar = list.filter(hasLiveCalendar).length;
 
 // Where a category sits inside school districts, that is the useful grouping.
 const districts = [...new Set(elsewhere.map((e) => e.area).filter(Boolean))].sort();
@@ -60,23 +60,25 @@ function dayLabel(iso: string) {
 	kicker={family.name}
 	heading={category.name}
 	lede={
-		list.length
-			? `${list.length} ${list.length === 1 ? "ministry" : "ministries"} across the family${
-					districts.length ? `, in ${districts.length} ${districts.length === 1 ? "area" : "areas"}` : ""
+		offering.length
+			? `${offering.length} ${offering.length === 1 ? "offering" : "offerings"} with real dates${
+					specialized.length ? `, plus ${specialized.length} more worth knowing` : ""
 				}.`
-			: "Nobody is on our list for this yet."
+			: specialized.length
+				? `Nothing with live dates yet, but ${specialized.length} worth knowing.`
+				: "Nobody is on our list for this yet."
 	}
 >
 	<section class="section">
 		<div class="container">
 			<p class="min-breadcrumb reveal is-visible">
 				<a href="/ministries">All ministries</a> · <a href={`/ministries/${family.slug}`}>{family.name}</a>
-				{withCalendar > 0 && <> · {withCalendar} on our calendar</>}
+				{offering.length > 0 && <> · <a href="/ministries/calendar">on our calendar</a></>}
 			</p>
 
 			{elsewhere.length > 0 && (
 				<div class="min-mapblock reveal is-visible">
-					<MinistryMap entries={list} label={category.name} />
+					<MinistryMap entries={offering} label={category.name} />
 				</div>
 			)}
 
@@ -119,6 +121,22 @@ function dayLabel(iso: string) {
 					</div>
 					<div class="min-grid">
 						{elsewhere.map((entry) => <MinistryCard entry={entry} full={true} />)}
+					</div>
+				</div>
+			)}
+
+			{specialized.length > 0 && (
+				<div class="min-cat reveal is-visible">
+					<div class="min-cat__head">
+						<h2>Also worth knowing</h2>
+						<span>{specialized.length}</span>
+					</div>
+					<p class="min-cat__note">
+						These are real and we would happily point you to them, but they do not publish dates we
+						can carry, so they are not on our calendar yet.
+					</p>
+					<div class="min-grid">
+						{specialized.map((entry) => <MinistryCard entry={entry} />)}
 					</div>
 				</div>
 			)}

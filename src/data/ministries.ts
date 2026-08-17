@@ -170,6 +170,22 @@ export function familyCount(familySlug: string): number {
 	return entriesInFamily(familySlug).length;
 }
 
+/**
+ * An offering is something a person can actually turn up to: ours, or a
+ * ministry whose calendar feed gives us real, current dates. Everything else is
+ * real and worth knowing, but it is a reference list, not an offering.
+ */
+export function isOffering(entry: Entry): boolean {
+	return entry.house === "in" || entry.calendar?.format === "ics";
+}
+
+export function splitOffering(list: Entry[]): { offering: Entry[]; specialized: Entry[] } {
+	return {
+		offering: list.filter(isOffering),
+		specialized: list.filter((e) => !isOffering(e)),
+	};
+}
+
 export function hasLiveCalendar(entry: Entry): boolean {
 	return LIVE_CALENDAR.has(entry.calendar?.sync ?? "");
 }
