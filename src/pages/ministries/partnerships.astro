@@ -1,0 +1,240 @@
+---
+// Curated Partnerships: who these ministries are, and where the relationship
+// with each of them actually stands. This page has two readers. A visitor
+// wanting to know whether we really know these people, and Jon wanting to see
+// who he has not yet spoken to.
+import Interior from "../../layouts/Interior.astro";
+import {
+	entries,
+	isOffering,
+	isListable,
+	familyOf,
+	sortEntries,
+	hasLiveCalendar,
+	type Entry,
+} from "../../data/ministries";
+
+const curated = sortEntries(
+	entries.filter((e) => e.house === "out" && isOffering(e) && isListable(e)),
+);
+
+// One card per church, carrying everything it runs.
+type Venue = {
+	venue: string;
+	website?: string | null;
+	churchMapUrl?: string | null;
+	bio?: string | null;
+	org?: string | null;
+	area?: string | null;
+	city?: string | null;
+	relationship: string;
+	ministries: Entry[];
+	live: number;
+};
+
+const byVenue = new Map<string, Venue>();
+for (const e of curated) {
+	const key = e.venue ?? e.name;
+	if (!byVenue.has(key)) {
+		byVenue.set(key, {
+			venue: key,
+			website: e.venueUrl ?? e.website,
+			churchMapUrl: e.churchMapUrl ?? null,
+			bio: e.venueBio ?? null,
+			org: e.org ?? null,
+			area: e.area,
+			city: e.city,
+			relationship: e.relationship ?? "not-yet-spoken-to",
+			ministries: [],
+			live: 0,
+		});
+	}
+	const v = byVenue.get(key)!;
+	if (!v.churchMapUrl && e.churchMapUrl) v.churchMapUrl = e.churchMapUrl;
+	v.ministries.push(e);
+	if (hasLiveCalendar(e)) v.live += 1;
+	if (!v.bio && e.venueBio) v.bio = e.venueBio;
+}
+
+// The ones carrying the most for us are the ones worth a conversation first.
+const venues = [...byVenue.values()].sort(
+	(a, b) => b.ministries.length - a.ministries.length || a.venue.localeCompare(b.venue),
+);
+
+const RELATIONSHIP_LABEL: Record<string, string> = {
+	"not-yet-spoken-to": "Not yet spoken to",
+	"in-conversation": "In conversation",
+	"ministry-share": "Ministry share",
+	joint: "Led together",
+};
+
+const toDevelop = venues.filter((v) => v.relationship === "not-yet-spoken-to");
+const ministryCount = curated.length;
+
+function areaOf(v: Venue) {
+	const fam = familyOf(v.ministries[0].categories[0]);
+	return fam?.name ?? "";
+}
+---
+
+<Interior
+	title="Curated Partnerships | New Life Grand Rapids"
+	description="The churches and ministries whose work we have chosen and made available, and where each relationship stands."
+	kicker="Ministries"
+	heading="Curated Partnerships"
+	lede="The people behind the ministries we point you to, and how well we actually know them."
+>
+	<!-- What partnership means here -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">What partnership means</p>
+			<h2 class="prose-block__title reveal is-visible">One church leads it. The rest send their people.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Working out what real collaboration between two churches would look like, Jon wrote this
+					down years before this page existed:
+				</p>
+			</div>
+			<blockquote class="min-quote reveal is-visible">
+				<p>
+					A Ministry Share: Church A leads a ministry and opens it up to the other churches. The other
+					churches have no obligation to be involved in leading or administering. They can just send
+					their people. This is a great opportunity for churches to focus on their strengths and not
+					try to do everything.
+				</p>
+				<cite>Jon Hazeltine, Senior Leader</cite>
+			</blockquote>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					That is what most of this page is. Somebody else leads it well and we send our people. A few
+					will grow into something we lead together, and a few into sharing what something costs. None
+					of it requires anybody to give up what makes them themselves.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Where each relationship stands -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Being honest about it</p>
+				<h2>Chosen is not the same as known.</h2>
+			</div>
+			<div class="min-relbar reveal is-visible">
+				<div>
+					<strong>{venues.length}</strong>
+					<span>churches and ministries</span>
+				</div>
+				<div>
+					<strong>{ministryCount}</strong>
+					<span>ministries we carry from them</span>
+				</div>
+				<div class="min-relbar--flag">
+					<strong>{toDevelop.length}</strong>
+					<span>we have not spoken to yet</span>
+				</div>
+			</div>
+			<p class="lead-copy reveal is-visible">
+				We chose every one of these on the evidence: what they run, how well they keep their dates,
+				and whether we would send our own family. That is not the same as a relationship. The list
+				below is in the order worth working, most carried first.
+			</p>
+		</div>
+	</section>
+
+	<!-- The bios -->
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Who they are</p>
+				<h2>The ministries we carry.</h2>
+			</div>
+			<div class="min-bios reveal is-visible">
+				{venues.map((v) => (
+					<article class="min-bio">
+						<div class="min-bio__head">
+							<h3>
+								{v.churchMapUrl ? (
+									<a href={v.churchMapUrl} target="_blank" rel="noopener">{v.venue}</a>
+								) : v.website ? (
+									<a href={v.website} target="_blank" rel="noopener">{v.venue}</a>
+								) : (
+									v.venue
+								)}
+							</h3>
+							<span class={`min-rel min-rel--${v.relationship}`}>
+								{RELATIONSHIP_LABEL[v.relationship] ?? v.relationship}
+							</span>
+						</div>
+
+						<p class="min-bio__where">
+							{[v.org, v.area ?? v.city].filter(Boolean).join(" · ")}
+						</p>
+
+						{v.bio && <p class="min-bio__text">{v.bio}</p>}
+
+						<div class="min-bio__runs">
+							<span class="min-bio__label">What we carry from them</span>
+							<ul>
+								{v.ministries.map((m) => (
+									<li>
+										<a href={`/ministry/${m.slug}`}>{m.name}</a>
+										{m.rhythm && <span>{m.rhythm}</span>}
+									</li>
+								))}
+							</ul>
+						</div>
+
+						<p class="min-bio__links">
+							{v.churchMapUrl && (
+								<a href={v.churchMapUrl} target="_blank" rel="noopener">Their profile on The Church Map</a>
+							)}
+							{v.website && (
+								<a href={v.website} target="_blank" rel="noopener">Their own site</a>
+							)}
+						</p>
+
+						{v.live > 0 && (
+							<p class="min-bio__cal">
+								{v.live === v.ministries.length
+									? "Their dates come to us automatically."
+									: `${v.live} of these come to us automatically.`}
+							</p>
+						)}
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- The development list -->
+	<section class="section prose-block prose-block--tinted">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">Your move</p>
+			<h2 class="prose-block__title reveal is-visible">Who to call first.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					Nobody on this page knows they are on it. In the order that would be worth the call, weighted
+					by how much of our offering each one is already carrying:
+				</p>
+			</div>
+			<ol class="min-devlist reveal is-visible">
+				{toDevelop.slice(0, 12).map((v, i) => (
+					<li>
+						<span class="min-devlist__n">{String(i + 1).padStart(2, "0")}</span>
+						<span class="min-devlist__name">{v.venue}</span>
+						<span class="min-devlist__why">
+							{v.ministries.length} {v.ministries.length === 1 ? "ministry" : "ministries"}
+							{" · "}{areaOf(v)}
+						</span>
+					</li>
+				))}
+			</ol>
+			<div class="min-cta reveal is-visible">
+				<a class="button button--primary" href="/ministries">All ministries</a>
+				<a class="button button--secondary" href="/ministries/specialized">Specialised ministries</a>
+			</div>
+		</div>
+	</section>
+</Interior>

@@ -1,0 +1,21 @@
+{
+	"_comment": "Card art per ministry area. Derived from the site's existing cinematic stills so every card reads as one set; regenerate per-area art later and drop it in under the same filenames.",
+	"images": {
+		"worship-and-prayer": "/art/ministries/worship-and-prayer.jpg",
+		"formation": "/art/ministries/formation.jpg",
+		"kids": "/art/ministries/kids.jpg",
+		"students": "/art/ministries/students.jpg",
+		"marriage-family": "/art/ministries/marriage-family.jpg",
+		"foster-adoption": "/art/ministries/foster-adoption.jpg",
+		"men-women": "/art/ministries/men-women.jpg",
+		"recovery": "/art/ministries/recovery.jpg",
+		"mental-health": "/art/ministries/mental-health.jpg",
+		"practical-care": "/art/ministries/practical-care.jpg",
+		"health": "/art/ministries/health.jpg",
+		"justice": "/art/ministries/justice.jpg",
+		"mission": "/art/ministries/mission.jpg",
+		"church-leaders": "/art/ministries/church-leaders.jpg",
+		"creative": "/art/ministries/creative.jpg",
+		"seniors": "/art/ministries/seniors.jpg"
+	}
+}

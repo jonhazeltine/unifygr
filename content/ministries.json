@@ -1407,7 +1407,8 @@
 				"person": null
 			},
 			"rhythm": null,
-			"venue": "Meets on campus"
+			"venue": "Meets on campus",
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "fca-west-michigan",
@@ -1438,7 +1439,8 @@
 				"person": null
 			},
 			"rhythm": null,
-			"venue": "Meets on campus"
+			"venue": "Meets on campus",
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "cru-gvsu",
@@ -1469,7 +1471,8 @@
 				"person": null
 			},
 			"rhythm": null,
-			"venue": "Meets on campus"
+			"venue": "Meets on campus",
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "camp-roger",
@@ -2123,7 +2126,7 @@
 		{
 			"slug": "bh-student-ministry",
 			"name": "Student Ministry",
-			"org": null,
+			"org": "wesleyan",
 			"venue": "Berkley Hills Church",
 			"venueUrl": "https://www.berkleyhills.org/",
 			"house": "out",
@@ -2154,12 +2157,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9929144,
-			"lng": -85.6291695
+			"lng": -85.6291695,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Berkley is more than a building, program, worship style, or even an organization. We are a living, moving, growing body made up of uncommon people who come together for a common purpose: Knowing Jesus and Being Jesus.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/berkley-hills-church"
 		},
 		{
 			"slug": "bh-mens-group",
 			"name": "Heavenly Peace Men's Group",
-			"org": null,
+			"org": "wesleyan",
 			"venue": "Berkley Hills Church",
 			"venueUrl": "https://www.berkleyhills.org/",
 			"house": "out",
@@ -2189,12 +2195,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9929144,
-			"lng": -85.6291695
+			"lng": -85.6291695,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Berkley is more than a building, program, worship style, or even an organization. We are a living, moving, growing body made up of uncommon people who come together for a common purpose: Knowing Jesus and Being Jesus.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/berkley-hills-church"
 		},
 		{
 			"slug": "bh-young-adults",
 			"name": "Young Adult Ministry",
-			"org": null,
+			"org": "wesleyan",
 			"venue": "Berkley Hills Church",
 			"venueUrl": "https://www.berkleyhills.org/",
 			"house": "out",
@@ -2224,12 +2233,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9929144,
-			"lng": -85.6291695
+			"lng": -85.6291695,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Berkley is more than a building, program, worship style, or even an organization. We are a living, moving, growing body made up of uncommon people who come together for a common purpose: Knowing Jesus and Being Jesus.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/berkley-hills-church"
 		},
 		{
 			"slug": "lc-local-youth",
 			"name": "Local Youth",
-			"org": null,
+			"org": "Wesleyan",
 			"venue": "The Local Church GR",
 			"venueUrl": "https://localchurchgr.org/",
 			"house": "out",
@@ -2260,12 +2272,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9404184,
-			"lng": -85.5824886
+			"lng": -85.5824886,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "We are a multiplying church helping the next generation fall in love with Jesus to create better futures.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/the-local-church-gr"
 		},
 		{
 			"slug": "sn-nazateens",
 			"name": "NazaTeens",
-			"org": null,
+			"org": "Church of the Nazarene",
 			"venue": "Sparta Church of the Nazarene",
 			"venueUrl": "https://www.spartanaz.org/",
 			"house": "out",
@@ -2296,12 +2311,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.1611107,
-			"lng": -85.6868383
+			"lng": -85.6868383,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Welcome to Sparta Naz!Join us on Sunday for worship at 10:30 am!665 13 Mile Rd. NW Sparta, MI 49345",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/sparta/sparta-church-of-the-nazarene"
 		},
 		{
 			"slug": "sn-wednesday-unite",
 			"name": "Wednesday UNITE",
-			"org": null,
+			"org": "Church of the Nazarene",
 			"venue": "Sparta Church of the Nazarene",
 			"venueUrl": "https://www.spartanaz.org/",
 			"house": "out",
@@ -2331,12 +2349,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.1611107,
-			"lng": -85.6868383
+			"lng": -85.6868383,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Welcome to Sparta Naz!Join us on Sunday for worship at 10:30 am!665 13 Mile Rd. NW Sparta, MI 49345",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/sparta/sparta-church-of-the-nazarene"
 		},
 		{
 			"slug": "kcc-prayer-team",
 			"name": "Prayer Team",
-			"org": null,
+			"org": "Wesleyan",
 			"venue": "Kentwood Community Church",
 			"venueUrl": "https://www.kentwoodcommunitychurch.com/",
 			"house": "out",
@@ -2367,7 +2388,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8525964,
-			"lng": -85.6332948
+			"lng": -85.6332948,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/kentwood/kentwood-community-church"
 		},
 		{
 			"slug": "anc-midweek",
@@ -2402,12 +2425,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.92257678,
-			"lng": -85.66375689
+			"lng": -85.66375689,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "We are a group of Sabbath-keeping believers who strive to connect people with Jesus and his family, equip them for spiritual growth and Christ-like living, develop them for their role of service in the church and their mission of sharing Christ in the world, and release them to worship and bring glory to God.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/all-nations-church"
 		},
 		{
 			"slug": "pw-kids",
 			"name": "Kids Ministry",
-			"org": null,
+			"org": "Church of God",
 			"venue": "Pennellwood Church Of God",
 			"venueUrl": "https://pennellwoodchurch.org/",
 			"house": "out",
@@ -2437,12 +2463,14 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9009583,
-			"lng": -85.6675504
+			"lng": -85.6675504,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/pennellwood-church-of-god"
 		},
 		{
 			"slug": "cor-worship-nights",
 			"name": "Nights of Worship",
-			"org": null,
+			"org": "Baptist",
 			"venue": "City Of Refuge Church",
 			"venueUrl": "https://cityofrefugechurchgr.org/",
 			"house": "out",
@@ -2473,7 +2501,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0032764,
-			"lng": -85.6550149
+			"lng": -85.6550149,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/city-of-refuge-church"
 		},
 		{
 			"slug": "yl-forest-hills",
@@ -2509,7 +2539,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "yl-rockford",
@@ -2545,7 +2576,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "yl-kentwood",
@@ -2581,7 +2613,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "yl-gr-city",
@@ -2617,7 +2650,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "yl-gr-southwest",
@@ -2653,7 +2687,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "yl-northwest-gr",
@@ -2689,7 +2724,8 @@
 			"status": "no-details",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "sunshine-youth",
@@ -2725,7 +2761,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.973811,
-			"lng": -85.661778
+			"lng": -85.661778,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
 		},
 		{
 			"slug": "crossroads-outpost",
@@ -2761,7 +2800,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9773282,
-			"lng": -85.6766588
+			"lng": -85.6766588,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
 		},
 		{
 			"slug": "messiah-seasoned-sisters",
@@ -2797,7 +2838,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8819205,
-			"lng": -85.8532563
+			"lng": -85.8532563,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
 		},
 		{
 			"slug": "stones-men-of-valor",
@@ -2832,7 +2875,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8416916,
-			"lng": -85.6287557
+			"lng": -85.6287557,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/stones-church"
 		},
 		{
 			"slug": "crossroads-band-of-brothers",
@@ -2867,7 +2912,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9773282,
-			"lng": -85.6766588
+			"lng": -85.6766588,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
 		},
 		{
 			"slug": "magnify-northview-womens",
@@ -2903,7 +2950,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0389909,
-			"lng": -85.6188172
+			"lng": -85.6188172,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "gr-dream-center",
@@ -2943,7 +2992,8 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8106,
-			"lng": -85.7186
+			"lng": -85.7186,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "serve-gr",
@@ -2979,7 +3029,8 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9634,
-			"lng": -85.6681
+			"lng": -85.6681,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-gather-and-",
@@ -3014,7 +3065,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "cedar-creek-community-church-rooted-women-s-bible-study",
@@ -3050,7 +3103,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/algoma-township/cedar-creek-community-church"
 		},
 		{
 			"slug": "community-christian-church-dude-s-night",
@@ -3085,7 +3140,8 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "faith-community-christian-reformed-church-free-drive-thru-do",
@@ -3120,7 +3176,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8687201,
-			"lng": -85.7224491
+			"lng": -85.7224491,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church"
 		},
 		{
 			"slug": "grace-christian-reformed-church-public-reading-of-scripture",
@@ -3155,7 +3213,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.95285,
-			"lng": -85.665441
+			"lng": -85.665441,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our worship experience at Grace reflects the range of our cultural differences. It is blended and inclusive so that we celebrate together how God by his grace has drawn us together into community.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/grace-christian-reformed-church"
 		},
 		{
 			"slug": "grace-christian-reformed-church-food-pantry",
@@ -3190,12 +3251,15 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.95285,
-			"lng": -85.665441
+			"lng": -85.665441,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our worship experience at Grace reflects the range of our cultural differences. It is blended and inclusive so that we celebrate together how God by his grace has drawn us together into community.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/grace-christian-reformed-church"
 		},
 		{
 			"slug": "mosaic-church-mosaic-young-adults-ages-18-29-bible-study",
 			"name": "Mosaic Young Adults (ages 18-29) Bible Study",
-			"org": null,
+			"org": "evangelical",
 			"venue": "Mosaic Church",
 			"venueUrl": null,
 			"house": "out",
@@ -3225,7 +3289,8 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "set-free-ministries-sf-ministry-center-michigan-warrior-wedn",
@@ -3260,7 +3325,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.88323799,
-			"lng": -85.73288096
+			"lng": -85.73288096,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Warriors Set Free guides military, veterans, and first responders In growing their faith, healing from the past, and winning life’s battles.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/set-free-ministries-sf-ministry-center"
 		},
 		{
 			"slug": "sunshine-community-church-60-up-breakfast-bunch",
@@ -3295,7 +3363,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0229431,
-			"lng": -85.5878996
+			"lng": -85.5878996,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
 		},
 		{
 			"slug": "sunshine-community-church-young-adults-bible-study",
@@ -3330,7 +3401,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0229431,
-			"lng": -85.5878996
+			"lng": -85.5878996,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-financial-p",
@@ -3365,7 +3439,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-summer-jam-",
@@ -3401,7 +3477,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-men-s-fish-",
@@ -3436,7 +3514,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-women-s-sum",
@@ -3472,7 +3552,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
 		},
 		{
 			"slug": "crossroads-bible-church-the-post",
@@ -3507,7 +3589,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9773282,
-			"lng": -85.6766588
+			"lng": -85.6766588,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
 		},
 		{
 			"slug": "crossroads-bible-church-women-s-fall-kickoff",
@@ -3543,7 +3627,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.9773282,
-			"lng": -85.6766588
+			"lng": -85.6766588,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
 		},
 		{
 			"slug": "faith-community-christian-reformed-church-fall-kick-off-comm",
@@ -3578,7 +3664,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 42.8687201,
-			"lng": -85.7224491
+			"lng": -85.7224491,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church"
 		},
 		{
 			"slug": "messiah-christian-reformed-church-i-scream-for-ice-cream",
@@ -3613,7 +3701,9 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
 		},
 		{
 			"slug": "messiah-christian-reformed-church-m-i-s-t-seniors-group-mont",
@@ -3648,12 +3738,14 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
 		},
 		{
 			"slug": "mosaic-church-seidman-bgc-back-to-school-bash",
 			"name": "Seidman BGC - Back to School Bash",
-			"org": null,
+			"org": "evangelical",
 			"venue": "Mosaic Church",
 			"venueUrl": null,
 			"house": "out",
@@ -3683,7 +3775,8 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": null,
-			"lng": null
+			"lng": null,
+			"relationship": "not-yet-spoken-to"
 		},
 		{
 			"slug": "sunshine-community-church-sunshine-sewing-group-stitches-of-",
@@ -3718,7 +3811,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0229431,
-			"lng": -85.5878996
+			"lng": -85.5878996,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
 		},
 		{
 			"slug": "sunshine-community-church-kids-courtyard-grand-opening",
@@ -3754,7 +3850,10 @@
 			"status": "proposed",
 			"verified": null,
 			"lat": 43.0229431,
-			"lng": -85.5878996
+			"lng": -85.5878996,
+			"relationship": "not-yet-spoken-to",
+			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
 		}
 	]
 }
