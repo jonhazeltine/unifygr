@@ -2470,6 +2470,11 @@ strong {
 .min-calrow__go { color: var(--gold); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; }
 
 .min-cat__note { color: var(--muted); font-size: 0.9rem; max-width: 62ch; margin: 0.9rem 0 0; }
+.min-subhead {
+	margin: 1.4rem 0 0; font-size: 0.72rem; letter-spacing: 0.16em;
+	text-transform: uppercase; color: var(--gold);
+}
+.min-detail__lead { color: var(--muted); font-size: 0.95rem; margin: 0 0 1.4rem; max-width: 60ch; }
 
 .min-shelf {
 	margin: 0 0 2.4rem; padding: 1.1rem 1.3rem;

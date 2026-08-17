@@ -29,6 +29,10 @@ const { family, category } = Astro.props as { family: Family; category: Category
 
 const list = sortEntries(entriesInCategory(category.slug));
 const { offering, specialized } = splitOffering(list);
+// Signature: ours. We lead them and our volunteers run them.
+// Curated: led by other ministries. We selected them and made them available.
+const signature = offering.filter((e) => e.house === "in");
+const curated = offering.filter((e) => e.house === "out");
 
 type Ev = {
 	title: string; date: string; time: string | null;
@@ -126,14 +130,34 @@ function dayLabel(iso: string) {
 				</div>
 			)}
 
-			{offering.length > 0 && (
+			{signature.length > 0 && (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
-						<h2>You can turn up to these</h2>
-						<span>{offering.length}</span>
+						<h2>Signature Ministries</h2>
+						<span>{signature.length}</span>
 					</div>
+					<p class="min-cat__note">
+						Ours. We lead these and our volunteers run them, offered to our own people and to any
+						part of the Body.
+					</p>
 					<div class="min-grid">
-						{offering.map((entry) => <MinistryCard entry={entry} full={true} />)}
+						{signature.map((entry) => <MinistryCard entry={entry} full={true} />)}
+					</div>
+				</div>
+			)}
+
+			{curated.length > 0 && (
+				<div class="min-cat reveal is-visible">
+					<div class="min-cat__head">
+						<h2>Curated Ministries</h2>
+						<span>{curated.length}</span>
+					</div>
+					<p class="min-cat__note">
+						Led and run by other ministries. We have chosen them and made them available to you. We
+						do not lead them and we do not run them.
+					</p>
+					<div class="min-grid">
+						{curated.map((entry) => <MinistryCard entry={entry} full={true} />)}
 					</div>
 				</div>
 			)}

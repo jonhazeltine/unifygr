@@ -26,10 +26,15 @@ const { family } = Astro.props as { family: Family };
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 
 const groups = family.categories
-	.map((category) => ({
-		category,
-		entries: splitOffering(sortEntries(entriesInCategory(category.slug))).offering,
-	}))
+	.map((category) => {
+		const open = splitOffering(sortEntries(entriesInCategory(category.slug))).offering;
+		return {
+			category,
+			signature: open.filter((e) => e.house === "in"),
+			curated: open.filter((e) => e.house === "out"),
+			entries: open,
+		};
+	})
 	.filter((g) => g.entries.length > 0);
 
 const openCategories = family.categories.filter(
@@ -58,20 +63,33 @@ const openCategories = family.categories.filter(
 				</div>
 			)}
 
-			{groups.map(({ category, entries }) => (
+			{groups.map(({ category, signature, curated }) => (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
 						<h2 id={category.slug}>
 							<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
 						</h2>
-						<span>{entries.length}</span>
+						<span>{signature.length + curated.length}</span>
 						<a class="min-cat__more" href={`/ministries/${family.slug}/${category.slug}`}>
 							Map &amp; calendar →
 						</a>
 					</div>
-					<div class="min-grid">
-						{entries.map((entry) => <MinistryCard entry={entry} full={true} />)}
-					</div>
+					{signature.length > 0 && (
+						<>
+							<p class="min-subhead">Signature — we lead it, our volunteers run it</p>
+							<div class="min-grid">
+								{signature.map((entry) => <MinistryCard entry={entry} full={true} />)}
+							</div>
+						</>
+					)}
+					{curated.length > 0 && (
+						<>
+							<p class="min-subhead">Curated — led by another ministry, chosen by us</p>
+							<div class="min-grid">
+								{curated.map((entry) => <MinistryCard entry={entry} full={true} />)}
+							</div>
+						</>
+					)}
 				</div>
 			))}
 

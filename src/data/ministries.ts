@@ -259,14 +259,14 @@ export function byArea(): AreaGroup[] {
 // One church meeting in many places, so these read as location and family
 // rather than as distance.
 export const TIER_LABEL: Record<string, string> = {
-	signature: "Signature",
-	core: "Ours",
-	partner: "Partner",
-	"partner-church": "Family",
+	signature: "Signature Ministry",
+	core: "Signature Ministry",
+	partner: "Curated Ministry",
+	"partner-church": "Curated Ministry",
 	"ministry-share": "Ministry share",
 	joint: "Led together",
-	recommended: "Family",
-	listed: "Family",
+	recommended: "Curated Ministry",
+	listed: "Curated Ministry",
 };
 
 export const STATUS_LABEL: Record<string, string> = {
