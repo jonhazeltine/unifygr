@@ -13,6 +13,17 @@ import {
 	hasLiveCalendar,
 	type Entry,
 } from "../../data/ministries";
+import partnershipAsks from "../../../content/partnership-asks.json";
+
+// Some churches run their whole life through Planning Center, which nobody may
+// read without their permission. That permission is one click and it is theirs
+// to give, so these are not a technical problem. They are a phone call.
+const asks = partnershipAsks.churches as {
+	church: string;
+	alreadyCurated: boolean;
+	note: string | null;
+}[];
+const askable = new Set(asks.map((a) => a.church));
 
 const curated = sortEntries(
 	entries.filter((e) => e.house === "out" && isOffering(e) && isListable(e)),
@@ -212,6 +223,40 @@ function areaOf(v: Venue) {
 					</article>
 				))}
 			</div>
+		</div>
+	</section>
+
+	<!-- One click we need from eight churches -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">A small ask, eight times</p>
+			<h2 class="prose-block__title reveal is-visible">Eight churches can turn their ministries on for the whole city.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					These eight run their life through Planning Center. Their groups and gatherings are real and
+					current, and nobody outside their congregation can see any of it, because Planning Center
+					only opens up when the church says so.
+				</p>
+				<p class="reveal is-visible">
+					That is the whole obstacle. Not technology, and not willingness. One click that only they
+					can make, on an account only they can reach.
+				</p>
+			</div>
+			<blockquote class="min-quote reveal is-visible">
+				<p>{partnershipAsks.theAsk}</p>
+				<cite>What we are asking for, word for word</cite>
+			</blockquote>
+			<ul class="min-asklist reveal is-visible">
+				{asks.map((a) => (
+					<li>
+						<span class="min-asklist__name">{a.church}</span>
+						<span class={`min-asklist__tag min-asklist__tag--${a.alreadyCurated ? "in" : "not"}`}>
+							{a.alreadyCurated ? "Already carried here" : "Not carried yet"}
+						</span>
+						{a.note && <span class="min-asklist__note">{a.note}</span>}
+					</li>
+				))}
+			</ul>
 		</div>
 	</section>
 

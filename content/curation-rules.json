@@ -169,5 +169,28 @@
 			"decidedOn": "2026-07-26",
 			"note": "Planning Center Church Center is readable but their Terms of Service forbid it, and their robots.txt disallows Anthropic agents by name. Closed by The Church Map in docs/plans/church-center-calendar-findings.md. The legitimate route is a registered OAuth app the church authorises. Do not re-derive the token handshake."
 		}
+	},
+	"websitesTheMapIsMissing": {
+		"note": "Three prayed-for churches had no website on their Church Map record, and none of them could be found by guessing a domain from the name. Every one uses a domain that does not match what it calls itself — which is why an automated crawl misses them and a person finds them in seconds.",
+		"found": [
+			{
+				"church": "Mosaic Life Church",
+				"website": "https://www.lifecenterchurchgr.org",
+				"why": "They were Life Center Church and kept the old domain after the rebrand.",
+				"extra": "Meets at 2777 Knapp St NE — our own building — Sundays at 3:30pm."
+			},
+			{
+				"church": "Crosswinds Community Church",
+				"website": "http://www.windschurch.net",
+				"why": "Their domain drops the 'cross' entirely.",
+				"extra": "Kids Club Sunday 6pm for grades 1-5, youth group Monday 7:30pm for grades 6-12."
+			},
+			{
+				"church": "Monroe Community Church",
+				"website": "https://www.mccgr.org",
+				"why": "Their domain is an initialism, mccgr.",
+				"extra": "Also runs Planning Center."
+			}
+		]
 	}
 }

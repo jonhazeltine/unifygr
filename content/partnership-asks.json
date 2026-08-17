@@ -1,0 +1,46 @@
+{
+	"_comment": "Churches we would like something specific from, and the exact thing to ask for. These all run Planning Center. Their ministries are real and current and we cannot see them, because Planning Center's terms do not let anyone read them without the church's permission. The permission takes one click from them and it goes to The Church Map, which is where our calendar already comes from. So the ask is small, it is theirs to give, and it is the same ask every time.",
+	"theAsk": "Authorise The Church Map inside your Planning Center account. It takes one click, it only shares your public calendar, and it means your ministries show up for anyone in the city looking for them — on our site and everywhere else the map reaches.",
+	"churches": [
+		{
+			"church": "Berkley Hills Church",
+			"alreadyCurated": true,
+			"note": "Their account also runs Frost Creek and Knapp Valley, so one yes here covers three churches."
+		},
+		{
+			"church": "Buck Creek Community Church",
+			"alreadyCurated": false,
+			"note": null
+		},
+		{
+			"church": "Cedar Creek Community Church",
+			"alreadyCurated": true,
+			"note": null
+		},
+		{
+			"church": "Indwelling Community Church",
+			"alreadyCurated": false,
+			"note": null
+		},
+		{
+			"church": "Monroe Community Church",
+			"alreadyCurated": false,
+			"note": "Not on the map with a website yet — their site is mccgr.org."
+		},
+		{
+			"church": "North Park Baptist Church",
+			"alreadyCurated": false,
+			"note": null
+		},
+		{
+			"church": "Sunshine Community Church",
+			"alreadyCurated": true,
+			"note": null
+		},
+		{
+			"church": "Tabernacle Community Church",
+			"alreadyCurated": false,
+			"note": null
+		}
+	]
+}
