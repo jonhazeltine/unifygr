@@ -1,12 +1,15 @@
 ---
+// A family page is the way into its categories. Like the category pages, it
+// shows only what someone can turn up to; everything else sits on the
+// specialised list.
 import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
 import MinistryMap from "../../components/MinistryMap.astro";
 import {
-	families,
+	allFamiliesIncludingSpecialised as families,
 	entriesInCategory,
 	entriesInFamily,
-	familyCalendarCount,
+	splitOffering,
 	sortEntries,
 	type Family,
 } from "../../data/ministries";
@@ -20,16 +23,18 @@ export function getStaticPaths() {
 
 const { family } = Astro.props as { family: Family };
 
-const groups = family.categories.map((category) => ({
-	category,
-	entries: sortEntries(entriesInCategory(category.slug)),
-}));
+const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 
-const inFamily = entriesInFamily(family.slug);
-const total = inFamily.length;
-const cal = familyCalendarCount(family.slug);
-const empty = groups.filter((g) => g.entries.length === 0);
-const filled = groups.filter((g) => g.entries.length > 0);
+const groups = family.categories
+	.map((category) => ({
+		category,
+		entries: splitOffering(sortEntries(entriesInCategory(category.slug))).offering,
+	}))
+	.filter((g) => g.entries.length > 0);
+
+const openCategories = family.categories.filter(
+	(c) => splitOffering(entriesInCategory(c.slug)).offering.length === 0,
+);
 ---
 
 <Interior
@@ -42,17 +47,18 @@ const filled = groups.filter((g) => g.entries.length > 0);
 	<section class="section">
 		<div class="container">
 			<p class="min-breadcrumb reveal is-visible">
-				<a href="/ministries">All ministries</a> · {total} listed across {family.categories.length} categories
-				{cal > 0 && <> · <a href="/ministries/calendar">{cal} keep a live calendar</a></>}
+				<a href="/ministries">All ministries</a> · {offering.length}
+				{offering.length === 1 ? " offering" : " offerings"} across {family.categories.length} categories
+				{offering.length > 0 && <> · <a href="/ministries/calendar">on our calendar</a></>}
 			</p>
 
-			{total > 0 && (
+			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">
-					<MinistryMap entries={inFamily} map={family.slug} label={family.name} />
+					<MinistryMap entries={offering} label={family.name} />
 				</div>
 			)}
 
-			{filled.map(({ category, entries }) => (
+			{groups.map(({ category, entries }) => (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
 						<h2 id={category.slug}>
@@ -69,16 +75,26 @@ const filled = groups.filter((g) => g.entries.length > 0);
 				</div>
 			))}
 
-			{empty.length > 0 && (
+			{specialized.length > 0 && (
+				<p class="min-shelf reveal is-visible">
+					{specialized.length} specialised {specialized.length === 1 ? "ministry works" : "ministries work"}
+					{" "}in this area too. They do not publish dates we can carry, so they sit on the
+					{" "}<a href="/ministries/specialized">specialised list</a>.
+				</p>
+			)}
+
+			{openCategories.length > 0 && (
 				<div class="min-gaps reveal is-visible">
 					<h2>Still open</h2>
 					<p>
-						Nobody is on our list for these yet. If you know a ministry in Grand Rapids that does
-						one of them well, that is exactly what we are looking for.
+						Nothing with dates we can carry in these yet. If you know a ministry that does one of
+						them well, that is exactly what we are looking for.
 					</p>
 					<ul>
-						{empty.map(({ category }) => (
-							<li><a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a></li>
+						{openCategories.map((category) => (
+							<li>
+								<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
+							</li>
 						))}
 					</ul>
 					<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">

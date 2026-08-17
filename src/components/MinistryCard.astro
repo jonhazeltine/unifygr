@@ -16,7 +16,7 @@ const venue = entry.venue ?? (inHouse ? "New Life, Knapp's Corner" : entry.org);
 
 <article class={`min-card ${inHouse ? "min-card--in" : "min-card--out"}`}>
 	<div class="min-card__top">
-		{entry.area && <span class="min-card__area">{entry.area}</span>}
+		{(entry.city ?? entry.area) && <span class="min-card__area">{entry.city ?? entry.area}</span>}
 		{isOffering(entry) && entry.house === "out" && <span class="min-card__live">On our calendar</span>}
 	</div>
 

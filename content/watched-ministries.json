@@ -9,7 +9,13 @@
 				"https://my.localchurchgr.org/events",
 				"https://localchurchgr.org/"
 			],
-			"look_for": ["youth", "student", "local youth", "middle school", "high school"],
+			"look_for": [
+				"youth",
+				"student",
+				"local youth",
+				"middle school",
+				"high school"
+			],
 			"note": "Their events page carries real upcoming dates. Sunday nights during the school year."
 		},
 		{
@@ -20,8 +26,47 @@
 				"https://www.berkleyhills.org/student-ministry",
 				"https://www.berkleyhills.org/"
 			],
-			"look_for": ["student", "youth", "wednesday", "middle school", "high school"],
+			"look_for": [
+				"student",
+				"youth",
+				"wednesday",
+				"middle school",
+				"high school"
+			],
 			"note": "Standing midweek rhythm rather than dated events. Watch for one-off announcements."
+		},
+		{
+			"slug": "gr-dream-center",
+			"name": "Grand Rapids Dream Center",
+			"venue": "Grand Rapids Dream Center",
+			"pages": [
+				"https://grandrapidsdreamcenter.org/outreach/",
+				"https://grandrapidsdreamcenter.org/"
+			],
+			"look_for": [
+				"outreach",
+				"kids",
+				"sports",
+				"gym",
+				"bootcamp",
+				"food"
+			],
+			"note": "Weekly neighbourhood outreaches. Their site blocks automated readers, so this may need a person."
+		},
+		{
+			"slug": "serve-gr",
+			"name": "SERVE GR",
+			"venue": "SERVE GR",
+			"pages": [
+				"https://servegr.org/"
+			],
+			"look_for": [
+				"serve",
+				"project",
+				"volunteer",
+				"day"
+			],
+			"note": "Project days through the year."
 		}
 	]
 }

@@ -1,0 +1,94 @@
+---
+// Everything that is real and worth knowing but is not an offering: no dates we
+// can carry, or not the kind of thing a person turns up to on a Tuesday. The
+// category pages stay clean for what someone can actually attend; this is the
+// reference shelf behind them.
+import Interior from "../../layouts/Interior.astro";
+import { allFamiliesIncludingSpecialised as families, entries, isOffering, isListable, specialisedFamilies, type Entry } from "../../data/ministries";
+
+const shelf = entries.filter((e) => !isOffering(e) && isListable(e));
+
+const grouped = families
+	.map((family) => {
+		const slugs = new Set(family.categories.map((c) => c.slug));
+		const list = entries
+			.filter((e) => isListable(e) && e.categories.some((c) => slugs.has(c)))
+			// A collapsed family belongs here whole, offerings and all.
+			.filter((e) => specialisedFamilies.has(family.slug) || !isOffering(e))
+			.sort((a, b) => a.name.localeCompare(b.name));
+		return { family, list };
+	})
+	.filter((g) => g.list.length > 0);
+
+const placed = new Set(grouped.flatMap((g) => g.list.map((e) => e.slug)));
+const rest = shelf.filter((e) => !placed.has(e.slug));
+const total = shelf.length;
+---
+
+<Interior
+	title="Specialised Ministries | New Life Grand Rapids"
+	description="Organisations across West Michigan we would send our own family to, listed by what they do."
+	kicker="Ministries"
+	heading="Specialised Ministries"
+	lede="Organisations we would send our own family to. They do not publish dates we can carry, so they sit here rather than on the calendar."
+>
+	<section class="section">
+		<div class="container">
+			<p class="lead-copy reveal is-visible">
+				{total} of them, doing one thing each and doing it for years. When somebody needs the thing
+				they do, they are the answer, and no weekly calendar would change that. Ask us and we will
+				make the introduction.
+			</p>
+			<div class="min-cta reveal is-visible">
+				<a class="button button--primary" href="/ministries">What's on this week</a>
+				<a class="button button--secondary" href="https://newlife.ccbchurch.com/goto/forms/156/responses/new">
+					Tell us about one
+				</a>
+			</div>
+		</div>
+	</section>
+
+	{grouped.map(({ family, list }) => (
+		<section class="section spec-block">
+			<div class="container">
+				<div class="min-cat__head reveal is-visible">
+					<h2>{family.name}</h2>
+					<span>{list.length}</span>
+				</div>
+				<ul class="spec-list reveal is-visible">
+					{list.map((entry: Entry) => (
+						<li>
+							<a class="spec-row" href={`/ministry/${entry.slug}`}>
+								<span class="spec-row__name">{entry.name}</span>
+								<span class="spec-row__what">{entry.summary}</span>
+								<span class="spec-row__where">{entry.area ?? entry.city}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	))}
+
+	{rest.length > 0 && (
+		<section class="section spec-block">
+			<div class="container">
+				<div class="min-cat__head reveal is-visible">
+					<h2>Everything else</h2>
+					<span>{rest.length}</span>
+				</div>
+				<ul class="spec-list reveal is-visible">
+					{rest.map((entry: Entry) => (
+						<li>
+							<a class="spec-row" href={`/ministry/${entry.slug}`}>
+								<span class="spec-row__name">{entry.name}</span>
+								<span class="spec-row__what">{entry.summary}</span>
+								<span class="spec-row__where">{entry.area ?? entry.city}</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			</div>
+		</section>
+	)}
+</Interior>
