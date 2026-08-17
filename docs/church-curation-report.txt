@@ -1,0 +1,119 @@
+TOTAL churches: 1272
+Publish a current calendar: 207   (of which real ICS feeds: 57)
+Placed in a high-school district: 980
+
+================ TOP 30 CURATION CANDIDATES ================
+score cal           ch    mi  name                                   district
+   21 ics-feed       1   2.6  Calvary Chapel East Grand Rapids       Grand Rapids Public Schools
+   20 current        5   1.5  Berkley Hills Church                   Grand Rapids Public Schools
+   20 ics-feed       1   1.7  Calvary Church                         Grand Rapids Public Schools
+   19 ics-feed       3   4.2  The Local Church GR                    Grand Rapids Public Schools
+   18 ics-feed       0  11.0  Stones Church                          -
+   18 weekly-detail  1   6.0  Seymour Christian Reformed Church      Grand Rapids Public Schools
+   18 ics-feed       1   9.1  Remembrance Church                     -
+   18 ics-feed       1   8.0  Remembrance Reformed Church            -
+   18 ics-feed       3  11.9  Sparta Church of the Nazarene          Sparta Area Schools
+   17 ics-feed       2   2.8  St. Isidore Catholic Church            Grand Rapids Public Schools
+   17 weekly-detail  0   6.0  First Evangelical Covenant Church      Grand Rapids Public Schools
+   17 weekly-detail  1   6.7  Grand Rapids Maranatha Bible           Godfrey-Lee Public Schools
+   17 ics-feed       0   8.9  New Life Baptist Church                -
+   17 weekly-detail  1   9.2  Rockford Reformed Church               Rockford Public Schools
+   17 weekly-detail  0  14.5  Rosewood Church                        Hudsonville Public School Dist
+   17 ics-feed       0  16.3  Bauer Christian Reformed Church        Hudsonville Public School Dist
+   17 standing       1   5.5  Redeemer Presbyterian Church           Forest Hills Public Schools
+   17 standing       1   8.3  Redeemer Orthodox Presbyterian Church  Forest Hills Public Schools
+   16 weekly-detail  0   1.9  Free Reformed Church                   Grand Rapids Public Schools
+   16 weekly-detail  2   6.2  Christian Reformed Church in N. Americ Grand Rapids Public Schools
+   16 weekly-detail  1   4.6  Redemption City Church                 Grand Rapids Public Schools
+   16 weekly-detail  0   5.1  Church of the Servant Christian Reform Forest Hills Public Schools
+   16 weekly-detail  0   3.2  All American City's First Baptist Chur Grand Rapids Public Schools
+   16 weekly-detail  0   4.0  Cornerstone Church - Heritage Hill Cam Grand Rapids Public Schools
+   16 ics-feed       0   5.9  Community Christian Church             Grand Rapids Public Schools
+   16 ics-feed       0   5.4  Family of Christ Church                Grand Rapids Public Schools
+   16 current        1   6.3  Highland Hills Baptist Church          Grand Rapids Public Schools
+   16 ics-feed       1   4.8  Grand Rapids Bethel Seventh-day Advent Grand Rapids Public Schools
+   16 weekly-detail  2   9.0  Immanuel Christian Reformed            Kelloggsville Public Schools
+   16 current        1   7.7  Faith Reformed Church                  Godwin Heights Public Schools
+
+================ YOUTH COVERAGE BY SCHOOL DISTRICT ================
+GAP Allendale Public Schools               youth:  4  with-live-calendar: 0   best: Allendale Bapstist Church
+GAP Belding Area School District           youth:  0  with-live-calendar: 0   best: -
+    Byron Center Public Schools            youth: 12  with-live-calendar: 1   best: High Pointe Community Church
+    Cedar Springs Public Schools           youth:  6  with-live-calendar: 2   best: Rockford Springs Community Church
+GAP Central Montcalm Public Schools        youth:  0  with-live-calendar: 0   best: -
+GAP Comstock Park Public Schools           youth:  1  with-live-calendar: 0   best: The Story Church
+    Coopersville Area Public School Distri youth:  5  with-live-calendar: 1   best: Faith Community Church of Coopersv
+GAP East Grand Rapids Public Schools       youth:  0  with-live-calendar: 0   best: -
+    Forest Hills Public Schools            youth: 17  with-live-calendar: 5   best: Redeemer Presbyterian Church
+GAP Fruitport Community Schools            youth:  0  with-live-calendar: 0   best: -
+    Godfrey-Lee Public Schools             youth:  2  with-live-calendar: 1   best: Grand Rapids Maranatha Bible
+    Godwin Heights Public Schools          youth:  1  with-live-calendar: 1   best: Faith Reformed Church
+GAP Grand Haven Area Public Schools        youth:  0  with-live-calendar: 0   best: -
+    Grand Rapids Public Schools            youth: 71  with-live-calendar:37   best: Calvary Chapel East Grand Rapids
+    Greenville Public Schools              youth:  1  with-live-calendar: 1   best: Oakfield Baptist Church
+GAP Holland City School District           youth:  0  with-live-calendar: 0   best: -
+    Hudsonville Public School District     youth: 13  with-live-calendar: 5   best: Rosewood Church
+    Jenison Public Schools                 youth:  9  with-live-calendar: 7   best: CrossPoint Baptist Church
+    Kelloggsville Public Schools           youth:  2  with-live-calendar: 1   best: Immanuel Christian Reformed
+GAP Kent City Community Schools            youth:  0  with-live-calendar: 0   best: -
+GAP Lakewood Public Schools                youth:  0  with-live-calendar: 0   best: -
+    Lowell Area Schools                    youth:  4  with-live-calendar: 1   best: Saint Mary’s Catholic Church – Low
+GAP Muskegon Public Schools of the City of youth:  0  with-live-calendar: 0   best: -
+GAP Northview Public Schools               youth:  1  with-live-calendar: 0   best: Plainfield Baptist Church
+GAP Oakridge Public Schools                youth:  0  with-live-calendar: 0   best: -
+GAP Ravenna Public Schools                 youth:  0  with-live-calendar: 0   best: -
+    Rockford Public Schools                youth: 14  with-live-calendar: 7   best: Rockford Reformed Church
+    Sparta Area Schools                    youth:  5  with-live-calendar: 3   best: Sparta Church of the Nazarene
+GAP Wayland Union Schools                  youth:  4  with-live-calendar: 0   best: Gun Lake Community Church
+GAP West Ottawa Public School District     youth:  0  with-live-calendar: 0   best: -
+    Wyoming Public Schools                 youth:  7  with-live-calendar: 2   best: Wyoming Park Bible Fellowship
+    Zeeland Public Schools                 youth:  1  with-live-calendar: 1   best: North Blendon Reformed Church
+
+================ MIDWEEK COVERAGE BY DISTRICT ================
+GAP Allendale Public Schools               midweek:  3  with-live-calendar: 0
+GAP Belding Area School District           midweek:  0  with-live-calendar: 0
+    Byron Center Public Schools            midweek:  7  with-live-calendar: 1
+GAP Cedar Springs Public Schools           midweek:  1  with-live-calendar: 0
+GAP Central Montcalm Public Schools        midweek:  0  with-live-calendar: 0
+GAP Comstock Park Public Schools           midweek:  0  with-live-calendar: 0
+    Coopersville Area Public School Distri midweek:  4  with-live-calendar: 3
+GAP East Grand Rapids Public Schools       midweek:  0  with-live-calendar: 0
+    Forest Hills Public Schools            midweek: 11  with-live-calendar: 2
+GAP Fruitport Community Schools            midweek:  0  with-live-calendar: 0
+    Godfrey-Lee Public Schools             midweek:  1  with-live-calendar: 1
+    Godwin Heights Public Schools          midweek:  1  with-live-calendar: 1
+GAP Grand Haven Area Public Schools        midweek:  0  with-live-calendar: 0
+    Grand Rapids Public Schools            midweek: 28  with-live-calendar:18
+GAP Greenville Public Schools              midweek:  0  with-live-calendar: 0
+GAP Holland City School District           midweek:  0  with-live-calendar: 0
+    Hudsonville Public School District     midweek:  4  with-live-calendar: 4
+    Jenison Public Schools                 midweek:  7  with-live-calendar: 6
+GAP Kelloggsville Public Schools           midweek:  1  with-live-calendar: 0
+GAP Kent City Community Schools            midweek:  0  with-live-calendar: 0
+GAP Lakewood Public Schools                midweek:  0  with-live-calendar: 0
+GAP Lowell Area Schools                    midweek:  1  with-live-calendar: 0
+GAP Muskegon Public Schools of the City of midweek:  0  with-live-calendar: 0
+    Northview Public Schools               midweek:  3  with-live-calendar: 2
+GAP Oakridge Public Schools                midweek:  0  with-live-calendar: 0
+GAP Ravenna Public Schools                 midweek:  0  with-live-calendar: 0
+    Rockford Public Schools                midweek:  3  with-live-calendar: 1
+GAP Sparta Area Schools                    midweek:  1  with-live-calendar: 0
+    Wayland Union Schools                  midweek:  5  with-live-calendar: 2
+GAP West Ottawa Public School District     midweek:  0  with-live-calendar: 0
+    Wyoming Public Schools                 midweek:  4  with-live-calendar: 1
+GAP Zeeland Public Schools                 midweek:  0  with-live-calendar: 0
+
+================ CHARISMATIC + LIVE CALENDAR ================
+12 churches
+   20 current       Berkley Hills Church                 Grand Rapids   holiness,language            kids,mens,midweek,small_groups,young_adu
+   19 ics-feed      The Local Church GR                  Grand Rapids   holiness                     kids,small_groups,young_adults,youth
+   18 ics-feed      Sparta Church of the Nazarene        Sparta         holiness                     kids,small_groups,youth
+   15 ics-feed      All Nations Church                   Grand Rapids   pentecostal                  midweek
+   15 ics-feed      Wyoming Church of God                Wyoming        pentecostal                  kids
+   15 ics-feed      Pennellwood Church Of God            Wyoming        pentecostal                  kids
+   14 weekly-detail City Of Refuge Church                Grand Rapids   pentecostal,language         worship_night
+   14 weekly-detail City Life Church-A Wesleyan Communit Grand Rapids   holiness                     young_adults,youth
+   14 current       Bethel Pentecostal Church            Grand Rapids   pentecostal,language         kids,prayer
+   13 weekly-detail Calvary Assembly of God              Cedar Springs  pentecostal,language         
+   13 weekly-detail Calvary Assembly Of God              Cedar Springs  pentecostal,language         
+   11 weekly-detail Kentwood Community Church            Kentwood       holiness                     
