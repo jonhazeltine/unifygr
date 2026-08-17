@@ -162,5 +162,12 @@
 			"Buck Creek Community Church",
 			"Mosaic Life Church"
 		]
+	},
+	"closedRoutes": {
+		"churchCenter": {
+			"status": "closed-on-licence",
+			"decidedOn": "2026-07-26",
+			"note": "Planning Center Church Center is readable but their Terms of Service forbid it, and their robots.txt disallows Anthropic agents by name. Closed by The Church Map in docs/plans/church-center-calendar-findings.md. The legitimate route is a registered OAuth app the church authorises. Do not re-derive the token handshake."
+		}
 	}
 }
