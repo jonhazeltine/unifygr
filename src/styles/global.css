@@ -2107,6 +2107,7 @@ strong {
 	opacity: 0.55;
 }
 .min-half p { color: var(--muted); max-width: 46ch; }
+.min-half__extra { font-size: 0.78rem; color: rgba(246, 240, 231, 0.42); }
 .min-half__go {
 	margin-top: auto;
 	padding-top: 0.6rem;
@@ -2483,6 +2484,14 @@ strong {
 }
 .min-shelf a { color: var(--gold); }
 
+.min-curgroup { margin-top: 2rem; }
+.min-curgroup h3 {
+	display: flex; align-items: baseline; gap: 0.7rem;
+	font-family: "Iowan Old Style", Georgia, serif; font-size: 1.2rem; letter-spacing: -0.03em;
+	margin: 0 0 0.9rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--line); max-width: none;
+}
+.min-curgroup h3 span { color: var(--gold); font-size: 0.85rem; }
+
 /* ---- Specialised ministries shelf ---- */
 .spec-block { padding-top: 0; }
 .spec-list { list-style: none; padding: 0; margin: 1.2rem 0 0; display: grid; gap: 0.5rem; }
@@ -2517,6 +2526,31 @@ strong {
 .min-districts strong { color: var(--gold); font-weight: 400; }
 .min-districts span { color: var(--muted); }
 @media (max-width: 620px) { .min-districts li { grid-template-columns: 1fr; gap: 0.15rem; } }
+
+/* Where New Life itself stands in an area */
+.min-usnote {
+	margin: 0 0 2.2rem; padding: 1.3rem 1.5rem;
+	border-left: 3px solid var(--gold); border-radius: 0 16px 16px 0;
+	background: rgba(242, 210, 162, 0.055);
+}
+.min-usnote .eyebrow { margin: 0 0 0.4rem; }
+.min-usnote p:last-child { margin: 0; color: var(--text); font-size: 1rem; line-height: 1.65; max-width: 62ch; }
+
+/* Card art — one filter across the set so they read as one family */
+.min-family { position: relative; overflow: hidden; padding-top: 0; }
+.min-family__art { display: block; margin: -1.5rem -1.5rem 1rem; height: 132px; overflow: hidden; position: relative; }
+.min-family__art img {
+	width: 100%; height: 100%; object-fit: cover; display: block;
+	filter: saturate(0.5) contrast(1.05) brightness(0.72);
+	transition: transform 500ms ease, filter 500ms ease;
+}
+.min-family:hover .min-family__art img { transform: scale(1.04); filter: saturate(0.62) contrast(1.05) brightness(0.82); }
+.min-family__art::after {
+	content: ""; position: absolute; inset: 0;
+	background: linear-gradient(180deg, rgba(5,6,8,0.15), rgba(5,6,8,0.92));
+}
+.min-family__mix { margin-top: 0.4rem; font-size: 0.74rem; letter-spacing: 0.08em; color: rgba(246,240,231,0.5); }
+.min-family__mix em { font-style: normal; color: var(--gold); }
 
 /* ---- Category page: its own calendar ---- */
 .min-catcal {
@@ -2599,3 +2633,42 @@ strong {
 	.min-mapblock { padding: 1.1rem; }
 	.min-calrow { grid-template-columns: 1fr; gap: 0.3rem; }
 }
+
+/* ---- Curated Partnerships ---- */
+.min-relbar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1rem; margin: 0 0 1.8rem; }
+.min-relbar > div { padding: 1.3rem 1.4rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+.min-relbar strong { display: block; font-family: "Iowan Old Style", Georgia, serif; font-size: 2.2rem; line-height: 1; color: var(--gold); }
+.min-relbar span { display: block; margin-top: 0.4rem; color: var(--muted); font-size: 0.88rem; }
+.min-relbar--flag { border-color: rgba(211, 133, 102, 0.4); }
+.min-relbar--flag strong { color: var(--rose); }
+
+.min-bios { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); margin-top: 1.6rem; }
+.min-bio { display: flex; flex-direction: column; gap: 0.6rem; padding: 1.5rem 1.6rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+.min-bio__head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.8rem; }
+.min-bio h3 { font-family: "Iowan Old Style", Georgia, serif; font-size: 1.2rem; letter-spacing: -0.03em; margin: 0; max-width: none; }
+.min-bio h3 a { color: var(--text); }
+.min-bio h3 a:hover { color: var(--gold); }
+.min-bio__where { margin: 0; font-size: 0.8rem; color: rgba(246, 240, 231, 0.45); }
+.min-bio__text { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.65; }
+.min-bio__runs { margin-top: auto; padding-top: 0.7rem; border-top: 1px solid var(--line); }
+.min-bio__label { font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(246, 240, 231, 0.4); }
+.min-bio__runs ul { list-style: none; padding: 0; margin: 0.6rem 0 0; display: grid; gap: 0.35rem; }
+.min-bio__runs li { display: flex; justify-content: space-between; gap: 0.8rem; font-size: 0.88rem; }
+.min-bio__runs a { color: var(--text); }
+.min-bio__runs a:hover { color: var(--gold); }
+.min-bio__runs span { color: rgba(246, 240, 231, 0.4); font-size: 0.78rem; white-space: nowrap; }
+.min-bio__cal { margin: 0.5rem 0 0; font-size: 0.78rem; color: var(--gold); }
+
+.min-rel { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.min-rel--not-yet-spoken-to { border-color: rgba(238, 199, 183, 0.35); color: var(--rose); }
+.min-rel--in-conversation { border-color: var(--gold-soft); color: var(--gold); }
+.min-rel--ministry-share, .min-rel--joint { border-color: rgba(143, 179, 136, 0.4); color: #8fb388; }
+
+.min-devlist { list-style: none; padding: 0; margin: 1.6rem 0 0; display: grid; gap: 0.5rem; counter-reset: dev; }
+.min-devlist li { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; gap: 1rem; align-items: baseline; padding: 0.8rem 1.2rem; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
+.min-devlist__n { font-family: "Iowan Old Style", Georgia, serif; color: var(--gold); font-size: 0.85rem; }
+.min-devlist__name { font-size: 1rem; }
+.min-devlist__why { color: rgba(246, 240, 231, 0.42); font-size: 0.78rem; white-space: nowrap; }
+@media (max-width: 620px) { .min-devlist li { grid-template-columns: 2rem 1fr; } .min-devlist__why { display: none; } }
+.min-bio__links { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0.5rem 0 0; }
+.min-bio__links a { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--gold); }

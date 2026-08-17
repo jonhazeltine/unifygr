@@ -11,6 +11,7 @@ import {
 	entriesInCategory,
 	sortEntries,
 	splitOffering,
+	newLifeNote,
 	type Category,
 	type Entry,
 	type Family,
@@ -89,6 +90,13 @@ function dayLabel(iso: string) {
 			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">
 					<MinistryMap entries={offering} label={category.name} />
+				</div>
+			)}
+
+			{newLifeNote(category.slug, family.slug) && (
+				<div class="min-usnote reveal is-visible">
+					<p class="eyebrow">Where we stand</p>
+					<p>{newLifeNote(category.slug, family.slug)}</p>
 				</div>
 			)}
 

@@ -83,24 +83,24 @@
 			"href": "/ministries",
 			"items": [
 				{
-					"label": "Signature Ministries",
-					"href": "/ministries#signature",
-					"blurb": "What we carry ourselves, in our own building."
+					"label": "All Ministries",
+					"href": "/ministries#ministries",
+					"blurb": "Every area, ours and the ones we have curated."
 				},
 				{
 					"label": "Curated Partnerships",
-					"href": "/ministries#browse",
-					"blurb": "The best of what the rest of the Body already does."
+					"href": "/ministries/partnerships",
+					"blurb": "Who leads these ministries, and how well we know them."
 				},
 				{
-					"label": "How We Curate",
-					"href": "/ministries#browse",
-					"blurb": "The four tests a ministry has to clear."
+					"label": "Our Calendar",
+					"href": "/ministries/calendar",
+					"blurb": "Everything coming up, wherever it meets."
 				},
 				{
-					"label": "Find One Near You",
-					"href": "/ministries#geography",
-					"blurb": "Laid out across Grand Rapids by where they meet."
+					"label": "Specialised Ministries",
+					"href": "/ministries/specialized",
+					"blurb": "Organisations we would send our own family to."
 				}
 			]
 		},

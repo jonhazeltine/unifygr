@@ -3,19 +3,42 @@ import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
 import MinistryMap from "../../components/MinistryMap.astro";
 import {
+	allFamiliesIncludingSpecialised,
 	families,
 	standard,
 	counts,
 	inHouse,
 	outOfHouse,
 	familyCount,
+	familyImage,
 	familyCalendarCount,
 	withLiveCalendar,
+	isOffering,
+	isListable,
+	entriesInFamily,
 	sortEntries,
 } from "../../data/ministries";
 
 const signature = sortEntries(inHouse).filter((e) => e.tier === "signature");
 const live = withLiveCalendar();
+
+// Curated needs a section of its own. Sending it to the category browse landed
+// people in a mixed list with our own ministries in it.
+const curatedOfferings = sortEntries(outOfHouse.filter((e) => isOffering(e) && isListable(e)));
+
+const curatedByFamily = allFamiliesIncludingSpecialised
+	.map((family) => {
+		const slugs = new Set(family.categories.map((c) => c.slug));
+		return {
+			family,
+			list: sortEntries(
+				outOfHouse.filter(
+					(e) => isOffering(e) && isListable(e) && e.categories.some((c) => slugs.has(c)),
+				),
+			),
+		};
+	})
+	.filter((g) => g.list.length > 0);
 ---
 
 <Interior
@@ -25,79 +48,45 @@ const live = withLiveCalendar();
 	heading="Ministries"
 	lede="One church, meeting in a lot of different rooms. Everything here is open to you."
 >
-	<!-- One body, many rooms -->
+	<!-- Our philosophy of ministry -->
 	<section class="section prose-block">
 		<div class="container">
-			<p class="eyebrow reveal is-visible">One body, many rooms</p>
-			<h2 class="prose-block__title reveal is-visible">The church in this city is bigger than our building.</h2>
+			<p class="eyebrow reveal is-visible">How we think about this</p>
+			<h2 class="prose-block__title reveal is-visible">If we cannot tell you when it meets, it is not here.</h2>
 			<div class="prose-block__body">
 				<p class="reveal is-visible">
-					{counts.inHouse} of these ministries meet at Knapp's Corner. The other {counts.outOfHouse} meet in
-					buildings across the city, led by brothers and sisters. They sit on this page beside our own
-					because that is what they are: ours.
+					Some of what follows is ours. We lead it, our volunteers run it, and we give it everything
+					we have. The rest is led by people we trust across the city, and it sits here beside our own
+					because that is what the Body is.
 				</p>
 				<p class="reveal is-visible">
-					Each one keeps its own leaders and its own front door. When something here meets somewhere
-					else, that is an address, not a distance.
+					Everything on this page has real dates. If we cannot tell you when it meets, it is not here.
+					A ministry you cannot turn up to is a fact, not an offer.
 				</p>
-			</div>
-		</div>
-	</section>
-
-	<!-- Two halves -->
-	<section class="section">
-		<div class="container">
-			<div class="min-halves reveal is-visible">
-				<a class="min-half" href="#signature">
-					<span class="min-half__label">Ours</span>
-					<strong class="min-half__title">Signature Ministries</strong>
-					<span class="min-half__count">{counts.inHouse}</span>
-					<p>
-						What we offer. We lead these and our volunteers run them, with excellence, for our own
-						people and for any part of the Body of Christ.
-					</p>
-					<span class="min-half__go">See what we lead →</span>
-				</a>
-				<a class="min-half min-half--out" href="#browse">
-					<span class="min-half__label">Chosen by us</span>
-					<strong class="min-half__title">Curated Ministries</strong>
-					<span class="min-half__count">{counts.outOfHouse}</span>
-					<p>
-						Led and run by other ministries. We have selected them and made them available to you. We
-						do not lead them and we do not run them.
-					</p>
-					<span class="min-half__go">Browse {counts.categories} categories →</span>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- Signature ministries -->
-	<section class="section" id="signature">
-		<div class="container">
-			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">At Knapp's Corner</p>
-				<h2>What meets in our building.</h2>
-			</div>
-			<div class="min-grid reveal is-visible">
-				{signature.map((entry) => <MinistryCard entry={entry} />)}
 			</div>
 		</div>
 	</section>
 
 	<!-- Browse -->
-	<section class="section prose-block prose-block--tinted" id="browse">
+	<section class="section" id="ministries">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Find what you're looking for</p>
-				<h2>Every category, with a map for each.</h2>
+				<p class="eyebrow">The ministries</p>
+				<h2>Everything on offer, by area.</h2>
 			</div>
 			<div class="min-families reveal is-visible">
 				{families.map((family) => {
 					const n = familyCount(family.slug);
-					const cal = familyCalendarCount(family.slug);
+					const inArea = entriesInFamily(family.slug).filter(isOffering);
+					const sig = inArea.filter((e) => e.house === "in").length;
+					const cur = inArea.length - sig;
 					return (
 						<a class="min-family" href={`/ministries/${family.slug}`}>
+							{familyImage(family.slug) && (
+								<span class="min-family__art" aria-hidden="true">
+									<img src={familyImage(family.slug)} alt="" loading="lazy" decoding="async" />
+								</span>
+							)}
 							<div class="min-family__head">
 								<h3>{family.name}</h3>
 								<span class={n ? "min-family__n" : "min-family__n min-family__n--empty"}>
@@ -109,7 +98,11 @@ const live = withLiveCalendar();
 								{family.categories.slice(0, 3).map((c) => c.name).join(" · ")}
 								{family.categories.length > 3 && ` · +${family.categories.length - 3}`}
 							</span>
-							{cal > 0 && <span class="min-family__cal">{cal} with a live calendar</span>}
+							<span class="min-family__mix">
+								{sig > 0 && <em>{sig} ours</em>}
+								{sig > 0 && cur > 0 && " · "}
+								{cur > 0 && <span>{cur} curated</span>}
+							</span>
 						</a>
 					);
 				})}
@@ -125,7 +118,7 @@ const live = withLiveCalendar();
 				<h2>Close enough to actually go.</h2>
 			</div>
 			<div class="reveal is-visible">
-				<MinistryMap entries={outOfHouse} map="all" label="every curated ministry" />
+				<MinistryMap entries={curatedOfferings} label="the curated ministries" />
 			</div>
 		</div>
 	</section>

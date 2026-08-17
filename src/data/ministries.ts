@@ -11,6 +11,8 @@
 import taxonomyJson from "../../content/ministry-taxonomy.json";
 import directoryJson from "../../content/ministries.json";
 import rulesJson from "../../content/curation-rules.json";
+import notesJson from "../../content/newlife-notes.json";
+import artJson from "../../content/ministry-art.json";
 
 export type Category = {
 	slug: string;
@@ -65,6 +67,13 @@ export type Entry = {
 	lng?: number | null;
 	/** What the geocoder matched, so a wrong pin can be spotted. */
 	geocodedAs?: string | null;
+	/** A short bio of the church, from The Church Map. */
+	venueBio?: string | null;
+	venueServiceTimes?: string | null;
+	/** This church's page on The Church Map. */
+	churchMapUrl?: string | null;
+	/** Where the relationship stands: not-yet-spoken-to | in-conversation | ministry-share | joint */
+	relationship?: string | null;
 	rhythm?: string | null;
 	href?: string | null;
 	website?: string | null;
@@ -127,6 +136,19 @@ export function familyOf(categorySlug: string): Family | undefined {
 	return familyByCategory.get(categorySlug);
 }
 
+/** What New Life itself does in an area, so a visitor never has to guess. */
+export function newLifeNote(categorySlug?: string, familySlug?: string): string | null {
+	const notes = notesJson as { byCategory: Record<string, string>; byFamily: Record<string, string> };
+	if (categorySlug && notes.byCategory[categorySlug]) return notes.byCategory[categorySlug];
+	if (familySlug && notes.byFamily[familySlug]) return notes.byFamily[familySlug];
+	return null;
+}
+
+/** Card art for an area. One visual language across the set. */
+export function familyImage(familySlug: string): string | null {
+	return (artJson as { images: Record<string, string> }).images[familySlug] ?? null;
+}
+
 export function getEntry(slug: string): Entry | undefined {
 	return entries.find((e) => e.slug === slug);
 }
@@ -168,7 +190,14 @@ export const outOfHouse = entries.filter((e) => e.house === "out");
 export const counts = {
 	entries: entries.length,
 	inHouse: inHouse.length,
-	outOfHouse: outOfHouse.length,
+	/** Curated Ministries means offerings, not the whole specialised shelf. */
+	get outOfHouse() {
+		return outOfHouse.filter(isOffering).length;
+	},
+	/** Everything else we would point at, which lives on the specialised list. */
+	get specialised() {
+		return entries.filter((e) => !isOffering(e) && isListable(e)).length;
+	},
 	get families() { return families.length; },
 	categories: categories.length,
 	/** Categories nobody on this list covers yet — the honest gaps. */

@@ -10,6 +10,7 @@ import {
 	entriesInCategory,
 	entriesInFamily,
 	splitOffering,
+	newLifeNote,
 	sortEntries,
 	type Family,
 } from "../../data/ministries";
@@ -56,6 +57,13 @@ const openCategories = family.categories.filter(
 				{offering.length === 1 ? " offering" : " offerings"} across {family.categories.length} categories
 				{offering.length > 0 && <> · <a href="/ministries/calendar">on our calendar</a></>}
 			</p>
+
+			{newLifeNote(undefined, family.slug) && (
+				<div class="min-usnote reveal is-visible">
+					<p class="eyebrow">Where we stand</p>
+					<p>{newLifeNote(undefined, family.slug)}</p>
+				</div>
+			)}
 
 			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">

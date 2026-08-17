@@ -1,0 +1,27 @@
+{
+	"_comment": "What New Life itself does in each area, said on that area's page. Written so a visitor never has to guess where we stand before they read a list of other people's ministries. Keyed by category slug first, then by family slug as a fallback.",
+	"byCategory": {
+		"childrens-ministry": "Kids are ours on a Sunday. Nursery through 5th grade, every week at 10am, with their own space and their own teaching.",
+		"nursery": "We run our own nursery every Sunday at 10am, so you can be in the service.",
+		"high-school": "We do not run a separate youth service. Our teens are in the room with us on Sunday morning, and the messages are written for 12 and up.",
+		"middle-school": "We do not run a separate youth service. Our middle schoolers are in the room with us on Sunday morning, and the messages are written for 12 and up.",
+		"small-groups": "Life Groups are ours and they stay ours. Belonging is the one thing a church cannot hand off, so we will not send you to another church's small group.",
+		"discipleship-groups": "The Welcome Path is ours: a guided next step that Elizabeth follows up on personally.",
+		"prayer-meetings": "We have a praying team that has been going longer than most of our other ministries, and a prayer chain that goes out the same day.",
+		"intercession": "Our Corporate Prayer team gathers to pray for the church and the city, and prays with anyone who asks.",
+		"corporate-worship": "Sunday at 10am is ours. Hosting His presence is the thing we have given 30 years to.",
+		"short-term-missions": "We send our own teams to Jarabacoa each summer with Mission of Hope, and have done since 2015. Any church in the city can send their people with us.",
+		"local-outreach": "Rebecca directs our outreach. When we serve the city, she is the one who knows where to point us.",
+		"grief-support": "Our pastoral care team shows up at the hospital and stays through the hard season. That is not outsourced and never has been.",
+		"hospital-visitation": "Call the church office and someone from pastoral care will call you back.",
+		"membership-baptism": "Membership and baptism run through us, starting with the Welcome Path.",
+		"city-unity": "Unify GR is ours. This whole page exists because of it."
+	},
+	"byFamily": {
+		"kids": "Kids are ours on a Sunday morning. Everything else here is what the rest of the family offers through the week.",
+		"students": "Our teens worship with us on Sunday morning and our messages are written for 12 and up. Midweek is where the rest of the family carries them.",
+		"worship-and-prayer": "Worship and prayer are our own signature. What sits here alongside them is what others open to the wider city.",
+		"formation": "Life Groups and the Welcome Path are ours. The deeper study and training below is led by others.",
+		"mission": "Mission trips and local outreach are ours. The rest is led by people already doing it well."
+	}
+}
