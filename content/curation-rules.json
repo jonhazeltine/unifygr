@@ -139,5 +139,15 @@
 		"alsoForce": [
 			"mental-health"
 		]
+	},
+	"venueAliases": {
+		"note": "The same congregation under more than one record upstream. Folding them stops one ministry appearing twice under two names. The event titles carry the campus, so the campus is not lost.",
+		"map": {
+			"Blythefield Hills Baptist Church: Rockford Campus": "Magnify Church",
+			"Magnify Church - Northview Campus": "Magnify Church",
+			"Coit Community Church": "Sunshine Community Church",
+			"St Nicholas Church": "Saint Nicholas Antiochian Orthodox Church",
+			"Wright Church": "Wright Seventh-day Adventist Church"
+		}
 	}
 }

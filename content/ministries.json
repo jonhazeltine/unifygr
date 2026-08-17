@@ -2873,7 +2873,7 @@
 			"slug": "magnify-northview-womens",
 			"name": "Women's Gatherings",
 			"org": null,
-			"venue": "Magnify Church - Northview Campus",
+			"venue": "Magnify Church",
 			"venueUrl": "https://magnifychurch.org/northview-campus/",
 			"house": "out",
 			"tier": "partner-church",
@@ -2980,6 +2980,781 @@
 			"verified": null,
 			"lat": 42.9634,
 			"lng": -85.6681
+		},
+		{
+			"slug": "blythefield-hills-baptist-church-rockford-campus-gather-and-",
+			"name": "Gather and Grow",
+			"org": null,
+			"venue": "Magnify Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"bible-study"
+			],
+			"summary": "Bible study at Blythefield Hills Baptist Church: Rockford Campus, meeting sundays, 6:30pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Rockford",
+			"city": "Rockford",
+			"rhythm": "Sundays, 6:30pm",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "5 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "cedar-creek-community-church-rooted-women-s-bible-study",
+			"name": "Rooted - Women's Bible Study",
+			"org": null,
+			"venue": "Cedar Creek Community Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"womens-bible-study",
+				"womens-ministry"
+			],
+			"summary": "Women at Cedar Creek Community Church, meeting wednesdays, 10:30am.",
+			"why": null,
+			"bestFor": null,
+			"area": "Algoma township",
+			"city": "Algoma township",
+			"rhythm": "Wednesdays, 10:30am",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "community-christian-church-dude-s-night",
+			"name": "Dude's Night",
+			"org": null,
+			"venue": "Community Christian Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"small-groups"
+			],
+			"summary": "Food & fellowship at Community Christian Church, meeting wednesdays, 7pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Wednesdays, 7pm",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "faith-community-christian-reformed-church-free-drive-thru-do",
+			"name": "Free Drive-Thru Donut Dash",
+			"org": null,
+			"venue": "Faith Community Christian Reformed Church",
+			"venueUrl": "http://www.faithcommunitycrc.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"small-groups"
+			],
+			"summary": "Food & fellowship at Faith Community Christian Reformed Church, meeting saturdays, 9am.",
+			"why": null,
+			"bestFor": null,
+			"area": "Wyoming",
+			"city": "Wyoming",
+			"rhythm": "Saturdays, 9am",
+			"href": null,
+			"website": "http://www.faithcommunitycrc.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "3 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8687201,
+			"lng": -85.7224491
+		},
+		{
+			"slug": "grace-christian-reformed-church-public-reading-of-scripture",
+			"name": "Public Reading of Scripture",
+			"org": null,
+			"venue": "Grace Christian Reformed Church",
+			"venueUrl": "https://gracegr.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"bible-study"
+			],
+			"summary": "Bible study at Grace Christian Reformed Church, meeting thursdays, 12pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Thursdays, 12pm",
+			"href": null,
+			"website": "https://gracegr.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.95285,
+			"lng": -85.665441
+		},
+		{
+			"slug": "grace-christian-reformed-church-food-pantry",
+			"name": "Food Pantry",
+			"org": null,
+			"venue": "Grace Christian Reformed Church",
+			"venueUrl": "https://gracegr.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"local-outreach"
+			],
+			"summary": "Serve at Grace Christian Reformed Church, meeting tuesdays, 9:30am.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Tuesdays, 9:30am",
+			"href": null,
+			"website": "https://gracegr.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.95285,
+			"lng": -85.665441
+		},
+		{
+			"slug": "mosaic-church-mosaic-young-adults-ages-18-29-bible-study",
+			"name": "Mosaic Young Adults (ages 18-29) Bible Study",
+			"org": null,
+			"venue": "Mosaic Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"young-adults"
+			],
+			"summary": "Young adults at Mosaic Church, meeting thursdays, 12:15pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Thursdays, 12:15pm",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "4 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "set-free-ministries-sf-ministry-center-michigan-warrior-wedn",
+			"name": "Michigan Warrior Wednesday – Sam and Jennifer Stitt IV, Speakers",
+			"org": null,
+			"venue": "Set Free Ministries (SF Ministry Center)",
+			"venueUrl": "https://warriorssetfree.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"discipleship-groups"
+			],
+			"summary": "Classes at Set Free Ministries (SF Ministry Center), meeting wednesdays, 6pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Wyoming",
+			"city": "Wyoming",
+			"rhythm": "Wednesdays, 6pm",
+			"href": null,
+			"website": "https://warriorssetfree.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.88323799,
+			"lng": -85.73288096
+		},
+		{
+			"slug": "sunshine-community-church-60-up-breakfast-bunch",
+			"name": "60 & Up Breakfast Bunch",
+			"org": null,
+			"venue": "Sunshine Community Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"senior-adults"
+			],
+			"summary": "Seniors at Sunshine Community Church, meeting fridays, 8:30am.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Fridays, 8:30am",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.0229431,
+			"lng": -85.5878996
+		},
+		{
+			"slug": "sunshine-community-church-young-adults-bible-study",
+			"name": "Young Adults Bible Study",
+			"org": null,
+			"venue": "Sunshine Community Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"young-adults"
+			],
+			"summary": "Young adults at Sunshine Community Church, meeting mondays, 7pm.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": "Mondays, 7pm",
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "weekly",
+				"sync": "available",
+				"evidence": "5 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.0229431,
+			"lng": -85.5878996
+		},
+		{
+			"slug": "blythefield-hills-baptist-church-rockford-campus-financial-p",
+			"name": "Financial Planning Ministry Webinar",
+			"org": null,
+			"venue": "Magnify Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"discipleship-groups"
+			],
+			"summary": "Classes at Blythefield Hills Baptist Church: Rockford Campus. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Rockford",
+			"city": "Rockford",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "blythefield-hills-baptist-church-rockford-campus-summer-jam-",
+			"name": "Summer Jam - Northview",
+			"org": null,
+			"venue": "Magnify Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids at Blythefield Hills Baptist Church: Rockford Campus. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Rockford",
+			"city": "Rockford",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "blythefield-hills-baptist-church-rockford-campus-men-s-fish-",
+			"name": "Men's Fish Fry - Ensley",
+			"org": null,
+			"venue": "Magnify Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"mens-ministry"
+			],
+			"summary": "Men at Blythefield Hills Baptist Church: Rockford Campus. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Rockford",
+			"city": "Rockford",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "blythefield-hills-baptist-church-rockford-campus-women-s-sum",
+			"name": "Women's Summer Gatherings",
+			"org": null,
+			"venue": "Magnify Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"womens-bible-study",
+				"womens-ministry"
+			],
+			"summary": "Women at Blythefield Hills Baptist Church: Rockford Campus. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Rockford",
+			"city": "Rockford",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "2 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "crossroads-bible-church-the-post",
+			"name": "The Post",
+			"org": null,
+			"venue": "Crossroads Bible Church",
+			"venueUrl": "http://www.crossroads-bible.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"parenting"
+			],
+			"summary": "Family at Crossroads Bible Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "http://www.crossroads-bible.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9773282,
+			"lng": -85.6766588
+		},
+		{
+			"slug": "crossroads-bible-church-women-s-fall-kickoff",
+			"name": "Women's Fall Kickoff",
+			"org": null,
+			"venue": "Crossroads Bible Church",
+			"venueUrl": "http://www.crossroads-bible.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"womens-bible-study",
+				"womens-ministry"
+			],
+			"summary": "Women at Crossroads Bible Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "http://www.crossroads-bible.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.9773282,
+			"lng": -85.6766588
+		},
+		{
+			"slug": "faith-community-christian-reformed-church-fall-kick-off-comm",
+			"name": "Fall Kick-Off Community Event",
+			"org": null,
+			"venue": "Faith Community Christian Reformed Church",
+			"venueUrl": "http://www.faithcommunitycrc.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"local-outreach"
+			],
+			"summary": "Serve at Faith Community Christian Reformed Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Wyoming",
+			"city": "Wyoming",
+			"rhythm": null,
+			"href": null,
+			"website": "http://www.faithcommunitycrc.org/",
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.8687201,
+			"lng": -85.7224491
+		},
+		{
+			"slug": "messiah-christian-reformed-church-i-scream-for-ice-cream",
+			"name": "I SCREAM (for ice cream)!",
+			"org": null,
+			"venue": "Messiah Christian Reformed Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"small-groups"
+			],
+			"summary": "Food & fellowship at Messiah Christian Reformed Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Hudsonville",
+			"city": "Hudsonville",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "messiah-christian-reformed-church-m-i-s-t-seniors-group-mont",
+			"name": "M.I.S.T. Seniors Group Monthly Breakfast",
+			"org": null,
+			"venue": "Messiah Christian Reformed Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"senior-adults"
+			],
+			"summary": "Seniors at Messiah Christian Reformed Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Hudsonville",
+			"city": "Hudsonville",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "mosaic-church-seidman-bgc-back-to-school-bash",
+			"name": "Seidman BGC - Back to School Bash",
+			"org": null,
+			"venue": "Mosaic Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"parenting"
+			],
+			"summary": "Family at Mosaic Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "sunshine-community-church-sunshine-sewing-group-stitches-of-",
+			"name": "Sunshine Sewing Group & Stitches of Hope",
+			"org": null,
+			"venue": "Sunshine Community Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"small-groups"
+			],
+			"summary": "Food & fellowship at Sunshine Community Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.0229431,
+			"lng": -85.5878996
+		},
+		{
+			"slug": "sunshine-community-church-kids-courtyard-grand-opening",
+			"name": "Kids' Courtyard Grand Opening",
+			"org": null,
+			"venue": "Sunshine Community Church",
+			"venueUrl": null,
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"childrens-ministry",
+				"nursery"
+			],
+			"summary": "Kids at Sunshine Community Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 43.0229431,
+			"lng": -85.5878996
 		}
 	]
 }

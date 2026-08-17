@@ -181,6 +181,7 @@ def main():
     ours_by_name = re.compile(
         "|".join(rules["noOverlapWithOurSignature"]["oursByName"]["titlePatterns"]), re.I)
     flagged = {c.lower() for c in rules["needsHumanHandling"]["churches"]}
+    aliases = rules.get("venueAliases", {}).get("map", {})
     disperse = rules["prefer"]["midweekDispersion"]
     disperse_themes = set(disperse["themes"])
     per_area_cap = disperse["maxPerAreaPerTheme"]
@@ -216,6 +217,7 @@ def main():
     for ev in raw:
         title = (ev.get("title") or "").strip()
         church = (ev.get("churchName") or "").strip()
+        church = aliases.get(church, church)
         if not title or not church:
             continue
         low = church.lower()
