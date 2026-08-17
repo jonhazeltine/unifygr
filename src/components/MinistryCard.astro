@@ -1,6 +1,6 @@
 ---
 // The ministry is the headline. The church it meets in is the address.
-import { STATUS_LABEL, hasLiveCalendar, type Entry } from "../data/ministries";
+import { STATUS_LABEL, isOffering, type Entry } from "../data/ministries";
 
 interface Props {
 	entry: Entry;
@@ -17,7 +17,7 @@ const venue = entry.venue ?? (inHouse ? "New Life, Knapp's Corner" : entry.org);
 <article class={`min-card ${inHouse ? "min-card--in" : "min-card--out"}`}>
 	<div class="min-card__top">
 		{entry.area && <span class="min-card__area">{entry.area}</span>}
-		{hasLiveCalendar(entry) && <span class="min-card__live">On our calendar</span>}
+		{isOffering(entry) && entry.house === "out" && <span class="min-card__live">On our calendar</span>}
 	</div>
 
 	<h3 class="min-card__name">
