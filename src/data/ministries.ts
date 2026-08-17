@@ -221,5 +221,7 @@ export const STATUS_LABEL: Record<string, string> = {
 	live: "Confirmed",
 	reviewing: "Being verified",
 	proposed: "Not yet verified",
+	/** Real ministry, but it publishes no time or place we could carry. */
+	"no-details": "Time and place not published",
 	dormant: "Paused",
 };

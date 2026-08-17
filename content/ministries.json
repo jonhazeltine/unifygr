@@ -1378,32 +1378,6 @@
 			"geocodedAs": "21 West 16th Street, Holland, Michigan 49423, United States"
 		},
 		{
-			"slug": "young-life-west-michigan",
-			"name": "Young Life Greater Grand Rapids",
-			"house": "out",
-			"tier": "recommended",
-			"categories": [
-				"high-school",
-				"middle-school",
-				"youth-mentoring",
-				"student-camps"
-			],
-			"summary": "Leaders who show up in local high schools, plus club, campaigners, and summer camp, across nine Greater Grand Rapids areas.",
-			"why": "We do not run a youth group right now. Young Life leaders are already at your kid's school this week.",
-			"bestFor": "Middle and high schoolers, and adults who want to lead them.",
-			"area": "Greater Grand Rapids",
-			"city": "Grand Rapids",
-			"website": "https://grandrapids.younglife.org",
-			"status": "proposed",
-			"calendar": {
-				"url": null,
-				"format": null,
-				"cadence": null,
-				"sync": "none",
-				"evidence": null
-			}
-		},
-		{
 			"slug": "youth-for-christ-wm",
 			"name": "Youth for Christ West Michigan",
 			"house": "out",
@@ -1420,14 +1394,20 @@
 			"area": "Grand Rapids",
 			"city": "Grand Rapids",
 			"website": "https://wmyfc.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Campus Life and City Life run at specific schools and sites that are not listed publicly. Ask us for an introduction.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "fca-west-michigan",
@@ -1445,14 +1425,20 @@
 			"area": "West Michigan",
 			"city": "Grand Rapids",
 			"website": "https://www.fca.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Huddles meet at individual schools and are not listed publicly. Ask us and we will find out whether your kid's school has one.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "cru-gvsu",
@@ -1470,14 +1456,20 @@
 			"area": "Allendale",
 			"city": "Allendale",
 			"website": "https://www.cru.org",
-			"status": "proposed",
+			"status": "no-details",
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": null,
 				"sync": "none",
 				"evidence": null
-			}
+			},
+			"handoff": {
+				"how": "Meeting times are posted on campus each semester rather than online. Ask us and we will connect you.",
+				"person": null
+			},
+			"rhythm": null,
+			"venue": "Meets on campus"
 		},
 		{
 			"slug": "camp-roger",
@@ -2660,6 +2652,222 @@
 			"verified": null,
 			"lat": 42.8525964,
 			"lng": -85.6332948
+		},
+		{
+			"slug": "yl-forest-hills",
+			"name": "Young Life Forest Hills",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://foresthills.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Forest Hills Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Forest Hills Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://foresthills.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-rockford",
+			"name": "Young Life Rockford",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://rockford.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Rockford Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Rockford Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://rockford.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-kentwood",
+			"name": "Young Life Kentwood",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://kentwood.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Kentwood Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Kentwood Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://kentwood.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-gr-city",
+			"name": "Young Life Grand Rapids City",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://grandrapidscity.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Grand Rapids Public Schools, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Grand Rapids Public Schools",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://grandrapidscity.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-gr-southwest",
+			"name": "Young Life Grand Rapids SouthWest",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://grsw.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Southwest Grand Rapids, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Southwest Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://grsw.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
+		},
+		{
+			"slug": "yl-northwest-gr",
+			"name": "Young Life Northwest Grand Rapids",
+			"org": "Young Life",
+			"venue": "Meets in homes and schools",
+			"venueUrl": "https://northwestgrandrapids.younglife.org/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"high-school",
+				"middle-school"
+			],
+			"summary": "Young Life leaders on the ground in Northwest Grand Rapids, with weekly club, campaigners and summer camp.",
+			"why": "Leaders who are already at your kid's school this week. One of nine Young Life areas across Greater Grand Rapids.",
+			"bestFor": null,
+			"area": "Northwest Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": "https://northwestgrandrapids.younglife.org/",
+			"handoff": {
+				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": null,
+				"sync": "none",
+				"evidence": null
+			},
+			"status": "no-details",
+			"verified": null,
+			"lat": null,
+			"lng": null
 		}
 	]
 }
