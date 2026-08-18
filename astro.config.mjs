@@ -19,5 +19,8 @@ export default defineConfig({
 	// Clean short link for the (password-gated) land-sale update page.
 	redirects: {
 		"/land": "/land-sale-update-b7f2/",
+		// The old "Plan a Visit" page is now /sunday — keep printed and linked
+		// URLs working.
+		"/visit": "/sunday",
 	},
 });

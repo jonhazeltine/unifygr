@@ -1,106 +1,58 @@
 {
 	"groups": [
 		{
-			"label": "Encounter God",
-			"href": "/encounter-god",
-			"items": [
-				{
-					"label": "Plan a Visit",
-					"href": "/visit",
-					"blurb": "What to expect on a Sunday, and how to find us."
-				},
-				{
-					"label": "Watch & Sermons",
-					"href": "/watch",
-					"blurb": "Join live Sunday mornings or catch up on past messages."
-				},
-				{
-					"label": "When & Where",
-					"href": "/visit#when-where",
-					"blurb": "Sundays at 10am · 2777 Knapp St NE."
-				}
-			]
+			"label": "Sunday",
+			"href": "/sunday",
+			"items": []
 		},
 		{
-			"label": "Be Transformed",
-			"href": "/be-transformed",
-			"items": [
-				{
-					"label": "What We Believe",
-					"href": "/beliefs",
-					"blurb": "The core convictions that anchor our church."
-				},
-				{
-					"label": "Vision & Values",
-					"href": "/vision-values",
-					"blurb": "Where we're headed and what we hold dear."
-				},
-				{
-					"label": "Spiritual Formation",
-					"href": "/spiritual-formation",
-					"blurb": "Growing deeper in Christ, day by day."
-				},
-				{
-					"label": "Membership",
-					"href": "/membership",
-					"blurb": "Make New Life your home and family."
-				},
-				{
-					"label": "Our Staff",
-					"href": "/staff",
-					"blurb": "Meet the team that leads and cares for our church."
-				}
-			]
+			"label": "Watch",
+			"href": "/watch",
+			"items": []
 		},
 		{
-			"label": "Change the World",
-			"href": "/change-the-world",
-			"items": [
-				{
-					"label": "Mission Trips",
-					"href": "/mission-trips",
-					"blurb": "Go and serve the Caribbean with Mission of Hope."
-				},
-				{
-					"label": "Unify GR",
-					"href": "/unify-gr",
-					"blurb": "One Body, one witness across Grand Rapids churches."
-				},
-				{
-					"label": "Giving",
-					"href": "/giving",
-					"blurb": "Fuel the mission online, by text, or by mail."
-				},
-				{
-					"label": "Connect Card",
-					"href": "https://newlife.ccbchurch.com/goto/forms/156/responses/new",
-					"blurb": "Take a first step and let us know you're here."
-				}
-			]
+			"label": "What we believe",
+			"href": "/beliefs",
+			"items": []
 		},
 		{
 			"label": "Ministries",
 			"href": "/ministries",
+			"items": []
+		},
+		{
+			"label": "About us",
+			"href": "/about",
 			"items": [
 				{
-					"label": "All Ministries",
-					"href": "/ministries#ministries",
-					"blurb": "Every area, ours and the ones we have curated."
+					"label": "Our staff",
+					"href": "/staff",
+					"blurb": "The people who lead and care for this church."
 				},
 				{
-					"label": "Curated Partnerships",
-					"href": "/ministries/partnerships",
-					"blurb": "Who leads these ministries, and how well we know them."
+					"label": "Vision and values",
+					"href": "/vision-values",
+					"blurb": "Where we are headed and what we hold to."
 				},
 				{
-					"label": "Our Calendar",
-					"href": "/ministries/calendar",
-					"blurb": "Everything coming up, wherever it meets."
+					"label": "Membership",
+					"href": "/membership",
+					"blurb": "Making New Life your home church."
 				},
 				{
-					"label": "Specialised Ministries",
-					"href": "/ministries/specialized",
-					"blurb": "Organisations we would send our own family to."
+					"label": "Spiritual formation",
+					"href": "/spiritual-formation",
+					"blurb": "How people here grow, day by day."
+				},
+				{
+					"label": "Mission trips",
+					"href": "/mission-trips",
+					"blurb": "Serving in the Caribbean with Mission of Hope."
+				},
+				{
+					"label": "Unify GR",
+					"href": "/unify-gr",
+					"blurb": "Working with churches across Grand Rapids."
 				}
 			]
 		},
@@ -111,7 +63,7 @@
 		}
 	],
 	"cta": {
-		"label": "Plan a Visit",
-		"href": "/visit"
+		"label": "Get directions",
+		"href": "https://www.google.com/maps/place/2777+Knapp+St+NE,+Grand+Rapids,+MI+49525"
 	}
 }

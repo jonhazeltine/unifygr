@@ -1,429 +1,139 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import SiteHeader from "../components/SiteHeader.astro";
-import StudioDock from "../components/StudioDock.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { mission } from "../data/site";
+import Site from "../layouts/Site.astro";
+import { church, sermons } from "../data/site";
+import { service, answers, identity } from "../data/sunday";
 
-const pillarTitle = {
-	"encounter-god": "Encounter God",
-	"be-transformed": "Be Transformed",
-	"change-the-world": "Change the World",
-};
+// The hero already gives the when and the where, so this list picks up at the
+// next thing a stranger wants to know. Everything else is one tap away.
+const upFront = answers.filter((a) => !["When is it?", "Where is it?"].includes(a.q));
 
-const pillars = [
-	{ label: "Encounter God", detail: "Host His presence.", href: "/encounter-god" },
-	{ label: "Be Transformed", detail: "Hear His voice. Obey His assignments.", href: "/be-transformed" },
-	{ label: "Change the World", detail: "Unite the Church. Reveal Jesus to the city.", href: "/change-the-world" },
+const latest = sermons[0];
+
+// The three things this church says it exists to do. Kept — but as a quiet
+// strip near the end, not as the thing standing between a stranger and the
+// service time.
+const vision = [
+	{ title: "Encounter God", line: "We build our gatherings around God's presence.", href: "/encounter-god" },
+	{ title: "Be Transformed", line: "We expect people to actually change.", href: "/be-transformed" },
+	{ title: "Change the World", line: "We work with the whole church across this city.", href: "/change-the-world" },
 ];
-
-const experiences = [
-	{
-		title: "Encounter God",
-		copy: "Host His presence.",
-		tone: "glow",
-		image: "/art/generated/worship-ambient-v5-thumb.webp",
-		video: "/art/generated/worship-ambient-v5.mp4",
-		alt: "A dim worship gathering with silhouettes, raised hands, and palpable emotional response.",
-		href: "/encounter-god",
-	},
-	{
-		title: "Be Transformed",
-		copy: "Hear His voice. Obey His assignments.",
-		tone: "mist",
-		image: "/art/generated/voice-ambient-v2-thumb.webp",
-		video: "/art/generated/voice-ambient-v2.mp4",
-		alt: "A quiet night prayer scene with a solitary figure beneath a radiant halo.",
-		href: "/be-transformed",
-	},
-	{
-		title: "Change the World",
-		copy: "Unite the Church. Reveal Jesus to the city.",
-		tone: "flare",
-		image: "/art/generated/mission-ambient-v2-thumb.webp",
-		video: "/art/generated/mission-ambient-v2.mp4",
-		alt: "A cinematic city scene washed in warm light and night-blue atmosphere.",
-		href: "/change-the-world",
-	},
-];
-
-const liturgies = [
-	"Host His presence",
-	"Hear His voice",
-	"Obey His assignments",
-	"Unite the Church",
-	"Reveal Jesus to the city",
-];
-
-const quickLinks = [
-	{ label: "Plan a Visit", href: "/visit" },
-	{ label: "What We Believe", href: "/beliefs" },
-	{ label: "Watch Sermons", href: "/watch" },
-	{ label: "See Events", href: "/unify-gr#calendar" },
-];
-
-const heroVariants = {
-	a: {
-		label: "Dawn",
-		concept: "figure",
-		image: "/art/generated/hero-dawn-figure-clean.png",
-	},
-	b: {
-		label: "Blue Hour",
-		concept: "city",
-		city: "/art/generated/hero-bluehour-gr-silhouette-v2.png",
-		cityVideo: "/art/generated/gr-water-loop-v1.mp4",
-		cityPoster: "/art/generated/hero-bluehour-gr-silhouette-v2.png",
-	},
-};
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<main class="landing-shell">
-			<SiteHeader brandHref="#top">
-				<div class="hero-variant-toggle" slot="chrome-extra" aria-label="Hero variant toggle">
-					{Object.entries(heroVariants).map(([key, variant]) => (
-						<button class="hero-variant-toggle__button" data-hero-variant={key} type="button">
-							{variant.label}
-						</button>
-					))}
-				</div>
-			</SiteHeader>
+<Site
+	title="New Life Grand Rapids — Sundays at 10am"
+	description="A church at 2777 Knapp St NE in Grand Rapids. Sundays at 10am, about 90 minutes, kids welcome, come as you are."
+>
+	<section class="opener">
+		<!-- 18KB, not the 2.4MB original: it sits at half opacity behind a heavy
+		     scrim, so there is nothing for the extra detail to do. -->
+		<div class="opener__bg" aria-hidden="true">
+			<img src="/art/generated/worship-ambient-v5-thumb.webp" alt="" loading="eager" />
+		</div>
+		<div class="shell">
+			<p class="opener__id">New Life — a church in Grand Rapids, built around Jesus.</p>
 
-			<section class="hero section" id="top">
-				<div class="hero__veil"></div>
-				<div class="hero__grain"></div>
-				<div class="hero__light hero__light--one"></div>
-				<div class="hero__light hero__light--two"></div>
-				<div class="hero__light hero__light--three"></div>
-				<div class="hero__orbit hero__orbit--one"></div>
-				<div class="hero__orbit hero__orbit--two"></div>
-				<div class="hero__city" style="display:none;">
-					<video class="hero__city-video" autoplay muted loop playsinline poster="/art/generated/hero-bluehour-gr-silhouette-v2.png">
-						<source src="/art/generated/gr-water-loop-v1.mp4" type="video/mp4" />
-					</video>
-					<img class="hero__city-silhouette" src="/art/generated/hero-bluehour-gr-silhouette-v2.png" alt="" />
-				</div>
+			<h1 class="opener__when">
+				Sundays<br /><em>at 10am</em>
+			</h1>
 
-				<div class="container hero__content">
-					<p class="eyebrow reveal">New Life / Grand Rapids</p>
-					<p class="hero__micro reveal">Encounter God · Be Transformed · Change the World</p>
-					<h1 class="reveal">Jesus at the center.</h1>
-					<p class="hero__lede reveal">
-						We host His presence, hear His voice, and reveal Jesus to our city.
-					</p>
-					<p class="hero__newhere reveal">New to New Life? <a href="https://theformation.app/m/welcome-to-new-life" target="_blank" rel="noopener">Start here →</a></p>
-					<div class="hero__actions reveal">
-						<a class="button button--primary" href="/visit">Plan a Visit</a>
-						<a class="button button--secondary" href="#experience">See the Vision</a>
-					</div>
-					<a class="hero__enter-link reveal" href="/enter">✦ Enter the experience</a>
-					<div class="hero__pillars reveal">
-						{pillars.map((pillar) => (
-							<a class="hero-pillar" href={pillar.href}>
-								<span>{pillar.label}</span>
-								<p>{pillar.detail}</p>
-							</a>
-						))}
-					</div>
-				</div>
+			<p class="opener__where">
+				{service.street}
+				<span>{service.city}, {service.state} — out at {service.area}</span>
+			</p>
 
-				<div class="hero__figure" aria-hidden="true" style="display:block;">
-					<img class="figure__art" src="/art/generated/hero-dawn-figure-clean.png" alt="" />
-					<div class="figure__halo"></div>
-					<div class="figure__beam figure__beam--one"></div>
-					<div class="figure__beam figure__beam--two"></div>
-					<div class="figure__beam figure__beam--three"></div>
-					<div class="figure__ring figure__ring--one"></div>
-					<div class="figure__ring figure__ring--two"></div>
-					<div class="figure__aura"></div>
-				</div>
+			<p class="opener__note">{service.length}. Come as you are. Kids have their own space.</p>
 
-				<div class="scroll-cue reveal">
-					<span>Scroll</span>
-					<div class="scroll-cue__line"></div>
-				</div>
-			</section>
-
-			<section class="section section--statement" id="vision">
-				<div class="container statement">
-					<div class="statement__art reveal">
-						<img src="/art/generated/gr-city-unity.png" alt="A luminous Grand Rapids riverfront skyline with the Blue Bridge at blue hour." />
-					</div>
-					<p class="statement__eyebrow eyebrow reveal">Unify GR</p>
-					<h2 class="statement__title reveal">One Body. One Witness.</h2>
-					<p class="statement__copy reveal">
-						Uniting the Church to reveal Jesus to our city.
-					</p>
-				</div>
-			</section>
-
-			<section class="section section--rhythm" id="mission">
-				<div class="rhythm__veil"></div>
-				<div class="container">
-					<div class="section-heading reveal">
-						<p class="eyebrow">Our Mission</p>
-						<h2>Five commitments. One life.</h2>
-					</div>
-					<ol class="mission-spine">
-						{mission.map((m, index) => (
-							<li class="mission-step reveal" style={`--delay:${index * 90}ms`}>
-								<span class="mission-step__n">{m.n}</span>
-								<span class="mission-step__verb">{m.verb}</span>
-								<span class="mission-step__pillar">{pillarTitle[m.pillar]}</span>
-							</li>
-						))}
-					</ol>
-				</div>
-			</section>
-
-			<section class="section section--marquee" aria-label="Core themes">
-				<div class="marquee">
-					<div class="marquee__track">
-						<span>Presence</span>
-						<span>Voice</span>
-						<span>Obedience</span>
-						<span>Unity</span>
-						<span>Witness</span>
-						<span>Presence</span>
-						<span>Voice</span>
-						<span>Obedience</span>
-						<span>Unity</span>
-						<span>Witness</span>
-					</div>
-				</div>
-			</section>
-
-			<section class="section section--pilgrimage">
-				<div class="pilgrimage__backdrop"></div>
-				<div class="pilgrimage__beam pilgrimage__beam--one"></div>
-				<div class="pilgrimage__beam pilgrimage__beam--two"></div>
-				<div class="container pilgrimage">
-					<div class="pilgrimage__copy reveal">
-						<p class="eyebrow">Reveal Jesus to the City</p>
-						<h2>Unite the Church. Reveal Jesus to our city.</h2>
-						<p>
-							We believe it is the calling of every believer to bring the light of heaven into every area of society, and to see the news of God’s kindness spread throughout Grand Rapids and the world.
-						</p>
-					</div>
-					<div class="pilgrimage__stage">
-						<div class="pilgrimage-panel pilgrimage-panel--quote reveal" style="--delay:120ms">
-							<p class="pilgrimage-panel__label">Unify GR</p>
-							<blockquote>
-								“One Body. One Witness.”
-							</blockquote>
-						</div>
-						<div class="pilgrimage-panel pilgrimage-panel--path reveal" style="--delay:220ms">
-							<div class="pilgrimage-path" aria-hidden="true">
-								<span></span>
-								<span></span>
-								<span></span>
-							</div>
-							<div>
-								<p class="pilgrimage-panel__label">Movement</p>
-								<ul class="liturgies">
-									{liturgies.map((item) => (
-										<li>{item}</li>
-									))}
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="section section--experience" id="experience">
-				<div class="container">
-					<div class="section-heading section-heading--center reveal">
-						<p class="eyebrow">The Vision</p>
-						<h2>Three movements. One life.</h2>
-					</div>
-					<div class="experience-grid">
-						{experiences.map((experience, index) => (
-							<a class={`experience-card experience-card--${experience.tone} reveal`} href={experience.href} style={`--delay:${index * 140}ms`}>
-								<div class="experience-card__visual">
-									<video
-										class="experience-card__media"
-										autoplay
-										muted
-										loop
-										playsinline
-										poster={experience.image}
-										aria-label={experience.alt}
-									>
-										<source src={experience.video} type="video/mp4" />
-									</video>
-									<div class="experience-card__orb"></div>
-									<div class="experience-card__wave"></div>
-								</div>
-								<div class="experience-card__body">
-									<span class="experience-card__index">0{index + 1}</span>
-									<h3>{experience.title}</h3>
-									<p>{experience.copy}</p>
-									<span class="experience-card__go">Enter →</span>
-								</div>
-							</a>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<section class="section section--links" id="visit">
-				<div class="container">
-					<div class="section-heading reveal">
-						<p class="eyebrow">Take a Step</p>
-						<h2>Visit, be strengthened, and participate in the life of the Church.</h2>
-					</div>
-					<div class="links-grid">
-						{quickLinks.map((link, index) => (
-							<a class="link-card reveal" href={link.href} style={`--delay:${index * 90}ms`}>
-								<span>{link.label}</span>
-								<strong>Open</strong>
-							</a>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<section class="section section--final">
-				<div class="container final-cta reveal">
-					<div>
-						<p class="eyebrow">Join Us</p>
-						<h2>Come and encounter God with us.</h2>
-					</div>
-					<a class="button button--primary" href="/visit">Step In</a>
-				</div>
-			</section>
-		</main>
-
-		<footer class="site-footer">
-			<div class="container site-footer__inner">
-				<p>New Life / Unify GR</p>
-				<a href="/visit">Plan a Visit</a>
+			<div class="opener__actions">
+				<a class="btn btn--gold" href={church.mapUrl} target="_blank" rel="noopener">Get directions</a>
+				<a class="btn btn--quiet" href="/sunday">What a Sunday is like</a>
 			</div>
-		</footer>
+		</div>
+	</section>
 
-		<script is:inline define:vars={{ heroVariants }}>
-			const root = document.documentElement;
-			const reveals = Array.from(document.querySelectorAll(".reveal"));
-			const heroCity = document.querySelector(".hero__city");
-			const heroFigure = document.querySelector(".hero__figure");
-			const heroArt = document.querySelector(".hero__figure .figure__art");
-			const heroCityVideo = document.querySelector(".hero__city-video");
-			const heroCitySource = heroCityVideo?.querySelector("source");
-			const heroButtons = Array.from(document.querySelectorAll("[data-hero-variant]"));
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Before you come</p>
+			<h2 class="band__title">The things people ask us first.</h2>
 
-			const updatePointer = (event) => {
-				const x = (event.clientX / window.innerWidth) * 100;
-				const y = (event.clientY / window.innerHeight) * 100;
-				root.style.setProperty("--pointer-x", `${x}%`);
-				root.style.setProperty("--pointer-y", `${y}%`);
-			};
+			<ul class="qa">
+				{upFront.map((item) => (
+					<li class="qa__item">
+						<p class="qa__q">{item.q}</p>
+						<p class="qa__a">{item.a}</p>
+					</li>
+				))}
+			</ul>
 
-			const updateScroll = () => {
-				const progress = Math.min(window.scrollY / window.innerHeight, 1);
-				root.style.setProperty("--scroll-progress", progress.toFixed(3));
-			};
+			<a class="qa__more" href="/sunday">Everything about a Sunday here →</a>
+		</div>
+	</section>
 
-			const observer = new IntersectionObserver(
-				(entries) => {
-					for (const entry of entries) {
-						if (entry.isIntersecting) {
-							entry.target.classList.add("is-visible");
-							observer.unobserve(entry.target);
-						}
-					}
-				},
-				{ threshold: 0.18, rootMargin: "0px 0px -10% 0px" },
-			);
+	<section class="band">
+		<div class="shell">
+			<p class="band__label">What we believe</p>
+			<p class="creed__line">{identity.line}</p>
+			<p class="creed__body">{identity.body}</p>
+			<a class="qa__more" href="/beliefs">Read the long version →</a>
+		</div>
+	</section>
 
-			reveals.forEach((element, index) => {
-				if (index < 5) {
-					element.classList.add("is-visible");
-					return;
-				}
+	{latest && (
+		<section class="band band--raised">
+			<div class="shell">
+				<p class="band__label">Have a look first</p>
+				<h2 class="band__title">Watch a service before you drive over.</h2>
+				<a
+					class="watch-card"
+					href={`https://www.youtube.com/watch?v=${latest.id}`}
+					target="_blank"
+					rel="noopener"
+				>
+					<div class="watch-card__still">
+						<img src={`https://i.ytimg.com/vi/${latest.id}/hqdefault.jpg`} alt="" loading="lazy" />
+						<span class="watch-card__play" aria-hidden="true"><span>▶</span></span>
+					</div>
+					<div class="watch-card__meta">
+						<strong>{latest.title}</strong>
+						<span>{latest.date} · about 90 minutes</span>
+					</div>
+				</a>
+				<a class="qa__more" href="/watch">More services →</a>
+			</div>
+		</section>
+	)}
 
-				observer.observe(element);
-			});
+	<section class="band">
+		<div class="shell">
+			<p class="band__label">Why we do it this way</p>
+			<div class="vision">
+				{vision.map((v) => (
+					<a class="vision__item" href={v.href}>
+						<strong>{v.title}</strong>
+						<span>{v.line}</span>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
 
-			const applyHeroVariant = (variantKey, syncUrl = false) => {
-				if (
-					!(heroArt instanceof HTMLImageElement) ||
-					!(heroCity instanceof HTMLDivElement) ||
-					!(heroFigure instanceof HTMLDivElement)
-				) {
-					return;
-				}
-
-				const variant = heroVariants[variantKey] ?? heroVariants.a;
-				root.dataset.heroVariant = variantKey;
-				root.dataset.heroConcept = variant.concept;
-
-				for (const button of heroButtons) {
-					button.classList.toggle("is-active", button.dataset.heroVariant === variantKey);
-				}
-
-				if (variant.concept === "figure" && variant.image) {
-					heroArt.src = variant.image;
-				}
-
-				heroFigure.style.display = variant.concept === "figure" ? "block" : "none";
-				heroCity.style.display = variant.concept === "city" ? "block" : "none";
-				heroCity.style.setProperty("--hero-city-image", variant.city ? `url("${variant.city}")` : "none");
-
-				if (
-					heroCityVideo instanceof HTMLVideoElement &&
-					heroCitySource instanceof HTMLSourceElement &&
-					variant.concept === "city"
-				) {
-					if (variant.cityVideo && heroCitySource.getAttribute("src") !== variant.cityVideo) {
-						heroCitySource.setAttribute("src", variant.cityVideo);
-						heroCityVideo.load();
-					}
-					if (variant.cityPoster) {
-						heroCityVideo.poster = variant.cityPoster;
-					}
-					heroCityVideo.play().catch(() => {});
-				}
-
-				if (syncUrl) {
-					const nextUrl = new URL(window.location.href);
-					nextUrl.searchParams.set("hero", variantKey);
-					window.history.replaceState({}, "", nextUrl);
-					window.localStorage.setItem("hero-variant", variantKey);
-				}
-			};
-
-			const requestedVariant =
-				new URL(window.location.href).searchParams.get("hero") ??
-				window.localStorage.getItem("hero-variant") ??
-				"a";
-
-			if (requestedVariant in heroVariants) {
-				applyHeroVariant(requestedVariant);
-			} else {
-				applyHeroVariant("a");
-			}
-
-			heroButtons.forEach((button) => {
-				button.addEventListener("click", () => {
-					const variantKey = button.dataset.heroVariant;
-					if (variantKey) {
-						applyHeroVariant(variantKey, true);
-					}
-				});
-			});
-
-			updateScroll();
-			window.addEventListener("pointermove", updatePointer, { passive: true });
-			window.addEventListener("scroll", updateScroll, { passive: true });
-		</script>
-
-		<StudioDock />
-	</body>
-</html>
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Still deciding</p>
+			<h2 class="band__title">Ask us anything before you come.</h2>
+			<div class="reach">
+				<div class="reach__row">
+					<a href={`tel:${church.phone.replace(/\./g, "")}`}>{church.phone}</a>
+					<p>Call the office on a weekday.</p>
+				</div>
+				<div class="reach__row">
+					<a href={`mailto:${church.email}`}>{church.email}</a>
+					<p>We read every one of these.</p>
+				</div>
+				<div class="reach__row">
+					<a href={church.external.connectCard} target="_blank" rel="noopener">Send us a note</a>
+					<p>Tell us you're coming and we'll look for you.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+</Site>

@@ -1,0 +1,111 @@
+---
+import Site from "../layouts/Site.astro";
+import { church } from "../data/site";
+import { service, answers, unanswered } from "../data/sunday";
+---
+
+<Site
+	title="A Sunday at New Life — 10am, 2777 Knapp St NE"
+	description="When we meet, where to find us, what to wear, what happens with your kids, and what actually goes on in the room."
+>
+	<section class="pagehead">
+		<div class="shell">
+			<h1>A Sunday here</h1>
+			<p>
+				Everything you would want to know before walking in, written for someone who has
+				never been.
+			</p>
+		</div>
+	</section>
+
+	<section class="band" id="when-where">
+		<div class="shell where">
+			<div>
+				<p class="band__label">When and where</p>
+				<p class="where__addr">
+					{service.shortWhen}
+					<span>{service.street}<br />{service.city}, {service.state} {service.zip}</span>
+				</p>
+			</div>
+			<div>
+				<p style="color:var(--muted);margin-bottom:1.2rem">
+					One service, every Sunday morning. {service.length} from start to finish. We are out
+					at {service.area}, on the northeast side.
+				</p>
+				<a class="btn btn--gold" href={church.mapUrl} target="_blank" rel="noopener">Open in Maps</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Your questions</p>
+			<h2 class="band__title">Straight answers.</h2>
+			<ul class="qa">
+				{answers.map((item) => (
+					<li class="qa__item">
+						<p class="qa__q">{item.q}</p>
+						<p class="qa__a">{item.a}</p>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+
+	{unanswered.length > 0 && (
+		<section class="band">
+			<div class="shell">
+				<div class="open-qs">
+					<h3>Questions we still owe you an answer to</h3>
+					<p>
+						These belong on this page and are not written yet. Until they are, call the office
+						on {church.phone} and a real person will tell you.
+					</p>
+					<ul>
+						{unanswered.map((q) => <li>{q}</li>)}
+					</ul>
+				</div>
+			</div>
+		</section>
+	)}
+
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Bringing kids</p>
+			<h2 class="band__title">They get their own room and their own teaching.</h2>
+			<p class="creed__body" style="margin-bottom:1.4rem">
+				Nursery through 5th grade run at the same time as the service, led by a director who has
+				been building this for years. Check in at the kids desk when you arrive — someone will
+				walk you through it, and you will get them back at the end.
+			</p>
+			<a class="btn btn--quiet" href="/ministry/childrens-ministry">More about kids here</a>
+		</div>
+	</section>
+
+	<section class="band">
+		<div class="shell">
+			<p class="band__label">Rather watch first</p>
+			<h2 class="band__title">Nobody minds if you sit at home for a few weeks.</h2>
+			<p class="creed__body" style="margin-bottom:1.4rem">
+				Every Sunday service goes up afterwards, and you can watch as many as you like before you
+				decide to come in person.
+			</p>
+			<a class="btn btn--quiet" href="/watch">Watch a service</a>
+		</div>
+	</section>
+
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Tell us you're coming</p>
+			<h2 class="band__title">Or don't — you are welcome either way.</h2>
+			<p class="creed__body" style="margin-bottom:1.4rem">
+				If you send a note first, someone will be watching for you at the door and can save you
+				the part where you stand in a lobby wondering where to go.
+			</p>
+			<div class="opener__actions" style="margin-top:0">
+				<a class="btn btn--gold" href={church.external.connectCard} target="_blank" rel="noopener">Send us a note</a>
+				<a class="btn btn--quiet" href={`tel:${church.phone.replace(/\./g, "")}`}>Call {church.phone}</a>
+			</div>
+		</div>
+	</section>
+</Site>
