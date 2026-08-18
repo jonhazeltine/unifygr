@@ -1,9 +1,9 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
-import MinistryMap from "../../components/MinistryMap.astro";
 import {
 	allFamiliesIncludingSpecialised,
+	entries,
 	families,
 	standard,
 	counts,
@@ -16,11 +16,22 @@ import {
 	isOffering,
 	isListable,
 	entriesInFamily,
+	entriesInCategory,
 	sortEntries,
 } from "../../data/ministries";
+import curatedEventsJson from "../../../content/curated-events.json";
+
+const curatedEvents = (curatedEventsJson.events ?? []) as unknown[];
 
 const signature = sortEntries(inHouse).filter((e) => e.tier === "signature");
 const live = withLiveCalendar();
+
+// The scale is the first thing a visitor should meet, so it is counted from the
+// directory itself rather than typed into the copy where it would rot.
+const allOfferings = entries.filter((e) => isOffering(e) && isListable(e));
+const offeringCount = allOfferings.length;
+const areaCount = new Set(allOfferings.flatMap((e) => e.categories)).size;
+const gatheringCount = curatedEvents.length;
 
 // Curated needs a section of its own. Sending it to the category browse landed
 // people in a mixed list with our own ministries in it.
@@ -44,11 +55,61 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 <Interior
 	title="Ministries | New Life Grand Rapids"
 	description="Ministries we lead, and ministries across Grand Rapids we trust enough to send you to."
-	kicker="Signature Ministries & Curated Ministries"
+	kicker="Ministries"
 	heading="Ministries"
-	lede="One church, meeting in a lot of different rooms. Everything here is open to you."
+	lede="Whatever season you are in, there is something here for you and for the people you love."
 >
-	<!-- Our philosophy of ministry -->
+	<!-- The number, first, because it is the point -->
+	<section class="section min-scale">
+		<div class="container">
+			<div class="min-scale__band reveal is-visible">
+				<div>
+					<strong>{offeringCount}</strong>
+					<span>ministries you can join</span>
+				</div>
+				<div>
+					<strong>{areaCount}</strong>
+					<span>areas of life they cover</span>
+				</div>
+				<div>
+					<strong>{gatheringCount}</strong>
+					<span>gatherings already on the calendar</span>
+				</div>
+			</div>
+			<p class="min-scale__line reveal is-visible">
+				No single church in Grand Rapids offers this much. We do not either. We offer what the whole
+				Body offers, because it was never meant to be carried by one congregation.
+			</p>
+		</div>
+	</section>
+
+	<!-- The welcome -->
+	<section class="section prose-block">
+		<div class="container">
+			<p class="eyebrow reveal is-visible">You are welcome here</p>
+			<h2 class="prose-block__title reveal is-visible">A whole life, not a slot in a programme.</h2>
+			<div class="prose-block__body">
+				<p class="reveal is-visible">
+					People do not arrive at a church in pieces. You come with a marriage or the ache of not
+					having one, with a toddler who will not sit still, with a teenager you are losing sleep
+					over, with a job that ended, with a body that is failing, with a faith that is either
+					growing or quietly going cold.
+				</p>
+				<p class="reveal is-visible">
+					So we went looking for all of it. Not the parts that are convenient for us to run, and not
+					the parts that make us look good. Every season a family actually goes through, and someone
+					in this city who does that season well.
+				</p>
+				<p class="reveal is-visible">
+					We want your family to flourish more than we want your attendance. If the best thing for
+					you meets in somebody else's building on a Tuesday night, we would rather tell you where it
+					is than pretend we have it.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- How we think about this -->
 	<section class="section prose-block">
 		<div class="container">
 			<p class="eyebrow reveal is-visible">How we think about this</p>
@@ -94,10 +155,19 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 								</span>
 							</div>
 							<p>{family.blurb}</p>
-							<span class="min-family__cats">
-								{family.categories.slice(0, 3).map((c) => c.name).join(" · ")}
-								{family.categories.length > 3 && ` · +${family.categories.length - 3}`}
-							</span>
+							<ul class="min-family__breakdown">
+								{family.categories
+									.map((c) => ({ c, n: entriesInCategory(c.slug).filter(isOffering).length }))
+									.filter(({ n }) => n > 0)
+									.sort((a, b) => b.n - a.n || a.c.name.localeCompare(b.c.name))
+									.slice(0, 6)
+									.map(({ c, n }) => (
+										<li>
+											<span>{c.name}</span>
+											<em>{n}</em>
+										</li>
+									))}
+							</ul>
 							<span class="min-family__mix">
 								{sig > 0 && <em>{sig} ours</em>}
 								{sig > 0 && cur > 0 && " · "}
@@ -106,19 +176,6 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 						</a>
 					);
 				})}
-			</div>
-		</div>
-	</section>
-
-	<!-- The whole map -->
-	<section class="section" id="geography">
-		<div class="container">
-			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Where they are</p>
-				<h2>Close enough to actually go.</h2>
-			</div>
-			<div class="reveal is-visible">
-				<MinistryMap entries={curatedOfferings} label="the curated ministries" />
 			</div>
 		</div>
 	</section>

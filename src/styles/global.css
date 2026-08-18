@@ -2233,6 +2233,32 @@ strong {
 .min-tag--cat:hover { border-color: var(--gold-soft); color: var(--gold); }
 
 /* Family browse */
+/* The scale band. First thing on the ministries page, because the number IS the
+   argument — and it is the only place on the site where the type gets this big. */
+.min-scale { padding-top: 2.4rem; }
+.min-scale__band { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  padding: 2rem 0 1.7rem; border-top: 1px solid var(--line, rgba(255,255,255,0.12));
+  border-bottom: 1px solid var(--line, rgba(255,255,255,0.12)); text-align: center; }
+.min-scale__band > div { display: flex; flex-direction: column; gap: 0.4rem; }
+.min-scale__band strong { font-family: var(--font-display, serif); font-size: clamp(2.9rem, 8vw, 4.6rem);
+  line-height: 0.95; font-weight: 400; font-variant-numeric: tabular-nums; }
+.min-scale__band span { font-size: 0.82rem; letter-spacing: 0.07em; text-transform: uppercase;
+  opacity: 0.68; }
+.min-scale__line { margin: 1.6rem auto 0; max-width: 46ch; text-align: center; opacity: 0.85; }
+@media (max-width: 40rem) {
+  .min-scale__band { grid-template-columns: 1fr; gap: 1.6rem; }
+}
+
+/* Inside each area, what it actually contains. A person scanning for their own
+   season should find it here rather than having to open every card. */
+.min-family__breakdown { list-style: none; padding: 0; margin: 0.7rem 0 0;
+  display: flex; flex-wrap: wrap; gap: 0.3rem 0.45rem; }
+.min-family__breakdown li { display: inline-flex; align-items: baseline; gap: 0.3rem;
+  padding: 0.2rem 0.5rem; border-radius: 999px; font-size: 0.78rem;
+  background: var(--surface-2, rgba(255,255,255,0.05)); }
+.min-family__breakdown em { font-style: normal; font-variant-numeric: tabular-nums;
+  opacity: 0.7; font-size: 0.72rem; }
+
 .min-families {
 	margin-top: 2rem;
 	display: grid;
