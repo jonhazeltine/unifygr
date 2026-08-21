@@ -35,3 +35,13 @@ text; this file is the real orientation doc.
   enabled on this repo). Never commit straight to main.
 - Jon is non-technical — report outcomes in plain English; never ask him to
   review code or a PR.
+
+## Reaching the chief of staff (machine-local)
+
+A supervising chief-of-staff session on Jon's Mac watches every project's Mirror
+board, routines, and PRs. To hand it a finding outside your task: read
+`~/.claude/chief-of-staff.json` and send to the `sessionId` it names
+(`mcp__ccd_session_mgmt__send_message`). **Never search for it by name** — peer
+names in session listings come from working directories, not titles. If it isn't
+reachable, write the finding onto this project's Mirror board with a clear
+recommendation instead. (No such session or file exists on a clone elsewhere.)
