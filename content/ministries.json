@@ -503,7 +503,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-stale",
-				"evidence": "3 dates, years ['2026']"
+				"evidence": "3 dates, years ['2026']",
+				"next": [
+					{
+						"title": "Season of Hope",
+						"date": "2026-09-10",
+						"time": null,
+						"url": "https://www.meltrotter.org/events/"
+					},
+					{
+						"title": "Turkey Drop",
+						"date": "2026-11-18",
+						"time": "7:00 AM – 7:00 PM",
+						"url": "https://www.meltrotter.org/events/"
+					},
+					{
+						"title": "Thanksgiving Community Meal",
+						"date": "2026-11-26",
+						"time": "11:00 AM – 1:00 PM",
+						"url": "https://www.meltrotter.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "225 Commerce Avenue SW, Grand Rapids, MI 49503",
 			"lat": 42.95904,
@@ -735,7 +756,9 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "97 dates, years ['2024', '2025', '2026', '2027']"
+				"evidence": "Their events page returned a 403 to our fetch on 2026-08-22; a search found only a since-passed May 2026 course date, nothing upcoming to publish.",
+				"next": null,
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "2790 44th St SW Wyoming, MI 49519",
 			"lat": 42.8841,
@@ -763,7 +786,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "17 dates, years ['2024', '2026']"
+				"evidence": "17 dates, years ['2024', '2026']",
+				"next": [
+					{
+						"title": "Mecosta County Fundraising Banquet",
+						"date": "2026-09-10",
+						"time": null,
+						"url": "https://jailministry.org/events/"
+					},
+					{
+						"title": "Isabella County Fundraising Banquet",
+						"date": "2026-09-29",
+						"time": null,
+						"url": "https://jailministry.org/events/"
+					},
+					{
+						"title": "Ottawa County Fundraising Banquet",
+						"date": "2026-10-06",
+						"time": null,
+						"url": "https://jailministry.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"org": "Formerly Forgotten Man Ministries",
 			"address": "1480 Buchanan Ave SW Grand Rapids, MI 49507",
@@ -871,7 +915,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "17 dates, years ['2024', '2026']"
+				"evidence": "17 dates, years ['2024', '2026']",
+				"next": [
+					{
+						"title": "In-Person Volunteer Information Session",
+						"date": "2026-08-26",
+						"time": "4:00 PM",
+						"url": "https://literacycenterwm.org/events"
+					},
+					{
+						"title": "Online Volunteer Information Session",
+						"date": "2026-09-09",
+						"time": "6:00 PM",
+						"url": "https://literacycenterwm.org/events"
+					},
+					{
+						"title": "Wine & Words 2026",
+						"date": "2026-09-10",
+						"time": "6:00 PM",
+						"url": "https://literacycenterwm.org/events"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "207 Fulton St E, Suite 4000, Grand Rapids, MI, 49503",
 			"lat": 42.9634,
@@ -1065,7 +1130,9 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "7 dates, years ['2026']"
+				"evidence": "Their events page loaded but lists no upcoming dates as of 2026-08-22.",
+				"next": null,
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "400 Martin Luther King Jr. St. SE Grand Rapids, MI 49507",
 			"lat": 42.94839,
@@ -1093,7 +1160,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "74 dates, years ['2026']"
+				"evidence": "74 dates, years ['2026']",
+				"next": [
+					{
+						"title": "Money Smart Class 4 of 4",
+						"date": "2026-08-25",
+						"time": "5:30 PM – 7:30 PM",
+						"url": "https://www.habitatkent.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "1739 Elizabeth Ave NW Grand Rapids, MI 49504",
 			"lat": 42.9951,
@@ -1120,7 +1196,9 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "13 dates, years ['2026']"
+				"evidence": "Their events page only shows an expired 2023 listing as of 2026-08-22.",
+				"next": null,
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "1100 South Division Avenue Grand Rapids, Michigan 49507",
 			"lat": 42.94333,
@@ -1149,7 +1227,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "11 dates, years ['2025', '2026']"
+				"evidence": "11 dates, years ['2025', '2026']",
+				"next": [
+					{
+						"title": "Changing the Course for Children Golf Outing",
+						"date": "2026-09-14",
+						"time": null,
+						"url": "https://www.familypromisewm.org/news-and-events/category/events-fundraisers/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "516 Cherry St SE Grand Rapids, MI 49503",
 			"lat": 42.95907,
@@ -1178,7 +1265,22 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "23 dates, years ['2025', '2026']"
+				"evidence": "23 dates, years ['2025', '2026']",
+				"next": [
+					{
+						"title": "4th Annual Reception",
+						"date": "2026-10-29",
+						"time": null,
+						"url": "https://exaltahealth.org/events/"
+					},
+					{
+						"title": "Learn About Exalta Health - 2026 Series",
+						"date": "2026-11-12",
+						"time": null,
+						"url": "https://exaltahealth.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "2060 Division Ave S, Grand Rapids, MI 49507",
 			"lat": 42.92577,
@@ -1207,7 +1309,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "9 dates, years ['2025', '2026']"
+				"evidence": "9 dates, years ['2025', '2026']",
+				"next": [
+					{
+						"title": "Celebration",
+						"date": "2026-10-28",
+						"time": null,
+						"url": "https://cherryhealth.org/donate/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "1001 33rd St SE Grand Rapids, MI 49508",
 			"lat": 42.9042,
@@ -1261,7 +1372,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "38 dates, years ['2024', '2025', '2026']"
+				"evidence": "38 dates, years ['2024', '2025', '2026']",
+				"next": [
+					{
+						"title": "Spirits of Hope: Grand Rapids",
+						"date": "2026-10-07",
+						"time": "VIP early entry 5:30 PM; general admission 6:00 PM",
+						"url": "https://hopenetwork.org/foundation/events/2026-spirits-of-hope-gr"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "975 Ottawa Avenue NW, Grand Rapids MI 49503",
 			"lat": 42.97977,
@@ -1343,7 +1463,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "11 dates, years ['2026']"
+				"evidence": "11 dates, years ['2026']",
+				"next": [
+					{
+						"title": "Courage, Comfort & Cocktails",
+						"date": "2026-10-13",
+						"time": "6:00 PM – 9:30 PM",
+						"url": "https://www.elesplace.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			}
 		},
 		{
@@ -1370,7 +1499,22 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "27 dates, years ['2026']"
+				"evidence": "27 dates, years ['2026']",
+				"next": [
+					{
+						"title": "Big Star Lake Chapel",
+						"date": "2026-08-23",
+						"time": null,
+						"url": "https://winningathome.com/events/"
+					},
+					{
+						"title": "Sandy Pines Chapel",
+						"date": "2026-09-06",
+						"time": null,
+						"url": "https://winningathome.com/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "21 West 16th Street Holland, MI 49423",
 			"lat": 42.78319,
@@ -1403,7 +1547,7 @@
 				"evidence": null
 			},
 			"handoff": {
-				"how": "Campus Life and City Life run at specific schools and sites that are not listed publicly. Ask us for an introduction.",
+				"how": "Their site lists 29 Campus Life sites by school but publishes no meeting day, time, or location for any of them — including Northview High School and Union High School, the two nearest Knapp's Corner. Email info@wmyfc.org (or sulstad@wmyfc.org for Northview specifically) to ask this week's schedule.",
 				"person": null
 			},
 			"rhythm": null,
@@ -1425,8 +1569,8 @@
 			"bestFor": "Student athletes and coaches.",
 			"area": "West Michigan",
 			"city": "Grand Rapids",
-			"website": "https://www.fca.org",
-			"status": "no-details",
+			"website": "https://www.fcakentcounty.org",
+			"status": "proposed",
 			"calendar": {
 				"url": null,
 				"format": null,
@@ -1435,10 +1579,10 @@
 				"evidence": null
 			},
 			"handoff": {
-				"how": "Huddles meet at individual schools and are not listed publicly. Ask us and we will find out whether your kid's school has one.",
-				"person": null
+				"how": "FCA Kent County (the chapter that covers the Knapp's Corner area — westmichiganfca.org itself is currently unreachable) publishes a full huddle schedule by school at fcakentcounty.org/huddles: for example Forest Hills Central HS, Fridays 7:10am; East Kentwood HS, Fridays 7:00am; Grandville HS, Tuesdays 7:15am; Rockford HS, early-release Wednesdays 12:30pm. Contact Brian Broekhuizen (Area Director), bbroekhuizen@fca.org, 616-299-4882, to find your kid's school.",
+				"person": "Brian Broekhuizen"
 			},
-			"rhythm": null,
+			"rhythm": "Weekday mornings, by school",
 			"venue": "Meets on campus",
 			"relationship": "not-yet-spoken-to"
 		},
@@ -1582,7 +1726,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "84 dates, years ['2026', '2027']"
+				"evidence": "84 dates, years ['2026', '2027']",
+				"next": [
+					{
+						"title": "First Day MWF Preschool (Rockford campus)",
+						"date": "2026-08-24",
+						"time": null,
+						"url": "https://www.grcs.org/about-us/calendars-and-schedules"
+					},
+					{
+						"title": "GRPS Busing Starts Today (Iroquois campus)",
+						"date": "2026-08-24",
+						"time": null,
+						"url": "https://www.grcs.org/about-us/calendars-and-schedules"
+					},
+					{
+						"title": "First Day T.TH Preschool (Rockford campus)",
+						"date": "2026-08-25",
+						"time": null,
+						"url": "https://www.grcs.org/about-us/calendars-and-schedules"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "1050 Iroquois Dr. SE Grand Rapids, MI 49506",
 			"lat": 42.94358,
@@ -1668,7 +1833,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "9 dates, years ['2024', '2026']"
+				"evidence": "9 dates, years ['2024', '2026']",
+				"next": [
+					{
+						"title": "Why Not Communism? A Wisdom Conversation on Freedom, Faith, and the Future of America",
+						"date": "2026-10-01",
+						"time": "6:30 PM",
+						"url": "https://www.cornerstone.edu/news-events-blogs/events/wisdom-conversations/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"org": "Cornerstone University",
 			"address": "1001 East Beltline Ave NE, Grand Rapids, MI, 49525",
@@ -1697,7 +1871,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "25 dates, years ['2026']"
+				"evidence": "25 dates, years ['2026']",
+				"next": [
+					{
+						"title": "Convocation Chapel",
+						"date": "2026-09-09",
+						"time": "10:30 AM – 11:30 AM",
+						"url": "https://calvinseminary.edu/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "3233 Burton St SE Grand Rapids, MI 49546",
 			"lat": 42.92798,
@@ -1725,7 +1908,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "12 dates, years ['2024', '2025', '2026']"
+				"evidence": "12 dates, years ['2024', '2025', '2026']",
+				"next": [
+					{
+						"title": "2026 Scholarship Golf Scramble",
+						"date": "2026-09-16",
+						"time": null,
+						"url": "https://www.kuyper.edu/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "3333 East Beltline Ave. NE Grand Rapids, MI 49525",
 			"lat": 43.02245,
@@ -1754,7 +1946,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "10 dates, years ['2026']"
+				"evidence": "10 dates, years ['2026']",
+				"next": [
+					{
+						"title": "2026 Pittsburgh Dinner",
+						"date": "2026-09-30",
+						"time": "5:30 PM",
+						"url": "https://www.acton.org/events"
+					},
+					{
+						"title": "Annual Calihan Lecture and Novak Award Presentation",
+						"date": "2026-10-01",
+						"time": "5:00 PM",
+						"url": "https://www.acton.org/events"
+					},
+					{
+						"title": "POVERTY TRAP in Chicago: Advance Screening and Filmmaker Q&A",
+						"date": "2026-10-06",
+						"time": "6:00 PM",
+						"url": "https://www.acton.org/events"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			}
 		},
 		{
@@ -1838,7 +2051,9 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "17 dates, years ['2026']"
+				"evidence": "Their events page returned a 403 to our fetch on 2026-08-22; no specific dated event could be verified elsewhere.",
+				"next": null,
+				"nextCheckedOn": "2026-08-22"
 			}
 		},
 		{
@@ -2037,7 +2252,16 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "17 dates, years ['2024', '2025', '2026']"
+				"evidence": "17 dates, years ['2024', '2025', '2026']",
+				"next": [
+					{
+						"title": "Holland Home Annual Keeping the Promise Dinner",
+						"date": "2026-12-14",
+						"time": "6:00 PM – 9:00 PM",
+						"url": "https://hollandhome.org/foundation/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "2772 Pfeiffer Woods Dr. Grand Rapids, MI 49512",
 			"lat": 42.89223,
@@ -2066,7 +2290,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "27 dates, years ['2025', '2026', '2027']"
+				"evidence": "27 dates, years ['2025', '2026', '2027']",
+				"next": [
+					{
+						"title": "2026 Annual Fall Luncheon",
+						"date": "2026-10-06",
+						"time": "11:30 AM – 1:00 PM",
+						"url": "https://safehavenministries.org/events/"
+					},
+					{
+						"title": "Unbroken Wings: A Vigil of Remembrance",
+						"date": "2026-10-13",
+						"time": "6:00 PM – 7:00 PM",
+						"url": "https://safehavenministries.org/events/"
+					},
+					{
+						"title": "Domestic Violence and Anti-Trafficking Seminar",
+						"date": "2026-10-15",
+						"time": "6:00 PM – 9:00 PM",
+						"url": "https://safehavenministries.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			},
 			"address": "2627 Birchcrest Dr SE Grand Rapids, MI 49506",
 			"lat": 42.91555,
@@ -2120,7 +2365,28 @@
 				"format": "page",
 				"cadence": null,
 				"sync": "page-current",
-				"evidence": "14 dates, years ['2025', '2026', '2027']"
+				"evidence": "14 dates, years ['2025', '2026', '2027']",
+				"next": [
+					{
+						"title": "MALAWI | 2026 Ministry Field Visit",
+						"date": "2026-08-29",
+						"time": null,
+						"url": "https://www.bibleleague.org/events/"
+					},
+					{
+						"title": "MI Conference | Hope and Forgiveness in the Midst of Evil",
+						"date": "2026-09-11",
+						"time": null,
+						"url": "https://www.bibleleague.org/events/"
+					},
+					{
+						"title": "IA Conference | Hope and Forgiveness in the Midst of Evil",
+						"date": "2026-09-14",
+						"time": null,
+						"url": "https://www.bibleleague.org/events/"
+					}
+				],
+				"nextCheckedOn": "2026-08-22"
 			}
 		},
 		{
@@ -2522,11 +2788,11 @@
 			"bestFor": null,
 			"area": "Forest Hills Public Schools",
 			"city": "Grand Rapids",
-			"rhythm": null,
+			"rhythm": "Mondays, 7:57–9:15pm",
 			"href": null,
 			"website": "https://foresthills.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"how": "Young Life Club meets Mondays, 7:57–9:15pm, during the school year. WyldLife (middle school) meets every other Thursday, 7:11–8:15pm, at Cascade Fellowship, 6655 Cascade Rd SE. Capernaum meets every other Wednesday, 6:45–8pm, at Thornapple Covenant Church, 6595 Cascade Rd SE. Email joshgreene.yl@gmail.com to confirm this week's night.",
 				"person": null
 			},
 			"calendar": {
@@ -2536,7 +2802,7 @@
 				"sync": "none",
 				"evidence": null
 			},
-			"status": "no-details",
+			"status": "proposed",
 			"verified": null,
 			"lat": null,
 			"lng": null,
@@ -2547,7 +2813,7 @@
 			"name": "Young Life Rockford",
 			"org": "Young Life",
 			"venue": "Meets in homes and schools",
-			"venueUrl": "https://rockford.younglife.org/",
+			"venueUrl": "https://rockfordmi.younglife.org/",
 			"house": "out",
 			"tier": "partner-church",
 			"categories": [
@@ -2561,9 +2827,9 @@
 			"city": "Grand Rapids",
 			"rhythm": null,
 			"href": null,
-			"website": "https://rockford.younglife.org/",
+			"website": "https://rockfordmi.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"how": "Their site's old address (rockford.younglife.org) is dead; the live one is rockfordmi.younglife.org. It still does not publish a day or time — it points to a separate club calendar instead. Email rockfordyounglife@gmail.com to ask this week's night and location.",
 				"person": null
 			},
 			"calendar": {
@@ -2600,8 +2866,8 @@
 			"href": null,
 			"website": "https://kentwood.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
-				"person": null
+				"how": "Their site lists Young Life, WyldLife, Capernaum, College and Younglives programs by name, but no meeting day, time, or location for any of them. Email Jake Bajema, jacobbajema@gmail.com, to ask this week's night.",
+				"person": "Jake Bajema"
 			},
 			"calendar": {
 				"url": null,
@@ -2637,7 +2903,7 @@
 			"href": null,
 			"website": "https://grandrapidscity.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"how": "Their site names the two schools they serve, Burton Middle School and Union High School, but publishes no meeting day, time, or location. Email GRcityYL@gmail.com to ask this week's night.",
 				"person": null
 			},
 			"calendar": {
@@ -2674,7 +2940,7 @@
 			"href": null,
 			"website": "https://grsw.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"how": "Their site lists the schools they serve (Byron Center, Caledonia, Calvin Christian, Grandville, Godfrey-Lee, South Christian, The Potter's House) but routes families to each ministry's Instagram or Facebook rather than posting a schedule. Email office@grsw.younglife.org (or capernaum.grsw@gmail.com for Capernaum) to ask this week's night.",
 				"person": null
 			},
 			"calendar": {
@@ -2707,11 +2973,11 @@
 			"bestFor": null,
 			"area": "Northwest Grand Rapids",
 			"city": "Grand Rapids",
-			"rhythm": null,
+			"rhythm": "Mondays, 7:31pm (Sparta)",
 			"href": null,
 			"website": "https://northwestgrandrapids.younglife.org/",
 			"handoff": {
-				"how": "Their club meets in homes and changes through the year, so the time is not posted. Contact the area team, or ask us and we will find out for you.",
+				"how": "Sparta Young Life Club meets Monday nights, 7:31pm; Sparta WyldLife meets every other Tuesday, 7:31pm. Kenowa Hills Young Life meets Monday nights (time not posted); Comstock Park club is listed as 'coming soon.' No street address is posted for any of them. Email nwgryl@gmail.com to confirm location.",
 				"person": null
 			},
 			"calendar": {
@@ -2721,7 +2987,7 @@
 				"sync": "none",
 				"evidence": null
 			},
-			"status": "no-details",
+			"status": "proposed",
 			"verified": null,
 			"lat": null,
 			"lng": null,
@@ -3857,6 +4123,41 @@
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
 			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+		},
+		{
+			"slug": "community-christian-church-young-adults",
+			"name": "Young Adults",
+			"org": null,
+			"venue": "Community Christian Church",
+			"venueUrl": "https://communitycc.com/",
+			"house": "out",
+			"tier": "partner-church",
+			"categories": [
+				"young-adults"
+			],
+			"summary": "Young adults at Community Christian Church. Occasional rather than weekly, so watch the calendar.",
+			"why": null,
+			"bestFor": null,
+			"area": "Grand Rapids",
+			"city": "Grand Rapids",
+			"rhythm": null,
+			"href": null,
+			"website": null,
+			"handoff": {
+				"how": "The dates are on our calendar. Turn up, or ask us and we will introduce you first.",
+				"person": null
+			},
+			"calendar": {
+				"url": null,
+				"format": "ics",
+				"cadence": "occasional",
+				"sync": "available",
+				"evidence": "1 dates on The Church Map's Grand Rapids calendar"
+			},
+			"status": "proposed",
+			"verified": null,
+			"lat": 42.927246,
+			"lng": -85.663345
 		}
 	]
 }

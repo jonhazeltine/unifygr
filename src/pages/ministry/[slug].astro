@@ -104,6 +104,27 @@ const kicker = inHouse ? "Signature Ministry" : "Curated Ministry";
 						<><dt>Calendar</dt><dd>{entry.calendar.sync === "synced" ? "Synced to this site" : `Published ${entry.calendar.cadence}`}</dd></>
 					)}
 				</dl>
+				{entry.calendar?.next && entry.calendar.next.length > 0 && (
+					<div class="min-nextup reveal is-visible">
+						<p class="eyebrow">Coming up</p>
+						<ul class="min-nextup__list">
+							{entry.calendar.next.map((ev) => (
+								<li>
+									<span class="min-nextup__date">
+										{new Date(`${ev.date}T12:00:00`).toString() !== "Invalid Date"
+											? new Date(`${ev.date}T12:00:00`).toLocaleDateString("en-US", { month: "short", day: "numeric" })
+											: ev.date}
+										{ev.time ? ` · ${ev.time}` : ""}
+									</span>
+									<span class="min-nextup__title">{ev.title}</span>
+								</li>
+							))}
+						</ul>
+						<p class="min-nextup__source">
+							Straight from <a href={entry.calendar.url ?? entry.website ?? "#"} target="_blank" rel="noopener">their own events page</a>.
+						</p>
+					</div>
+				)}
 				<div class="min-actions">
 					{entry.href && <a class="button button--primary" href={entry.href}>Learn more</a>}
 					{entry.website && (

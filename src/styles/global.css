@@ -1989,6 +1989,8 @@ strong {
 .sermon-tile__body { padding: 1.1rem 1.2rem 1.3rem; }
 .sermon-tile__tag { color: var(--gold); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
 .sermon-tile__body h3 { margin-top: .35rem; font-size: 1.15rem; }
+.sermon-tile__speaker { margin: .3rem 0 0; font-size: .85rem; color: var(--muted); }
+.watch-live__speaker { margin: .2rem 0 0; font-size: .95rem; color: var(--muted); }
 
 /* Home → enter link */
 .hero__enter-link { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem; color: var(--gold); font-size: .8rem; letter-spacing: .16em; text-transform: uppercase; }
@@ -2350,6 +2352,16 @@ strong {
 .min-facts dt { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .min-facts dd { margin: 0; font-size: 0.95rem; }
 .min-facts dd a { color: var(--gold); }
+.min-nextup {
+	margin: 0 0 1.6rem; padding: 1.1rem 1.3rem;
+	border: 1px solid var(--line); border-radius: 14px; background: rgba(242, 210, 162, 0.04);
+}
+.min-nextup__list { list-style: none; margin: 0.6rem 0 0; padding: 0; display: grid; gap: 0.55rem; }
+.min-nextup__list li { display: flex; flex-direction: column; gap: 0.1rem; }
+.min-nextup__date { font-size: 0.78rem; letter-spacing: 0.04em; color: var(--gold); }
+.min-nextup__title { font-size: 0.95rem; }
+.min-nextup__source { margin: 0.7rem 0 0; font-size: 0.78rem; color: var(--muted); }
+.min-nextup__source a { color: var(--gold); }
 .min-actions { display: grid; gap: 0.6rem; }
 .min-actions .button { justify-content: center; text-align: center; }
 
