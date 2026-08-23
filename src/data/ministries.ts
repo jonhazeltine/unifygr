@@ -31,6 +31,14 @@ export type Handoff = {
 	person: string | null;
 };
 
+export type NextEvent = {
+	title: string;
+	/** ISO date (YYYY-MM-DD) where the source gave us a real year; otherwise as shown. */
+	date: string;
+	time?: string | null;
+	url: string;
+};
+
 export type CalendarLink = {
 	url: string | null;
 	/** ics | google | thechurches | page — how we would pull their dates in. */
@@ -40,6 +48,10 @@ export type CalendarLink = {
 	sync: string | null;
 	/** What the enrichment pass actually saw, so a claim can be checked. */
 	evidence?: string | null;
+	/** Real upcoming dates read straight off their own events page. Never invented. */
+	next?: NextEvent[] | null;
+	/** When `next` was last pulled. */
+	nextCheckedOn?: string | null;
 };
 
 export type Entry = {
