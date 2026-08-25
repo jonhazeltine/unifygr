@@ -39,6 +39,9 @@ html {
 }
 
 body {
+	/* body is the scroll container here, so it needs the offset too or an
+	   anchor lands underneath the sticky header. */
+	scroll-padding-top: 6rem;
 	margin: 0;
 	font-family: "Atkinson", system-ui, sans-serif;
 	color: var(--text);
