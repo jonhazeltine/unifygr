@@ -1,5 +1,5 @@
 {
-	"_comment": "Card art per ministry area. Derived from the site's existing cinematic stills so every card reads as one set; regenerate per-area art later and drop it in under the same filenames.",
+	"_comment": "Card art per ministry area — one generated image each, no sharing. Prompts and the exposure rule live in AI_ART_DIRECTION.md under 'Ministry card art'. To replace one, drop a new file in under the same filename.",
 	"images": {
 		"worship-and-prayer": "/art/ministries/worship-and-prayer.jpg",
 		"formation": "/art/ministries/formation.jpg",

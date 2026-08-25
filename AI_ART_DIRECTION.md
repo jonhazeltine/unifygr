@@ -43,3 +43,39 @@ Recommended generation settings:
 - Keep prompt style consistent across all images.
 - Reuse the same seed family when the tool supports it.
 - Reduce prompt variation between scenes; change only subject matter.
+
+## Ministry card art
+
+One image per ministry area in `public/art/ministries/<family-slug>.jpg`, 900×600.
+Sixteen areas, sixteen distinct images — no sharing between areas.
+
+Shared spine, appended to every per-area subject so the set reads as one family:
+
+`Cinematic spiritual minimalism, midnight blue and charcoal palette, warm gold light, faint cool-blue secondary glow, visible volumetric light beams, soft mist and fine grain, monumental composition with generous negative space, reverent and restrained. Luminous and generously lit — the light fills much of the frame and the subject reads clearly; rich midtones, not underexposed, not a black frame. Premium editorial lighting, realistic light behaviour, no faces visible, no text or logos.`
+
+Per-area subjects (change only this half):
+
+| Area | Subject |
+|---|---|
+| worship-and-prayer | glowing circular window of light above a congregation in silhouette |
+| formation | long table, one open book under a hanging lamp, empty chairs |
+| kids | children in silhouette running toward a tall lit doorway |
+| students | young figures on a rooftop edge at blue hour, city glow beyond |
+| marriage-family | two figures walking a narrow lit path together |
+| foster-adoption | an adult and a child at a warmly lit doorway, seen from behind |
+| men-women | a circle of empty chairs under one hanging lamp |
+| recovery | a figure walking out of a tunnel into warm gold light |
+| mental-health | a figure at a tall window as dawn floods a quiet room |
+| practical-care | a lit doorway at night, crates stacked in silhouette outside |
+| health | a bedroom at dawn, light across a made bed and a glass of water |
+| justice | a heavy gate standing open, dawn light flooding through |
+| mission | city skyline at blue hour, one light breaking outward across it |
+| church-leaders | an empty lectern under a broad shaft of light |
+| creative | light through a tall patterned window, instruments in silhouette |
+| seniors | two figures on a bench facing a golden horizon over water |
+
+**Exposure rule.** The card crops a short horizontal band and lays a gradient over
+it, so anything underexposed becomes a black rectangle. After generating,
+normalise the whole set to a mean luminance of ~56 with a per-image gamma
+(floor the gamma at 0.42 so noise is not lifted out of true black). Straight
+out of the model these ranged 15–55; without the pass the set looks unrelated.
