@@ -65,11 +65,15 @@ export default defineConfig({
 						],
 					},
 					{
+						// The Watch page pulls recent services straight from the YouTube
+						// channel. This list is only the fallback (if YouTube can't be
+						// reached) and a place to override a video's title/tag by ID.
+						// NOTE: changing the SHAPE of this field breaks the production
+						// build until TinaCloud re-indexes the schema — it has been stuck
+						// on the 2026-06-29 index, so label/field edits here fail the deploy.
 						type: "object",
 						name: "sermons",
-						label: "Recent Services (overrides)",
-						description:
-							"The Watch page pulls recent services straight from the YouTube channel. This list is only used if YouTube can't be reached, and to override the title/tag of a video (match the YouTube Video ID).",
+						label: "Recent Services",
 						list: true,
 						ui: { itemProps: (item) => ({ label: item ? `${item.title} ${item.date || ""}` : "Service" }) },
 						fields: [
