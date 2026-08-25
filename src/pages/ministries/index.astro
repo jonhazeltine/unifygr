@@ -1,13 +1,11 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
-import MinistryMap from "../../components/MinistryMap.astro";
 import {
 	allFamiliesIncludingSpecialised,
 	families,
 	standard,
 	counts,
-	inHouse,
 	outOfHouse,
 	familyCount,
 	familyImage,
@@ -19,12 +17,7 @@ import {
 	sortEntries,
 } from "../../data/ministries";
 
-const signature = sortEntries(inHouse).filter((e) => e.tier === "signature");
 const live = withLiveCalendar();
-
-// Curated needs a section of its own. Sending it to the category browse landed
-// people in a mixed list with our own ministries in it.
-const curatedOfferings = sortEntries(outOfHouse.filter((e) => isOffering(e) && isListable(e)));
 
 const curatedByFamily = allFamiliesIncludingSpecialised
 	.map((family) => {
@@ -112,19 +105,6 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 						</a>
 					);
 				})}
-			</div>
-		</div>
-	</section>
-
-	<!-- The whole map -->
-	<section class="section" id="geography">
-		<div class="container">
-			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Where they are</p>
-				<h2>Close enough to actually go.</h2>
-			</div>
-			<div class="reveal is-visible">
-				<MinistryMap entries={curatedOfferings} label="the curated ministries" />
 			</div>
 		</div>
 	</section>

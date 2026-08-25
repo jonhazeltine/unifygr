@@ -6,11 +6,13 @@ different zooms. Any page then picks the tightest frame that contains its own
 pins and draws them itself. That lets every category have a real map of its own
 without carrying a separate image for each one.
 
-    python3 scripts/build-ministry-maps.py
+    python3 scripts/build-ministry-maps.py   (needs Pillow: pip install pillow)
 
 Writes public/art/maps/ and content/ministry-maps.json.
 """
-import json, os, subprocess, urllib.request
+import io, json, os, subprocess, urllib.request
+
+from PIL import Image, ImageEnhance
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "public/art/maps")
@@ -36,6 +38,19 @@ def token():
     return out.split("=", 1)[1]
 
 
+def tone(data: bytes) -> Image.Image:
+    """Mapbox's dark style is almost pure charcoal — on our near-black pages it
+    reads as an empty rectangle. Lift it and tilt it toward midnight blue so the
+    roads, the river and the city labels are actually visible."""
+    im = Image.open(io.BytesIO(data)).convert("RGB")
+    im = ImageEnhance.Brightness(im).enhance(1.75)
+    im = ImageEnhance.Contrast(im).enhance(1.45)
+    r, g, b = im.split()
+    r = r.point(lambda v: int(v * 0.96))
+    b = b.point(lambda v: min(255, int(v * 1.10 + 6)))
+    return Image.merge("RGB", (r, g, b))
+
+
 def fetch(clat, clng, zoom, path):
     url = (f"https://api.mapbox.com/styles/v1/{STYLE}/static/"
            f"{clng:.6f},{clat:.6f},{zoom:.2f},0/{W}x{H}@2x"
@@ -43,12 +58,7 @@ def fetch(clat, clng, zoom, path):
     data = urllib.request.urlopen(url, timeout=60).read()
     if not data.startswith(b"\x89PNG"):
         raise RuntimeError(f"not a png for {path}")
-    tmp = path + ".png"
-    with open(tmp, "wb") as f:
-        f.write(data)
-    subprocess.run(["sips", "-s", "format", "jpeg", "-s", "formatOptions", "78",
-                    tmp, "--out", path], capture_output=True, check=True)
-    os.remove(tmp)
+    tone(data).save(path, "JPEG", quality=78, optimize=True)
     return os.path.getsize(path)
 
 
