@@ -2591,13 +2591,31 @@ strong {
 
 .min-themes { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 1.6rem; }
 .min-theme {
-	padding: 0.3rem 0.7rem; border: 1px solid var(--line); border-radius: 999px;
+	padding: 0.34rem 0.75rem; border: 1px solid var(--line); border-radius: 999px;
 	font-size: 0.8rem; color: var(--muted);
+	font-family: inherit; background: none; cursor: pointer; line-height: 1.35;
+	display: inline-flex; align-items: center; gap: 0.32rem; min-height: 2.375rem;
+	-webkit-user-select: none; user-select: none; -webkit-tap-highlight-color: transparent;
+	transition: border-color 0.16s ease, background 0.16s ease, color 0.16s ease;
+}
+.min-theme:hover { border-color: var(--gold-soft); color: var(--text); }
+.min-theme.is-active {
+	border-color: var(--gold); background: rgba(242, 210, 162, 0.12); color: var(--text);
 }
 .min-theme strong { color: var(--gold); font-weight: 400; font-variant-numeric: tabular-nums; }
+/* Sixteen of these is a wall, especially on a phone — the rest wait behind "more". */
+.min-theme--extra { display: none; }
+.min-themes.is-expanded .min-theme--extra { display: inline-flex; }
+.min-theme--more { color: var(--gold); }
+
+@media (max-width: 680px) {
+	.min-themes { gap: 0.4rem; }
+	.min-theme { padding: 0.3rem 0.65rem; font-size: 0.78rem; }
+}
 
 /* ---- Our calendar: days and events ---- */
 .min-days { display: grid; gap: 1rem; }
+.min-day[hidden] { display: none; }
 .min-day {
 	display: grid; grid-template-columns: minmax(120px, 160px) minmax(0, 1fr); gap: 1.4rem;
 	padding: 1.2rem 1.4rem; border: 1px solid var(--line); border-radius: 16px; background: var(--panel);
@@ -2613,7 +2631,9 @@ strong {
 	display: grid; grid-template-columns: 5.2rem minmax(0, 1fr) auto; gap: 0.9rem;
 	align-items: baseline; padding-bottom: 0.7rem; border-bottom: 1px solid var(--line);
 }
-.min-day__events li:last-child { border-bottom: 0; padding-bottom: 0; }
+.min-day__events li:last-child,
+.min-day__events li.is-last { border-bottom: 0; padding-bottom: 0; }
+.min-day__events li[hidden] { display: none; }
 .min-ev__time { color: var(--gold); font-size: 0.82rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .min-ev__body { display: grid; gap: 0.1rem; min-width: 0; }
 .min-ev__title { color: var(--text); font-size: 0.97rem; }
