@@ -31,9 +31,13 @@ function whoIs(token: string | undefined): Permissions | null {
 	} catch {
 		return null;
 	}
+	// Look up own properties only. A plain object inherits `toString`,
+	// `constructor` and friends, so `users[token]` would otherwise hand a
+	// caller who guessed /api/mcp/toString a truthy entry and full access.
+	if (!Object.prototype.hasOwnProperty.call(users, token)) return null;
 	const entry = users[token];
-	if (!entry) return null;
-	return { name: entry.name, canSendToLists: Boolean(entry.canSendToLists) };
+	if (!entry || typeof entry !== "object" || typeof entry.name !== "string") return null;
+	return { name: entry.name, canSendToLists: entry.canSendToLists === true };
 }
 
 export const POST: APIRoute = async ({ request, params }) => {

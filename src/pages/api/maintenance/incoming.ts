@@ -19,7 +19,7 @@ import type { APIRoute } from "astro";
 import { sendText } from "../../../lib/clearstream/client";
 import { identifyResident, houseProject } from "../../../lib/maintenance/houses";
 import { triage } from "../../../lib/maintenance/triage";
-import { createFollowUpTask, asanaConfigured, AsanaError } from "../../../lib/connect/asana";
+import { createFollowUpTask, AsanaError } from "../../../lib/connect/asana";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -93,7 +93,9 @@ export const POST: APIRoute = async ({ request, url }) => {
 
 	const project = houseProject(resident.house);
 	if (!project) return handOff(`No Asana project is mapped for ${resident.house}.`);
-	if (!asanaConfigured()) return handOff("Asana isn't connected on this deployment.");
+	// The house project stands on its own — it does not need the unrelated
+	// Connect Card project to be configured, only the shared Asana token.
+	if (!process.env.ASANA_TOKEN) return handOff("Asana isn't connected on this deployment.");
 
 	let task: { gid: string; url: string };
 	try {
@@ -140,9 +142,15 @@ export const POST: APIRoute = async ({ request, url }) => {
 	return json({ task, alert, replied: false });
 };
 
+/**
+ * Due dates are counted from the date it is *in Grand Rapids*, not in UTC.
+ * A text at 9pm local is already tomorrow in UTC, which would push an
+ * emergency to "due tomorrow" — exactly the wrong day.
+ */
 function dueDate(urgency: string): string {
 	const days = urgency === "emergency" ? 0 : urgency === "soon" ? 2 : 7;
-	const d = new Date();
-	d.setDate(d.getDate() + days);
+	const local = new Date().toLocaleDateString("en-CA", { timeZone: "America/Detroit" });
+	const d = new Date(`${local}T12:00:00Z`);
+	d.setUTCDate(d.getUTCDate() + days);
 	return d.toISOString().slice(0, 10);
 }
