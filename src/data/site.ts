@@ -1,12 +1,12 @@
 // Central content for New Life GR / Unify GR.
-// Structured so it can be lifted into TinaCMS collections later without
+// Structured so it stays easy to edit by hand or through the Studio without
 // reshaping the pages that consume it.
 
 import siteContent from "../../content/site.json";
 
 const c = siteContent.church;
 
-// Editable basics come from content/site.json (managed by TinaCMS).
+// Editable basics come from content/site.json (edited in the Studio).
 // Technical links (socials, CCB, giving, calendar) stay in code.
 export const church = {
 	name: c.name,
@@ -44,7 +44,7 @@ export const church = {
 };
 
 // Recent messages — the Sunday morning live services (and worship nights).
-// Managed in content/site.json (TinaCMS); can be auto-synced from YouTube later.
+// Fallback + title overrides for the Watch page; the live list comes from YouTube.
 export const sermons = siteContent.sermons;
 
 export type PillarItem = {
@@ -115,7 +115,7 @@ export const pillars: Pillar[] = [
 // ---- About content (real, captured from the live site) ----
 
 // The Mission — five commitments that flow inward → outward, living under
-// the three Vision pillars. Managed in content/site.json (TinaCMS).
+// the three Vision pillars. Managed in content/site.json (edited in the Studio).
 export const mission = siteContent.mission;
 
 export const vision = [
