@@ -67,7 +67,9 @@ export default defineConfig({
 					{
 						type: "object",
 						name: "sermons",
-						label: "Recent Services",
+						label: "Recent Services (overrides)",
+						description:
+							"The Watch page pulls recent services straight from the YouTube channel. This list is only used if YouTube can't be reached, and to override the title/tag of a video (match the YouTube Video ID).",
 						list: true,
 						ui: { itemProps: (item) => ({ label: item ? `${item.title} ${item.date || ""}` : "Service" }) },
 						fields: [
