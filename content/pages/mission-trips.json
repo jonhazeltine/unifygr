@@ -29,8 +29,7 @@
 				"image": "/art/generated/mission-ambient-v2-thumb.webp",
 				"video": "/art/generated/mission-ambient-v2.mp4",
 				"buttons": [
-					{ "label": "Mission Trip Application", "href": "https://newlife.ccbchurch.com/goto/forms/156/responses/new", "style": "primary" },
-					{ "label": "Give to the Team", "href": "/giving", "style": "secondary" }
+					{ "label": "Give to the Team", "href": "/giving", "style": "primary" }
 				],
 				"facts": [
 					{ "label": "Partner", "value": "Mission of Hope" },

@@ -34,7 +34,7 @@ export const church = {
 		handle: "@newlifegrandrapids2177",
 	},
 	external: {
-		connectCard: "https://newlife.ccbchurch.com/goto/forms/156/responses/new",
+		connectCard: "/connect", // our own form — writes to CCB and Asana (was CCB form 156)
 		memberLogin: "https://newlife.ccbchurch.com",
 		giveOnline: "https://app.securegive.com/NewLifeGR/new-life/donate/category",
 		textToGive: c.textToGive,

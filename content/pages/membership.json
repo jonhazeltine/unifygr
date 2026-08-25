@@ -26,7 +26,7 @@
 				"title": "This page is ready for your content.",
 				"body": "What membership means at New Life, the path to becoming a member, and how to take the next step. Staff can fill this in directly in the Page Builder.",
 				"buttons": [
-					{ "label": "Connect Card", "href": "https://newlife.ccbchurch.com/goto/forms/156/responses/new", "style": "primary" }
+					{ "label": "Connect Card", "href": "/connect", "style": "primary" }
 				]
 			}
 		}

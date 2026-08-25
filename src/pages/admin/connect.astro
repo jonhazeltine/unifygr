@@ -1,0 +1,187 @@
+---
+// Connect Card submissions — the staff view.
+//
+// Standalone rather than wrapped in the site layout: this is a work surface,
+// not a page of the website, and it must never be indexed.
+import "../../styles/global.css";
+export const prerender = false;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>Connect Cards | New Life</title>
+	</head>
+	<body class="admin-body">
+		<main class="admin-shell">
+			<header class="admin-head">
+				<p class="eyebrow">New Life</p>
+				<h1>Connect Cards</h1>
+				<p class="admin-sub">Everything sent from the Connect Card on unifygr.com, newest first.</p>
+			</header>
+
+			<form class="admin-gate" id="gate">
+				<label class="field">
+					<span>Password</span>
+					<input name="passcode" type="password" autocomplete="current-password" required />
+				</label>
+				<button class="button button--primary" type="submit">Sign in</button>
+				<p class="admin-error" id="gate-error" role="alert" hidden></p>
+			</form>
+
+			<section class="admin-list" id="list" hidden>
+				<div class="admin-toolbar">
+					<button class="button button--secondary" type="button" id="refresh">Refresh</button>
+					<button class="button button--secondary" type="button" id="signout">Sign out</button>
+				</div>
+				<div id="rows"></div>
+			</section>
+		</main>
+
+		<style>
+			.admin-body { background: var(--bg); color: var(--text); }
+			.admin-shell { max-width: 60rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+			.admin-head h1 { margin: 0.3rem 0 0.5rem; }
+			.admin-sub { color: var(--muted); margin: 0 0 2rem; }
+
+			.admin-gate { display: grid; gap: 1rem; max-width: 22rem; }
+			.field { display: grid; gap: 0.5rem; }
+			.field > span { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+			.field input { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--text); font: inherit; }
+			.admin-error { color: var(--rose); margin: 0; }
+
+			.admin-toolbar { display: flex; gap: 0.7rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+
+			.card { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.3rem 1.4rem; margin-bottom: 1rem; }
+			.card__top { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+			.card__name { font-size: 1.15rem; font-weight: 600; margin: 0; }
+			.card__when { color: var(--muted); font-size: 0.85rem; }
+			.card__want { color: var(--gold); margin: 0.35rem 0 0.8rem; }
+			.card__contact { color: var(--muted); margin: 0 0 0.8rem; font-size: 0.92rem; }
+			.card__contact a { color: var(--muted); }
+			.card__message { white-space: pre-wrap; border-left: 2px solid var(--gold-soft); padding-left: 1rem; margin: 0 0 1rem; }
+
+			.legs { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+			.leg { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; padding: 0.35rem 0.7rem; border-radius: 999px; border: 1px solid var(--line); }
+			.leg--ok { color: #9fe0b0; border-color: rgba(159, 224, 176, 0.4); }
+			.leg--failed { color: var(--rose); border-color: rgba(238, 199, 183, 0.45); }
+			.leg--pending { color: var(--muted); }
+			.leg a { color: inherit; }
+			.retry { font: inherit; font-size: 0.85rem; background: none; border: 1px solid var(--line); color: var(--text); border-radius: 999px; padding: 0.35rem 0.8rem; cursor: pointer; }
+			.retry[disabled] { opacity: 0.5; cursor: progress; }
+			.detail { color: var(--muted); font-size: 0.82rem; margin: 0.6rem 0 0; }
+			.empty { color: var(--muted); }
+		</style>
+
+		<script>
+			const gate = document.getElementById("gate") as HTMLFormElement;
+			const gateError = document.getElementById("gate-error") as HTMLParagraphElement;
+			const list = document.getElementById("list") as HTMLElement;
+			const rows = document.getElementById("rows") as HTMLElement;
+
+			const escapeHtml = (s: string) =>
+				s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+
+			const when = (iso: string) =>
+				new Date(iso).toLocaleString("en-US", {
+					timeZone: "America/Detroit",
+					month: "short", day: "numeric", hour: "numeric", minute: "2-digit",
+				});
+
+			function leg(name: string, d: any, id: string, target: string) {
+				const cls = d?.status === "ok" ? "leg--ok" : d?.status === "failed" ? "leg--failed" : "leg--pending";
+				const label = d?.status === "ok" ? `${name} ✓` : d?.status === "failed" ? `${name} failed` : `${name} waiting`;
+				const link = d?.url ? ` <a href="${escapeHtml(d.url)}" target="_blank" rel="noopener">open</a>` : "";
+				const retry = d?.status === "ok" ? "" : ` <button class="retry" data-id="${id}" data-target="${target}">Retry</button>`;
+				return `<span class="leg ${cls}">${label}${link}</span>${retry}`;
+			}
+
+			function render(submissions: any[]) {
+				if (!submissions.length) {
+					rows.innerHTML = `<p class="empty">No connect cards yet.</p>`;
+					return;
+				}
+				rows.innerHTML = submissions
+					.map((s) => {
+						const contact = [s.email, s.phone, s.city].filter(Boolean).map(escapeHtml).join(" &middot; ");
+						const detail = [s.ccb?.detail, s.asana?.detail].filter(Boolean).map(escapeHtml).join(" ");
+						return `<article class="card">
+							<div class="card__top">
+								<p class="card__name">${escapeHtml(`${s.firstName} ${s.lastName}`)}</p>
+								<span class="card__when">${when(s.receivedAt)}</span>
+							</div>
+							<p class="card__want">${escapeHtml(s.interestLabel)}</p>
+							${contact ? `<p class="card__contact">${contact}</p>` : ""}
+							${s.message ? `<p class="card__message">${escapeHtml(s.message)}</p>` : ""}
+							<div class="legs">
+								${leg("CCB", s.ccb, s.id, "ccb")}
+								${leg("Asana", s.asana, s.id, "asana")}
+							</div>
+							${detail ? `<p class="detail">${detail}</p>` : ""}
+						</article>`;
+					})
+					.join("");
+			}
+
+			async function load() {
+				const res = await fetch("/api/connect/admin");
+				if (res.status === 401) {
+					list.hidden = true;
+					gate.hidden = false;
+					return;
+				}
+				const data = await res.json().catch(() => ({}));
+				gate.hidden = true;
+				list.hidden = false;
+				if (!data.ok) {
+					rows.innerHTML = `<p class="admin-error">${escapeHtml(data.error || "Could not load submissions.")}</p>`;
+					return;
+				}
+				render(data.submissions || []);
+			}
+
+			gate.addEventListener("submit", async (event) => {
+				event.preventDefault();
+				gateError.hidden = true;
+				const passcode = (new FormData(gate).get("passcode") || "").toString();
+				const res = await fetch("/api/connect/session", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify({ passcode }),
+				});
+				if (!res.ok) {
+					gateError.textContent = "Wrong password.";
+					gateError.hidden = false;
+					return;
+				}
+				gate.reset();
+				await load();
+			});
+
+			document.getElementById("refresh")?.addEventListener("click", load);
+			document.getElementById("signout")?.addEventListener("click", async () => {
+				await fetch("/api/connect/session", { method: "DELETE" });
+				list.hidden = true;
+				gate.hidden = false;
+			});
+
+			rows.addEventListener("click", async (event) => {
+				const button = (event.target as HTMLElement).closest(".retry") as HTMLButtonElement | null;
+				if (!button) return;
+				button.disabled = true;
+				button.textContent = "Retrying…";
+				await fetch("/api/connect/admin", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify({ id: button.dataset.id, target: button.dataset.target }),
+				});
+				await load();
+			});
+
+			load();
+		</script>
+	</body>
+</html>
