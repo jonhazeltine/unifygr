@@ -1,0 +1,782 @@
+/* ---------------------------------------------------------------------------
+   New Life — the Sunday-decision layer.
+
+   Everything here serves one reader: someone on a phone, probably on a
+   Saturday night, deciding whether to walk into a room full of strangers
+   tomorrow morning. Atmosphere is allowed to exist behind the answers. It is
+   never allowed to be in front of them.
+
+   Loaded only by Site.astro, so it cannot collide with the older pages.
+--------------------------------------------------------------------------- */
+
+@font-face {
+	font-family: "Fraunces";
+	src: url("/fonts/fraunces-400.woff2") format("woff2");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "Fraunces";
+	src: url("/fonts/fraunces-600.woff2") format("woff2");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+
+body.v2 {
+	--ink: #06070a;
+	--ink-raised: #10141c;
+	--ivory: #f7f2ea;
+	--muted: rgba(247, 242, 234, 0.66);
+	--faint: rgba(247, 242, 234, 0.42);
+	--gold: #f2d2a2;
+	--gold-ink: #1c1305;
+	--line: rgba(247, 242, 234, 0.14);
+
+	--display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	--body: "Atkinson", system-ui, -apple-system, sans-serif;
+
+	--shell: 62rem;
+	--gutter: 1.35rem;
+	--bar: 4.1rem;
+
+	margin: 0;
+	background: var(--ink);
+	color: var(--ivory);
+	font-family: var(--body);
+	font-size: 17px;
+	line-height: 1.55;
+	-webkit-font-smoothing: antialiased;
+	overflow-x: hidden;
+}
+
+/* The old global stylesheet paints ambience onto the body itself. */
+body.v2::before,
+body.v2::after {
+	display: none;
+}
+
+body.v2 * {
+	box-sizing: border-box;
+}
+
+/* Base type sits at zero specificity so every component class below can set
+   its own margins without a fight. */
+:where(body.v2) :where(h1, h2, h3) {
+	font-family: var(--display);
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	line-height: 1.06;
+	margin: 0;
+	text-wrap: balance;
+}
+
+:where(body.v2) :where(p) {
+	margin: 0;
+}
+
+:where(body.v2) :where(a) {
+	color: inherit;
+}
+
+body.v2 :focus-visible {
+	outline: 2px solid var(--gold);
+	outline-offset: 3px;
+	border-radius: 4px;
+}
+
+.shell {
+	width: 100%;
+	max-width: var(--shell);
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+/* --- Header ------------------------------------------------------------- */
+
+.chrome {
+	position: sticky;
+	top: 0;
+	z-index: 60;
+	background: rgba(6, 7, 10, 0.92);
+	backdrop-filter: blur(14px);
+	border-bottom: 1px solid var(--line);
+}
+
+.chrome__bar {
+	max-width: var(--shell);
+	margin: 0 auto;
+	min-height: var(--bar);
+	padding: 0 var(--gutter);
+	display: flex;
+	align-items: center;
+	gap: 0.9rem;
+}
+
+.chrome__brand {
+	font-family: var(--display);
+	font-size: 1.22rem;
+	letter-spacing: -0.03em;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+/* The service time rides in the header on every page, at every width. */
+.chrome__when {
+	margin-left: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	gap: 0.05rem;
+	text-decoration: none;
+	padding: 0.3rem 0.1rem 0.3rem 0.6rem;
+	line-height: 1.15;
+}
+
+.chrome__when-time {
+	font-size: 0.85rem;
+	font-weight: 700;
+	color: var(--gold);
+	letter-spacing: 0.01em;
+}
+
+.chrome__when-place {
+	font-size: 0.72rem;
+	color: var(--faint);
+}
+
+.chrome__toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: none;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	color: var(--ivory);
+	font: inherit;
+	font-size: 0.82rem;
+	padding: 0.45rem 0.85rem;
+	cursor: pointer;
+}
+
+.chrome__bars,
+.chrome__bars::before,
+.chrome__bars::after {
+	display: block;
+	width: 15px;
+	height: 1.5px;
+	background: currentColor;
+	transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.chrome__bars {
+	position: relative;
+}
+
+.chrome__bars::before,
+.chrome__bars::after {
+	content: "";
+	position: absolute;
+	left: 0;
+}
+
+.chrome__bars::before { top: -5px; }
+.chrome__bars::after { top: 5px; }
+
+.chrome.is-open .chrome__bars { background: transparent; }
+.chrome.is-open .chrome__bars::before { transform: translateY(5px) rotate(45deg); }
+.chrome.is-open .chrome__bars::after { transform: translateY(-5px) rotate(-45deg); }
+
+.chrome__nav {
+	border-top: 1px solid var(--line);
+	padding: 0.6rem var(--gutter) 1.4rem;
+	max-width: var(--shell);
+	margin: 0 auto;
+}
+
+.navlist {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.navlist__item {
+	border-bottom: 1px solid var(--line);
+}
+
+.navlist__link {
+	display: block;
+	padding: 0.95rem 0;
+	font-family: var(--display);
+	font-size: 1.5rem;
+	letter-spacing: -0.02em;
+	text-decoration: none;
+}
+
+.navlist__sub {
+	list-style: none;
+	margin: 0 0 1rem;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 1.1rem;
+}
+
+.navlist__sub a {
+	font-size: 0.9rem;
+	color: var(--muted);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+}
+
+.navlist__sub a:hover {
+	color: var(--ivory);
+	border-bottom-color: var(--line);
+}
+
+.navlist__cta {
+	display: inline-block;
+	margin-top: 1.3rem;
+	background: var(--gold);
+	color: var(--gold-ink);
+	font-weight: 700;
+	font-size: 0.95rem;
+	text-decoration: none;
+	padding: 0.8rem 1.4rem;
+	border-radius: 999px;
+}
+
+/* --- Buttons ------------------------------------------------------------ */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.95rem 1.5rem;
+	border-radius: 999px;
+	font-weight: 700;
+	font-size: 1rem;
+	text-decoration: none;
+	border: 1px solid transparent;
+	transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+
+.btn--gold {
+	background: var(--gold);
+	color: var(--gold-ink);
+}
+
+.btn--quiet {
+	border-color: var(--line);
+	color: var(--ivory);
+}
+
+.btn--quiet:hover {
+	background: rgba(247, 242, 234, 0.06);
+}
+
+/* --- Hero --------------------------------------------------------------- */
+
+.opener {
+	position: relative;
+	padding: 2.6rem 0 3rem;
+	overflow: hidden;
+}
+
+.opener__bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+}
+
+.opener__bg img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: 50% 30%;
+	opacity: 0.5;
+}
+
+/* Atmosphere sits behind a scrim heavy enough that type never fights it. */
+.opener__bg::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(
+		180deg,
+		rgba(6, 7, 10, 0.72) 0%,
+		rgba(6, 7, 10, 0.86) 55%,
+		var(--ink) 100%
+	);
+}
+
+.opener .shell {
+	position: relative;
+	z-index: 1;
+}
+
+.opener__id {
+	font-family: var(--display);
+	font-size: 1.05rem;
+	color: var(--muted);
+	letter-spacing: -0.01em;
+	margin-bottom: 1.9rem;
+}
+
+.opener__when {
+	font-family: var(--display);
+	font-size: clamp(3.1rem, 15vw, 5.6rem);
+	line-height: 0.94;
+	letter-spacing: -0.045em;
+	margin: 0;
+}
+
+.opener__when em {
+	display: block;
+	font-style: normal;
+	color: var(--gold);
+}
+
+.opener__where {
+	margin-top: 1.35rem;
+	font-size: 1.12rem;
+	line-height: 1.4;
+	font-weight: 700;
+}
+
+.opener__where span {
+	display: block;
+	color: var(--muted);
+	font-weight: 400;
+}
+
+.opener__note {
+	margin-top: 0.9rem;
+	color: var(--muted);
+	font-size: 1rem;
+}
+
+.opener__actions {
+	margin-top: 1.9rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.7rem;
+}
+
+/* --- Sections ----------------------------------------------------------- */
+
+.band {
+	padding: 3.4rem 0;
+	border-top: 1px solid var(--line);
+}
+
+.band--raised {
+	background: var(--ink-raised);
+}
+
+.band__label {
+	font-size: 0.74rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--gold);
+	margin-bottom: 0.9rem;
+}
+
+.band__title {
+	font-size: clamp(1.62rem, 6vw, 2.6rem);
+	margin-bottom: 2.2rem;
+	max-width: 22ch;
+}
+
+/* --- The questions ------------------------------------------------------ */
+
+.qa {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.qa__item {
+	padding: 1.35rem 0;
+	border-top: 1px solid var(--line);
+}
+
+.qa__item:first-child {
+	border-top: 0;
+	padding-top: 0;
+}
+
+.qa__q {
+	font-family: var(--display);
+	font-size: 1.35rem;
+	letter-spacing: -0.02em;
+	margin-bottom: 0.45rem;
+}
+
+.qa__a {
+	color: var(--muted);
+	max-width: 40rem;
+}
+
+.qa__more {
+	display: inline-block;
+	margin-top: 1.8rem;
+	color: var(--gold);
+	font-weight: 700;
+	text-decoration: none;
+	border-bottom: 1px solid var(--gold);
+	padding-bottom: 2px;
+}
+
+/* --- Open questions ----------------------------------------------------- */
+
+.open-qs {
+	border: 1px dashed rgba(247, 242, 234, 0.28);
+	border-radius: 14px;
+	padding: 1.4rem 1.4rem 1.5rem;
+}
+
+.open-qs h3 {
+	font-size: 1.2rem;
+	margin-bottom: 0.5rem;
+}
+
+.open-qs p {
+	color: var(--muted);
+	font-size: 0.95rem;
+	margin-bottom: 1rem;
+}
+
+.open-qs ul {
+	margin: 0;
+	padding-left: 1.1rem;
+	color: var(--faint);
+}
+
+.open-qs li {
+	margin-bottom: 0.4rem;
+}
+
+/* --- Belief ------------------------------------------------------------- */
+
+.creed__line {
+	font-family: var(--display);
+	font-size: clamp(1.7rem, 6vw, 2.4rem);
+	letter-spacing: -0.03em;
+	line-height: 1.12;
+	margin-bottom: 1.1rem;
+}
+
+.creed__body {
+	color: var(--muted);
+	max-width: 42rem;
+}
+
+/* --- Watch -------------------------------------------------------------- */
+
+.watch-card {
+	display: block;
+	text-decoration: none;
+	border: 1px solid var(--line);
+	border-radius: 16px;
+	overflow: hidden;
+	background: var(--ink-raised);
+	max-width: 34rem;
+}
+
+.watch-card__still {
+	position: relative;
+	aspect-ratio: 16 / 9;
+	background: #000;
+}
+
+.watch-card__still img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.watch-card__play {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+}
+
+.watch-card__play span {
+	width: 58px;
+	height: 58px;
+	border-radius: 50%;
+	background: rgba(6, 7, 10, 0.62);
+	border: 1px solid rgba(247, 242, 234, 0.5);
+	display: grid;
+	place-items: center;
+	color: var(--ivory);
+	font-size: 1rem;
+	padding-left: 4px;
+}
+
+.watch-card__meta {
+	padding: 1rem 1.15rem 1.2rem;
+}
+
+.watch-card__meta strong {
+	font-family: var(--display);
+	font-weight: 600;
+	font-size: 1.2rem;
+	display: block;
+	letter-spacing: -0.02em;
+}
+
+.watch-card__meta span {
+	color: var(--faint);
+	font-size: 0.88rem;
+}
+
+/* --- Vision strip ------------------------------------------------------- */
+
+.vision {
+	display: grid;
+	gap: 1.4rem;
+}
+
+.vision__item {
+	text-decoration: none;
+	border-top: 1px solid var(--line);
+	padding-top: 1rem;
+}
+
+.vision__item strong {
+	font-family: var(--display);
+	font-weight: 600;
+	font-size: 1.25rem;
+	letter-spacing: -0.02em;
+	display: block;
+	margin-bottom: 0.25rem;
+}
+
+.vision__item span {
+	color: var(--muted);
+	font-size: 0.95rem;
+}
+
+/* --- Contact ------------------------------------------------------------ */
+
+.reach {
+	display: grid;
+	gap: 1.5rem;
+}
+
+.reach__row a {
+	font-family: var(--display);
+	font-size: 1.45rem;
+	letter-spacing: -0.02em;
+	text-decoration: none;
+	border-bottom: 1px solid var(--line);
+	padding-bottom: 3px;
+}
+
+.reach__row p {
+	color: var(--faint);
+	font-size: 0.88rem;
+	margin-top: 0.35rem;
+}
+
+/* --- Footer ------------------------------------------------------------- */
+
+.foot {
+	border-top: 1px solid var(--line);
+	padding: 2.6rem 0 3.4rem;
+	color: var(--faint);
+	font-size: 0.9rem;
+}
+
+.foot__grid {
+	display: grid;
+	gap: 1.6rem;
+}
+
+.foot__grid a {
+	color: var(--muted);
+	text-decoration: none;
+	display: block;
+	padding: 0.15rem 0;
+}
+
+.foot__brand {
+	font-family: var(--display);
+	font-size: 1.15rem;
+	color: var(--ivory);
+	margin-bottom: 0.4rem;
+}
+
+/* --- Interior page head ------------------------------------------------- */
+
+.pagehead {
+	padding: 2.8rem 0 0.4rem;
+}
+
+.pagehead h1 {
+	font-size: clamp(2.4rem, 10vw, 4rem);
+	letter-spacing: -0.04em;
+}
+
+.pagehead p {
+	margin-top: 1rem;
+	color: var(--muted);
+	font-size: 1.08rem;
+	max-width: 34rem;
+}
+
+/* --- Directions --------------------------------------------------------- */
+
+.where {
+	display: grid;
+	gap: 1.6rem;
+}
+
+.where__addr {
+	font-family: var(--display);
+	font-size: clamp(1.8rem, 7vw, 2.5rem);
+	letter-spacing: -0.03em;
+	line-height: 1.1;
+}
+
+.where__addr span {
+	display: block;
+	color: var(--muted);
+	font-size: 0.5em;
+	letter-spacing: -0.02em;
+	margin-top: 0.4rem;
+}
+
+/* --- Wider screens ------------------------------------------------------ */
+
+@media (min-width: 760px) {
+	body.v2 { font-size: 18px; }
+
+	.opener {
+		padding: 5rem 0 5.5rem;
+	}
+
+	.opener__id { margin-bottom: 2.6rem; }
+
+	.opener__actions { margin-top: 2.4rem; }
+
+	.band { padding: 4.6rem 0; }
+
+	.vision { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+	.reach { grid-template-columns: repeat(3, 1fr); }
+
+	.foot__grid { grid-template-columns: 1.4fr 1fr 1fr; }
+
+	.where { grid-template-columns: 1fr 1fr; align-items: start; gap: 2.5rem; }
+}
+
+@media (min-width: 900px) {
+	/* The menu is always open on a desktop — no reason to hide six links. */
+	.chrome__toggle { display: none; }
+
+	.chrome {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		padding: 0 var(--gutter);
+	}
+
+	.chrome__bar {
+		flex: 0 0 auto;
+		width: auto;
+		min-height: 4.6rem;
+		margin: 0;
+		padding: 0;
+		gap: 1.6rem;
+	}
+
+	/* `hidden` is still on the element from the mobile script, so this has to
+	   out-specify it rather than just setting display on the class. */
+	.chrome__nav,
+	.chrome__nav[hidden] {
+		display: flex;
+		flex: 1 1 auto;
+		flex-wrap: nowrap;
+		border-top: 0;
+		padding: 0 0 0 2rem;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 1.6rem;
+		margin: 0;
+		max-width: none;
+	}
+
+	.chrome__when {
+		margin-left: 0;
+		align-items: flex-start;
+		padding-left: 0;
+		border-left: 1px solid var(--line);
+		padding: 0.15rem 0 0.15rem 1.6rem;
+	}
+
+	.navlist {
+		display: flex;
+		align-items: center;
+		gap: 1.5rem;
+	}
+
+	.navlist__item { border-bottom: 0; position: relative; }
+
+	.navlist__link {
+		font-family: var(--body);
+		font-size: 0.95rem;
+		padding: 0.4rem 0;
+	}
+
+	.navlist__sub {
+		position: absolute;
+		top: 100%;
+		left: -0.9rem;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		gap: 0;
+		background: var(--ink-raised);
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		padding: 0.6rem 0.9rem;
+		min-width: 14rem;
+		margin: 0;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.14s ease;
+	}
+
+	.navlist__item:hover .navlist__sub,
+	.navlist__item:focus-within .navlist__sub {
+		opacity: 1;
+		visibility: visible;
+	}
+
+	.navlist__sub a { display: block; padding: 0.4rem 0; }
+
+	.navlist__cta {
+		margin-top: 0;
+		padding: 0.62rem 1.15rem;
+		font-size: 0.88rem;
+		white-space: nowrap;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	body.v2 *,
+	body.v2 *::before,
+	body.v2 *::after {
+		animation-duration: 0.001ms !important;
+		transition-duration: 0.001ms !important;
+	}
+}

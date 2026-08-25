@@ -1,0 +1,50 @@
+---
+import Site from "../layouts/Site.astro";
+
+// Everything about the church itself lives behind this one door, so the top
+// level of the site can stay about the visitor's decision.
+const sections = [
+	{ title: "Our staff", line: "The people who lead and care for this church.", href: "/staff" },
+	{ title: "Vision and values", line: "Where we are headed and what we hold to.", href: "/vision-values" },
+	{ title: "Membership", line: "What it means to make New Life your home church.", href: "/membership" },
+	{ title: "Spiritual formation", line: "How people here grow, day by day.", href: "/spiritual-formation" },
+	{ title: "Mission trips", line: "Serving in the Caribbean with Mission of Hope.", href: "/mission-trips" },
+	{ title: "Unify GR", line: "Working with churches across Grand Rapids.", href: "/unify-gr" },
+];
+---
+
+<Site
+	title="About New Life Grand Rapids"
+	description="Who leads this church, what we are aiming at, and how to go deeper than a Sunday."
+>
+	<section class="pagehead">
+		<div class="shell">
+			<h1>About us</h1>
+			<p>
+				If you have already decided about Sunday and want to know more about the church itself,
+				this is where the rest of it lives.
+			</p>
+		</div>
+	</section>
+
+	<section class="band">
+		<div class="shell">
+			<div class="vision">
+				{sections.map((s) => (
+					<a class="vision__item" href={s.href}>
+						<strong>{s.title}</strong>
+						<span>{s.line}</span>
+					</a>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Start here instead</p>
+			<h2 class="band__title">Never been on a Sunday?</h2>
+			<a class="btn btn--gold" href="/sunday">What a Sunday is like</a>
+		</div>
+	</section>
+</Site>

@@ -1,7 +1,4 @@
 ---
-// The layout the older content pages still use. It now wears the same chrome
-// and footer as the new pages, so the service time is in the header wherever a
-// visitor lands.
 import BaseHead from "../components/BaseHead.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import StudioDock from "../components/StudioDock.astro";
@@ -12,12 +9,10 @@ import "../styles/sunday.css";
 interface Props {
 	title: string;
 	description: string;
-	kicker?: string;
-	heading?: string;
-	lede?: string;
+	brandHref?: string;
 }
 
-const { title, description, kicker, heading, lede } = Astro.props;
+const { title, description, brandHref = "/" } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -28,19 +23,9 @@ const year = new Date().getFullYear();
 		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
 	</head>
 	<body class="v2">
-		<SiteHeader />
+		<SiteHeader brandHref={brandHref} />
 
-		<main class="landing-shell">
-			{(kicker || heading || lede) && (
-				<section class="pagehead">
-					<div class="shell">
-						{kicker && <p class="band__label">{kicker}</p>}
-						{heading && <h1>{heading}</h1>}
-						{lede && <p>{lede}</p>}
-					</div>
-				</section>
-			)}
-
+		<main>
 			<slot />
 		</main>
 

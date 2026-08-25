@@ -1,8 +1,9 @@
 ---
 import { readNav } from "../lib/studio/nav";
+import { service } from "../data/sunday";
 
 interface Props {
-	/** Where the wordmark points. The homepage links back to its own hero anchor. */
+	/** Where the wordmark points. */
 	brandHref?: string;
 }
 
@@ -12,91 +13,69 @@ const { brandHref = "/" } = Astro.props;
 const nav = await readNav();
 ---
 
-<header class="site-chrome site-chrome--drawer">
-	<div class="container site-chrome__inner">
-		<a class="site-chrome__brand" href={brandHref}>
-			<strong>New Life</strong>
+<header class="chrome">
+	<div class="chrome__bar">
+		<a class="chrome__brand" href={brandHref}>New Life</a>
+
+		<!-- The answer, on every page, without a tap. -->
+		<a class="chrome__when" href="/sunday">
+			<span class="chrome__when-time">{service.shortWhen}</span>
+			<span class="chrome__when-place">{service.street}</span>
 		</a>
+
 		<button
-			class="site-chrome__toggle"
+			class="chrome__toggle"
 			type="button"
 			aria-label="Menu"
 			aria-expanded="false"
-			aria-controls="primary-nav"
+			aria-controls="site-nav"
 		>
-			<span class="site-chrome__bars" aria-hidden="true"></span>
+			<span class="chrome__bars" aria-hidden="true"></span>
+			<span class="chrome__toggle-label">Menu</span>
 		</button>
-		<nav class="site-chrome__nav" id="primary-nav" aria-label="Primary">
-			{nav.groups.map((g) => (
-				g.items.length ? (
-					<div class="nav-group">
-						<a class="nav-group__trigger" href={g.href} aria-expanded="false">
-							{g.label}
-							<span class="nav-group__caret" aria-hidden="true"></span>
-						</a>
-						<div class="nav-menu">
-							{g.items.map((it) => (
-								<a class="nav-menu__link" href={it.href}>
-									<span class="nav-menu__label">{it.label}</span>
-									<span class="nav-menu__blurb">{it.blurb}</span>
-								</a>
-							))}
-						</div>
-					</div>
-				) : (
-					<a class="nav-simple" href={g.href}>{g.label}</a>
-				)
-			))}
-			<a class="button button--primary nav-panel-cta" href={nav.cta.href}>{nav.cta.label}</a>
-		</nav>
-		<slot name="chrome-extra" />
-		<a class="button button--secondary chrome-cta" href={nav.cta.href}>{nav.cta.label}</a>
 	</div>
+
+	<nav class="chrome__nav" id="site-nav" aria-label="Primary" hidden>
+		<ul class="navlist">
+			{nav.groups.map((g) => (
+				<li class="navlist__item">
+					<a class="navlist__link" href={g.href}>{g.label}</a>
+					{g.items.length > 0 && (
+						<ul class="navlist__sub">
+							{g.items.map((it) => (
+								<li><a href={it.href}>{it.label}</a></li>
+							))}
+						</ul>
+					)}
+				</li>
+			))}
+		</ul>
+		<a class="navlist__cta" href={nav.cta.href} target="_blank" rel="noopener">{nav.cta.label}</a>
+	</nav>
 </header>
 
 <script>
-	const chrome = document.querySelector(".site-chrome");
-	const toggle = document.querySelector(".site-chrome__toggle");
-	const nav = document.getElementById("primary-nav");
-	const mobile = window.matchMedia("(max-width: 860px)");
+	const chrome = document.querySelector(".chrome");
+	const toggle = document.querySelector(".chrome__toggle");
+	const nav = document.getElementById("site-nav");
 
-	const closeNav = () => {
-		chrome?.classList.remove("nav-open");
-		toggle?.setAttribute("aria-expanded", "false");
+	const setOpen = (open: boolean) => {
+		chrome?.classList.toggle("is-open", open);
+		toggle?.setAttribute("aria-expanded", open ? "true" : "false");
+		if (nav) nav.hidden = !open;
 	};
 
+	setOpen(false);
+
 	toggle?.addEventListener("click", () => {
-		const open = chrome?.classList.toggle("nav-open");
-		toggle.setAttribute("aria-expanded", open ? "true" : "false");
+		setOpen(!chrome?.classList.contains("is-open"));
 	});
 
-	// On mobile a pillar trigger expands its submenu instead of navigating.
-	document.querySelectorAll(".nav-group__trigger").forEach((trigger) => {
-		trigger.addEventListener("click", (event) => {
-			if (!mobile.matches) return;
-			event.preventDefault();
-			const group = trigger.closest(".nav-group");
-			const expanded = group?.classList.toggle("is-expanded");
-			trigger.setAttribute("aria-expanded", expanded ? "true" : "false");
-		});
-	});
-
-	// Tapping a real destination closes the panel.
-	nav?.querySelectorAll(".nav-menu__link, .nav-simple, .nav-panel-cta").forEach((link) => {
-		link.addEventListener("click", closeNav);
+	nav?.querySelectorAll("a").forEach((link) => {
+		link.addEventListener("click", () => setOpen(false));
 	});
 
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape") closeNav();
-	});
-
-	// Reset when leaving the mobile breakpoint.
-	mobile.addEventListener("change", (event) => {
-		if (!event.matches) {
-			closeNav();
-			document
-				.querySelectorAll(".nav-group.is-expanded")
-				.forEach((group) => group.classList.remove("is-expanded"));
-		}
+		if (event.key === "Escape") setOpen(false);
 	});
 </script>
