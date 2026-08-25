@@ -2453,11 +2453,15 @@ strong {
 }
 
 /* ---- Live-calendar signals ---- */
-.min-card__live { color: var(--gold); }
+/* Signature and curated are a pair, so they take the same shape and differ
+   only in weight of colour. */
+.min-card__live,
 .min-card__ours {
-	font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
-	border: 1px solid var(--gold-soft); border-radius: 999px; padding: 0.12rem 0.5rem;
+	font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+	border: 1px solid; border-radius: 999px; padding: 0.12rem 0.5rem; white-space: nowrap;
 }
+.min-card__ours { color: var(--gold); border-color: var(--gold-soft); }
+.min-card__live { color: var(--muted); border-color: var(--line); }
 .min-family__cal { margin-top: 0.4rem; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
 
 /* ---- Calendar page ---- */
