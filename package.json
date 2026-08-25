@@ -1,31 +1,27 @@
 {
-	"name": "unifygr",
-	"description": "Build a personal website, blog, or portfolio with Astro.",
-	"dependencies": {
-		"@anthropic-ai/sdk": "^0.120.0",
-		"@astrojs/mdx": "4.3.12",
-		"@astrojs/react": "^6.0.1",
-		"@astrojs/rss": "4.0.14",
-		"@astrojs/sitemap": "3.6.0",
-		"@astrojs/vercel": "^8.2.11",
-		"@measured/puck": "^0.20.2",
-		"@tinacms/cli": "^2.5.1",
-		"@vercel/blob": "^2.8.0",
-		"astro": "5.16.2",
-		"fast-xml-parser": "^5.11.0",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"tinacms": "^3.9.3",
-		"typescript": "5.9.3"
-	},
-	"private": true,
-	"scripts": {
-		"astro": "astro",
-		"build": "astro build",
-		"check": "astro build && tsc",
-		"dev": "astro dev",
-		"cms": "tinacms dev -c \"astro dev\"",
-		"tina:build": "tinacms build"
-	},
-	"type": "module"
+  "name": "unifygr",
+  "description": "Build a personal website, blog, or portfolio with Astro.",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.120.0",
+    "@astrojs/mdx": "4.3.12",
+    "@astrojs/react": "^6.0.1",
+    "@astrojs/rss": "4.0.14",
+    "@astrojs/sitemap": "3.6.0",
+    "@astrojs/vercel": "^8.2.11",
+    "@measured/puck": "^0.20.2",
+    "@vercel/blob": "^2.8.0",
+    "astro": "5.16.2",
+    "fast-xml-parser": "^5.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "5.9.3"
+  },
+  "private": true,
+  "scripts": {
+    "astro": "astro",
+    "build": "astro build",
+    "check": "astro build && tsc",
+    "dev": "astro dev"
+  },
+  "type": "module"
 }
