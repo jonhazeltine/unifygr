@@ -1,27 +1,36 @@
 # unifygr — AGENTS.md
 
-Landing site for **New Life / the Unify GR vision** — a Jesus-centered, single-page
-Astro site (worship / voice / mission pillars) with ambient generated video art.
-PUBLIC repo (`jonhazeltine/unifygr`). The README is still the stock Astro starter
+Site for **New Life / the Unify GR vision** — a Jesus-centered Astro site
+(worship / voice / mission pillars) with ambient generated video art. PUBLIC
+repo (`jonhazeltine/unifygr`). The README is still the stock Astro starter
 text; this file is the real orientation doc.
 
 ## Stack
 
-- Astro 5 (MDX, sitemap, RSS integrations) + `@astrojs/cloudflare` adapter.
-- Deployed as a **Cloudflare Worker** with static assets (`wrangler.json`;
-  worker entry `dist/_worker.js`).
-- Content today is one page: `src/pages/index.astro`, constants in
-  `src/consts.ts`, styles in `src/styles/`, generated art under
-  `public/art/generated/`.
+- Astro 5 (MDX, sitemap, RSS, React integrations) + `@astrojs/vercel` adapter.
+- Deployed on **Vercel** at unifygr.com; every push to `main` deploys.
+- Many pages now (`src/pages/`), with editable copy in `content/site.json`,
+  constants in `src/data/site.ts`, styles in `src/styles/`, and generated art
+  under `public/art/generated/`.
+- **The Studio is the CMS** — a staff-only dock on the live site
+  (`src/components/StudioDock.astro`, `src/lib/studio/`, `/api/studio/*`).
+  It edits fenced fields in `content/site.json` and commits pages, nav and
+  media to `main`. TinaCMS was removed 2026-08-25; don't reintroduce it.
 
 ## Build & deploy
 
 - `npm run dev` — local dev at :4321.
-- `npm run check` — build + typecheck + `wrangler deploy --dry-run`.
-- `npm run build && npm run deploy` — ships to Cloudflare Workers via wrangler
-  (machine-local: uses the Cloudflare auth on Jon's Mac).
+- `npm run check` — build + typecheck.
+- `npm run build` — what Vercel runs; merging to `main` is how the site ships.
 - `.github/workflows/mirror-plan-codework.yml` is the Mirror app's dispatch
   workflow (Claude code-work runs from Mirror plans) — don't remove it.
+
+## Watch page
+
+The "Recent Services" grid reads the YouTube channel's public RSS feed at
+request time (`src/lib/youtube.ts`), edge-cached 5 minutes, so new services
+appear on their own. The `sermons` list in `content/site.json` is only the
+offline fallback and a place to override a video's title/tag by ID.
 
 ## Rules
 
