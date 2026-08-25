@@ -12,6 +12,8 @@ import {
 	splitOffering,
 	newLifeNote,
 	sortEntries,
+	isOffering,
+	type Entry,
 	type Family,
 } from "../../data/ministries";
 
@@ -26,21 +28,56 @@ const { family } = Astro.props as { family: Family };
 
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 
+// A ministry can sit in several categories of the same family, and printing it
+// under each one made these pages read like a loop — Mission rendered 11 cards
+// for 8 ministries, with Caribbean Mission Trips printed twice back to back,
+// the same paragraph both times. Each ministry now prints once, under the first
+// category that claims it, and links to the others from its own card.
+const openIn = new Map<string, Entry[]>();
+for (const category of family.categories) {
+	openIn.set(category.slug, splitOffering(sortEntries(entriesInCategory(category.slug))).offering);
+}
+
+const primary = new Map<string, string>();
+for (const category of family.categories) {
+	for (const entry of openIn.get(category.slug)!) {
+		if (!primary.has(entry.slug)) primary.set(entry.slug, category.slug);
+	}
+}
+
 const groups = family.categories
-	.map((category) => {
-		const open = splitOffering(sortEntries(entriesInCategory(category.slug))).offering;
-		return {
-			category,
-			signature: open.filter((e) => e.house === "in"),
-			curated: open.filter((e) => e.house === "out"),
-			entries: open,
-		};
-	})
+	.map((category) => ({
+		category,
+		entries: openIn.get(category.slug)!.filter((e) => primary.get(e.slug) === category.slug),
+	}))
 	.filter((g) => g.entries.length > 0);
 
-const openCategories = family.categories.filter(
-	(c) => splitOffering(entriesInCategory(c.slug)).offering.length === 0,
-);
+function alsoIn(entry: Entry) {
+	return family.categories
+		.filter((c) => c.slug !== primary.get(entry.slug) && entry.categories.includes(c.slug))
+		.map((c) => ({ name: c.name, href: `/ministries/${family.slug}/${c.slug}` }));
+}
+
+// The questions someone actually arrives with: what do you run yourselves, and
+// what can I turn up to.
+const areaCounts = new Map<string, number>();
+for (const e of offering) {
+	const area = e.city ?? e.area;
+	if (area) areaCounts.set(area, (areaCounts.get(area) ?? 0) + 1);
+}
+// Almost everything is in Grand Rapids, so an area pill is usually a filter
+// that returns one card. Only offer them where there is a real spread.
+const areas = [...areaCounts.entries()]
+	.filter(([, n]) => n >= 2)
+	.map(([name, n]) => ({ name, n }))
+	.sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
+const showAreas = areas.length >= 2;
+
+const oursCount = offering.filter((e) => e.house === "in").length;
+const calendarCount = offering.filter((e) => isOffering(e) && e.house === "out").length;
+const AREAS_SHOWN = 3;
+
+const openCategories = family.categories.filter((c) => (openIn.get(c.slug) ?? []).length === 0);
 ---
 
 <Interior
@@ -54,7 +91,8 @@ const openCategories = family.categories.filter(
 		<div class="container">
 			<p class="min-breadcrumb reveal is-visible">
 				<a href="/ministries">All ministries</a> · {offering.length}
-				{offering.length === 1 ? " offering" : " offerings"} across {family.categories.length} categories
+				{offering.length === 1 ? " offering" : " offerings"} across {groups.length}
+				{groups.length === 1 ? " category" : " categories"}
 				{offering.length > 0 && <> · <a href="/ministries/calendar">on our calendar</a></>}
 			</p>
 
@@ -72,33 +110,55 @@ const openCategories = family.categories.filter(
 				</div>
 			)}
 
-			{groups.map(({ category, signature, curated }) => (
+			{offering.length > 3 && (
+				<div class="min-themes reveal is-visible" data-cardfilter>
+					<button class="min-theme is-active" type="button" data-filter="" aria-pressed="true">
+						Everything
+					</button>
+					{oursCount > 0 && (
+						<button class="min-theme" type="button" data-filter="ours" aria-pressed="false">
+							<strong>{oursCount}</strong> We lead it
+						</button>
+					)}
+					{calendarCount > 0 && (
+						<button class="min-theme" type="button" data-filter="calendar" aria-pressed="false">
+							<strong>{calendarCount}</strong> On our calendar
+						</button>
+					)}
+					{showAreas && areas.map((a, i) => (
+						<button
+							class={i < AREAS_SHOWN ? "min-theme" : "min-theme min-theme--extra"}
+							type="button"
+							data-filter={`area:${a.name}`}
+							aria-pressed="false"
+						>
+							<strong>{a.n}</strong> {a.name}
+						</button>
+					))}
+					{showAreas && areas.length > AREAS_SHOWN && (
+						<button class="min-theme min-theme--more" type="button" data-more>
+							+{areas.length - AREAS_SHOWN} more
+						</button>
+					)}
+				</div>
+			)}
+
+			<p class="min-nomatch" hidden>Nothing here yet. Try another filter.</p>
+
+			{groups.map(({ category, entries }) => (
 				<div class="min-cat reveal is-visible">
 					<div class="min-cat__head">
 						<h2 id={category.slug}>
 							<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
 						</h2>
-						<span>{signature.length + curated.length}</span>
+						<span>{entries.length}</span>
 						<a class="min-cat__more" href={`/ministries/${family.slug}/${category.slug}`}>
 							Map &amp; calendar →
 						</a>
 					</div>
-					{signature.length > 0 && (
-						<>
-							<p class="min-subhead">Signature — we lead it, our volunteers run it</p>
-							<div class="min-grid">
-								{signature.map((entry) => <MinistryCard entry={entry} full={true} />)}
-							</div>
-						</>
-					)}
-					{curated.length > 0 && (
-						<>
-							<p class="min-subhead">Curated — led by another ministry, chosen by us</p>
-							<div class="min-grid">
-								{curated.map((entry) => <MinistryCard entry={entry} full={true} />)}
-							</div>
-						</>
-					)}
+					<div class="min-grid">
+						{entries.map((entry) => <MinistryCard entry={entry} alsoIn={alsoIn(entry)} />)}
+					</div>
 				</div>
 			))}
 
@@ -111,23 +171,16 @@ const openCategories = family.categories.filter(
 			)}
 
 			{openCategories.length > 0 && (
-				<div class="min-gaps reveal is-visible">
-					<h2>Still open</h2>
-					<p>
-						Nothing with dates we can carry in these yet. If you know a ministry that does one of
-						them well, that is exactly what we are looking for.
-					</p>
-					<ul>
-						{openCategories.map((category) => (
-							<li>
-								<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
-							</li>
-						))}
-					</ul>
-					<a class="button button--secondary" href="/connect">
-						Suggest a ministry
-					</a>
-				</div>
+				<p class="min-shelf reveal is-visible">
+					Nothing yet in{" "}
+					{openCategories.map((category, i) => (
+						<>
+							{i > 0 && (i === openCategories.length - 1 ? " or " : ", ")}
+							<a href={`/ministries/${family.slug}/${category.slug}`}>{category.name}</a>
+						</>
+					))}. If you know a ministry that does one of them well,{" "}
+					<a href="/connect">tell us</a>.
+				</p>
 			)}
 		</div>
 	</section>
@@ -147,4 +200,57 @@ const openCategories = family.categories.filter(
 			</div>
 		</div>
 	</section>
+
+	<script>
+		// Same behaviour as the calendar pills: narrow the list, and drop the
+		// category blocks that empty out so you never scroll past a header with
+		// nothing under it.
+		const bar = document.querySelector<HTMLElement>("[data-cardfilter]");
+		if (bar) {
+			const pills = [...bar.querySelectorAll<HTMLButtonElement>(".min-theme[data-filter]")];
+			const more = bar.querySelector<HTMLButtonElement>("[data-more]");
+			more?.addEventListener("click", () => {
+				bar.classList.add("is-expanded");
+				more.remove();
+			});
+
+			const blocks = [...document.querySelectorAll<HTMLElement>(".min-cat")];
+			const empty = document.querySelector<HTMLElement>(".min-nomatch");
+
+			const matches = (card: HTMLElement, filter: string) => {
+				if (!filter) return true;
+				if (filter === "ours") return card.dataset.house === "in";
+				if (filter === "calendar") return card.dataset.live === "1";
+				if (filter.startsWith("area:")) return card.dataset.area === filter.slice(5);
+				return true;
+			};
+
+			const apply = (filter: string) => {
+				let total = 0;
+				for (const block of blocks) {
+					let shown = 0;
+					for (const card of block.querySelectorAll<HTMLElement>(".min-card")) {
+						const on = matches(card, filter);
+						card.hidden = !on;
+						if (on) shown += 1;
+					}
+					block.hidden = shown === 0;
+					total += shown;
+				}
+				if (empty) empty.hidden = total > 0;
+				for (const pill of pills) {
+					const on = (pill.dataset.filter ?? "") === filter;
+					pill.classList.toggle("is-active", on);
+					pill.setAttribute("aria-pressed", String(on));
+				}
+			};
+
+			for (const pill of pills) {
+				pill.addEventListener("click", () => {
+					const own = pill.dataset.filter ?? "";
+					apply(own && pill.classList.contains("is-active") ? "" : own);
+				});
+			}
+		}
+	</script>
 </Interior>

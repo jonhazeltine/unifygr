@@ -1,23 +1,33 @@
 ---
 // The ministry is the headline. The church it meets in is the address.
-import { STATUS_LABEL, isOffering, type Entry } from "../data/ministries";
+import { isOffering, type Entry } from "../data/ministries";
 
 interface Props {
 	entry: Entry;
 	/** Show the longer note. Off in dense lists. */
 	full?: boolean;
+	/** Other categories on this page the ministry also belongs to. */
+	alsoIn?: { name: string; href: string }[];
 }
 
-const { entry, full = false } = Astro.props;
+const { entry, full = false, alsoIn = [] } = Astro.props;
 const inHouse = entry.house === "in";
-const unverified = entry.status !== "live";
 const venue = entry.venue ?? (inHouse ? "New Life, Knapp's Corner" : entry.org);
+const onCalendar = isOffering(entry) && entry.house === "out";
+const area = entry.city ?? entry.area ?? "";
 ---
 
-<article class={`min-card ${inHouse ? "min-card--in" : "min-card--out"}`}>
+<article
+	class={`min-card ${inHouse ? "min-card--in" : "min-card--out"}`}
+	data-house={entry.house}
+	data-area={area}
+	data-live={onCalendar ? "1" : "0"}
+>
 	<div class="min-card__top">
-		{(entry.city ?? entry.area) && <span class="min-card__area">{entry.city ?? entry.area}</span>}
-		{isOffering(entry) && entry.house === "out" && <span class="min-card__live">On our calendar</span>}
+		{area && <span class="min-card__area">{area}</span>}
+		{/* Who leads it belongs on the card, not in a banner reprinted above every block. */}
+		{inHouse && <span class="min-card__ours">We lead it</span>}
+		{onCalendar && <span class="min-card__live">On our calendar</span>}
 	</div>
 
 	<h3 class="min-card__name">
@@ -31,7 +41,15 @@ const venue = entry.venue ?? (inHouse ? "New Life, Knapp's Corner" : entry.org);
 
 	{full && entry.why && <p class="min-card__note">{entry.why}</p>}
 
-	{unverified && (
-		<p class="min-card__flag">{STATUS_LABEL[entry.status] ?? entry.status}</p>
+	{alsoIn.length > 0 && (
+		<p class="min-card__also">
+			Also in{" "}
+			{alsoIn.map((c, i) => (
+				<>
+					{i > 0 && ", "}
+					<a href={c.href}>{c.name}</a>
+				</>
+			))}
+		</p>
 	)}
 </article>
