@@ -1,11 +1,34 @@
 ---
 import Interior from "../layouts/Interior.astro";
 import { church, sermons } from "../data/site";
+import { fetchChannelVideos } from "../lib/youtube";
+
+// Rendered per request (edge-cached below) so the list of services follows the
+// YouTube channel automatically — no rebuild, no hand-editing after a Sunday.
+export const prerender = false;
 
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
 const embedUrl = (id: string) => `https://www.youtube.com/embed/${id}?rel=0`;
-const featured = sermons[0]; // most recent — default until the live check resolves
+
+// The channel feed is the source of truth; the curated list in the Studio is
+// the fallback if YouTube is unreachable, and can override any title/tag.
+const feed = await fetchChannelVideos(church.youtube.channelId, 8);
+const curated = new Map(sermons.map((s) => [s.id, s]));
+const services = feed.length
+	? feed.map((v) => {
+			const c = curated.get(v.id);
+			return { ...v, title: c?.title || v.title, tag: c?.tag || v.tag, date: c?.date || v.date };
+		})
+	: sermons;
+
+const featured = services[0]; // most recent — default until the live check resolves
+
+// Fresh within a few minutes, but served from cache like a static page.
+Astro.response.headers.set(
+	"cache-control",
+	"public, s-maxage=300, stale-while-revalidate=86400",
+);
 ---
 
 <Interior
@@ -13,7 +36,7 @@ const featured = sermons[0]; // most recent — default until the live check res
 	description="Watch New Life Grand Rapids live on Sunday mornings or catch up on past messages."
 >
 	<section class="section watch-hero">
-		<div class="watch-hero__bg" style={`background-image:url(${thumb(featured.id)})`}></div>
+		<div class="watch-hero__bg" style="background-image:url(/art/generated/worship-still.png)"></div>
 		<div class="watch-hero__veil"></div>
 		<div class="container watch-hero__inner">
 			<p class="eyebrow watch-status" id="watch-status" data-state="offline">
@@ -62,7 +85,7 @@ const featured = sermons[0]; // most recent — default until the live check res
 				<h2>Catch up any time.</h2>
 			</div>
 			<div class="sermon-grid sermon-grid--media">
-				{sermons.map((s, i) => (
+				{services.map((s, i) => (
 					<a class="sermon-tile reveal is-visible" href={watchUrl(s.id)} target="_blank" rel="noopener" style={`--delay:${i * 60}ms`}>
 						<div class="sermon-tile__thumb" style={`background-image:url(${thumb(s.id)})`}>
 							<span class="sermon-tile__play" aria-hidden="true">▶</span>
