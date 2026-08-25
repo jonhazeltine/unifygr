@@ -94,9 +94,9 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 								{family.categories.length > 3 && ` · +${family.categories.length - 3}`}
 							</span>
 							<span class="min-family__mix">
-								{sig > 0 && <em>{sig} ours</em>}
+								{sig > 0 && <em>{sig} signature (ours)</em>}
 								{sig > 0 && cur > 0 && " · "}
-								{cur > 0 && <span>{cur} curated</span>}
+								{cur > 0 && <span>{cur} curated (hosted)</span>}
 							</span>
 						</a>
 					);
