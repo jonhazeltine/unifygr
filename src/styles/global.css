@@ -2207,13 +2207,12 @@ strong {
 	font-size: 0.78rem;
 	color: var(--muted);
 }
-.min-card__flag {
-	margin: 0.3rem 0 0;
-	font-size: 0.72rem;
-	letter-spacing: 0.14em;
-	text-transform: uppercase;
-	color: rgba(246, 240, 231, 0.45);
-}
+.min-card__also { margin: 0.55rem 0 0; font-size: 0.78rem; color: rgba(246, 240, 231, 0.45); }
+.min-card__also a { color: var(--muted); }
+.min-card__also a:hover { color: var(--gold); }
+.min-card[hidden] { display: none; }
+.min-cat[hidden] { display: none; }
+.min-nomatch { color: var(--muted); margin: 0 0 2rem; }
 
 /* Tags */
 .min-tag {
@@ -2433,12 +2432,12 @@ strong {
 .minmap__key { border-left: 1px solid var(--line); padding-left: 1.4rem; }
 .minmap__keyhead { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin: 0 0 0.8rem; }
 .minmap__list { list-style: none; padding: 0; margin: 0 0 1.3rem; display: grid; gap: 0.45rem; }
-.minmap__list li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr) auto; gap: 0.6rem; align-items: baseline; font-size: 0.85rem; }
+.minmap__list li { display: grid; grid-template-columns: 1.4rem minmax(0, 1fr); gap: 0.15rem 0.6rem; align-items: baseline; font-size: 0.85rem; }
 .minmap__n { color: var(--blue); font-size: 0.74rem; font-variant-numeric: tabular-nums; }
 .minmap__n--plain { color: rgba(246, 240, 231, 0.3); }
 .minmap__list a { color: var(--muted); }
 .minmap__list a:hover { color: var(--gold); }
-.minmap__d { color: rgba(246, 240, 231, 0.38); font-size: 0.76rem; white-space: nowrap; }
+.minmap__d { grid-column: 2; color: rgba(246, 240, 231, 0.38); font-size: 0.76rem; }
 .minmap__rest { border-top: 1px solid var(--line); padding-top: 1.1rem; }
 .min-mapblock { margin: 0 0 3rem; padding: 1.7rem; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
 .min-mapblock__title {
@@ -2452,6 +2451,10 @@ strong {
 
 /* ---- Live-calendar signals ---- */
 .min-card__live { color: var(--gold); }
+.min-card__ours {
+	font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold);
+	border: 1px solid var(--gold-soft); border-radius: 999px; padding: 0.12rem 0.5rem;
+}
 .min-family__cal { margin-top: 0.4rem; font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
 
 /* ---- Calendar page ---- */
