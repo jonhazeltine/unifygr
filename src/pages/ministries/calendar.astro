@@ -28,13 +28,35 @@ const ours = entries
 	.filter((e) => e.house === "in" && e.rhythm && e.status === "live")
 	.map((e) => ({ name: e.name, rhythm: e.rhythm!, slug: e.slug }));
 
+// The snapshot in content/ starts from whenever it was pulled, so anything
+// already past has to go — a calendar opening on last Monday is worse than no
+// calendar. This re-filters on every build.
+const now = new Date();
+const TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+
 const byDate = new Map<string, Ev[]>();
 for (const ev of data.events) {
+	if (ev.date < TODAY) continue;
 	if (!byDate.has(ev.date)) byDate.set(ev.date, []);
 	byDate.get(ev.date)!.push(ev);
 }
 const days = [...byDate.entries()].sort((a, b) => a[0].localeCompare(b[0])).slice(0, 21);
-const themes = Object.entries(data.themes).sort((a, b) => b[1] - a[1]);
+
+// Every count on this page describes exactly what is printed below it, not the
+// whole snapshot.
+const shown = days.flatMap(([, list]) => list);
+const themeCounts = new Map<string, { label: string; n: number }>();
+for (const ev of shown) {
+	const seen = themeCounts.get(ev.theme) ?? { label: ev.themeLabel, n: 0 };
+	themeCounts.set(ev.theme, { label: seen.label, n: seen.n + 1 });
+}
+const themes = [...themeCounts.entries()]
+	.map(([slug, v]) => ({ slug, ...v }))
+	.sort((a, b) => b.n - a.n || a.label.localeCompare(b.label));
+
+// Sixteen pills is a wall on a phone. Show the busiest few and let people open
+// the rest.
+const PILLS = 6;
 
 function label(iso: string) {
 	const d = new Date(`${iso}T12:00:00`);
@@ -44,7 +66,7 @@ function label(iso: string) {
 	};
 }
 
-const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
+const venues = new Set(shown.map((e) => e.venue).filter(Boolean));
 ---
 
 <Interior
@@ -58,7 +80,7 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 		<div class="container">
 			<div class="min-calbar reveal is-visible">
 				<div>
-					<strong>{data.events.length}</strong>
+					<strong>{shown.length}</strong>
 					<span>gatherings coming up</span>
 				</div>
 				<div>
@@ -70,34 +92,31 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 					<span>of them at Knapp's Corner</span>
 				</div>
 			</div>
-			<div class="min-themes reveal is-visible">
-				{themes.map(([label, n]) => (
-					<span class="min-theme"><strong>{n}</strong> {label}</span>
+			<div class="min-themes reveal is-visible" data-themefilter>
+				<button class="min-theme is-active" type="button" data-theme="" aria-pressed="true">
+					Everything
+				</button>
+				{themes.map((t, i) => (
+					<button
+						class={i < PILLS ? "min-theme" : "min-theme min-theme--extra"}
+						type="button"
+						data-theme={t.slug}
+						aria-pressed="false"
+					>
+						<strong>{t.n}</strong> {t.label}
+					</button>
 				))}
+				{themes.length > PILLS && (
+					<button class="min-theme min-theme--more" type="button" data-more>
+						+{themes.length - PILLS} more
+					</button>
+				)}
 			</div>
 			<p class="lead-copy reveal is-visible">
 				This is one calendar, not a list of other people's. We do not carry everything that happens
 				in these buildings, only the gatherings we have chosen. Every one here belongs to the same
 				family, and the church named underneath it is simply the address.
 			</p>
-		</div>
-	</section>
-
-	<section class="section prose-block prose-block--tinted">
-		<div class="container">
-			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Every week</p>
-				<h2>The standing rhythms.</h2>
-			</div>
-			<div class="min-callist reveal is-visible">
-				{ours.map((o) => (
-					<a class="min-calrow" href={`/ministry/${o.slug}`}>
-						<span class="min-calrow__name">{o.name}</span>
-						<span class="min-calrow__when">{o.rhythm}</span>
-						<span class="min-calrow__go">Knapp's Corner →</span>
-					</a>
-				))}
-			</div>
 		</div>
 	</section>
 
@@ -124,7 +143,7 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 								</div>
 								<ul class="min-day__events">
 									{list.map((ev) => (
-										<li>
+										<li data-theme={ev.theme}>
 											<span class="min-ev__time">{ev.time ?? "All day"}</span>
 											<span class="min-ev__body">
 												<span class="min-ev__title">{ev.title}</span>
@@ -168,4 +187,46 @@ const venues = new Set(data.events.map((e) => e.venue).filter(Boolean));
 			</div>
 		</div>
 	</section>
+
+	<script>
+		// Tapping a theme pill narrows the list below it. Days that empty out drop
+		// away, so you never scroll past a header with nothing under it.
+		const bar = document.querySelector<HTMLElement>("[data-themefilter]");
+		if (bar) {
+			const pills = [...bar.querySelectorAll<HTMLButtonElement>(".min-theme[data-theme]")];
+			const more = bar.querySelector<HTMLButtonElement>("[data-more]");
+			more?.addEventListener("click", () => {
+				bar.classList.add("is-expanded");
+				more.remove();
+			});
+
+			const days = [...document.querySelectorAll<HTMLElement>(".min-day")];
+			const apply = (theme: string) => {
+				for (const day of days) {
+					const rows = [...day.querySelectorAll<HTMLElement>("li[data-theme]")];
+					let last: HTMLElement | null = null;
+					for (const row of rows) {
+						const show = !theme || row.dataset.theme === theme;
+						row.hidden = !show;
+						row.classList.remove("is-last");
+						if (show) last = row;
+					}
+					last?.classList.add("is-last");
+					day.hidden = last === null;
+				}
+				for (const pill of pills) {
+					const on = (pill.dataset.theme ?? "") === theme;
+					pill.classList.toggle("is-active", on);
+					pill.setAttribute("aria-pressed", String(on));
+				}
+			};
+
+			for (const pill of pills) {
+				pill.addEventListener("click", () => {
+					const own = pill.dataset.theme ?? "";
+					apply(own && pill.classList.contains("is-active") ? "" : own);
+				});
+			}
+		}
+	</script>
 </Interior>
