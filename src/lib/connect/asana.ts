@@ -36,11 +36,15 @@ export async function createFollowUpTask(input: {
 	name: string;
 	notes: string;
 	dueOn: string;
+	/** Target a different project than the Connect Card one (e.g. a house). */
+	projectId?: string;
 }): Promise<AsanaTask> {
-	if (!asanaConfigured()) throw new AsanaError("Asana is not connected yet.");
+	if (!input.projectId && !asanaConfigured()) throw new AsanaError("Asana is not connected yet.");
+	if (!process.env.ASANA_TOKEN) throw new AsanaError("Asana is not connected yet.");
 
-	const projectId = String(process.env.ASANA_PROJECT_ID);
-	const sectionId = process.env.ASANA_SECTION_ID;
+	const projectId = input.projectId ?? String(process.env.ASANA_PROJECT_ID);
+	// The "New" column belongs to the Connect Card project only.
+	const sectionId = input.projectId ? undefined : process.env.ASANA_SECTION_ID;
 
 	const task = await call("/tasks", {
 		name: input.name,

@@ -2,6 +2,7 @@
 	"name": "unifygr",
 	"description": "Build a personal website, blog, or portfolio with Astro.",
 	"dependencies": {
+		"@anthropic-ai/sdk": "^0.120.0",
 		"@astrojs/mdx": "4.3.12",
 		"@astrojs/react": "^6.0.1",
 		"@astrojs/rss": "4.0.14",
