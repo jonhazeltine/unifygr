@@ -25,9 +25,9 @@ const area = entry.city ?? entry.area ?? "";
 >
 	<div class="min-card__top">
 		{area && <span class="min-card__area">{area}</span>}
-		{/* Who leads it belongs on the card, not in a banner reprinted above every block. */}
-		{inHouse && <span class="min-card__ours">We lead it</span>}
-		{onCalendar && <span class="min-card__live">On our calendar</span>}
+		{/* Signature or curated belongs on the card, not in a banner above every block. */}
+		{inHouse && <span class="min-card__ours">Signature</span>}
+		{onCalendar && <span class="min-card__live">Curated</span>}
 	</div>
 
 	<h3 class="min-card__name">
