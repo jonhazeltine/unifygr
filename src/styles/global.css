@@ -2371,8 +2371,8 @@ strong {
 .minmap { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(215px, 0.75fr); gap: 1.8rem; align-items: start; }
 .minmap__plot { min-width: 0; }
 .minmap__frame { position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
-.minmap__frame img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.55) contrast(1.02); }
-.minmap__wash { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,8,0.30), rgba(5,6,8,0.05) 40%, rgba(5,6,8,0.35)); pointer-events: none; }
+.minmap__frame img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.85); }
+.minmap__wash { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(5,6,8,0.16), rgba(5,6,8,0.02) 40%, rgba(5,6,8,0.20)); pointer-events: none; }
 .minmap__missing { color: var(--muted); font-size: 0.9rem; }
 
 .minmap__pin {
@@ -2441,6 +2441,14 @@ strong {
 .minmap__d { color: rgba(246, 240, 231, 0.38); font-size: 0.76rem; white-space: nowrap; }
 .minmap__rest { border-top: 1px solid var(--line); padding-top: 1.1rem; }
 .min-mapblock { margin: 0 0 3rem; padding: 1.7rem; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); }
+.min-mapblock__title {
+	font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	font-size: clamp(1.25rem, 2.1vw, 1.6rem);
+	margin: 0 0 1.2rem;
+	max-width: none;
+}
 
 /* ---- Live-calendar signals ---- */
 .min-card__live { color: var(--gold); }

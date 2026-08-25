@@ -67,6 +67,7 @@ const openCategories = family.categories.filter(
 
 			{offering.some((e) => e.house === "out") && (
 				<div class="min-mapblock reveal is-visible">
+					<h2 class="min-mapblock__title">Where can I connect?</h2>
 					<MinistryMap entries={offering} label={family.name} />
 				</div>
 			)}
