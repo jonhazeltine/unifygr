@@ -11,6 +11,7 @@ import {
 	entriesInFamily,
 	splitOffering,
 	newLifeNote,
+	curationNote,
 	sortEntries,
 	isOffering,
 	type Entry,
@@ -99,6 +100,13 @@ const AREAS_SHOWN = 3;
 					</>
 				)}
 			</p>
+
+			{curationNote(family.slug) && (
+				<div class="min-curation reveal is-visible">
+					<p class="eyebrow">Why we send you here</p>
+					<p>{curationNote(family.slug)}</p>
+				</div>
+			)}
 
 			{newLifeNote(undefined, family.slug) && (
 				<div class="min-usnote reveal is-visible">
