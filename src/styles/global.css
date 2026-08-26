@@ -2167,6 +2167,10 @@ strong {
 }
 .min-test h3 { margin: 0.4rem 0 0.5rem; font-size: 1.1rem; letter-spacing: -0.02em; }
 .min-test p { color: var(--muted); font-size: 0.95rem; }
+/* The three movements link out to their pillar pages. */
+a.min-test { display: block; transition: border-color 0.2s ease, background 0.2s ease; }
+a.min-test:hover { border-color: var(--gold-soft); background: var(--panel-strong); }
+a.min-test h3 { color: var(--text); margin-top: 0; }
 
 /* Entry cards */
 .min-grid {
