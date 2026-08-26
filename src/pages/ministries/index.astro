@@ -17,10 +17,12 @@ import {
 	entriesInFamily,
 	sortEntries,
 } from "../../data/ministries";
+import { pillars } from "../../data/site";
 
 const live = withLiveCalendar();
 
-// What we lead, signature first. These open the page on their own — no curated
+// Our signature ministries, signature tier first. These open the page on their
+// own, no curated
 // mixed in, because this section is answering a different question.
 // Derived so the sentence below cannot drift from the list above it.
 const curatedOffering = outOfHouse.filter((e) => isOffering(e) && isListable(e));
@@ -49,7 +51,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 
 <Interior
 	title="Ministries | New Life Grand Rapids"
-	description="Ministries we lead, and ministries across Grand Rapids we trust enough to send you to."
+	description="Where New Life puts its focus, and the best of Grand Rapids opened up for your family."
 	kicker="Signature Ministries & Curated Ministries"
 	heading="Ministries"
 	lede="One church, meeting in a lot of different rooms. Everything here is open to you."
@@ -79,12 +81,23 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 		</div>
 	</section>
 
-	<!-- What we lead -->
+	<!-- Our focus: the signature ministries -->
 	<section class="section" id="ours">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">What we lead</p>
-				<h2>What we give everything to.</h2>
+				<p class="eyebrow">Signature ministries</p>
+				<h2>Our Focus.</h2>
+			</div>
+			<div class="prose-block__body reveal is-visible">
+				<p>Three movements of one life run through all of it.</p>
+			</div>
+			<div class="min-tests reveal is-visible">
+				{pillars.map((pillar) => (
+					<a class="min-test" href={`/${pillar.slug}`}>
+						<h3>{pillar.title}</h3>
+						<p>{pillar.essence}</p>
+					</a>
+				))}
 			</div>
 			<div class="prose-block__body reveal is-visible">
 				<p>
@@ -92,13 +105,8 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 					homes across the city. Teams to Jarabacoa every summer since 2015. Unify GR.
 				</p>
 				<p>
-					These are the {ours.length} we lead ourselves. Our volunteers run them, we have given
-					years to them, and they are the strongest things we have to give.
-				</p>
-				<p>
-					So we give them to the whole city. Any church in Grand Rapids can send their people
-					into these, and several already do. That is what a ministry share is: we lead it, and
-					you are welcome in it.
+					These {ours.length} are where our focus goes, and every one of them is open to anyone
+					in the city.
 				</p>
 			</div>
 			<div class="min-grid reveal is-visible">
