@@ -76,7 +76,7 @@ function dayLabel(iso: string) {
 		offering.length
 			? `${offering.length} ${offering.length === 1 ? "offering" : "offerings"} you can turn up to.`
 			: specialized.length
-				? "Nothing with dates we can carry yet."
+				? "We are still looking for the right one here."
 				: "Nobody is on our list for this yet."
 	}
 >
@@ -105,8 +105,8 @@ function dayLabel(iso: string) {
 				<div class="min-districts reveal is-visible">
 					<p class="eyebrow">By school district</p>
 					<p>
-						Most families pick a youth group around the school run rather than the map, so here is
-						which district each one sits in.
+						Most families pick a youth group around the school run, so here is which district each
+						one sits in.
 					</p>
 					<ul>
 						{districtNote.map((d) => (
@@ -162,8 +162,7 @@ function dayLabel(iso: string) {
 						<span>{curated.length}</span>
 					</div>
 					<p class="min-cat__note">
-						Led and run by other ministries. We have chosen them and made them available to you. We
-						do not lead them and we do not run them.
+						Led by other ministries in the city. We chose these ones and opened the door for you.
 					</p>
 					<div class="min-grid">
 						{curated.map((entry) => <MinistryCard entry={entry} full={true} />)}
@@ -174,7 +173,7 @@ function dayLabel(iso: string) {
 			{specialized.length > 0 && (
 				<p class="min-shelf reveal is-visible">
 					{specialized.length} specialised {specialized.length === 1 ? "ministry" : "ministries"} also
-					work in this area. They do not publish dates we can carry, so they sit on the
+					work in this area too. They keep no public calendar, and they are on the
 					{" "}<a href="/ministries/specialized">specialised list</a>.
 				</p>
 			)}
