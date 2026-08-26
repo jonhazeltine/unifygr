@@ -3,9 +3,9 @@
 	"byCategory": {
 		"childrens-ministry": "Kids are ours on a Sunday. Nursery through 5th grade, every week at 10am, with their own space and their own teaching.",
 		"nursery": "We run our own nursery every Sunday at 10am, so you can be in the service.",
-		"high-school": "We do not run a separate youth service. Our teens are in the service with us on Sunday morning, and the messages are written for 12 and up.",
-		"middle-school": "We do not run a separate youth service. Our middle schoolers are in the service with us on Sunday morning, and the messages are written for 12 and up.",
-		"small-groups": "Life Groups are ours and they stay ours. Belonging is the one thing a church cannot hand off, so we will not send you to another church's small group.",
+		"high-school": "Our teens are in the service with us on Sunday morning, and the messages are written for 12 and up.",
+		"middle-school": "Our middle schoolers are in the service with us on Sunday morning, and the messages are written for 12 and up.",
+		"small-groups": "Life Groups are ours and they stay ours. Belonging is the one thing a church keeps for itself, so this is a table we set in our own homes.",
 		"discipleship-groups": "The Welcome Path is ours: a guided next step that Elizabeth follows up on personally.",
 		"prayer-meetings": "We have a praying team that has been going longer than most of our other ministries, and a prayer chain that goes out the same day.",
 		"intercession": "Our Corporate Prayer team gathers to pray for the church and the city, and prays with anyone who asks.",
@@ -18,28 +18,28 @@
 		"city-unity": "Unify GR is ours. This whole page exists because of it."
 	},
 	"byFamily": {
-		"kids": "Kids are ours on a Sunday morning. Everything else here is what the rest of the family offers through the week.",
+		"kids": "Kids are ours on a Sunday morning. Through the week, the rest of the family opens their doors too.",
 		"students": "Our teens worship with us on Sunday morning and our messages are written for 12 and up. Midweek is where the rest of the family gets around them.",
-		"worship-and-prayer": "Worship and prayer are our own signature. What sits here alongside them is what others open to the wider city.",
+		"worship-and-prayer": "Worship and prayer are our own signature. Alongside them sits what others open to the wider city.",
 		"formation": "Life Groups and the Welcome Path are ours. The deeper study and training below is led by others.",
-		"mission": "Mission trips and local outreach are ours. The rest is led by people already doing it well."
+		"mission": "Mission trips and local outreach are ours. Alongside them are people already doing this well."
 	},
 	"curation": {
-		"students": "A teenager needs other believing teenagers in the same hallway on Monday morning, which is why we point students toward groups inside their own school district. What they build on a Wednesday night then gets held up for the other 6 days by people they already sit near in class. It also has to be a drive a parent can actually make twice a week. You still worship with us at 10 on Sunday, and you still go home with us afterward.",
-		"kids": "Families run on bedtimes and car seats, and a midweek kids programme 15 minutes from your door is the one you are still going to in February.",
-		"men-women": "One shoe does not fit all. Some men will come to a 6am breakfast and never to a study, and some will come to a golf outing and say more on the 4th hole than they have said in a year. So we carry several of them at different hours, and you pick the one you would actually turn up to.",
-		"marriage-family": "Marriage work is specific. A couple in their first year and a couple in their thirtieth need different rooms, and the mothers among us need support built around what a mother's day actually looks like.",
-		"formation": "Depth takes teachers who have given years to it. Where somebody in this city teaches a book better than we do, we would rather send you to them than run a thinner version of it ourselves.",
-		"worship-and-prayer": "Prayer meetings keep different hours, and some of us can only pray at 6am while others can only pray at 9pm. The city has both, so we carry both.",
-		"recovery": "Recovery runs on repetition and anonymity, and it works best close to home. What matters is that there is a room open on the night you need one, not whose name is on the building.",
-		"mental-health": "This is licensed work and we will not improvise it. We know the counselors we would send our own family to, and those are the ones listed here.",
-		"health": "The clinic, the diagnosis, the disability, the last months of a life. This needs people who do it every day.",
-		"practical-care": "Food, housing, work, and the emergency that decides whether a family stays together. Speed matters more than whose logo is on the door. The pantry that is open tomorrow is the right pantry.",
-		"justice": "People who are trapped, exploited, locked up, or newly arrived with nothing are already being served by ministries who have been at it for decades. We back them rather than start something beside them.",
-		"mission": "We lead the trips and the local outreach. For the rest, the people already doing it well should keep doing it, and we should be sending them help.",
-		"church-leaders": "Pastors need care from outside their own congregation. So do their marriages.",
-		"foster-adoption": "Nobody should walk into a licensing process alone. These are the people who know the system.",
-		"creative": "Artists need other artists, and there are more of them in this city than there are in any one church.",
-		"seniors": "Getting there is the whole question, and close and warm on a Tuesday morning beats excellent and across town every time."
+		"students": "A teenager needs other believing teenagers in the same hallway on Monday morning, so we went and found the groups inside their own school district. What they build on a Wednesday night then gets held up for the other 6 days by people they already sit near in class, and the drive is one a parent can make twice a week. They worship with us at 10 on Sunday and come home with us afterward.",
+		"kids": "Families run on bedtimes and car seats. We looked for the midweek programmes 15 minutes from your door, because those are the ones your family is still enjoying in February.",
+		"men-women": "One shoe does not fit all. Some men come alive at a 6am breakfast, some on the 4th hole, some in a room with an open Bible at 8pm. So we found several, at different hours, and you take the one you would look forward to.",
+		"marriage-family": "A couple in their first year and a couple in their thirtieth need different rooms, so we found both. And the mothers among us get support built around what a mother's day actually looks like.",
+		"formation": "There are teachers in this city who have given 20 years to a single book of the Bible. We opened the door to their tables, so the depth you want is a short drive from your house.",
+		"worship-and-prayer": "Some of us can only pray at 6am and some only at 9pm. The city keeps both hours, so we carry both and you take the one your life allows.",
+		"recovery": "Recovery runs on repetition, on anonymity, and on being close enough to get to. What matters is that there is a room open on the night you need one, and we know where they all are.",
+		"mental-health": "This is licensed work, and we know the counselors we would put our own family in front of. Those are the ones here, so the call you make is already a good one.",
+		"health": "The clinic, the diagnosis, the disability, the last months of a life. We found the people who do this every day, so that when your family needs them the number is already in your hand.",
+		"practical-care": "Food, housing, work, and the emergency that decides whether a family stays together. The pantry that is open tomorrow is the one that helps, so we keep track of which doors are open when.",
+		"justice": "People who are trapped, exploited, locked up, or newly arrived with nothing are being served by ministries who have given decades to it. We put our weight behind them and we will send you straight to them.",
+		"mission": "We lead the trips and the local outreach ourselves. Alongside them we found the people already doing this brilliantly in Grand Rapids and around the world, and we send them our help.",
+		"church-leaders": "Pastors need care from outside their own congregation, and so do their marriages. We know where to send them.",
+		"foster-adoption": "Nobody should walk into a licensing process alone. These are the people who know the system, and they will sit with you through it.",
+		"creative": "Artists need other artists, and there are more of them in this city than in any one church. We found where they gather.",
+		"seniors": "Getting there is the whole question. Close and warm on a Tuesday morning is worth more than excellent and across town, so those are the ones we looked for."
 	}
 }
