@@ -7,6 +7,7 @@ import {
 	standard,
 	counts,
 	outOfHouse,
+	inHouse,
 	familyCount,
 	familyImage,
 	familyCalendarCount,
@@ -18,6 +19,18 @@ import {
 } from "../../data/ministries";
 
 const live = withLiveCalendar();
+
+// What we lead, signature first. These open the page on their own — no curated
+// mixed in, because this section is answering a different question.
+// Derived so the sentence below cannot drift from the list above it.
+const curatedOffering = outOfHouse.filter((e) => isOffering(e) && isListable(e));
+const curatedHosts = new Set(curatedOffering.map((e) => e.venue ?? e.org ?? e.name)).size;
+const curatedTowns = new Set(curatedOffering.map((e) => e.city).filter(Boolean)).size;
+
+const ours = [
+	...sortEntries(inHouse.filter((e) => e.tier === "signature")),
+	...sortEntries(inHouse.filter((e) => e.tier !== "signature")),
+];
 
 const curatedByFamily = allFamiliesIncludingSpecialised
 	.map((family) => {
@@ -66,9 +79,57 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 		</div>
 	</section>
 
-	<!-- Browse -->
+	<!-- What we lead -->
+	<section class="section" id="ours">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">What we lead</p>
+				<h2>Our part of the Body.</h2>
+			</div>
+			<div class="prose-block__body reveal is-visible">
+				<p>
+					Every church should be able to answer one question: what is our role in the body of
+					Christ in our community? What follows is our answer.
+				</p>
+				<p>
+					We lead {ours.length} of them. Our volunteers run them and we give them everything we
+					have: Sunday morning at 10 at 2777 Knapp, corporate prayer, Life Groups meeting weekly
+					in homes across the city, teams to Jarabacoa every summer since 2015, and Unify GR.
+				</p>
+				<p>
+					None of it is ours to keep. A church that knows its own strength should be eager to
+					make it available to other church communities, so where one of these can carry another
+					congregation's people too, it does. That is what a ministry share is: we lead it, and
+					any church in the city can send their people.
+				</p>
+			</div>
+			<div class="min-grid reveal is-visible">
+				{ours.map((entry) => <MinistryCard entry={entry} />)}
+			</div>
+		</div>
+	</section>
+
+	<!-- Everything else we carry for you -->
 	<section class="section" id="ministries">
 		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">Everything else</p>
+				<h2>We are still your pastors here.</h2>
+			</div>
+			<div class="prose-block__body reveal is-visible">
+				<p>We do not run everything, and we are not going to pretend we do.</p>
+				<p>
+					What we will do is make sure you and your family get the best care in this city, the
+					deepest discipleship, and the challenge you actually need, in a place that fits your
+					street, your week and your season. There are {counts.outOfHouse} of them on this page,
+					run by {curatedHosts} churches and ministries across {curatedTowns} towns, and we chose
+					every one of them ourselves. We would send our own family to them, and we do.
+				</p>
+				<p>
+					You are not being handed off. When you walk into one of these, we are still your
+					pastors. If something gets missed, we want to hear about it.
+				</p>
+			</div>
 			<div class="min-families reveal is-visible">
 				{families.map((family) => {
 					const n = familyCount(family.slug);

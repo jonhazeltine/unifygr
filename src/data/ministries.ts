@@ -144,6 +144,12 @@ export function newLifeNote(categorySlug?: string, familySlug?: string): string 
 	return null;
 }
 
+/** Why we send people out in this area. Opens every family page. */
+export function curationNote(familySlug: string): string | null {
+	const notes = notesJson as { curation?: Record<string, string> };
+	return notes.curation?.[familySlug] ?? null;
+}
+
 /** Card art for an area. One visual language across the set. */
 export function familyImage(familySlug: string): string | null {
 	return (artJson as { images: Record<string, string> }).images[familySlug] ?? null;
