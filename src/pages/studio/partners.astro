@@ -68,29 +68,20 @@ export const prerender = false;
 
 				<section class="pc-block">
 					<div class="pc-block__head">
-						<h2>Churches we take dates from</h2>
-						<span class="pc-count" id="partners-count"></span>
-					</div>
-					<div id="partners"></div>
-					<p class="pc-empty" id="partners-empty" hidden>
-						No churches yet. Add one below and the calendar fills in.
-					</p>
-				</section>
-
-				<section class="pc-block">
-					<div class="pc-block__head">
-						<h2>Add a church</h2>
-						<span class="pc-count" id="available-count"></span>
+						<h2>Churches</h2>
+						<span class="pc-count" id="church-count"></span>
 					</div>
 					<p class="pc-block__note">
-						Every church publishing a calendar we can read right now. The city is worth reading —
-						this list reaches further than we do.
+						Every church publishing a calendar we can read. Tick one to take dates from it, then
+						open it to choose which kinds of gathering. The city is worth reading — this list
+						reaches further than we do.
 					</p>
 					<label class="field pc-search">
 						<span>Search</span>
 						<input id="search" type="search" placeholder="Church name or city" autocomplete="off" />
 					</label>
-					<div id="available"></div>
+					<div id="churches"></div>
+					<p class="pc-empty" id="churches-empty" hidden>No church matches that.</p>
 					<div id="declined"></div>
 				</section>
 			</div>
@@ -210,15 +201,25 @@ export const prerender = false;
 			.pc-days input { width: 5rem; padding: 0.5rem 0.7rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
 			.pc-days small { color: var(--muted); }
 
-			.pc-church { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.2rem 1.4rem; margin-bottom: 0.9rem; }
-			.pc-church.is-off { opacity: 0.55; }
-			.pc-church__top { display: flex; gap: 1rem; align-items: flex-start; flex-wrap: wrap; }
-			.pc-church__id { flex: 1 1 16rem; min-width: 0; }
-			.pc-church__name { font-size: 1.1rem; font-weight: 600; margin: 0 0 0.2rem; }
-			.pc-church__where { color: var(--muted); font-size: 0.88rem; margin: 0; }
-			.pc-church__dupe { color: var(--rose); font-size: 0.85rem; margin: 0.5rem 0 0; line-height: 1.45; }
-			.pc-church__silent { color: var(--muted); font-size: 0.85rem; font-style: italic; margin: 0.5rem 0 0; }
-			.pc-church__acts { display: flex; gap: 0.6rem; align-items: center; flex: none; }
+			.pc-church { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 0.4rem; padding: 0.55rem 1.1rem; }
+			.pc-church.is-open { border-color: var(--gold, #c8a24a); }
+			.pc-church__top { display: flex; gap: 1rem; align-items: center; }
+			.pc-church__hit { flex: 1; min-width: 0; display: grid; grid-template-columns: auto 1fr 14rem; gap: 0.9rem; align-items: center; cursor: pointer; }
+			.pc-church__hit input { width: 1.1rem; height: 1.1rem; accent-color: var(--gold, #c8a24a); }
+			.pc-church__id { min-width: 0; display: grid; gap: 0.1rem; }
+			.pc-church__name { font-weight: 500; font-size: 0.98rem; }
+			.pc-church.is-on .pc-church__name { color: var(--gold, #c8a24a); }
+			.pc-church__where { color: var(--muted); font-size: 0.82rem; }
+			.pc-church__sum { color: var(--muted); font-size: 0.82rem; text-align: right; }
+			.pc-church__acts { display: flex; gap: 0.7rem; align-items: center; flex: none; }
+			.pc-church__no { opacity: 0; transition: opacity 0.12s; }
+			.pc-church:hover .pc-church__no, .pc-church__no:focus-visible { opacity: 1; }
+			.pc-church__dupe { color: var(--rose); font-size: 0.82rem; margin: 0.4rem 0 0; line-height: 1.45; }
+			.pc-church__silent { color: var(--muted); font-size: 0.82rem; font-style: italic; margin: 0.4rem 0 0; }
+			@media (max-width: 46rem) {
+				.pc-church__hit { grid-template-columns: auto 1fr; }
+				.pc-church__sum { grid-column: 2; text-align: left; }
+			}
 
 			.pc-switch { display: inline-flex; align-items: center; gap: 0.55rem; cursor: pointer; font-size: 0.9rem; }
 			.pc-switch input { width: 1.15rem; height: 1.15rem; accent-color: var(--gold, #c8a24a); }
@@ -655,42 +656,83 @@ export const prerender = false;
 				return chips + none;
 			}
 
-			function renderPartners() {
-				const host = $("partners");
-				$("partners-count").textContent = `${settings.partners.length} on the list`;
-				$("partners-empty").hidden = settings.partners.length > 0;
-				host.innerHTML = settings.partners
-					.map((p) => {
-						const row = rowFor(p.churchId);
-						const isOpen = open.has(p.churchId);
+
+			/** Every church we can read, plus any we hold a choice for that has gone quiet. */
+			function allChurches() {
+				const refused = new Set((settings.declined || []).map((d) => d.churchId));
+				const byId = new Map(settings.partners.map((p) => [p.churchId, p]));
+				const seen = new Set<string>();
+				const out: { id: string; name: string; city: string | null; row?: ChurchRow; p?: Partner }[] = [];
+				for (const row of roster) {
+					if (refused.has(row.churchId)) continue;
+					seen.add(row.churchId);
+					out.push({ id: row.churchId, name: row.name, city: row.city, row, p: byId.get(row.churchId) });
+				}
+				// A church that has stopped publishing vanishes from the feed but not
+				// from our choices, and it is the only place that would tell us.
+				for (const p of settings.partners) {
+					if (refused.has(p.churchId) || seen.has(p.churchId)) continue;
+					out.push({ id: p.churchId, name: p.name, city: p.city, p });
+				}
+				return out.sort(
+					(a, b) =>
+						Number(!!b.p?.on) - Number(!!a.p?.on) ||
+						(b.row?.total || 0) - (a.row?.total || 0) ||
+						a.name.localeCompare(b.name),
+				);
+			}
+
+			function renderChurches() {
+				const q = ($("search") as HTMLInputElement).value.trim().toLowerCase();
+				const all = allChurches();
+				const list = all.filter(
+					(c) => !q || c.name.toLowerCase().includes(q) || (c.city || "").toLowerCase().includes(q),
+				);
+				const on = all.filter((c) => c.p?.on).length;
+				$("church-count").textContent = `${on} of ${all.length} switched on`;
+				$("churches-empty").hidden = list.length > 0;
+				$("churches").innerHTML = list
+					.map(({ id, name, city, row, p }) => {
+						const isOn = !!p?.on;
+						const isOpen = open.has(id);
+						const taking = isOn ? p!.themes.filter((t) => liveCount(id, t) > 0).length : 0;
+						const showing = isOn
+							? p!.themes.reduce((n, t) => n + liveCount(id, t), 0)
+							: 0;
+						const kinds = row ? Object.keys(row.themes).length : 0;
+						const kindWord = kinds === 1 ? "kind" : "kinds";
+						const summary = isOn
+							? `${showing} of ${row?.total ?? 0} · ${taking} of ${kinds} ${kindWord}`
+							: row
+								? `${row.total} published · ${kinds} ${kindWord}`
+								: "";
 						const sample =
 							isOpen && row?.sample.length
 								? `<div class="pc-sample"><ul>${row.sample
 										.map(
-											(s) =>
-												`<li><b>${escape(s.title)}</b> — ${THEME_LABEL[s.theme] || s.theme}, ${s.date}</li>`,
+											(x) =>
+												`<li><b>${escape(x.title)}</b> — ${THEME_LABEL[x.theme] || x.theme}, ${x.date}</li>`,
 										)
 										.join("")}</ul></div>`
 								: "";
-						return `<article class="pc-church ${p.on ? "" : "is-off"}">
+						return `<article class="pc-church ${isOn ? "is-on" : ""} ${isOpen ? "is-open" : ""}">
 							<div class="pc-church__top">
-								<div class="pc-church__id">
-									<p class="pc-church__name">${escape(p.name)}</p>
-									<p class="pc-church__where">${escape(p.city || "—")}${row ? ` · ${row.total} gatherings published` : ""}${p.ownCampus ? " · our campus" : ""}</p>
-									${row?.duplicateOf ? `<p class="pc-church__dupe">Publishes the same calendar as ${escape(row.duplicateOf)} — keep one of the two, not both.</p>` : ""}
-									${!row ? `<p class="pc-church__silent">Publishing nothing at the moment. Kept on the list; anything they post will show up.</p>` : ""}
-								</div>
-								<div class="pc-church__acts">
-									<label class="pc-switch">
-										<input type="checkbox" data-on="${p.churchId}" ${p.on ? "checked" : ""} />
-										<span>${p.on ? "On" : "Off"}</span>
-									</label>
-									${row?.sample.length ? `<button class="pc-link" type="button" data-peek="${p.churchId}">${isOpen ? "hide" : "what's on"}</button>` : ""}
-									<button class="pc-link" type="button" data-remove="${p.churchId}">remove</button>
-								</div>
+								<label class="pc-church__hit">
+									<input type="checkbox" data-on="${id}" ${isOn ? "checked" : ""} />
+									<span class="pc-church__id">
+										<span class="pc-church__name">${escape(name)}</span>
+										<span class="pc-church__where">${escape(city || "—")}${p?.ownCampus ? " · our campus" : ""}</span>
+									</span>
+									<span class="pc-church__sum">${summary}</span>
+								</label>
+								<span class="pc-church__acts">
+									<button class="pc-link" type="button" data-peek="${id}">${isOpen ? "close" : "open"}</button>
+									<button class="pc-link pc-church__no" type="button" data-decline="${id}" title="Stop offering this church anywhere">not for us</button>
+								</span>
 							</div>
-							<div class="pc-themes">${themeChips(p, row)}</div>
-							${sample}
+							${row?.duplicateOf ? `<p class="pc-church__dupe">Publishes the same calendar as ${escape(row.duplicateOf)} — keep one of the two, not both.</p>` : ""}
+							${!row ? `<p class="pc-church__silent">Publishing nothing at the moment. Our choices are kept; anything they post will show up.</p>` : ""}
+							${isOpen ? `<div class="pc-themes">${themeChips(p ?? { churchId: id, name, city, on: false, themes: [] }, row)}</div>${sample}` : ""}
 						</article>`;
 					})
 					.join("");
@@ -717,41 +759,6 @@ export const prerender = false;
 					}</p>`;
 			}
 
-			function renderAvailable() {
-				const q = ($("search") as HTMLInputElement).value.trim().toLowerCase();
-				const have = new Set(settings.partners.map((p) => p.churchId));
-				const refused = new Set((settings.declined || []).map((d) => d.churchId));
-				const list = roster
-					.filter((r) => !have.has(r.churchId) && !refused.has(r.churchId))
-					.filter(
-						(r) =>
-							!q ||
-							r.name.toLowerCase().includes(q) ||
-							(r.city || "").toLowerCase().includes(q),
-					);
-				$("available-count").textContent = `${list.length} available`;
-				$("available").innerHTML = list.length
-					? list
-							.map((r) => {
-								const kinds = Object.entries(r.themes)
-									.sort((a, b) => b[1] - a[1])
-									.map(([t, n]) => `${THEME_LABEL[t] || t} ${n}`)
-									.join(" · ");
-								return `<div class="pc-add">
-									<div class="pc-add__what">
-										<div class="pc-add__name">${escape(r.name)}</div>
-										<div class="pc-add__meta">${escape(r.city || "—")} · ${r.total} gatherings · ${escape(kinds)}</div>
-										${r.duplicateOf ? `<div class="pc-church__dupe">Same calendar as ${escape(r.duplicateOf)}.</div>` : ""}
-									</div>
-									<span class="pc-add__acts">
-										<button class="button button--secondary" type="button" data-add="${r.churchId}">Add</button>
-										<button class="pc-link" type="button" data-decline="${r.churchId}">not for us</button>
-									</span>
-								</div>`;
-							})
-							.join("")
-					: `<p class="pc-empty">Nothing left to add${q ? " for that search" : ""}.</p>`;
-			}
 
 			function escape(s: string) {
 				return String(s).replace(
@@ -765,8 +772,7 @@ export const prerender = false;
 				recount();
 				renderSummary();
 				renderCoverage();
-				renderPartners();
-				renderAvailable();
+				renderChurches();
 				renderDeclined();
 			}
 
@@ -789,8 +795,25 @@ export const prerender = false;
 					return;
 				}
 				if (el.dataset.on) {
-					const p = settings.partners.find((x) => x.churchId === el.dataset.on);
-					if (p) p.on = el.checked;
+					const id = el.dataset.on;
+					let p = settings.partners.find((x) => x.churchId === id);
+					if (!p) {
+						// Ticking a church we have never taken from is how it gets added.
+						// Its kinds are chosen next, either here or inside a category.
+						const row = rowFor(id);
+						p = {
+							churchId: id,
+							name: row?.name || "Unknown church",
+							city: row?.city ?? null,
+							on: true,
+							themes: [],
+							addedAt: new Date().toISOString().slice(0, 10),
+						};
+						settings.partners.push(p);
+						settings.partners.sort((a, b) => a.name.localeCompare(b.name));
+						open.add(id);
+					}
+					p.on = el.checked;
 					markDirty();
 					renderAll();
 					return;
@@ -835,7 +858,7 @@ export const prerender = false;
 			});
 
 			panel.addEventListener("input", (e) => {
-				if ((e.target as HTMLElement).id === "search") renderAvailable();
+				if ((e.target as HTMLElement).id === "search") renderChurches();
 			});
 
 			panel.addEventListener("click", (e) => {
@@ -878,38 +901,7 @@ export const prerender = false;
 				if (btn.dataset.peek) {
 					const id = btn.dataset.peek;
 					open.has(id) ? open.delete(id) : open.add(id);
-					renderPartners();
-					return;
-				}
-				if (btn.dataset.remove) {
-					const p = settings.partners.find((x) => x.churchId === btn.dataset.remove);
-					if (p && !confirm(`Take ${p.name} off the list? Their gatherings stop appearing.`)) return;
-					settings.partners = settings.partners.filter((x) => x.churchId !== btn.dataset.remove);
-					markDirty();
-					renderAll();
-					return;
-				}
-				if (btn.dataset.add) {
-					const row = rowFor(btn.dataset.add);
-					if (!row) return;
-					settings.partners.push({
-						churchId: row.churchId,
-						name: row.name,
-						city: row.city,
-						on: true,
-						// Added on, with nothing picked yet: the next thing you do is choose
-						// which of their gatherings you actually want.
-						themes: [],
-						addedAt: new Date().toISOString().slice(0, 10),
-					});
-					settings.partners.sort((a, b) => a.name.localeCompare(b.name));
-					open.add(row.churchId);
-					markDirty();
-					renderAll();
-					document
-						.querySelector(`[data-on="${row.churchId}"]`)
-						?.closest(".pc-church")
-						?.scrollIntoView({ behavior: "smooth", block: "center" });
+					renderChurches();
 					return;
 				}
 			});
