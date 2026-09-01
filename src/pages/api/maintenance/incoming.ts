@@ -37,6 +37,26 @@ function readPayload(body: any): { text: string; from: string } | null {
 	return { text: String(text).trim(), from: String(from).trim() };
 }
 
+/**
+ * Clearstream keeps webhooks on the church's own account, so the only way to
+ * see texts sent to the Residents line is to include subaccounts — which
+ * means texts to the church's own number arrive here too. Those are
+ * congregation replies, not maintenance, and alerting the staff watchers
+ * about every one of them would bury the real ones. So anything addressed to
+ * a different number than the maintenance line is left alone.
+ *
+ * With MAINTENANCE_LINE unset, or a payload that doesn't say which number was
+ * texted, nothing is dropped — the old behaviour stands.
+ */
+function textedAnotherLine(body: any): string | null {
+	const line = (process.env.MAINTENANCE_LINE || "").trim();
+	if (!line) return null;
+	const to = String(body?.number ?? body?.to ?? body?.received_on ?? "").trim();
+	if (!to) return null;
+	const last10 = (n: string) => n.replace(/\D/g, "").slice(-10);
+	return last10(to) === last10(line) ? null : to;
+}
+
 const alertNumbers = () =>
 	(process.env.MAINTENANCE_ALERT_NUMBERS || "")
 		.split(",")
@@ -60,6 +80,10 @@ export const POST: APIRoute = async ({ request, url }) => {
 	if (!secret || url.searchParams.get("key") !== secret) return json({ error: "Not found." }, 404);
 
 	const body = await request.json().catch(() => null);
+
+	const otherLine = textedAnotherLine(body);
+	if (otherLine) return json({ ignored: `Sent to ${otherLine}, not the maintenance line.` });
+
 	const incoming = readPayload(body);
 	if (!incoming) return json({ ignored: "No text and sender in the payload." });
 
