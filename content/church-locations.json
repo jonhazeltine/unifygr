@@ -1,0 +1,76 @@
+{
+	"_comment": "Coordinates for churches the events feed reaches that content/church-funnel.json and content/church-candidates.json do not already carry \u2014 almost all of them beyond the 20 miles those two files cover: Holland, Grand Haven, Zeeland, Hamilton. Those two files are still the first place the panel looks; this only fills what they miss. Ids and coordinates come from The Church Map, the same source as the events. Refresh with scripts/refresh-church-locations.py.",
+	"format": "churchId: [lat, lng, name]",
+	"churches": {
+		"257a36d0-71e1-445d-8ab4-f07a242d1c14": [
+			42.83506,
+			-85.66298,
+			"Religious Education"
+		],
+		"3129421d-e211-4268-84b4-3ba544b37ce5": [
+			42.77258,
+			-86.10069,
+			"First Presbyterian Church"
+		],
+		"33a7f506-fe01-47e2-a5bc-4fb7a8e9e9e3": [
+			42.82028,
+			-85.98581,
+			"Hope Church"
+		],
+		"51eb7c1d-15d6-4cc3-a43b-a68bb327d6aa": [
+			42.78149,
+			-86.11456,
+			"Maple Avenue Church and Ministries"
+		],
+		"5e3b1f5e-7252-4822-ad10-eb7d85d5b6b5": [
+			42.80807,
+			-86.03506,
+			"Haven Christian Reformed Church"
+		],
+		"81505dff-6a76-4b5c-8ccc-9accbc187ead": [
+			43.17641,
+			-85.59701,
+			"Cedar Creek Community Church"
+		],
+		"a9326df6-4225-41cf-b82d-9919d5ba4e8b": [
+			43.05694,
+			-86.2057,
+			"Seventh-Day Adventist Community Center"
+		],
+		"aabf6a4a-8b2a-4bcd-8f66-cef8dd3acd7f": [
+			42.77069,
+			-86.05968,
+			"Holland Seventh-day Adventist Church"
+		],
+		"ac299aaf-6aaa-4ad8-8e8d-0e73b21e5b82": [
+			43.06173,
+			-86.22459,
+			"Seventh-Day Adventist Church"
+		],
+		"b7d77a7c-f1a6-4a85-b58f-c37c4047c20c": [
+			42.68002,
+			-85.89428,
+			"Diamond Springs Wesleyan Church"
+		],
+		"c2feade6-ac0a-48d2-9f9c-3fdd526e760d": [
+			43.06386,
+			-86.22572,
+			"C3 Spiritual Community"
+		],
+		"c39e939b-b4ff-4d7b-ab2a-04f550550615": [
+			42.84646,
+			-86.15774,
+			"Northpoint Assembly of God"
+		],
+		"d3aec69e-ce51-4550-baae-3107b41964fb": [
+			42.73306,
+			-86.11417,
+			"Faith Temple Christian Center"
+		],
+		"e3d29a74-eb2a-47c4-b67a-eb5d0758e71b": [
+			43.04106,
+			-86.22805,
+			"Grand Haven Seventh-day Adventist Church"
+		]
+	}
+}

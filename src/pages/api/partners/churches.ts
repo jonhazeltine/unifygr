@@ -5,6 +5,7 @@ import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { feed, roster } from "../../../lib/partners/churchmap";
 import { HOUSEKEEPING, isSundayMorning } from "../../../lib/partners/calendar";
+import { locate } from "../../../lib/partners/locations";
 
 export const prerender = false;
 
@@ -30,9 +31,13 @@ export const GET: APIRoute = async ({ cookies }) => {
 				// folds them on, so the panel's totals count it once too.
 				k: `${ev.localStart!.slice(0, 10)}|${ev.title.replace(/\s+/g, " ").trim().toLowerCase()}`,
 			}));
+		// Only the churches actually publishing need a pin.
+		const where = locate(new Set(rows.map((r) => r.c)));
+
 		return new Response(
 			JSON.stringify({
 				churches: roster(live.events),
+				where,
 				rows,
 				days: live.days,
 				fetchedAt: live.fetchedAt,
