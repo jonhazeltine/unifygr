@@ -1,0 +1,224 @@
+{
+	"status": "draft",
+	"order": 30,
+	"root": {
+		"props": {
+			"title": "Meals of Hope 2026",
+			"kicker": "Change the World",
+			"description": "Pack meals for children in Haiti with New Life Grand Rapids — Saturday, November 14, 2026."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-moh",
+				"kicker": "Change the World",
+				"heading": "Meals of Hope 2026",
+				"lede": "Saturday, November 14th at 4:00 pm. Two hours, thousands of meals, and everyone who showed up."
+			}
+		},
+		{
+			"type": "Feature",
+			"props": {
+				"id": "Feature-moh",
+				"eyebrow": "About the event",
+				"heading": "Pack meals for children in Haiti",
+				"subline": "Saturday, November 14 · 4:00 pm",
+				"body": "This is a tangible way to feed children in Haiti who may not otherwise eat that day. Help us pack as many meals as we can. You can join in by sponsoring meals alongside other local businesses, by bringing a team to pack, or both.\n\nGot a team you want to bring? Sign up below and we'll save you a table.",
+				"image": "/uploads/meals-of-hope-child.jpg",
+				"video": "",
+				"buttons": [
+					{
+						"label": "Give meals",
+						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"style": "primary"
+					},
+					{
+						"label": "Volunteer to pack",
+						"href": "https://newlife.ccbchurch.com/goto/forms/310/responses/new",
+						"style": "secondary"
+					}
+				],
+				"facts": [
+					{
+						"label": "Cost per meal",
+						"value": "$0.35"
+					},
+					{
+						"label": "How long",
+						"value": "About two hours"
+					},
+					{
+						"label": "Who can come",
+						"value": "Kids as young as 5 through adults — every age has a job"
+					},
+					{
+						"label": "Where the meals go",
+						"value": "Children in Haiti, through Mission of Hope"
+					}
+				]
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-moh-why",
+				"eyebrow": "Feed the poor",
+				"title": "Why this matters",
+				"body": "There is a massive food crisis in Haiti. Children who often eat just one meal a day are beginning to miss that single important meal.\n\nMalnourishment and hunger don't belong in this world, and together we have the resources to change it. For just $0.35 a meal, you can fill a belly tomorrow.",
+				"tinted": true
+			}
+		},
+		{
+			"type": "Cards",
+			"props": {
+				"id": "Cards-moh-giving",
+				"eyebrow": "What your giving buys",
+				"title": "Every dollar is 2.8 meals.",
+				"style": "simple",
+				"cards": [
+					{
+						"title": "$10",
+						"text": "28 meals"
+					},
+					{
+						"title": "$50",
+						"text": "143 meals"
+					},
+					{
+						"title": "$100",
+						"text": "285 meals"
+					},
+					{
+						"title": "$1,000",
+						"text": "2,857 meals"
+					},
+					{
+						"title": "$5,000",
+						"text": "14,285 meals"
+					},
+					{
+						"title": "$10,000",
+						"text": "28,571 meals"
+					}
+				]
+			}
+		},
+		{
+			"type": "Buttons",
+			"props": {
+				"id": "Buttons-moh-give",
+				"buttons": [
+					{
+						"label": "Give meals",
+						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"style": "primary"
+					}
+				]
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-moh-what",
+				"eyebrow": "What will we do?",
+				"title": "Two hours, thousands of meals.",
+				"body": "A meal-packing event is something to be part of. We spend about two hours packing thousands upon thousands of meals. We need kids as young as five to scoop the rice, teens to seal the bags, and adults to weigh out the portions.\n\nThis is a chance to use your hands and feet to serve the poorest of the poor. Bring your business and your clients, your teammates and your coworkers, your family and your friends.",
+				"tinted": false
+			}
+		},
+		{
+			"type": "Video",
+			"props": {
+				"id": "Video-moh-what",
+				"url": "https://vimeo.com/780858374",
+				"caption": "What a packing day looks like"
+			}
+		},
+		{
+			"type": "Video",
+			"props": {
+				"id": "Video-moh-why",
+				"url": "https://vimeo.com/823388351",
+				"caption": "Why we're doing this"
+			}
+		},
+		{
+			"type": "Gallery",
+			"props": {
+				"id": "Gallery-moh",
+				"eyebrow": "Last year",
+				"title": "What it looks like when everyone turns out.",
+				"photos": [
+					{
+						"src": "/uploads/meals-of-hope-hero.jpg",
+						"alt": "Children in Haiti eating a packed meal — feed a child, change a future"
+					},
+					{
+						"src": "/uploads/meals-of-hope-01.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-02.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-03.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-04.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-05.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-06.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-07.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-08.jpg",
+						"alt": "Volunteers packing meals at New Life"
+					},
+					{
+						"src": "/uploads/meals-of-hope-packing.jpg",
+						"alt": "The sanctuary set up as a packing line"
+					},
+					{
+						"src": "/uploads/meals-of-hope-child.jpg",
+						"alt": "A child in Haiti eating a packed meal"
+					}
+				]
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-moh",
+				"eyebrow": "Bring a team",
+				"title": "Two hours. Come pack.",
+				"body": "Sign your team up and we'll have a table ready for you.",
+				"buttons": [
+					{
+						"label": "Volunteer to pack",
+						"href": "https://newlife.ccbchurch.com/goto/forms/310/responses/new",
+						"style": "primary"
+					},
+					{
+						"label": "Give meals instead",
+						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"style": "secondary"
+					}
+				]
+			}
+		}
+	],
+	"zones": {}
+}

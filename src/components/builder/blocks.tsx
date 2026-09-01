@@ -17,6 +17,15 @@ function paras(text: string) {
 		.filter(Boolean);
 }
 
+// Pull a Vimeo id out of a pasted link (or accept a bare id). Meals of Hope's
+// two films live on Vimeo, not YouTube.
+function vimeoId(input: string): string | null {
+	const s = String(input || "").trim();
+	if (/^\d{6,}$/.test(s)) return s;
+	const m = s.match(/vimeo\.com\/(?:video\/)?(\d{6,})/);
+	return m ? m[1] : null;
+}
+
 // A link that leaves the site opens in a new tab, so a tap page stays put
 // behind whatever someone taps into. Anything relative ("/connect") is ours.
 function isExternal(href: string): boolean {
@@ -709,22 +718,72 @@ export const blocksConfig: Config = {
 			),
 		},
 
-		Video: {
-			label: "Video (YouTube)",
+		Gallery: {
+			label: "Photo gallery",
 			fields: {
-				url: { type: "text", label: "YouTube link (paste any share link)" },
+				eyebrow: { type: "text", label: "Small label above" },
+				title: { type: "text", label: "Section title" },
+				photos: {
+					type: "array",
+					label: "Photos",
+					arrayFields: {
+						src: {
+							type: "custom",
+							label: "Photo",
+							render: ({ value, onChange }: any) => <ImagePickerField value={value} onChange={onChange} />,
+						},
+						alt: { type: "text", label: "Describe the photo (for screen readers)" },
+					},
+					defaultItemProps: { src: "", alt: "" },
+					getItemSummary: (item: any, i?: number) => item?.alt || `Photo ${(i ?? 0) + 1}`,
+				},
+			},
+			defaultProps: { eyebrow: "", title: "", photos: [] },
+			render: ({ eyebrow, title, photos }) => (
+				<section className="section">
+					<div className="container">
+						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+						{title ? <h2>{title}</h2> : null}
+						<div
+							style={{
+								marginTop: title || eyebrow ? "22px" : 0,
+								display: "grid",
+								gap: "12px",
+								gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+							}}
+						>
+							{(photos || []).filter((p: any) => p?.src).map((p: any, i: number) => (
+								<img
+									key={i}
+									src={p.src}
+									alt={p.alt || ""}
+									loading="lazy"
+									style={{ width: "100%", aspectRatio: "4 / 3", objectFit: "cover", borderRadius: "14px", display: "block" }}
+								/>
+							))}
+						</div>
+					</div>
+				</section>
+			),
+		},
+
+		Video: {
+			label: "Video (YouTube or Vimeo)",
+			fields: {
+				url: { type: "text", label: "YouTube or Vimeo link (paste any share link)" },
 				caption: { type: "text", label: "Caption (optional)" },
 			},
 			defaultProps: { url: "", caption: "" },
 			render: ({ url, caption }) => {
 				const id = youtubeId(url);
+				const vimeo = id ? null : vimeoId(url);
 				return (
 					<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
 						<div className="container">
 							<figure style={{ margin: 0, maxWidth: "860px", marginInline: "auto" }}>
-								{id ? (
+								{id || vimeo ? (
 									<iframe
-										src={`https://www.youtube-nocookie.com/embed/${id}`}
+										src={id ? `https://www.youtube-nocookie.com/embed/${id}` : `https://player.vimeo.com/video/${vimeo}`}
 										title={caption || "Video"}
 										allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 										allowFullScreen
@@ -732,7 +791,7 @@ export const blocksConfig: Config = {
 									/>
 								) : (
 									<p style={{ opacity: 0.5, textAlign: "center", padding: "40px 0", border: "1px dashed rgba(128,128,128,.4)", borderRadius: "18px" }}>
-										Paste a YouTube link →
+										Paste a YouTube or Vimeo link →
 									</p>
 								)}
 								{caption ? (

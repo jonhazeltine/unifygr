@@ -1,0 +1,15 @@
+---
+// Church Ambassador Teams — the short-term teams we send out.
+// Blockified: content lives in content/pages/ambassador-teams.json and is
+// edited in the Page Builder (/studio/builder). Starts as a draft.
+export const prerender = false;
+import MountedPage from "../components/builder/MountedPage.astro";
+import { draftGuard } from "../lib/studio/pages";
+import { isAuthed } from "../lib/studio/auth";
+
+// A draft is staff-only, and answers a real 404 to everyone else.
+const notFound = await draftGuard("ambassador-teams", isAuthed(Astro.cookies));
+if (notFound) return notFound;
+---
+
+<MountedPage slug="ambassador-teams" />
