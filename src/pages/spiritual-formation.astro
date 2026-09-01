@@ -17,8 +17,6 @@ const { modules, stale, reason } = await formation();
 Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-revalidate=3600");
 ---
 
-{stale && <Fragment set:html={`<!-- formation: ${(reason || "unknown").replace(/--+/g, "-")} -->`} />}
-
 <Interior
 	title="Spiritual Formation | New Life Grand Rapids"
 	description="Formation at New Life runs in The Formation App — guided modules you walk with the rest of our community."
@@ -92,7 +90,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 			</div>
 
 			{stale && (
-				<p class="fm-note reveal is-visible">
+				<p class="fm-note reveal is-visible" data-reason={reason || "unknown"}>
 					Showing the module we know about — the app was slow to answer just now.
 				</p>
 			)}
