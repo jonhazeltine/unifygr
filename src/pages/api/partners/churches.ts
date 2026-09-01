@@ -25,6 +25,10 @@ export const GET: APIRoute = async ({ cookies }) => {
 				d: ev.localStart!.slice(0, 10),
 				s: isSundayMorning(ev) ? 1 : 0,
 				h: HOUSEKEEPING.test(ev.title.trim()) ? 1 : 0,
+				// The same gathering reaches us under more than one church record when
+				// a church is listed once per campus. This is the key the calendar
+				// folds them on, so the panel's totals count it once too.
+				k: `${ev.localStart!.slice(0, 10)}|${ev.title.replace(/\s+/g, " ").trim().toLowerCase()}`,
 			}));
 		return new Response(
 			JSON.stringify({

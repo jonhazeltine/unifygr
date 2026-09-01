@@ -47,6 +47,17 @@ export const prerender = false;
 				<section class="pc-summary" id="summary"></section>
 
 				<section class="pc-block">
+					<h2>Where our calendar stands</h2>
+					<p class="pc-block__note">
+						Every kind of gathering churches around us are publishing: what we show, what the
+						churches we've switched on are already offering us, and what exists across every
+						church we can read. A gap in the middle column is one tick away. A gap in the last
+						is a church we haven't added yet.
+					</p>
+					<div id="coverage"></div>
+				</section>
+
+				<section class="pc-block">
 					<h2>Across every church</h2>
 					<p class="pc-block__note">
 						Three judgements that apply to everything, whichever church it came from.
@@ -121,6 +132,21 @@ export const prerender = false;
 			.pc-summary .pc-summary__warn { color: var(--rose); }
 
 			.pc-block { margin-bottom: 3rem; }
+
+			.pc-cov { display: grid; grid-template-columns: 11rem repeat(3, 6rem) 1fr; gap: 1rem; align-items: baseline; padding: 0.7rem 1.1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 0.4rem; }
+			.pc-cov__kind { font-weight: 600; font-size: 0.95rem; }
+			.pc-cov__n { display: grid; gap: 0.1rem; }
+			.pc-cov__n b { font-size: 1.15rem; font-weight: 600; line-height: 1; }
+			.pc-cov__n small { font-size: 0.72rem; color: var(--muted); white-space: nowrap; }
+			.pc-cov__say { font-size: 0.85rem; color: var(--muted); text-align: right; }
+			.pc-cov.is-takeable { border-color: var(--gold, #c8a24a); }
+			.pc-cov.is-takeable .pc-cov__say { color: var(--gold, #c8a24a); }
+			.pc-cov.is-absent .pc-cov__kind, .pc-cov.is-absent .pc-cov__n b { opacity: 0.55; }
+			@media (max-width: 46rem) {
+				.pc-cov { grid-template-columns: 1fr 1fr 1fr; }
+				.pc-cov__kind { grid-column: 1 / -1; }
+				.pc-cov__say { grid-column: 1 / -1; text-align: left; }
+			}
 			.pc-block__head { display: flex; align-items: baseline; gap: 0.9rem; flex-wrap: wrap; }
 			/* The site's display headings are capped narrow for the front end; a
 			   work surface wants them on one line. */
@@ -210,7 +236,7 @@ export const prerender = false;
 				duplicateOf?: string;
 			};
 
-			type Row = { c: string; t: string; d: string; s: 0 | 1; h: 0 | 1 };
+			type Row = { c: string; t: string; d: string; s: 0 | 1; h: 0 | 1; k: string };
 
 			let settings: { globals: any; partners: Partner[] } = { globals: {}, partners: [] };
 			let roster: ChurchRow[] = [];
@@ -219,6 +245,11 @@ export const prerender = false;
 			// the switches as they currently stand. Recomputed whenever a switch moves,
 			// so every number on this page is one you can hold us to.
 			let live = new Map<string, Record<string, number>>();
+			// One row per kind of gathering: what our calendar shows, what the churches
+			// we've switched on are offering, and what exists across every church we
+			// can read. The three together are how complete our calendar is.
+			type Coverage = { theme: string; showing: number; ours: number; town: number };
+			let coverage: Coverage[] = [];
 			let dirty = false;
 			const open = new Set<string>();
 
@@ -263,15 +294,48 @@ export const prerender = false;
 					settings.partners.filter((p) => p.ownCampus).map((p) => p.churchId),
 				);
 				const next = new Map<string, Record<string, number>>();
+				const kept: Row[] = [];
 				for (const r of rows) {
 					if (r.d < lo || r.d > hi) continue;
 					if (g.hideHousekeeping && r.h) continue;
 					if (g.hideOtherSundayMornings && r.s && !ownCampus.has(r.c)) continue;
+					kept.push(r);
 					const bucket = next.get(r.c) ?? {};
 					bucket[r.t] = (bucket[r.t] || 0) + 1;
 					next.set(r.c, bucket);
 				}
 				live = next;
+
+				// Totals fold duplicate church records the same way the calendar does,
+				// so a church listed once per campus is not counted twice.
+				const on = new Map(settings.partners.filter((p) => p.on).map((p) => [p.churchId, p]));
+				const seen = {
+					showing: new Map<string, Set<string>>(),
+					ours: new Map<string, Set<string>>(),
+					town: new Map<string, Set<string>>(),
+				};
+				const add = (m: Map<string, Set<string>>, theme: string, key: string) => {
+					const set = m.get(theme) ?? new Set<string>();
+					set.add(key);
+					m.set(theme, set);
+				};
+				for (const r of kept) {
+					add(seen.town, r.t, r.k);
+					const partner = on.get(r.c);
+					if (!partner) continue;
+					add(seen.ours, r.t, r.k);
+					if (partner.themes.includes(r.t)) add(seen.showing, r.t, r.k);
+				}
+				coverage = THEMES.map((theme) => ({
+					theme,
+					showing: seen.showing.get(theme)?.size || 0,
+					ours: seen.ours.get(theme)?.size || 0,
+					town: seen.town.get(theme)?.size || 0,
+				}))
+					.filter((c) => c.town > 0)
+					// What we could add without doing anything but ticking a box comes
+					// first, then the kinds we have nothing for at all.
+					.sort((a, b) => b.ours - b.showing - (a.ours - a.showing) || b.town - a.town);
 			}
 
 			/** How many gatherings this church would actually contribute of this kind. */
@@ -296,24 +360,36 @@ export const prerender = false;
 				const silent = settings.partners.filter(
 					(p) => p.on && p.themes.length > 0 && !p.themes.some((t) => liveCount(p.churchId, t)),
 				).length;
-				// A church that starts posting a kind we have not ticked shows up as an
-				// unticked chip on its card, which is easy to walk past. Counting them
-				// here is what stops a new youth group sitting unnoticed for a month.
-				let untaken = 0;
-				for (const p of settings.partners) {
-					if (!p.on) continue;
-					const row = rowFor(p.churchId);
-					if (!row) continue;
-					for (const t of Object.keys(row.themes)) {
-						if (!p.themes.includes(t) && liveCount(p.churchId, t) > 0) untaken++;
-					}
-				}
 				$("summary").innerHTML = `
 					<div><strong>${on}</strong><span>churches switched on</span></div>
 					<div><strong>${kinds.size}</strong><span>kinds of gathering open</span></div>
 					<div><strong>${shownCount()}</strong><span>gatherings this would show</span></div>
-					${untaken ? `<div><strong>${untaken}</strong><span>kinds on offer you haven't taken</span></div>` : ""}
 					${silent ? `<div><strong class="pc-summary__warn">${silent}</strong><span>on, but bringing nothing</span></div>` : ""}`;
+			}
+
+			function renderCoverage() {
+				$("coverage").innerHTML = coverage
+					.map((c) => {
+						const takeable = c.ours - c.showing;
+						const elsewhere = c.town - c.ours;
+						const state = takeable > 0 ? "is-takeable" : c.ours === 0 ? "is-absent" : "";
+						return `<div class="pc-cov ${state}">
+							<span class="pc-cov__kind">${THEME_LABEL[c.theme]}</span>
+							<span class="pc-cov__n"><b>${c.showing}</b><small>we show</small></span>
+							<span class="pc-cov__n"><b>${c.ours}</b><small>our churches</small></span>
+							<span class="pc-cov__n"><b>${c.town}</b><small>nearby</small></span>
+							<span class="pc-cov__say">${
+								takeable > 0
+									? `${takeable} more, one tick away`
+									: c.ours === 0
+										? `nothing from our churches`
+										: elsewhere === 0
+											? `everything published`
+											: ""
+							}</span>
+						</div>`;
+					})
+					.join("");
 			}
 
 			function renderGlobals() {
@@ -457,6 +533,7 @@ export const prerender = false;
 			function renderAll() {
 				recount();
 				renderSummary();
+				renderCoverage();
 				renderPartners();
 				renderAvailable();
 			}
