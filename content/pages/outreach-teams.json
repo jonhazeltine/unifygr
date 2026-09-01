@@ -25,7 +25,7 @@
 				"eyebrow": "To our city",
 				"heading": "Grand Rapids is the assignment too.",
 				"subline": "A few times a year, and some of it every week",
-				"body": "An Outreach Team is a group from New Life going somewhere in this city to do something useful — packing food, delivering groceries, showing up on the days the whole neighborhood is already outside.\n\nSome of it is one big day a year. Some of it is a Sunday afternoon that repeats. You don't need a skill to come; you need to be free that day.",
+				"body": "An Outreach Team is a group from New Life going somewhere in this city to do something useful — taking groceries to a neighbor, packing food, showing up on the days the whole neighborhood is already outside.\n\nSome of it is one big day a year. Some of it is every Sunday, shared out so nobody is doing it every week. You don't need a skill to come; you need to be free that day.",
 				"image": "",
 				"video": "",
 				"buttons": [
@@ -41,12 +41,16 @@
 						"value": "Anyone — families welcome, kids included on most of it"
 					},
 					{
+						"label": "The weekly one",
+						"value": "Grocery Deliveries — every Sunday after service, on a rota"
+					},
+					{
 						"label": "What it costs",
 						"value": "Nothing but the hours"
 					},
 					{
 						"label": "Partners",
-						"value": "Serve GR, Mission of Hope, and our neighbors in Briggs Park"
+						"value": "Serve GR, Mission of Hope, and our own neighbors"
 					}
 				]
 			}
@@ -72,8 +76,8 @@
 						"text": "Showing up in August on the night the neighborhoods are already out on their porches."
 					},
 					{
-						"title": "Briggs Park groceries",
-						"text": "Weekly grocery delivery in the neighborhood after Sunday service."
+						"title": "Grocery Deliveries",
+						"text": "Every Sunday after service, groceries go out to neighbors who need them. Seventeen people are on the rota, mostly couples, so your turn comes around every couple of months — an hour, once in a while."
 					}
 				]
 			}
