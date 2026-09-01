@@ -67,17 +67,23 @@ follow-up queue, and opens an Asana task. A human works that queue. Only after
 they approve does anyone get hand-added to a **Planning Center** team, by that
 team's leader, and then scheduled onto dates.
 
-**The website must never write to Planning Center.** The API would allow it —
-posting to a PCO Form creates a person and opens a workflow card — and doing so
-would put someone in the scheduler who does not exist in the CRM. That is the
-thing this church has deliberately avoided. Planning Center is read-only from
-here: we look at rosters and plans, we never create them. (Its Services API is
-read-only through our connection anyway, but the rule is the reason, not the
-limitation.)
+**Never write to Planning Center before CCB.** A serving sign-up opens a card on
+the **Serving Interest** workflow (id `776123`, steps: connect with them → get
+their availability → Core series on the app → get them scheduled) *after* the
+CCB leg, via `src/lib/connect/planningcenter.ts`. Only ever a card — nothing is
+added to a team or scheduled automatically; a leader still decides. Services
+rosters and plans are read-only to us in any case.
 
-As of 2026-09-01 Planning Center has **no Forms and no Workflows at all** —
-every approval queue lives in CCB. Don't propose moving approvals to Planning
-Center without saying that out loud first.
+**Most CCB queues are dead.** Checked 2026-09-01 against the live account: only
+Pastoral Care is genuinely worked (Initial Contact 604 people, 594 closed, by
+Sue Meyer / Jon / Sarah Rhein), plus 1st Connect Call. Small Group and Growth
+Track hold nobody; Prayer and Interested in Serving held one untouched test
+each; Serving Placement's 21 queues are a bulk import touched only by the "New
+Life Assistant" account. So most interests carry no `queueId` — filing into a
+queue nobody opens is worse than not filing, because it looks handled. Re-check
+before adding one back.
+
+Planning Center holds ~84 people (those who serve); CCB holds the whole church.
 
 The weak link is the hand-add after approval, so `Interest.scheduler` in
 `src/lib/connect/routing.ts` names the Planning Center team each interest ends

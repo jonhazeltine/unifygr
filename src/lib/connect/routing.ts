@@ -1,21 +1,22 @@
 // What a Connect Card submission means, and where each interest is routed.
 //
-// Every interest maps to a real CCB follow-up queue (verified against the live
-// CCB account) and to the wording staff will see on the Asana task. Queue ids
-// are stable in CCB; if a queue is ever renamed the id keeps working.
+// THE ORDER MATTERS. CCB is the CRM; Planning Center is the scheduler. Every
+// submission reaches CCB first — that is the person's record, and it is what
+// syncs across. Only then does a serving sign-up open a card in Planning
+// Center, and only ever a card: a leader still decides, and nobody is added to
+// a team automatically. Never write to Planning Center before CCB; that would
+// put someone in the scheduler who does not exist in the CRM.
 //
-// THE ORDER MATTERS. CCB is the CRM; Planning Center is the scheduler. Nobody
-// enters through the scheduler. A person arrives here, lands in CCB, is worked
-// by a human in a CCB queue, and only then is added to a Planning Center team
-// — by hand, by that team's leader. The website never writes to Planning
-// Center, and it never should: doing so would create a person there who does
-// not exist in the CRM.
+// A queue is only worth filing into if somebody opens it. Most of CCB's are
+// not worked (see queueId below), so most interests deliberately have none —
+// the person still lands in CCB, and the Asana task is what staff actually
+// see. Filing into a dead queue is worse than not filing: it looks handled.
 //
-// `scheduler` is what makes that handoff visible. It rides along on the Asana
-// task so whoever approves someone reads the next step instead of remembering
-// it. That step is where people fall on the floor: the Ambassador team has an
-// empty rota through next February while the grocery rota, seeded by hand in
-// January, has seventeen people on it.
+// `scheduler` names the Planning Center team an interest ends up on and rides
+// along on the Asana task, because the hand-add after approval is the step
+// where people fall on the floor. The Ambassador rota sat empty through next
+// February while the grocery rota, seeded by hand in January, carries
+// seventeen people.
 
 export type Interest = {
 	/** value stored on the submission */
@@ -24,8 +25,17 @@ export type Interest = {
 	label: string;
 	/** CCB process this queue belongs to (for the admin display) */
 	process: string;
-	/** CCB queue the person is dropped into */
-	queueId: number;
+	/**
+	 * CCB queue the person is dropped into — ONLY where a human actually works
+	 * that queue. Checked against the live account 2026-09-01: pastoral care is
+	 * worked (Initial Contact holds 604 people, 594 closed out, by Sue Meyer,
+	 * Jon and Sarah Rhein), and 1st Connect Call has real completions. The rest
+	 * are dead — Small Group and Growth Track hold nobody at all, Prayer and
+	 * Interested in Serving held one untouched test each. Leave queueId off for
+	 * those: the person still reaches CCB, and the Asana task is what a staff
+	 * member actually sees. Re-check before adding one back.
+	 */
+	queueId?: number;
 	/** how the Asana task is titled */
 	action: string;
 	/** days from submission for the Asana due date */
@@ -56,7 +66,7 @@ export const INTERESTS: Interest[] = [
 		id: "jesus",
 		label: "I want to know Jesus / I made a decision",
 		process: "Connections – New Believers",
-		queueId: 144, // Launch new Believer Drip
+		// No queueId: CCB's "Launch new Believer Drip" is dead — empty but for one untouched entry (checked 2026-09-01).
 		action: "New believer follow-up",
 		dueInDays: 1,
 	},
@@ -64,7 +74,7 @@ export const INTERESTS: Interest[] = [
 		id: "baptism",
 		label: "I'd like to be baptized",
 		process: "Connections – Direct and Connect",
-		queueId: 106, // Water Baptism
+		// No queueId: CCB's "Water Baptism" is dead — only admin accounts, three stalled (checked 2026-09-01).
 		action: "Baptism follow-up",
 		dueInDays: 3,
 	},
@@ -72,7 +82,7 @@ export const INTERESTS: Interest[] = [
 		id: "prayer",
 		label: "I have a prayer request",
 		process: "Connections – Direct and Connect",
-		queueId: 108, // Prayer
+		// No queueId: CCB's "Prayer" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Prayer request",
 		dueInDays: 1,
 	},
@@ -89,20 +99,18 @@ export const INTERESTS: Interest[] = [
 		serving: true,
 		label: "I want to serve on a team",
 		process: "Connections – Direct and Connect",
-		queueId: 111, // Interested in Serving
+		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Serving interest",
 		dueInDays: 5,
 	},
 	{
-		// The three ways we go. None of them has its own CCB queue, so all three
-		// ride the serving queue — but each carries a different Asana task title
-		// so staff can tell a church visit from a mission trip from a serve day
-		// without opening the task.
+		// The three ways we go. Each carries its own Asana task title so staff can
+		// tell a church visit from a mission trip from a serve day at a glance.
 		id: "ambassador",
 		serving: true,
 		label: "I want to go with an Ambassador Team to another church",
 		process: "Connections – Direct and Connect",
-		queueId: 111, // Interested in Serving
+		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Ambassador Team interest",
 		dueInDays: 5,
 		scheduler: { team: "Ambassador Team", serviceType: "Church Ambassador Teams" },
@@ -112,7 +120,7 @@ export const INTERESTS: Interest[] = [
 		serving: true,
 		label: "I want to go on a Missions Team (overseas)",
 		process: "Connections – Direct and Connect",
-		queueId: 111, // Interested in Serving
+		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Missions Team interest",
 		dueInDays: 5,
 		// No Planning Center team — a trip roster is not a Sunday rota.
@@ -122,7 +130,7 @@ export const INTERESTS: Interest[] = [
 		serving: true,
 		label: "I want to serve our city with an Outreach Team",
 		process: "Connections – Direct and Connect",
-		queueId: 111, // Interested in Serving
+		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Outreach Team interest",
 		dueInDays: 5,
 		scheduler: { team: "Grocery Deliveries", serviceType: "Hospitality & Connections" },
@@ -131,7 +139,7 @@ export const INTERESTS: Interest[] = [
 		id: "group",
 		label: "I'd like to join a life group",
 		process: "Connections – Direct and Connect",
-		queueId: 112, // Invitation to Small Group
+		// No queueId: CCB's "Invitation to Small Group" is dead — nobody in it at all (checked 2026-09-01).
 		action: "Life group invitation",
 		dueInDays: 5,
 	},
@@ -139,7 +147,7 @@ export const INTERESTS: Interest[] = [
 		id: "growth-track",
 		label: "I want to take the next step (Growth Track)",
 		process: "Growth Track",
-		queueId: 199, // 101
+		// No queueId: CCB's "101" is dead — nobody in it at all (checked 2026-09-01).
 		action: "Growth Track 101",
 		dueInDays: 5,
 	},
