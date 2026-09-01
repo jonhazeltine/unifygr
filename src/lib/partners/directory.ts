@@ -70,23 +70,41 @@ export async function readOrgs(): Promise<DirectoryOrg[]> {
 		.sort((a, b) => a.name.localeCompare(b.name));
 }
 
+export type OrgChange = { listed?: boolean; confirmed?: boolean };
+
 /**
- * Apply listing changes. Only entries whose value actually differs are touched,
- * and `listed: true` is written as an absent key so the file stays as it reads —
- * an entry is listed unless we have said otherwise.
+ * Apply changes. Only entries whose value actually differs are touched, and
+ * `listed: true` is written as an absent key so the file stays as it reads — an
+ * entry is listed unless we have said otherwise.
+ *
+ * Confirmed is the directory's own `status`: the file has always said an
+ * out-of-house entry sits at "proposed" until a person at New Life confirms it.
+ * That was true and unreachable. The star sets it.
  */
-export async function writeOrgs(changes: Record<string, boolean>): Promise<number> {
+export async function writeOrgs(changes: Record<string, OrgChange>): Promise<number> {
 	const raw = await readRaw();
 	const doc = JSON.parse(raw);
 	let touched = 0;
 	for (const entry of doc.entries as any[]) {
-		if (!(entry.slug in changes)) continue;
-		const want = changes[entry.slug];
-		const now = entry.listed !== false;
-		if (want === now) continue;
-		if (want) delete entry.listed;
-		else entry.listed = false;
-		touched++;
+		const change = changes[entry.slug];
+		if (!change) continue;
+		let moved = false;
+		if (change.listed !== undefined) {
+			const now = entry.listed !== false;
+			if (change.listed !== now) {
+				if (change.listed) delete entry.listed;
+				else entry.listed = false;
+				moved = true;
+			}
+		}
+		if (change.confirmed !== undefined) {
+			const now = entry.status === "live";
+			if (change.confirmed !== now) {
+				entry.status = change.confirmed ? "live" : "proposed";
+				moved = true;
+			}
+		}
+		if (moved) touched++;
 	}
 	if (!touched) return 0;
 
@@ -94,7 +112,7 @@ export async function writeOrgs(changes: Record<string, boolean>): Promise<numbe
 	if (process.env.GITHUB_TOKEN) {
 		await commitToMain(
 			[{ path: FILE, content: body }],
-			`content(ministries): ${touched} listing ${touched === 1 ? "change" : "changes"} from the partners panel`,
+			`content(ministries): ${touched} ${touched === 1 ? "change" : "changes"} from the partners panel`,
 		);
 	} else {
 		await fs.writeFile(filePath(), body, "utf8");

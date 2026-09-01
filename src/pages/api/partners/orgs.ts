@@ -1,7 +1,7 @@
 // The ministry directory's listing switches.
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { readOrgs, writeOrgs } from "../../../lib/partners/directory";
+import { readOrgs, writeOrgs, type OrgChange } from "../../../lib/partners/directory";
 
 export const prerender = false;
 
@@ -28,7 +28,7 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
 	if (!body || typeof body.changes !== "object" || body.changes === null)
 		return json({ error: "That save didn't arrive in one piece. Try again." }, 400);
 	try {
-		const touched = await writeOrgs(body.changes as Record<string, boolean>);
+		const touched = await writeOrgs(body.changes as Record<string, OrgChange>);
 		return json({ touched, orgs: await readOrgs() });
 	} catch (err: any) {
 		return json({ error: `Couldn't save: ${err?.message || "no reason given"}` }, 500);

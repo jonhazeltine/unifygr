@@ -87,6 +87,7 @@ export const prerender = false;
 						<div class="pc-chips" id="kinds"></div>
 						<div class="pc-chips" id="filters"></div>
 					</div>
+					<div class="pc-bulk" id="bulk" hidden></div>
 					<div id="churches"></div>
 					<p class="pc-empty" id="churches-empty" hidden>No church matches that.</p>
 					<p class="pc-empty" id="churches-loading">Reading what churches are publishing…</p>
@@ -217,6 +218,8 @@ export const prerender = false;
 			.pc-chip b { color: var(--text); font-weight: 600; margin-left: 0.2rem; }
 			.pc-chip.is-on { border-color: var(--gold, #c8a24a); color: var(--text); background: color-mix(in srgb, var(--gold, #c8a24a) 14%, transparent); }
 
+			.pc-bulk { display: flex; gap: 1rem; align-items: baseline; margin: 0 0 0.8rem; padding: 0 0.2rem; }
+			.pc-bulk__count { font-size: 0.82rem; color: var(--muted); margin-right: auto; }
 			.pc-chip--kind { border-style: dashed; }
 			.pc-church--org .pc-church__where { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 			.pc-star--none { width: 1.05rem; display: inline-block; flex: none; }
@@ -351,7 +354,8 @@ export const prerender = false;
 			// The ministry directory — Mel Trotter, Guiding Light, Celebrate Recovery.
 			// These carry no events; their switch decides whether we list them at all.
 			let orgs: DirectoryOrg[] = [];
-			let orgEdits = new Map<string, boolean>();
+			type OrgEdit = { listed?: boolean; confirmed?: boolean };
+			let orgEdits = new Map<string, OrgEdit>();
 			// Churches and organisations answer different questions, so the list can be
 			// held to one or the other.
 			let kind: "all" | "churches" | "orgs" = "all";
@@ -835,7 +839,22 @@ export const prerender = false;
 			}
 
 			function orgListed(o: DirectoryOrg): boolean {
-				return orgEdits.has(o.slug) ? orgEdits.get(o.slug)! : o.listed;
+				return orgEdits.get(o.slug)?.listed ?? o.listed;
+			}
+
+			function orgConfirmed(o: DirectoryOrg): boolean {
+				return orgEdits.get(o.slug)?.confirmed ?? o.confirmed;
+			}
+
+			function editOrg(slug: string, patch: OrgEdit) {
+				const org = orgs.find((o) => o.slug === slug);
+				if (!org) return;
+				const next = { ...(orgEdits.get(slug) || {}), ...patch };
+				// Anything back at where it started is not a change at all.
+				if (next.listed === org.listed) delete next.listed;
+				if (next.confirmed === org.confirmed) delete next.confirmed;
+				if (Object.keys(next).length) orgEdits.set(slug, next);
+				else orgEdits.delete(slug);
 			}
 
 			function renderKinds() {
@@ -855,21 +874,27 @@ export const prerender = false;
 				return shownOrgs;
 			}
 
-			function renderOrgRows(q: string) {
-				const list = orgs.filter(
+			function visibleOrgs(q: string): DirectoryOrg[] {
+				return orgs.filter(
 					(o) =>
 						!q ||
 						o.name.toLowerCase().includes(q) ||
 						(o.city || "").toLowerCase().includes(q) ||
 						o.summary.toLowerCase().includes(q),
 				);
-				return list
+			}
+
+			function renderOrgRows(q: string) {
+				return visibleOrgs(q)
 					.map((o) => {
 						const on = orgListed(o);
-						const changed = orgEdits.has(o.slug) && orgEdits.get(o.slug) !== o.listed;
+						const ok = orgConfirmed(o);
+						const changed = orgEdits.has(o.slug);
 						return `<article class="pc-church pc-church--org ${on ? "is-showing" : "is-new"} ${changed ? "is-changed" : ""}">
 							<div class="pc-church__top">
-								<span class="pc-star pc-star--none" aria-hidden="true"></span>
+								<button class="pc-star ${ok ? "is-on" : ""}" type="button" data-orgapprove="${o.slug}"
+									aria-pressed="${ok}"
+									title="${ok ? "Confirmed — someone here has actually spoken to them. Click to undo." : "Confirm: someone at New Life has spoken to them and would send people."}">${ok ? "★" : "☆"}</button>
 								<label class="pc-church__hit">
 									<input type="checkbox" data-org="${o.slug}" ${on ? "checked" : ""} />
 									<span class="pc-church__id">
@@ -881,7 +906,7 @@ export const prerender = false;
 									}</span>
 								</label>
 								<span class="pc-church__acts">
-									${o.confirmed ? "" : `<span class="pc-church__unconfirmed" title="Nobody at New Life has confirmed this one yet">unconfirmed</span>`}
+									${ok ? "" : `<span class="pc-church__unconfirmed" title="Nobody at New Life has confirmed this one yet">unconfirmed</span>`}
 								</span>
 							</div>
 						</article>`;
@@ -897,16 +922,62 @@ export const prerender = false;
 				).join("");
 			}
 
+			// What "select all" would act on: exactly the rows on screen, so narrowing
+			// with a filter or a search narrows what the button does.
+			let onScreen: { orgs: DirectoryOrg[]; churches: Listed[] } = { orgs: [], churches: [] };
+
+			function renderBulk() {
+				const n = onScreen.orgs.length + onScreen.churches.length;
+				const label = kind === "orgs" ? "listed" : kind === "churches" ? "showing" : "on";
+				const anyOn =
+					onScreen.orgs.filter(orgListed).length + onScreen.churches.filter((c) => c.state === "showing").length;
+				$("bulk").hidden = n === 0;
+				$("bulk").innerHTML = `<span class="pc-bulk__count">${anyOn} of ${n} ${label}</span>
+					<button class="pc-link" type="button" data-bulk="on">Tick all ${n}</button>
+					<button class="pc-link" type="button" data-bulk="off">Untick all ${n}</button>`;
+			}
+
+			function applyBulk(on: boolean) {
+				const n = onScreen.orgs.length + onScreen.churches.length;
+				if (!confirm(`${on ? "Tick" : "Untick"} all ${n} showing here? You can still change any of them before saving.`))
+					return;
+				for (const o of onScreen.orgs) editOrg(o.slug, { listed: on });
+				for (const c of onScreen.churches) {
+					let p = settings.partners.find((x) => x.churchId === c.id);
+					if (!p) {
+						if (!on) continue;
+						const row = rowFor(c.id);
+						p = {
+							churchId: c.id,
+							name: row?.name || c.name,
+							city: row?.city ?? c.city,
+							approved: true,
+							on: true,
+							themes: [],
+							addedAt: new Date().toISOString().slice(0, 10),
+						};
+						settings.partners.push(p);
+					}
+					if (on) p.approved = true;
+					p.on = on;
+				}
+				settings.partners.sort((a, b) => a.name.localeCompare(b.name));
+				markDirty();
+				renderAll();
+			}
+
 			function renderChurches() {
 				const q = ($("search") as HTMLInputElement).value.trim().toLowerCase();
 				const all = allChurches();
 				renderKinds();
 				renderFilters(all);
 				if (kind === "orgs") {
+					onScreen = { orgs: visibleOrgs(q), churches: [] };
 					const html = renderOrgRows(q);
 					$("churches-loading").hidden = true;
 					$("churches-empty").hidden = html.length > 0;
 					$("churches").innerHTML = html;
+					renderBulk();
 					return;
 				}
 				const fresh = all
@@ -929,6 +1000,7 @@ export const prerender = false;
 				$("churches-loading").hidden = true;
 				$("churches-empty").hidden = list.length > 0;
 				const orgHtml = kind === "all" ? renderOrgRows(q) : "";
+				onScreen = { orgs: kind === "all" ? visibleOrgs(q) : [], churches: list.filter((c) => c.state !== "declined") };
 				$("churches").innerHTML = list
 					.map(({ id, name, city, row, p, state }) => {
 						const isOpen = open.has(id);
@@ -983,6 +1055,7 @@ export const prerender = false;
 						</article>`;
 					})
 					.join("") + orgHtml;
+				renderBulk();
 			}
 
 			function renderDeclined() {
@@ -1068,10 +1141,7 @@ export const prerender = false;
 					return;
 				}
 				if (el.dataset.org) {
-					const slug = el.dataset.org;
-					const original = orgs.find((o) => o.slug === slug)?.listed ?? true;
-					if (el.checked === original) orgEdits.delete(slug);
-					else orgEdits.set(slug, el.checked);
+					editOrg(el.dataset.org, { listed: el.checked });
 					markDirty();
 					renderChurches();
 					return;
@@ -1127,6 +1197,18 @@ export const prerender = false;
 			panel.addEventListener("click", (e) => {
 				const btn = (e.target as HTMLElement).closest("button");
 				if (!btn) return;
+				if (btn.dataset.bulk) {
+					applyBulk(btn.dataset.bulk === "on");
+					return;
+				}
+				if (btn.dataset.orgapprove) {
+					const slug = btn.dataset.orgapprove;
+					const org = orgs.find((o) => o.slug === slug);
+					if (org) editOrg(slug, { confirmed: !orgConfirmed(org) });
+					markDirty();
+					renderChurches();
+					return;
+				}
 				if (btn.dataset.kindfilter) {
 					kind = btn.dataset.kindfilter as typeof kind;
 					frozen = null;
