@@ -6,10 +6,19 @@ import react from "@astrojs/react";
 
 import vercel from "@astrojs/vercel";
 
+import taxonomy from "./content/ministry-taxonomy.json" with { type: "json" };
+
+// The ministry category pages render per request now, so their calendars are
+// live. Astro's sitemap only sees prerendered routes, so they are listed here
+// by hand — they are real pages and they belong in the sitemap.
+const categoryUrls = taxonomy.families.flatMap((family) =>
+	family.categories.map((c) => `https://unifygr.com/ministries/${family.slug}/${c.slug}`),
+);
+
 // https://astro.build/config
 export default defineConfig({
 	site: "https://unifygr.com",
-	integrations: [mdx(), sitemap(), react()],
+	integrations: [mdx(), sitemap({ customPages: categoryUrls }), react()],
 	adapter: vercel(),
 	// The Studio agent runs a build to verify its edits; don't let that build's
 	// output disturb the dev server's file watcher (or its route manifest).

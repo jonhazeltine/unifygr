@@ -1,26 +1,18 @@
 ---
 import Interior from "../../layouts/Interior.astro";
-import calendarData from "../../../content/curated-events.json";
+import { calendar, type CalendarEvent as Ev } from "../../lib/partners/calendar";
 import { entries } from "../../data/ministries";
 import { church } from "../../data/site";
 
-type Ev = {
-	title: string;
-	date: string;
-	time: string | null;
-	venue: string | null;
-	city: string | null;
-	theme: string;
-	themeLabel: string;
-	categories: string[];
-};
+// Built on every request from the churches we carry and the kinds of gathering
+// we take from each, both set at /admin/partners. A church that posts a new
+// date is on this page the same day, with nothing to rebuild.
+export const prerender = false;
 
-const data = calendarData as {
-	source: string;
-	days: number;
-	themes: Record<string, number>;
-	events: Ev[];
-};
+const data = await calendar();
+// Fresh within a few minutes, but served from cache like a static page. A
+// switch flipped in the partners panel shows here within five minutes.
+Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=3600");
 
 // Our own weekly rhythms sit in the same list as everything else, because it is
 // one calendar.
@@ -28,15 +20,8 @@ const ours = entries
 	.filter((e) => e.house === "in" && e.rhythm && e.status === "live")
 	.map((e) => ({ name: e.name, rhythm: e.rhythm!, slug: e.slug }));
 
-// The snapshot in content/ starts from whenever it was pulled, so anything
-// already past has to go — a calendar opening on last Monday is worse than no
-// calendar. This re-filters on every build.
-const now = new Date();
-const TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-
 const byDate = new Map<string, Ev[]>();
 for (const ev of data.events) {
-	if (ev.date < TODAY) continue;
 	if (!byDate.has(ev.date)) byDate.set(ev.date, []);
 	byDate.get(ev.date)!.push(ev);
 }
