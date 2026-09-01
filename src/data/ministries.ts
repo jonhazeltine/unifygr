@@ -60,6 +60,11 @@ export type Entry = {
 	/** Where this ministry meets. The church is the address, not the headline. */
 	venue?: string | null;
 	venueUrl?: string | null;
+	/**
+	 * An organisation with premises of its own — Mel Trotter, Pine Rest. It has
+	 * an address rather than a venue, because it IS the venue.
+	 */
+	address?: string | null;
 	bestFor?: string | null;
 	area?: string | null;
 	city?: string | null;
@@ -236,16 +241,24 @@ export const specialisedFamilies = new Set<string>(
 export const families: Family[] = allFamilies.filter((f) => !specialisedFamilies.has(f.slug));
 
 /**
- * An offering is something a person can actually turn up to: ours, or a
- * ministry whose calendar feed gives us real, current dates. Everything else is
- * real and worth knowing, but it is a reference list, not an offering.
+ * Whether a ministry belongs on the page as somewhere to go.
+ *
+ * This used to ask whether the ministry published a machine-readable calendar,
+ * which was the wrong question and emptied 69 category pages: Mel Trotter, Pine
+ * Rest and Guiding Light publish no ICS feed and are still exactly who you send
+ * someone to. A feed decides whether a ministry can appear on the CALENDAR — it
+ * has nothing to do with whether we will point at it.
+ *
+ * What belongs here is our own standard: a real person on the other end. That is
+ * the handoff, or a rhythm we can state, or premises you can turn up to.
  */
 export function isOffering(entry: Entry): boolean {
 	return (
 		entry.house === "in" ||
+		Boolean(entry.handoff) ||
+		Boolean(entry.rhythm) ||
+		Boolean(entry.address) ||
 		entry.calendar?.format === "ics" ||
-		// No feed, but we read their announcements every week and a person
-		// confirms them, which is a slower version of the same promise.
 		entry.calendar?.format === "watched"
 	);
 }
