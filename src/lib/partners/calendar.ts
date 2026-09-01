@@ -12,7 +12,7 @@
 
 import snapshot from "../../../content/curated-events.json";
 import { feed, type RawEvent } from "./churchmap";
-import { approved, readSettings, type Settings } from "./settings";
+import { readSettings, showing, type Settings } from "./settings";
 import { THEME_CATEGORIES, themeLabel } from "./themes";
 
 export type CalendarEvent = {
@@ -86,7 +86,7 @@ function shape(ev: RawEvent): CalendarEvent {
 
 /** Everything the panel's choices let through, soonest first. */
 export function applySettings(events: RawEvent[], settings: Settings): CalendarEvent[] {
-	const partners = approved(settings);
+	const partners = showing(settings);
 	const { hideHousekeeping, hideOtherSundayMornings, daysAhead } = settings.globals;
 
 	const from = today();

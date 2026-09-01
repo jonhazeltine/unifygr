@@ -21,7 +21,13 @@ export type Partner = {
 	churchId: string;
 	name: string;
 	city: string | null;
-	/** Off keeps the church and its choices, but carries nothing. */
+	/**
+	 * We have looked at this church and would put our name next to it. Approving
+	 * is the judgement; showing is the switch. An approved church counts as
+	 * available on the calendar-coverage list whether or not it is showing.
+	 */
+	approved: boolean;
+	/** Showing: off keeps the church and its choices, but puts nothing on the calendar. */
 	on: boolean;
 	/** The Church Map theme keys we accept from this church. */
 	themes: string[];
@@ -64,11 +70,7 @@ export type Settings = {
 };
 
 const SEED_COMMENT =
-	"Which churches feed our calendar, and which kinds of gathering we take from each. " +
-	"Edited at /studio/partners on the live site; this file is the starting point a fresh " +
-	"deployment reads and the copy a laptop edits. Churches under `declined` are ones we have " +
-	"looked at and said no to — they stop being offered. Nothing else decides what reaches the " +
-	"calendar.";
+	"Which churches feed our calendar, and which kinds of gathering we take from each. Edited at /studio/partners on the live site; this file is the starting point a fresh deployment reads and the copy a laptop edits. A church is approved when we would put our name next to it, and shown when its dates are actually on the calendar — approving is the judgement, showing is the switch. Churches under `declined` are ones we have said no to; they stop being offered and stop being counted.";
 
 const DEFAULT_GLOBALS: Globals = {
 	hideHousekeeping: true,
@@ -91,6 +93,9 @@ export function normalise(raw: any): Settings {
 					churchId: p.churchId,
 					name: String(p.name || "").trim(),
 					city: p.city ?? null,
+					// A church written before approving existed was, by definition, one
+					// we had already approved.
+					approved: p.approved !== false,
 					on: p.on !== false,
 					themes: Array.isArray(p.themes) ? [...new Set(p.themes.map(String))] : [],
 					ownCampus: p.ownCampus === true,
@@ -172,11 +177,11 @@ export async function writeSettings(next: Settings): Promise<Settings> {
 	return clean;
 }
 
-/** Quick lookup for the calendar builder. */
-export function approved(settings: Settings): Map<string, Partner> {
+/** The churches whose dates actually reach the calendar right now. */
+export function showing(settings: Settings): Map<string, Partner> {
 	const map = new Map<string, Partner>();
 	for (const p of settings.partners) {
-		if (p.on && p.themes.length) map.set(p.churchId, p);
+		if (p.approved && p.on && p.themes.length) map.set(p.churchId, p);
 	}
 	return map;
 }
