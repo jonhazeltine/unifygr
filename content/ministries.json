@@ -68,7 +68,7 @@
 		},
 		{
 			"slug": "corporate-prayer",
-			"name": "Corporate Prayer",
+			"name": "Prayer",
 			"org": "New Life Grand Rapids",
 			"house": "in",
 			"tier": "signature",
@@ -78,58 +78,21 @@
 				"healing-prayer",
 				"prophetic"
 			],
-			"summary": "A praying team that gathers to intercede for the church and the city, and prays with people who ask.",
+			"summary": "A praying team that gathers to intercede for the church and the city, prays with anyone who asks on a Sunday, and takes urgent requests out to people the same day.",
 			"why": "Prayer is not a program here. It is the engine, and it has been running longer than most of our other ministries have existed.",
 			"bestFor": "Anyone who wants to be prayed for, and anyone ready to pray for others.",
 			"area": "Knapp's Corner",
 			"city": "Grand Rapids",
-			"rhythm": "Ongoing",
+			"rhythm": "Ongoing, and always on for urgent requests",
 			"href": null,
 			"handoff": {
-				"how": "Ask at the Connections desk on a Sunday, or use the connect card.",
+				"how": "Ask at the Connections desk on a Sunday, or send a request through the connect card and it goes out to the chain the same day.",
 				"person": "Elizabeth Bish"
 			},
 			"calendar": {
 				"url": null,
 				"format": null,
 				"cadence": "weekly",
-				"sync": "none"
-			},
-			"status": "live",
-			"verified": {
-				"by": "New Life staff",
-				"on": "2026-08-17"
-			},
-			"lat": 42.999923,
-			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
-			"venue": "New Life, Knapp's Corner",
-			"venueUrl": null
-		},
-		{
-			"slug": "prayer-chain",
-			"name": "Prayer Chain",
-			"org": "New Life Grand Rapids",
-			"house": "in",
-			"tier": "core",
-			"categories": [
-				"intercession"
-			],
-			"summary": "Send a request and it goes out to people who will pray the same day.",
-			"why": "The fastest way to get a room full of people praying for your situation.",
-			"bestFor": "Anyone in the middle of something urgent.",
-			"area": "Knapp's Corner",
-			"city": "Grand Rapids",
-			"rhythm": "Always on",
-			"href": null,
-			"handoff": {
-				"how": "Send your request through the connect card and it goes out the same day.",
-				"person": "Elizabeth Bish"
-			},
-			"calendar": {
-				"url": null,
-				"format": null,
-				"cadence": "none",
 				"sync": "none"
 			},
 			"status": "live",
@@ -294,8 +257,6 @@
 			"venueUrl": null
 		},
 		{
-			"slug": "mission-of-hope-trips",
-			"name": "Caribbean Mission Trips",
 			"org": "New Life Grand Rapids with Mission of Hope",
 			"house": "in",
 			"tier": "signature",
@@ -304,12 +265,8 @@
 				"student-missions",
 				"global-missions"
 			],
-			"summary": "Annual teams to Jarabacoa, Dominican Republic, working alongside Mission of Hope. New Life has sent teams since 2015.",
-			"why": "We did not want a sending agency that organizes trips on our behalf. We wanted a ministry partner on the ground, and after 11 years we have one. This is a ministry share: we lead it, and any church in the city can send their people.",
 			"bestFor": "Families with kids, high school students, retirees. Genuinely everyone.",
 			"area": "Knapp's Corner",
-			"city": "Jarabacoa, Dominican Republic",
-			"rhythm": "Every summer",
 			"href": "/mission-trips",
 			"handoff": {
 				"how": "Read the trip page, then talk to Stacy. She has led these for over a decade.",
@@ -330,7 +287,52 @@
 			"lng": -85.601454,
 			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
 			"venue": "New Life, Knapp's Corner",
-			"venueUrl": null
+			"venueUrl": null,
+			"slug": "mission-trips-dominican-republic",
+			"name": "Dominican Republic",
+			"summary": "Teams to Jarabacoa each summer, working alongside Mission of Hope. New Life has sent teams since 2015.",
+			"why": "We did not want a sending agency that organizes trips on our behalf. We wanted a ministry partner on the ground, and after 11 years we have one. This is a ministry share: we lead it, and any church in the city can send their people.",
+			"city": "Jarabacoa, Dominican Republic",
+			"rhythm": "Every summer"
+		},
+		{
+			"org": "New Life Grand Rapids with Mission of Hope",
+			"house": "in",
+			"tier": "signature",
+			"categories": [
+				"short-term-missions",
+				"student-missions",
+				"global-missions"
+			],
+			"bestFor": "Families with kids, high school students, retirees. Genuinely everyone.",
+			"area": "Knapp's Corner",
+			"href": "/mission-trips",
+			"handoff": {
+				"how": "Read the trip page, then talk to Stacy. She has led these for over a decade.",
+				"person": "Stacy Hazeltine"
+			},
+			"calendar": {
+				"url": null,
+				"format": null,
+				"cadence": "annual",
+				"sync": "none"
+			},
+			"status": "proposed",
+			"verified": {
+				"by": "New Life staff",
+				"on": "2026-08-17"
+			},
+			"lat": 42.999923,
+			"lng": -85.601454,
+			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
+			"venue": "New Life, Knapp's Corner",
+			"venueUrl": null,
+			"slug": "mission-trips-haiti",
+			"name": "Haiti",
+			"summary": "Teams going with Mission of Hope, whose work in Haiti is where the partnership began over twenty years ago.",
+			"why": "We did not want a sending agency that organizes trips on our behalf. We wanted a ministry partner on the ground, and after 11 years we have one. This is a ministry share: we lead it, and any church in the city can send their people.",
+			"city": "Haiti",
+			"rhythm": "Every summer"
 		},
 		{
 			"slug": "unify-gr",
