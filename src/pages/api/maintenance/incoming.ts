@@ -24,14 +24,25 @@ import { createFollowUpTask, AsanaError } from "../../../lib/connect/asana";
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
+/**
+ * Clearstream wraps the event — `{ created_at, event, production, data: {...} }`
+ * — and the text itself lives inside `data`. Everything is read through this,
+ * so a payload that arrives either way is understood. Reading only the outer
+ * object is what silently dropped every live resident text for a week.
+ */
+function unwrap(body: any): any {
+	return body?.data && typeof body.data === "object" ? body.data : (body ?? {});
+}
+
 /** Clearstream's payload shape isn't guaranteed, so read it forgivingly. */
 function readPayload(body: any): { text: string; from: string } | null {
-	const text = body?.text ?? body?.text_body ?? body?.message?.text ?? body?.reply?.text ?? "";
+	const d = unwrap(body);
+	const text = d?.text ?? d?.text_body ?? d?.message?.text ?? d?.reply?.text ?? "";
 	const from =
-		body?.from ??
-		body?.mobile_number ??
-		body?.subscriber?.mobile_number ??
-		body?.contact?.mobile_number ??
+		d?.from ??
+		d?.mobile_number ??
+		d?.subscriber?.mobile_number ??
+		d?.contact?.mobile_number ??
 		"";
 	if (!String(text).trim() || !String(from).trim()) return null;
 	return { text: String(text).trim(), from: String(from).trim() };
@@ -51,7 +62,8 @@ function readPayload(body: any): { text: string; from: string } | null {
 function textedAnotherLine(body: any): string | null {
 	const line = (process.env.MAINTENANCE_LINE || "").trim();
 	if (!line) return null;
-	const to = String(body?.number ?? body?.to ?? body?.received_on ?? "").trim();
+	const d = unwrap(body);
+	const to = String(d?.number ?? d?.to ?? d?.received_on ?? "").trim();
 	if (!to) return null;
 	const last10 = (n: string) => n.replace(/\D/g, "").slice(-10);
 	return last10(to) === last10(line) ? null : to;
@@ -87,10 +99,10 @@ export const POST: APIRoute = async ({ request, url }) => {
 	console.log(
 		"[maintenance] webhook hit",
 		JSON.stringify({
+			event: body?.event ?? null,
 			keys: body && typeof body === "object" ? Object.keys(body) : null,
-			number: body?.number ?? null,
-			to: body?.to ?? null,
-			received_on: body?.received_on ?? null,
+			innerKeys: typeof unwrap(body) === "object" ? Object.keys(unwrap(body)) : null,
+			number: unwrap(body)?.number ?? null,
 		}),
 	);
 
