@@ -51,15 +51,20 @@ export async function deliverToCcb(s: Submission): Promise<Submission["ccb"]> {
 			? await updatePerson(existing.id, fields)
 			: await createPerson(fields);
 
-		await addToQueue(person.id, interest.queueId, summarize(s));
+		// A queue only helps if somebody opens it. Interests whose queue is dead
+		// still get the person into CCB — that is the CRM record, and it is what
+		// syncs to Planning Center — but nothing is filed into a list no one
+		// reads, because a submission sitting in one looks handled and isn't.
+		if (interest.queueId) await addToQueue(person.id, interest.queueId, summarize(s));
 
+		const landed = interest.queueId ? ` and added them to ${interest.process}` : "";
 		return {
 			status: "ok",
 			ref: String(person.id),
 			url: personUrl(person.id),
 			detail: existing
-				? `Matched the existing profile for ${person.name} and added them to ${interest.process}.`
-				: `Created ${person.name} and added them to ${interest.process}.`,
+				? `Matched the existing profile for ${person.name}${landed}.`
+				: `Created ${person.name}${landed}.`,
 			at: new Date().toISOString(),
 		};
 	} catch (err) {
