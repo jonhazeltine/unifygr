@@ -27,6 +27,7 @@
 			</div>
 			<div class="sd-head__actions">
 				<button id="sd-builder" class="sd-icon" type="button" title="Open the Page Builder" aria-label="Open the Page Builder" hidden>⊞</button>
+				<button id="sd-partners" class="sd-icon" type="button" title="Partner churches — what feeds our calendar" aria-label="Partner churches" hidden>⛪</button>
 				<button id="sd-undo" class="sd-icon" type="button" title="Undo last change" aria-label="Undo last change" hidden>↺</button>
 				<button id="sd-signout" class="sd-icon" type="button" title="Sign out" hidden>⎋</button>
 				<button id="sd-close" class="sd-icon" type="button" title="Close" aria-label="Close">×</button>
@@ -182,7 +183,7 @@
 
 		function showChat() {
 			$("sd-signin").hidden = true; $("sd-chat").hidden = false;
-			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false;
+			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false; $("sd-partners").hidden = false;
 			sessionStorage.setItem(OPEN_KEY, "1"); // stay open as staff navigate
 			renderLog();
 			if (loadLog().length === 0) addMsg(`Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
@@ -250,6 +251,7 @@
 		$("sd-close").addEventListener("click", close);
 		$("sd-undo").addEventListener("click", undoLast);
 		$("sd-builder").addEventListener("click", () => { location.href = "/studio/builder"; });
+		$("sd-partners").addEventListener("click", () => { location.href = "/admin/partners"; });
 		$("sd-composer").addEventListener("submit", send);
 		$("sd-signout").addEventListener("click", async () => {
 			await api("/api/studio/session", { method: "DELETE" });

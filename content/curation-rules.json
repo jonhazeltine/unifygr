@@ -1,5 +1,5 @@
 {
-	"_comment": "The rules the curation runs on, set by New Life. These are editorial judgements, not data problems, so they live in one place where they can be read and argued with rather than buried in a script.",
+	"_comment": "HISTORY \u2014 not what the site uses. These were the rules that stood in for a person's judgement before the partners panel existed: a radius, traditions to avoid, caps on how many churches one part of town could fill. The live calendar is now decided in the panel at /admin/partners and stored in content/ministry-partners.json. Editing this file changes nothing on the site; it is kept because scripts/build-curated-calendar.py still uses it to refresh the offline fallback snapshot, and because the reasoning is worth having on record.",
 	"scope": {
 		"centre": {
 			"lat": 42.999923,
@@ -124,7 +124,7 @@
 		]
 	},
 	"specialisedOnly": {
-		"note": "The line: a category area stays in the curated browse if at least one ministry in it publishes dates we can carry. If nobody does, it moves to the specialised list. That is self-maintaining — as curation fills an area, it comes back on its own. The list below forces an area onto the shelf even when it does have offerings.",
+		"note": "The line: a category area stays in the curated browse if at least one ministry in it publishes dates we can carry. If nobody does, it moves to the specialised list. That is self-maintaining \u2014 as curation fills an area, it comes back on its own. The list below forces an area onto the shelf even when it does have offerings.",
 		"rule": "an area with zero offerings is specialised",
 		"alsoForce": [
 			"mental-health"

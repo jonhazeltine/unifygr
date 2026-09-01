@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
-"""Build our calendar from The Church Map's published Grand Rapids events.
+"""Refresh the OFFLINE FALLBACK calendar. This is no longer what the site shows.
+
+    ⚠️  The live calendar is built at request time from the choices saved in the
+        partners panel at /admin/partners (see src/lib/partners/). Which
+        churches we carry and which kinds of gathering we take from each are
+        decided there and nowhere else. This script's rules in
+        content/curation-rules.json are HISTORY — they are what stood in for a
+        person's judgement before the panel existed, and changing them changes
+        nothing on the site.
+
+    What this still does: rebuild content/curated-events.json, the snapshot the
+    site falls back to on the rare day The Church Map cannot be reached. That
+    snapshot is itself filtered through the panel's current choices before it is
+    shown, so a church switched off in the panel stays off even here.
+
+Build our calendar from The Church Map's published Grand Rapids events.
 
 The Church Map already gathers the calendars Grand Rapids churches publish
 themselves, parses them, and sorts them into themes:

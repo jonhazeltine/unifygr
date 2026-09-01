@@ -5,28 +5,23 @@
 import Interior from "../../../layouts/Interior.astro";
 import MinistryCard from "../../../components/MinistryCard.astro";
 import MinistryMap from "../../../components/MinistryMap.astro";
-import calendarData from "../../../../content/curated-events.json";
+import { calendar } from "../../../lib/partners/calendar";
 import {
 	allFamiliesIncludingSpecialised as families,
 	entriesInCategory,
 	sortEntries,
 	splitOffering,
 	newLifeNote,
-	type Category,
 	type Entry,
-	type Family,
 } from "../../../data/ministries";
 
-export function getStaticPaths() {
-	return families.flatMap((family) =>
-		family.categories.map((category) => ({
-			params: { family: family.slug, category: category.slug },
-			props: { family, category },
-		})),
-	);
-}
+// Rendered per request so this page's calendar is the live one, same as
+// /ministries/calendar. The directory itself still comes from the repo.
+export const prerender = false;
 
-const { family, category } = Astro.props as { family: Family; category: Category };
+const family = families.find((f) => f.slug === Astro.params.family);
+const category = family?.categories.find((c) => c.slug === Astro.params.category);
+if (!family || !category) return new Response(null, { status: 404 });
 
 const list = sortEntries(entriesInCategory(category.slug));
 const { offering, specialized } = splitOffering(list);
@@ -35,14 +30,12 @@ const { offering, specialized } = splitOffering(list);
 const signature = offering.filter((e) => e.house === "in");
 const curated = offering.filter((e) => e.house === "out");
 
-type Ev = {
-	title: string; date: string; time: string | null;
-	venue: string | null; city: string | null; categories: string[]; themeLabel: string;
-};
-const allEvents = (calendarData as { events: Ev[] }).events;
-
 // Only this category's gatherings belong on this page's calendar.
+const { events: allEvents } = await calendar();
 const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).slice(0, 12);
+// Fresh within a few minutes, but served from cache like a static page. A
+// switch flipped in the partners panel shows here within five minutes.
+Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=3600");
 
 
 // Where a category sits inside school districts, that is the useful grouping.

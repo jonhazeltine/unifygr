@@ -25,6 +25,33 @@ text; this file is the real orientation doc.
 - `.github/workflows/mirror-plan-codework.yml` is the Mirror app's dispatch
   workflow (Claude code-work runs from Mirror plans) — don't remove it.
 
+## The calendar and the partners panel
+
+Our calendar is assembled **at request time** from the calendars other churches
+publish, and nothing about it is baked into the repo:
+
+- **The source** is The Church Map's Grand Rapids feed
+  (`src/lib/partners/churchmap.ts`), cached five minutes. Every event arrives
+  already tagged with a theme and a church id.
+- **The decision** is `content/ministry-partners.json`: which churches we carry,
+  and which themes we take from each. Staff edit it at **`/admin/partners`**
+  (Studio passcode). On the live site the saved copy lives in Vercel Blob so a
+  switch takes effect on the next page view; on a laptop the committed file is
+  the live copy. `src/lib/partners/settings.ts` handles both.
+- **The assembly** is `src/lib/partners/calendar.ts`, consumed by
+  `/ministries/calendar` and every `/ministries/<family>/<category>` page. Both
+  are `prerender = false` with a 5-minute edge cache. Because they no longer
+  prerender, their URLs are listed in the sitemap by hand in `astro.config.mjs`.
+- **Three global switches** (housekeeping, other churches' Sunday mornings, how
+  far ahead) are the ONLY thing besides the panel that can drop an event, and
+  all three are visible and toggleable in the panel. Do not add a hidden rule:
+  if a gathering is missing, the reason must be a switch on that screen.
+- `content/curation-rules.json` and `scripts/build-curated-calendar.py` are
+  **history**. They were the guesswork that stood in for a person before the
+  panel existed. The script now only refreshes `content/curated-events.json`,
+  the offline fallback used when The Church Map is unreachable — and that
+  fallback is itself filtered through the panel's current choices.
+
 ## Watch page
 
 The "Recent Services" grid reads the YouTube channel's public RSS feed at
