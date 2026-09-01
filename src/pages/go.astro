@@ -1,0 +1,16 @@
+---
+// The hub for the three ways we go — Ambassador Teams (the local church),
+// Missions Teams (our partners overseas), Outreach Teams (our city).
+// Blockified: content lives in content/pages/go.json and is edited in the
+// Page Builder (/studio/builder). Starts as a draft.
+export const prerender = false;
+import MountedPage from "../components/builder/MountedPage.astro";
+import { draftGuard } from "../lib/studio/pages";
+import { isAuthed } from "../lib/studio/auth";
+
+// A draft is staff-only, and answers a real 404 to everyone else.
+const notFound = await draftGuard("go", isAuthed(Astro.cookies));
+if (notFound) return notFound;
+---
+
+<MountedPage slug="go" />

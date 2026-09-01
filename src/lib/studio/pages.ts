@@ -39,6 +39,8 @@ export const MOUNTED: Record<string, string> = {
 	"next-steps": "/next-steps",
 	"meals-of-hope": "/meals-of-hope",
 	"ambassador-teams": "/ambassador-teams",
+	"outreach-teams": "/outreach-teams",
+	"go": "/go",
 };
 
 // Pages that render with no header, footer or menu — a single screen of big

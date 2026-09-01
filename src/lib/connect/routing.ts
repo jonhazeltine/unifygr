@@ -69,15 +69,31 @@ export const INTERESTS: Interest[] = [
 		dueInDays: 5,
 	},
 	{
-		// Pray & Go — the monthly visit to another Grand Rapids church. There is
-		// no Ambassador-specific queue in CCB, so this rides the serving queue,
-		// but the Asana task is titled differently so staff can tell it from a
-		// serve-on-Sunday ask without opening it.
+		// The three ways we go. None of them has its own CCB queue, so all three
+		// ride the serving queue — but each carries a different Asana task title
+		// so staff can tell a church visit from a mission trip from a serve day
+		// without opening the task.
 		id: "ambassador",
 		label: "I want to go with an Ambassador Team to another church",
 		process: "Connections – Direct and Connect",
 		queueId: 111, // Interested in Serving
 		action: "Ambassador Team interest",
+		dueInDays: 5,
+	},
+	{
+		id: "missions",
+		label: "I want to go on a Missions Team (overseas)",
+		process: "Connections – Direct and Connect",
+		queueId: 111, // Interested in Serving
+		action: "Missions Team interest",
+		dueInDays: 5,
+	},
+	{
+		id: "outreach",
+		label: "I want to serve our city with an Outreach Team",
+		process: "Connections – Direct and Connect",
+		queueId: 111, // Interested in Serving
+		action: "Outreach Team interest",
 		dueInDays: 5,
 	},
 	{

@@ -1,0 +1,133 @@
+{
+	"status": "draft",
+	"order": 32,
+	"root": {
+		"props": {
+			"title": "Outreach Teams",
+			"kicker": "Change the World",
+			"description": "Serving Grand Rapids — the food, the neighbors, and the days our city already turns out for."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-out",
+				"kicker": "Change the World",
+				"heading": "Outreach Teams",
+				"lede": "The third direction: not the church down the road, not the Caribbean — the street outside."
+			}
+		},
+		{
+			"type": "Feature",
+			"props": {
+				"id": "Feature-out",
+				"eyebrow": "To our city",
+				"heading": "Grand Rapids is the assignment too.",
+				"subline": "A few times a year, and some of it every week",
+				"body": "An Outreach Team is a group from New Life going somewhere in this city to do something useful — packing food, delivering groceries, showing up on the days the whole neighborhood is already outside.\n\nSome of it is one big day a year. Some of it is a Sunday afternoon that repeats. You don't need a skill to come; you need to be free that day.",
+				"image": "",
+				"video": "",
+				"buttons": [
+					{
+						"label": "Get on the list",
+						"href": "/connect?interest=outreach&from=outreach+teams+page",
+						"style": "primary"
+					}
+				],
+				"facts": [
+					{
+						"label": "Who can come",
+						"value": "Anyone — families welcome, kids included on most of it"
+					},
+					{
+						"label": "What it costs",
+						"value": "Nothing but the hours"
+					},
+					{
+						"label": "Partners",
+						"value": "Serve GR, Mission of Hope, and our neighbors in Briggs Park"
+					}
+				]
+			}
+		},
+		{
+			"type": "Cards",
+			"props": {
+				"id": "Cards-out-what",
+				"eyebrow": "What we do",
+				"title": "The days on the calendar.",
+				"style": "simple",
+				"cards": [
+					{
+						"title": "Meals of Hope",
+						"text": "One November afternoon, hundreds of people, two hours, thousands of packed meals. Kids scoop, teens seal, adults weigh."
+					},
+					{
+						"title": "Serve GR",
+						"text": "We partner with Serve GR for a summer outreach day across the city."
+					},
+					{
+						"title": "National Night Out",
+						"text": "Showing up in August on the night the neighborhoods are already out on their porches."
+					},
+					{
+						"title": "Briggs Park groceries",
+						"text": "Weekly grocery delivery in the neighborhood after Sunday service."
+					}
+				]
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-out-why",
+				"eyebrow": "Why we go",
+				"title": "The need is on our street.",
+				"body": "It is easier to care about a place you fly to than the one you drive through. Overseas has a departure date and a photo at the end; a neighbor two blocks away has neither.\n\nSo we put our own city on the calendar the same way we put the Dominican Republic on it — with dates, teams, and someone responsible for showing up.",
+				"tinted": true
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-out",
+				"eyebrow": "Come along",
+				"title": "Tell us you're in.",
+				"body": "We'll let you know the next date, where to be, and what we're doing. Come to one or come to all of them.",
+				"buttons": [
+					{
+						"label": "Get on the list",
+						"href": "/connect?interest=outreach&from=outreach+teams+page",
+						"style": "primary"
+					}
+				]
+			}
+		},
+		{
+			"type": "CtaCards",
+			"props": {
+				"id": "CtaCards-out-siblings",
+				"cards": [
+					{
+						"label": "To the local church",
+						"title": "Ambassador Teams",
+						"body": "One Sunday a month we worship at another Grand Rapids church, having prayed for them all month, and hand over a letter and a gift.",
+						"buttonLabel": "Ambassador Teams",
+						"buttonHref": "/ambassador-teams",
+						"featured": false
+					},
+					{
+						"label": "To our partners overseas",
+						"title": "Missions Teams",
+						"body": "A week in the Caribbean with Mission of Hope — medical care, kids clubs, construction, whatever the team is built to do.",
+						"buttonLabel": "Missions Teams",
+						"buttonHref": "/mission-trips",
+						"featured": false
+					}
+				]
+			}
+		}
+	],
+	"zones": {}
+}
