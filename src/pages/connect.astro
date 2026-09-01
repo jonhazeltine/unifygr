@@ -8,6 +8,16 @@ export const prerender = false;
 // the first choice, so a stale link can never land on nothing.
 const wanted = interestById(Astro.url.searchParams.get("interest") ?? "")?.id;
 const from = Astro.url.searchParams.get("from")?.slice(0, 40) ?? "";
+const picked = wanted ?? INTERESTS[0].id;
+
+// Eleven flat radios was a wall on a phone, and four of them were one intent
+// said four ways. Same eleven answers, shown as five headings — with the ways
+// to serve tucked under the one line that asks the actual question.
+const groups = INTERESTS.reduce<{ name: string; items: typeof INTERESTS; sub: typeof INTERESTS }[]>((acc, interest) => {
+	const group = acc.find((g) => g.name === interest.group) ?? (acc.push({ name: interest.group, items: [], sub: [] }), acc[acc.length - 1]);
+	(interest.underServe ? group.sub : group.items).push(interest);
+	return acc;
+}, []);
 ---
 
 <Interior
@@ -50,16 +60,32 @@ const from = Astro.url.searchParams.get("from")?.slice(0, 40) ?? "";
 
 				<fieldset class="field field--choices">
 					<legend>What would you like from us?</legend>
-					{INTERESTS.map((interest, i) => (
-						<label class="choice">
-							<input
-								type="radio"
-								name="interest"
-								value={interest.id}
-								checked={wanted ? interest.id === wanted : i === 0}
-							/>
-							<span>{interest.label}</span>
-						</label>
+					{groups.map((group) => (
+						<div class="choice-group">
+							<p class="choice-group__head">{group.name}</p>
+							{group.items.map((interest) => (
+								<label class="choice">
+									<input type="radio" name="interest" value={interest.id} checked={interest.id === picked} />
+									<span>{interest.label}</span>
+								</label>
+							))}
+
+							{/* The four ways to serve are one intent, so they wait behind it.
+							    CSS :has() reveals them the moment "serve" is chosen — no
+							    script, and they are still real radios either way. */}
+							{group.sub.length > 0 && (
+								<div class="choice-sub">
+									<p class="choice-sub__head">Which one?</p>
+									{group.sub.map((interest) => (
+										<label class="choice">
+											<input type="radio" name="interest" value={interest.id} checked={interest.id === picked} />
+											<span>{interest.label}</span>
+										</label>
+									))}
+									<p class="field-note">Not sure yet? Leave it on the first one and we'll talk it through.</p>
+								</div>
+							)}
+						</div>
 					))}
 				</fieldset>
 
@@ -117,6 +143,23 @@ const from = Astro.url.searchParams.get("from")?.slice(0, 40) ?? "";
 
 	.field--choices { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
 	.field--choices legend { padding: 0 0.5rem; }
+
+	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
+	.choice-group__head {
+		margin: 0 0 0.35rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--gold);
+	}
+
+	/* Held back until someone says they want to serve. */
+	.choice-sub { display: none; margin: 0.5rem 0 0 1.6rem; padding-left: 0.9rem; border-left: 2px solid var(--gold-soft); }
+	.choice-group:has(input[value="serve"]:checked) .choice-sub,
+	.choice-group:has(.choice-sub input:checked) .choice-sub { display: block; }
+	.choice-sub__head { margin: 0 0 0.2rem; font-size: 0.82rem; color: var(--muted); }
+	.choice-sub .field-note { margin-top: 0.35rem; }
+
 	.choice { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.42rem 0; cursor: pointer; }
 	.choice input { margin-top: 0.28rem; accent-color: var(--gold); }
 	.choice span { color: var(--text); }
