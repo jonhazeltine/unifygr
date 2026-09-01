@@ -1,0 +1,117 @@
+---
+// A signature ministry — one of the few things New Life runs itself.
+//
+// These carry more weight than a directory card, so they get more room: an
+// image, a name, and one line on the front, and everything else behind a click.
+// What we actually do and why we do it that way is worth reading, but not worth
+// making somebody scroll past five times to reach the ministry they came for.
+import type { Entry } from "../data/ministries";
+
+interface Props {
+	entry: Entry;
+	/** Background image for the card. */
+	image: string;
+}
+
+const { entry, image } = Astro.props;
+const id = `sig-${entry.slug}`;
+// Ours meet in our building; what travels says where it goes.
+const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ?? entry.venue ?? null);
+---
+
+<article class="sig">
+	<button class="sig__face" type="button" aria-expanded="false" aria-controls={id}>
+		<span class="sig__art" style={`background-image:url(${image})`} aria-hidden="true"></span>
+		<span class="sig__scrim" aria-hidden="true"></span>
+		<span class="sig__head">
+			{entry.rhythm && <span class="sig__when">{entry.rhythm}</span>}
+			<span class="sig__name">{entry.name}</span>
+			<span class="sig__line">{entry.summary}</span>
+		</span>
+		<span class="sig__more" aria-hidden="true">
+			<span class="sig__more-open">What this is</span>
+			<span class="sig__more-shut">Close</span>
+		</span>
+	</button>
+
+	<div class="sig__body" id={id} hidden>
+		{entry.why && (
+			<div class="sig__why">
+				<p class="eyebrow">Why we do it this way</p>
+				<p>{entry.why}</p>
+			</div>
+		)}
+		<dl class="sig__facts">
+			{entry.bestFor && (<><dt>Who it's for</dt><dd>{entry.bestFor}</dd></>)}
+			{where && (<><dt>Where</dt><dd>{where}</dd></>)}
+			{entry.handoff?.how && (<><dt>Taking a step</dt><dd>{entry.handoff.how}</dd></>)}
+		</dl>
+		<p class="sig__go">
+			<a href={entry.href ?? `/ministry/${entry.slug}`}>More about {entry.name}</a>
+		</p>
+	</div>
+</article>
+
+<style>
+	.sig { border-radius: 18px; overflow: hidden; background: var(--panel); border: 1px solid var(--line); }
+	.sig:has(.sig__face[aria-expanded="true"]) { border-color: var(--gold-soft, var(--line)); }
+
+	.sig__face {
+		position: relative; display: block; width: 100%; text-align: left;
+		border: 0; padding: 0; color: inherit; font: inherit; cursor: pointer; background: none;
+		min-height: clamp(13rem, 24vw, 17rem);
+	}
+	.sig__art {
+		position: absolute; inset: 0; background-size: cover; background-position: center;
+		transform: scale(1.02); transition: transform 0.6s ease;
+	}
+	.sig__face:hover .sig__art { transform: scale(1.06); }
+	.sig__scrim {
+		position: absolute; inset: 0;
+		background: linear-gradient(180deg, rgba(8,10,16,0.15) 0%, rgba(8,10,16,0.72) 62%, rgba(8,10,16,0.92) 100%);
+	}
+	.sig__head { position: relative; display: block; padding: clamp(1.2rem, 3vw, 1.9rem); padding-top: clamp(6rem, 14vw, 9rem); }
+	.sig__when { display: block; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-soft, #d8bd82); margin-bottom: 0.45rem; }
+	.sig__name {
+		display: block; font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+		font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.05; letter-spacing: -0.02em; color: #f6f0e7;
+	}
+	.sig__line { display: block; margin-top: 0.55rem; max-width: 44ch; color: rgba(246,240,231,0.82); font-size: 0.95rem; line-height: 1.55; }
+	.sig__more {
+		position: absolute; right: clamp(1.2rem, 3vw, 1.9rem); top: clamp(1.2rem, 3vw, 1.9rem);
+		font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+		color: #f6f0e7; background: rgba(8,10,16,0.5); border: 1px solid rgba(246,240,231,0.35);
+		border-radius: 999px; padding: 0.42rem 0.85rem; backdrop-filter: blur(6px);
+	}
+	.sig__more-shut { display: none; }
+	.sig__face[aria-expanded="true"] .sig__more-open { display: none; }
+	.sig__face[aria-expanded="true"] .sig__more-shut { display: inline; }
+
+	/* display:grid would otherwise win over the hidden attribute and open every
+	   card on load. */
+	.sig__body[hidden] { display: none; }
+	.sig__body { padding: clamp(1.2rem, 3vw, 1.9rem); display: grid; gap: 1.4rem; }
+	.sig__why p:last-child { margin: 0.4rem 0 0; color: var(--text); line-height: 1.75; max-width: 60ch; }
+	.sig__facts { display: grid; grid-template-columns: 9rem 1fr; gap: 0.5rem 1.2rem; margin: 0; }
+	.sig__facts dt { color: var(--muted); font-size: 0.82rem; }
+	.sig__facts dd { margin: 0; line-height: 1.6; }
+	.sig__go { margin: 0; }
+	.sig__go a { color: var(--gold-soft, #d8bd82); }
+
+	@media (max-width: 34rem) {
+		.sig__facts { grid-template-columns: 1fr; gap: 0.15rem; }
+		.sig__facts dd { margin-bottom: 0.7rem; }
+	}
+</style>
+
+<script>
+	// One listener for every card on the page: they are static, so this runs once.
+	document.querySelectorAll<HTMLButtonElement>(".sig__face").forEach((face) => {
+		face.addEventListener("click", () => {
+			const open = face.getAttribute("aria-expanded") === "true";
+			const body = document.getElementById(face.getAttribute("aria-controls")!);
+			face.setAttribute("aria-expanded", String(!open));
+			if (body) body.hidden = open;
+		});
+	});
+</script>
