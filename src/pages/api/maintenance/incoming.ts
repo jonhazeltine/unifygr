@@ -81,6 +81,19 @@ export const POST: APIRoute = async ({ request, url }) => {
 
 	const body = await request.json().catch(() => null);
 
+	// Which number a text was sent to decides whether it belongs here at all,
+	// and Clearstream's payload shape is not guaranteed — so record the shape
+	// (never the message itself) to make a silent mis-route visible.
+	console.log(
+		"[maintenance] webhook hit",
+		JSON.stringify({
+			keys: body && typeof body === "object" ? Object.keys(body) : null,
+			number: body?.number ?? null,
+			to: body?.to ?? null,
+			received_on: body?.received_on ?? null,
+		}),
+	);
+
 	const otherLine = textedAnotherLine(body);
 	if (otherLine) return json({ ignored: `Sent to ${otherLine}, not the maintenance line.` });
 
@@ -115,8 +128,8 @@ export const POST: APIRoute = async ({ request, url }) => {
 	if (!verdict.isRequest) return handOff(`Read as not a maintenance request — ${verdict.reason}`);
 	if (!resident.house) return handOff("This number isn't on any house's resident list.");
 
-	const project = houseProject(resident.house);
-	if (!project) return handOff(`No Asana project is mapped for ${resident.house}.`);
+	const target = houseProject(resident.house);
+	if (!target) return handOff(`No Asana project is mapped for ${resident.house}.`);
 	// The house project stands on its own — it does not need the unrelated
 	// Connect Card project to be configured, only the shared Asana token.
 	if (!process.env.ASANA_TOKEN) return handOff("Asana isn't connected on this deployment.");
@@ -136,7 +149,8 @@ export const POST: APIRoute = async ({ request, url }) => {
 				verdict.summary ? `\n${verdict.summary}` : "",
 			].join("\n"),
 			dueOn: dueDate(verdict.urgency),
-			projectId: project,
+			projectId: target.project,
+			sectionId: target.section ?? undefined,
 		});
 	} catch (err) {
 		return handOff(
