@@ -40,11 +40,35 @@ export type Globals = {
 	daysAhead: number;
 };
 
+/** A church we have looked at and said no to. It stops being offered. */
+export type Declined = {
+	churchId: string;
+	name: string;
+	city: string | null;
+	at?: string;
+};
+
 export type Settings = {
+	/** Kept so the file still explains itself after the panel has written it. */
+	_comment?: string;
 	globals: Globals;
 	partners: Partner[];
+	/**
+	 * Churches we will not carry, whatever they publish. Without this the panel
+	 * offers the same congregation back every time a category is opened, and the
+	 * count of what is available nearby reads higher than anything we would
+	 * actually use.
+	 */
+	declined: Declined[];
 	updatedAt?: string;
 };
+
+const SEED_COMMENT =
+	"Which churches feed our calendar, and which kinds of gathering we take from each. " +
+	"Edited at /studio/partners on the live site; this file is the starting point a fresh " +
+	"deployment reads and the copy a laptop edits. Churches under `declined` are ones we have " +
+	"looked at and said no to — they stop being offered. Nothing else decides what reaches the " +
+	"calendar.";
 
 const DEFAULT_GLOBALS: Globals = {
 	hideHousekeeping: true,
@@ -74,7 +98,25 @@ export function normalise(raw: any): Settings {
 					addedAt: p.addedAt || undefined,
 				}))
 		: [];
-	return { globals, partners, updatedAt: raw?.updatedAt };
+	const declined: Declined[] = Array.isArray(raw?.declined)
+		? raw.declined
+				.filter((d: any) => d && typeof d.churchId === "string" && d.churchId)
+				.map((d: any) => ({
+					churchId: d.churchId,
+					name: String(d.name || "").trim(),
+					city: d.city ?? null,
+					at: d.at || undefined,
+				}))
+		: [];
+	// A church cannot be both carried and refused; saying no wins.
+	const refused = new Set(declined.map((d) => d.churchId));
+	return {
+		_comment: typeof raw?._comment === "string" ? raw._comment : SEED_COMMENT,
+		globals,
+		partners: partners.filter((p) => !refused.has(p.churchId)),
+		declined,
+		updatedAt: raw?.updatedAt,
+	};
 }
 
 export function seedSettings(): Settings {

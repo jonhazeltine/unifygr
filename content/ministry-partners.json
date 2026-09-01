@@ -1,4 +1,5 @@
 {
+	"_comment": "Which churches feed our calendar, and which kinds of gathering we take from each. Edited at /studio/partners on the live site; this file is the starting point a fresh deployment reads and the copy a laptop edits. Churches under `declined` are ones we have looked at and said no to \u2014 they stop being offered. Nothing else decides what reaches the calendar.",
 	"globals": {
 		"hideHousekeeping": true,
 		"hideOtherSundayMornings": true,
@@ -223,6 +224,14 @@
 			],
 			"ownCampus": false,
 			"addedAt": "2026-09-01"
+		}
+	],
+	"declined": [
+		{
+			"churchId": "771e4148-f6ff-4b10-842e-8771c392e371",
+			"name": "Unity Spiritual Community of Grand Rapids",
+			"city": "Grand Rapids",
+			"at": "2026-09-01"
 		}
 	]
 }
