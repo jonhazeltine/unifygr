@@ -7,6 +7,7 @@
 
 import { addToQueue, createPerson, findPerson, personUrl, updatePerson } from "./ccb";
 import { asanaConfigured, createFollowUpTask } from "./asana";
+import { addToServingWorkflow, pcoConfigured } from "./planningcenter";
 import { DEFAULT_INTEREST, interestById } from "./routing";
 import type { Submission } from "./store";
 
@@ -59,6 +60,45 @@ export async function deliverToCcb(s: Submission): Promise<Submission["ccb"]> {
 			detail: existing
 				? `Matched the existing profile for ${person.name} and added them to ${interest.process}.`
 				: `Created ${person.name} and added them to ${interest.process}.`,
+			at: new Date().toISOString(),
+		};
+	} catch (err) {
+		return {
+			status: "failed",
+			detail: err instanceof Error ? err.message : "Unknown error",
+			at: new Date().toISOString(),
+		};
+	}
+}
+
+/**
+ * Put a serving sign-up on the Planning Center workflow.
+ *
+ * Runs AFTER the CCB leg on purpose: CCB is the CRM, and nobody should appear
+ * in the scheduler who is not in it. A failure here is not fatal — the person
+ * is already recorded and a staff task still opens.
+ */
+export async function deliverToPlanningCenter(s: Submission): Promise<Submission["planningCenter"]> {
+	const interest = interestById(s.interest) ?? DEFAULT_INTEREST;
+	if (!interest.serving) {
+		return { status: "skipped", detail: "Not a serving sign-up.", at: new Date().toISOString() };
+	}
+	if (!pcoConfigured()) {
+		return {
+			status: "pending",
+			detail: "Planning Center isn't connected on this deployment yet. This will send as soon as it is.",
+			at: new Date().toISOString(),
+		};
+	}
+	try {
+		const card = await addToServingWorkflow({ firstName: s.firstName, lastName: s.lastName, email: s.email });
+		return {
+			status: "ok",
+			ref: card.cardId,
+			url: `https://people.planningcenteronline.com/workflows/${process.env.PCO_SERVING_WORKFLOW_ID}`,
+			detail: card.matched
+				? "Added to Serving Interest on their existing Planning Center profile."
+				: "Created a Planning Center profile and added them to Serving Interest.",
 			at: new Date().toISOString(),
 		};
 	} catch (err) {

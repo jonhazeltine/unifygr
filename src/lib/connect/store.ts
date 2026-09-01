@@ -12,9 +12,10 @@ import { put, list, get } from "@vercel/blob";
 const PREFIX = "connect/";
 
 export type Delivery = {
-	status: "ok" | "failed" | "pending";
+	/** "skipped" means this leg does not apply — only serving sign-ups go to Planning Center. */
+	status: "ok" | "failed" | "pending" | "skipped";
 	detail?: string;
-	/** CCB individual id, or Asana task gid */
+	/** CCB individual id, Asana task gid, or Planning Center card id */
 	ref?: string;
 	url?: string;
 	at?: string;
@@ -35,6 +36,8 @@ export type Submission = {
 	source?: string;
 	ccb: Delivery;
 	asana: Delivery;
+	/** Serving sign-ups only — a card on the Planning Center serving workflow. */
+	planningCenter?: Delivery;
 };
 
 function pathFor(id: string): string {

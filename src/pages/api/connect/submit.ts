@@ -6,7 +6,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { deliverToAsana, deliverToCcb } from "../../../lib/connect/deliver";
+import { deliverToAsana, deliverToCcb, deliverToPlanningCenter } from "../../../lib/connect/deliver";
 import { DEFAULT_INTEREST, interestById } from "../../../lib/connect/routing";
 import { newId, save, type Submission } from "../../../lib/connect/store";
 
@@ -51,6 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
 		source: clean(raw.source, 200),
 		ccb: { status: "pending" },
 		asana: { status: "pending" },
+		planningCenter: { status: "pending" },
 	};
 
 	try {
@@ -61,7 +62,10 @@ export const POST: APIRoute = async ({ request }) => {
 		return json({ ok: false, error: "Something went wrong on our end. Please try again, or call the church office." }, 500);
 	}
 
+	// CCB first, always: it is the CRM, and nobody reaches the scheduler who is
+	// not in it. Planning Center only ever sees people who already landed here.
 	submission.ccb = await deliverToCcb(submission);
+	submission.planningCenter = await deliverToPlanningCenter(submission);
 	submission.asana = await deliverToAsana(submission);
 	await save(submission).catch((err) => console.error("connect: could not update submission", err));
 
