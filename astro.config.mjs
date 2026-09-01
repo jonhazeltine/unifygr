@@ -34,5 +34,8 @@ export default defineConfig({
 		// Partner Churches sits with the Studio, whose passcode it shares —
 		// /admin/ is the Connect Card door and has a different password.
 		"/admin/partners": "/studio/partners",
+		// Spiritual Formation stopped being a builder page when it started
+		// reading the Formation App, so its old builder address still points home.
+		"/p/spiritual-formation": "/spiritual-formation",
 	},
 });

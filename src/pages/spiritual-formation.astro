@@ -1,14 +1,158 @@
 ---
-// Blockified: this page's content lives in content/pages/spiritual-formation.json
-// and is edited in the Page Builder (/studio/builder).
-export const prerender = false;
-import MountedPage from "../components/builder/MountedPage.astro";
-import { draftGuard } from "../lib/studio/pages";
-import { isAuthed } from "../lib/studio/auth";
+// Spiritual Formation — led by The Formation App.
+//
+// This is New Life's primary formation work, so the page follows the app rather
+// than describing it: the modules are read live from our own community inside
+// it, and publishing one there puts it here. The Welcome Path stays, because it
+// is the first thing a new person is pointed at, and it also lives on
+// /membership where the rest of that conversation now happens.
+import Interior from "../layouts/Interior.astro";
+import { formation, COMMUNITY_URL, FORMATION_APP } from "../lib/formation";
 
-// A draft is staff-only, and answers a real 404 to everyone else.
-const notFound = await draftGuard("spiritual-formation", isAuthed(Astro.cookies));
-if (notFound) return notFound;
+export const prerender = false;
+
+const { modules, stale } = await formation();
+
+// Fresh within a few minutes, served from cache like a static page.
+Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-revalidate=3600");
 ---
 
-<MountedPage slug="spiritual-formation" />
+<Interior
+	title="Spiritual Formation | New Life Grand Rapids"
+	description="Formation at New Life runs in The Formation App — guided modules you walk with the rest of our community."
+	kicker="Be Transformed"
+	heading="Spiritual Formation"
+	lede="Hear His voice. Obey His assignments. Grow deeper in Christ, together."
+>
+	<section class="section">
+		<div class="container">
+			<div class="prose-block__body reveal is-visible">
+				<p>
+					Formation is not a class you finish. It is what happens to a person over years, in the
+					company of people who know them. So ours does not live in a binder. It lives in an app
+					our own church built, and you walk it with the rest of us.
+				</p>
+				<p>
+					<strong>The Formation App</strong> gives you a guided path — modules broken into
+					lessons, taken at your pace, with the people from New Life walking the same one. You can
+					see where you are. So can the people encouraging you.
+				</p>
+			</div>
+
+			<div class="fm-join reveal is-visible">
+				<div>
+					<p class="eyebrow">Join our community</p>
+					<h2>Download it, then join New Life.</h2>
+					<p>
+						The app is free. Our community is <code>unifygr</code> — this link takes you straight
+						into it, so you land with our people rather than on your own.
+					</p>
+				</div>
+				<div class="fm-join__acts">
+					<a class="button button--primary" href={COMMUNITY_URL} target="_blank" rel="noopener">
+						Join New Life in the app
+					</a>
+					<a class="button button--secondary" href={FORMATION_APP} target="_blank" rel="noopener">
+						About The Formation App
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">What you'll walk</p>
+				<h2>{modules.length === 1 ? "The module we're on." : "The modules we've opened."}</h2>
+			</div>
+			<div class="prose-block__body reveal is-visible">
+				<p>
+					Each module is a set of lessons. The first is open to anyone; the rest unlock once you
+					are in our community, because they are meant to be walked with somebody, not read.
+				</p>
+			</div>
+
+			<div class="fm-grid reveal is-visible">
+				{modules.map((m) => (
+					<article class="fm-mod">
+						{m.image && <span class="fm-mod__art" style={`background-image:url(${m.image})`} aria-hidden="true"></span>}
+						<div class="fm-mod__body">
+							<h3>{m.title}</h3>
+							{m.description && <p class="fm-mod__desc">{m.description}</p>}
+							<p class="fm-mod__meta">{`${m.lessons} ${m.lessons === 1 ? "lesson" : "lessons"}${m.openLessons > 0 ? ` · ${m.openLessons} open to anyone` : ""}`}</p>
+							<a class="fm-mod__go" href={m.href} target="_blank" rel="noopener">
+								Start {m.title} →
+							</a>
+						</div>
+					</article>
+				))}
+			</div>
+
+			{stale && (
+				<p class="fm-note reveal is-visible">
+					Showing the module we know about — the app was slow to answer just now.
+				</p>
+			)}
+		</div>
+	</section>
+
+	<section class="section section--final">
+		<div class="container">
+			<div class="fm-path reveal is-visible">
+				<p class="eyebrow">New here?</p>
+				<h2>Start with the Welcome Path.</h2>
+				<p>
+					Our values and culture, the vision, the mission, our story, and how a person becomes part
+					of this community. It is the first module in the app, and the plainest answer to what
+					this church is.
+				</p>
+				<div class="fm-path__acts">
+					<a class="button button--primary" href={`${FORMATION_APP}/m/welcome-to-new-life`} target="_blank" rel="noopener">
+						Begin the Welcome Path →
+					</a>
+					<a class="button button--secondary" href="/membership">What membership means</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Interior>
+
+<style>
+	.fm-join {
+		display: grid; gap: 1.6rem; align-items: center;
+		grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+		margin-top: 2.6rem; padding: 1.8rem 2rem;
+		border: 1px solid var(--line); border-radius: 18px; background: var(--panel);
+	}
+	.fm-join h2 { margin: 0.3rem 0 0.6rem; }
+	.fm-join p { margin: 0; color: var(--muted); line-height: 1.7; max-width: 46ch; }
+	.fm-join code { font-size: 0.92em; color: var(--text); }
+	.fm-join__acts { display: grid; gap: 0.7rem; justify-items: stretch; }
+
+	.fm-grid {
+		display: grid; gap: 1rem; margin-top: 1.6rem;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+	}
+	.fm-mod {
+		border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+		background: var(--panel); display: flex; flex-direction: column;
+	}
+	.fm-mod__art { display: block; height: 9rem; background-size: cover; background-position: center; }
+	.fm-mod__body { padding: 1.3rem 1.4rem; display: grid; gap: 0.5rem; align-content: start; }
+	.fm-mod__body h3 { margin: 0; font-size: 1.2rem; }
+	.fm-mod__desc { margin: 0; color: var(--muted); line-height: 1.6; }
+	.fm-mod__meta { margin: 0; font-size: 0.82rem; letter-spacing: 0.04em; color: var(--muted); }
+	.fm-mod__go { margin-top: 0.4rem; color: var(--gold-soft, #d8bd82); }
+
+	.fm-note { color: var(--muted); font-size: 0.86rem; font-style: italic; margin-top: 1.2rem; }
+
+	.fm-path { border: 1px solid var(--line); border-radius: 18px; background: var(--panel); padding: 2rem; }
+	.fm-path h2 { margin: 0.3rem 0 0.7rem; }
+	.fm-path p { color: var(--muted); line-height: 1.7; max-width: 56ch; margin: 0 0 1.4rem; }
+	.fm-path__acts { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+
+	@media (max-width: 46rem) {
+		.fm-join { grid-template-columns: 1fr; padding: 1.4rem 1.5rem; }
+	}
+</style>

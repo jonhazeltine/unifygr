@@ -18,11 +18,12 @@ const EXCLUDE = new Set([
 	"[pillar]", // expanded below
 	"land-sale-update-b7f2", // password-gated private page
 	"happy-church", // local experiment, not a nav page
-	"mission-trips", "membership", "spiritual-formation", "staff", "giving", // blockified
+	"mission-trips", "membership", "staff", "giving", // blockified
 ]);
 
 const TITLES: Record<string, string> = {
 	"visit": "Plan a Visit",
+	"spiritual-formation": "Spiritual Formation",
 	"beliefs": "What We Believe",
 	"vision-values": "Vision & Values",
 	"unify-gr": "Unify GR",
