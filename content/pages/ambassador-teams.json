@@ -147,6 +147,30 @@
 					}
 				]
 			}
+		},
+		{
+			"type": "CtaCards",
+			"props": {
+				"id": "CtaCards-ambassador-teams-siblings",
+				"cards": [
+					{
+						"label": "To our partners overseas",
+						"title": "Missions Teams",
+						"body": "A week in the Caribbean with Mission of Hope — medical care, kids clubs, construction, whatever the team is built to do.",
+						"buttonLabel": "Missions Teams",
+						"buttonHref": "/mission-trips",
+						"featured": false
+					},
+					{
+						"label": "To our city",
+						"title": "Outreach Teams",
+						"body": "Serving Grand Rapids where it actually hurts — food, neighbors, and the days our city already turns out for.",
+						"buttonLabel": "Outreach Teams",
+						"buttonHref": "/outreach-teams",
+						"featured": false
+					}
+				]
+			}
 		}
 	],
 	"zones": {}

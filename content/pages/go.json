@@ -1,0 +1,65 @@
+{
+	"status": "draft",
+	"order": 29,
+	"root": {
+		"props": {
+			"title": "Go",
+			"kicker": "Change the World",
+			"description": "Three ways New Life Grand Rapids goes: to the local church, to our partners overseas, and to our city."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-go",
+				"kicker": "Change the World",
+				"heading": "Three ways we go.",
+				"lede": "Changing the world isn't one thing we do once a year. It's three habits, each pointed somewhere different."
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-go",
+				"eyebrow": "Why three",
+				"title": "The city, the Church, and the nations.",
+				"body": "Two of our five commitments are to unite the Church and to reveal Jesus to the city. You can't do either from a seat.\n\nSo we go three directions, on purpose. To the church down the road, because Grand Rapids needs churches that pray for each other by name. To our partners overseas, because the work there is real and it is ours too. And to our own city, because the need is on our street.",
+				"tinted": false
+			}
+		},
+		{
+			"type": "CtaCards",
+			"props": {
+				"id": "CtaCards-go",
+				"cards": [
+					{
+						"label": "To the local church",
+						"title": "Ambassador Teams",
+						"body": "One Sunday a month we worship at another Grand Rapids church, having prayed for them all month, and hand over a letter and a gift.",
+						"buttonLabel": "Ambassador Teams",
+						"buttonHref": "/ambassador-teams",
+						"featured": false
+					},
+					{
+						"label": "To our partners overseas",
+						"title": "Missions Teams",
+						"body": "A week in the Caribbean with Mission of Hope — medical care, kids clubs, construction, whatever the team is built to do.",
+						"buttonLabel": "Missions Teams",
+						"buttonHref": "/mission-trips",
+						"featured": false
+					},
+					{
+						"label": "To our city",
+						"title": "Outreach Teams",
+						"body": "Serving Grand Rapids where it actually hurts — food, neighbors, and the days our city already turns out for.",
+						"buttonLabel": "Outreach Teams",
+						"buttonHref": "/outreach-teams",
+						"featured": false
+					}
+				]
+			}
+		}
+	],
+	"zones": {}
+}

@@ -104,7 +104,7 @@ export const pillars: Pillar[] = [
 		video: "/art/generated/mission-ambient-v2.mp4",
 		poster: "/art/generated/mission-ambient-v2-thumb.webp",
 		items: [
-			{ label: "Mission Trips", href: "/mission-trips", blurb: "Go and serve the Caribbean with Mission of Hope." },
+			{ label: "Missions Teams", href: "/mission-trips", blurb: "Go and serve the Caribbean with Mission of Hope." },
 			{ label: "Unify GR", href: "/unify-gr", blurb: "One Body, one witness across Grand Rapids churches." },
 			{ label: "Giving", href: "/giving", blurb: "Fuel the mission online, by text, or by mail." },
 			{ label: "Connect Card", href: church.external.connectCard, blurb: "Take a first step and let us know you're here." },
