@@ -32,6 +32,8 @@ export type Formation = {
 	modules: FormationModule[];
 	/** true when the app could not be reached and this is the written fallback */
 	stale: boolean;
+	/** why, when it is stale — emitted as an HTML comment so a failure is findable */
+	reason?: string;
 };
 
 // One fetch serves every render for a few minutes. Modules change when somebody
@@ -60,7 +62,12 @@ const FALLBACK: FormationModule[] = [
 async function fetchModules(): Promise<Formation> {
 	const url = env("FORMATION_SUPABASE_URL")?.replace(/\/+$/, "");
 	const key = env("FORMATION_SUPABASE_ANON_KEY");
-	if (!url || !key) return { modules: FALLBACK, stale: true };
+	if (!url || !key)
+		return {
+			modules: FALLBACK,
+			stale: true,
+			reason: `missing env: ${!url ? "FORMATION_SUPABASE_URL " : ""}${!key ? "FORMATION_SUPABASE_ANON_KEY" : ""}`.trim(),
+		};
 
 	const headers = { apikey: key, authorization: `Bearer ${key}` };
 	const get = async (path: string) => {
@@ -106,7 +113,7 @@ export async function formation(): Promise<Formation> {
 		const value = await fetchModules();
 		cached = { at: Date.now(), value };
 		return value;
-	} catch {
-		return { modules: FALLBACK, stale: true };
+	} catch (err: any) {
+		return { modules: FALLBACK, stale: true, reason: String(err?.message || err).slice(0, 200) };
 	}
 }

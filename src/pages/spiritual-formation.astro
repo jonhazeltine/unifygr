@@ -11,11 +11,13 @@ import { formation, COMMUNITY_URL, FORMATION_APP } from "../lib/formation";
 
 export const prerender = false;
 
-const { modules, stale } = await formation();
+const { modules, stale, reason } = await formation();
 
 // Fresh within a few minutes, served from cache like a static page.
 Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-revalidate=3600");
 ---
+
+{stale && <Fragment set:html={`<!-- formation: ${(reason || "unknown").replace(/--+/g, "-")} -->`} />}
 
 <Interior
 	title="Spiritual Formation | New Life Grand Rapids"
