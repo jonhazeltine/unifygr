@@ -1,0 +1,235 @@
+---
+// The tap page — one thumb, three destinations.
+//
+// Built for a phone held in one hand: a link texted out, printed on a card, or
+// behind a QR code on a Sunday. No menu, no scrolling required, nothing to read
+// before the first button. Everything above the fold on a small phone.
+//
+// The three taps are the three asks: pray for the city, see the city's churches,
+// join an Ambassador Team. The first two hand off to The Church Map; the third
+// lands on our own Connect Card with the Ambassador interest already chosen.
+import BaseHead from "../components/BaseHead.astro";
+import { church } from "../data/site";
+import "../styles/sunday.css";
+
+const links = [
+	{
+		href: "https://thechurchmap.com/pray",
+		external: true,
+		label: "Pray for someone",
+		blurb: "A real request from a real neighbor, one at a time.",
+	},
+	{
+		href: "https://thechurchmap.com/grandrapids",
+		external: true,
+		label: "The Church Map",
+		blurb: "Every church in Grand Rapids, on one map.",
+	},
+	{
+		href: "/connect?interest=ambassador&from=tap+page",
+		external: false,
+		label: "Join an Ambassador Team",
+		blurb: "Go and serve — short-term teams carrying the good news out.",
+	},
+];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead
+			title="New Life | Start here"
+			description="Three ways to take a step today: pray for a neighbor, find a church in Grand Rapids, or join an Ambassador Team."
+		/>
+		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
+	</head>
+	<body class="v2">
+		<div class="tap">
+			<div class="tap__glow" aria-hidden="true"></div>
+
+			<main class="tap__inner">
+				<header class="tap__head">
+					<a class="tap__brand" href="/">{church.name}</a>
+					<h1 class="tap__title">Start here.</h1>
+					<p class="tap__lede">Three steps you can take from this screen.</p>
+				</header>
+
+				<nav class="tap__stack" aria-label="Take a step">
+					{links.map((link) => (
+						<a
+							class="tapbtn"
+							href={link.href}
+							target={link.external ? "_blank" : undefined}
+							rel={link.external ? "noopener" : undefined}
+						>
+							<span class="tapbtn__label">{link.label}</span>
+							<span class="tapbtn__blurb">{link.blurb}</span>
+							<span class="tapbtn__arrow" aria-hidden="true">→</span>
+						</a>
+					))}
+				</nav>
+
+				<footer class="tap__foot">
+					<a href="/">Everything else at New Life</a>
+				</footer>
+			</main>
+		</div>
+	</body>
+</html>
+
+<style>
+	/* The whole page is one screen. min-height uses the dynamic viewport unit so
+	   iOS Safari's shrinking address bar can't push the last button off. */
+	.tap {
+		position: relative;
+		min-height: 100dvh;
+		display: flex;
+		align-items: center;
+		overflow: hidden;
+	}
+
+	/* Atmosphere sits behind the answers, never in front of them: the still is
+	   held far back and the ink is painted over it so every label stays crisp. */
+	.tap__glow {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(180deg, rgba(6, 7, 10, 0.72) 0%, rgba(6, 7, 10, 0.92) 46%, var(--ink) 88%),
+			radial-gradient(110% 55% at 50% 0%, rgba(242, 210, 162, 0.18), transparent 60%),
+			url("/art/generated/hero-silhouette-thumb.webp") center top / cover no-repeat;
+		pointer-events: none;
+	}
+
+	.tap__inner {
+		position: relative;
+		width: 100%;
+		max-width: 30rem;
+		margin: 0 auto;
+		padding: 2.6rem var(--gutter) 2.2rem;
+		display: grid;
+		gap: 1.9rem;
+	}
+
+	.tap__head {
+		display: grid;
+		gap: 0.55rem;
+		text-align: center;
+	}
+
+	.tap__brand {
+		font-size: 0.78rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: var(--gold);
+		text-decoration: none;
+	}
+
+	/* Two short words. The site's global `text-wrap: balance` splits them across
+	   two lines here, which reads as a stumble rather than a headline. */
+	.tap__title {
+		width: 100%;
+		font-size: clamp(2rem, 9.5vw, 2.8rem);
+		text-wrap: nowrap;
+	}
+
+	.tap__lede {
+		color: var(--muted);
+		font-size: 1rem;
+	}
+
+	.tap__stack {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	/* Full-width, thumb-sized. The whole card is the tap target — nothing here
+	   asks for a precise finger. */
+	.tapbtn {
+		position: relative;
+		display: grid;
+		gap: 0.28rem;
+		min-height: 5.6rem;
+		align-content: center;
+		padding: 1.15rem 3rem 1.15rem 1.35rem;
+		border: 1px solid var(--line);
+		border-radius: 18px;
+		background: var(--ink-raised);
+		text-decoration: none;
+		transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+	}
+
+	.tapbtn:active {
+		transform: scale(0.985);
+	}
+
+	@media (hover: hover) {
+		.tapbtn:hover {
+			border-color: var(--gold);
+			background: #151a24;
+		}
+	}
+
+	/* The first tap is the one we most want taken. */
+	.tapbtn:first-child {
+		background: var(--gold);
+		border-color: var(--gold);
+	}
+
+	.tapbtn:first-child .tapbtn__label,
+	.tapbtn:first-child .tapbtn__arrow {
+		color: var(--gold-ink);
+	}
+
+	.tapbtn:first-child .tapbtn__blurb {
+		color: rgba(28, 19, 5, 0.72);
+	}
+
+	@media (hover: hover) {
+		.tapbtn:first-child:hover {
+			background: #f7dcb4;
+			border-color: #f7dcb4;
+		}
+	}
+
+	.tapbtn__label {
+		font-family: var(--display);
+		font-weight: 600;
+		font-size: 1.32rem;
+		letter-spacing: -0.01em;
+		line-height: 1.15;
+	}
+
+	.tapbtn__blurb {
+		color: var(--muted);
+		font-size: 0.92rem;
+		line-height: 1.4;
+	}
+
+	.tapbtn__arrow {
+		position: absolute;
+		right: 1.25rem;
+		top: 50%;
+		transform: translateY(-50%);
+		font-size: 1.15rem;
+		color: var(--faint);
+	}
+
+	.tap__foot {
+		text-align: center;
+	}
+
+	.tap__foot a {
+		color: var(--faint);
+		font-size: 0.9rem;
+		text-decoration: none;
+		border-bottom: 1px solid var(--line);
+		padding-bottom: 0.15rem;
+	}
+
+	@media (min-width: 700px) {
+		.tap__inner {
+			padding-top: 3.4rem;
+			padding-bottom: 3rem;
+		}
+	}
+</style>
