@@ -2,7 +2,7 @@
 """Refresh the OFFLINE FALLBACK calendar. This is no longer what the site shows.
 
     ⚠️  The live calendar is built at request time from the choices saved in the
-        partners panel at /admin/partners (see src/lib/partners/). Which
+        partners panel at /studio/partners (see src/lib/partners/). Which
         churches we carry and which kinds of gathering we take from each are
         decided there and nowhere else. This script's rules in
         content/curation-rules.json are HISTORY — they are what stood in for a

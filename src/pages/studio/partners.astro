@@ -164,7 +164,6 @@ export const prerender = false;
 			.pc-theme em { font-style: normal; color: var(--muted); font-size: 0.8rem; }
 			.pc-theme em s { opacity: 0.6; margin-left: 0.25rem; }
 			.pc-theme.is-empty { opacity: 0.45; }
-			.pc-theme-more { align-self: center; margin-left: 0.3rem; }
 
 			.pc-sample { margin: 1rem 0 0; padding: 0.9rem 1.1rem; border-radius: 12px; background: var(--bg); border: 1px solid var(--line); }
 			.pc-sample ul { margin: 0; padding-left: 1.1rem; display: grid; gap: 0.35rem; }
@@ -222,7 +221,6 @@ export const prerender = false;
 			let live = new Map<string, Record<string, number>>();
 			let dirty = false;
 			const open = new Set<string>();
-			const allKinds = new Set<string>();
 
 			function show(msg: string) {
 				const el = $("error");
@@ -298,10 +296,23 @@ export const prerender = false;
 				const silent = settings.partners.filter(
 					(p) => p.on && p.themes.length > 0 && !p.themes.some((t) => liveCount(p.churchId, t)),
 				).length;
+				// A church that starts posting a kind we have not ticked shows up as an
+				// unticked chip on its card, which is easy to walk past. Counting them
+				// here is what stops a new youth group sitting unnoticed for a month.
+				let untaken = 0;
+				for (const p of settings.partners) {
+					if (!p.on) continue;
+					const row = rowFor(p.churchId);
+					if (!row) continue;
+					for (const t of Object.keys(row.themes)) {
+						if (!p.themes.includes(t) && liveCount(p.churchId, t) > 0) untaken++;
+					}
+				}
 				$("summary").innerHTML = `
 					<div><strong>${on}</strong><span>churches switched on</span></div>
 					<div><strong>${kinds.size}</strong><span>kinds of gathering open</span></div>
 					<div><strong>${shownCount()}</strong><span>gatherings this would show</span></div>
+					${untaken ? `<div><strong>${untaken}</strong><span>kinds on offer you haven't taken</span></div>` : ""}
 					${silent ? `<div><strong class="pc-summary__warn">${silent}</strong><span>on, but bringing nothing</span></div>` : ""}`;
 			}
 
@@ -333,15 +344,14 @@ export const prerender = false;
 			}
 
 			function themeChips(p: Partner, row: ChurchRow | undefined) {
-				// By default a church shows only the kinds it actually publishes, plus
-				// anything already ticked. Twenty chips reading "—" on every card is a
-				// wall to read past. The rest are one click away, because a church may
-				// start posting a kind next month and you may want it waiting.
-				const everything = allKinds.has(p.churchId);
+				// Every church could in principle publish all twenty kinds, and almost
+				// none of them do. A card shows only the kinds this church is actually
+				// posting, plus anything already ticked — a kind with nothing behind it
+				// is not a choice, it is a blank to read past. When a church starts
+				// posting a new kind its chip appears here on its own.
 				const relevant = THEMES.filter(
-					(t) => everything || (row?.themes[t] || 0) > 0 || p.themes.includes(t),
+					(t) => (row?.themes[t] || 0) > 0 || p.themes.includes(t),
 				);
-				const hidden = THEMES.length - relevant.length;
 				const chips = relevant
 					.map((t) => {
 						const n = liveCount(p.churchId, t);
@@ -357,15 +367,10 @@ export const prerender = false;
 						</label>`;
 					})
 					.join("");
-				const more = everything
-					? `<button class="pc-link pc-theme-more" type="button" data-kinds="${p.churchId}">show fewer</button>`
-					: hidden
-						? `<button class="pc-link pc-theme-more" type="button" data-kinds="${p.churchId}">+${hidden} other kinds</button>`
-						: "";
 				const none = relevant.length
 					? ""
 					: `<span class="pc-church__silent">Nothing published right now.</span>`;
-				return chips + none + more;
+				return chips + none;
 			}
 
 			function renderPartners() {
@@ -501,12 +506,6 @@ export const prerender = false;
 			panel.addEventListener("click", (e) => {
 				const btn = (e.target as HTMLElement).closest("button");
 				if (!btn) return;
-				if (btn.dataset.kinds) {
-					const id = btn.dataset.kinds;
-					allKinds.has(id) ? allKinds.delete(id) : allKinds.add(id);
-					renderPartners();
-					return;
-				}
 				if (btn.dataset.peek) {
 					const id = btn.dataset.peek;
 					open.has(id) ? open.delete(id) : open.add(id);

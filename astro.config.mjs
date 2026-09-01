@@ -31,5 +31,8 @@ export default defineConfig({
 		// The old "Plan a Visit" page is now /sunday — keep printed and linked
 		// URLs working.
 		"/visit": "/sunday",
+		// Partner Churches sits with the Studio, whose passcode it shares —
+		// /admin/ is the Connect Card door and has a different password.
+		"/admin/partners": "/studio/partners",
 	},
 });

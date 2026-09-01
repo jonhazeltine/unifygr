@@ -4,7 +4,7 @@
 // choice lived in a script's rules — a radius, a list of traditions to avoid,
 // a cap on how many churches one part of town could fill — and every one of
 // those was a guess standing in for a person. Now a person makes the call in
-// the panel at /admin/partners and this is what they saved.
+// the panel at /studio/partners and this is what they saved.
 //
 // Two backends, one shape. On the live site the saved settings sit in Vercel
 // Blob, so a switch takes effect on the next page view without a rebuild. On a
