@@ -1,5 +1,5 @@
 {
-	"_comment": "Which churches feed our calendar, and which kinds of gathering we take from each. Edited at /studio/partners on the live site; this file is the starting point a fresh deployment reads and the copy a laptop edits. Churches under `declined` are ones we have looked at and said no to \u2014 they stop being offered. Nothing else decides what reaches the calendar.",
+	"_comment": "Which churches feed our calendar, and which kinds of gathering we take from each. Edited at /studio/partners on the live site; this file is the starting point a fresh deployment reads and the copy a laptop edits. A church is approved when we would put our name next to it, and shown when its dates are actually on the calendar — approving is the judgement, showing is the switch. Churches under `declined` are ones we have said no to; they stop being offered and stop being counted.",
 	"globals": {
 		"hideHousekeeping": true,
 		"hideOtherSundayMornings": true,
@@ -10,93 +10,94 @@
 			"churchId": "301310ad-78a2-4d13-acff-c3d15ea4a077",
 			"name": "All Nations Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"fellowship_food"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "43b9c3a0-098b-40d7-a309-64aeccb8b74e",
 			"name": "Blythefield Christian Reformed Church",
 			"city": "Rockford",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"kids",
 				"serve_outreach",
 				"womens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "b9212826-4cd9-4204-b7df-26e3ea530175",
 			"name": "Bostwick Lake Congregational Church",
 			"city": "Rockford",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"bible_study",
 				"fellowship_food"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "81505dff-6a76-4b5c-8ccc-9accbc187ead",
 			"name": "Cedar Creek Community Church",
 			"city": "Algoma township",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"bible_study",
 				"kids",
 				"womens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "73005957-094a-4bc8-850d-d6143041050c",
 			"name": "Crossroads Bible Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"care_support",
 				"mens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "c1cf5386-326a-4fbb-baa1-a976dc4064a1",
 			"name": "Faith Community Christian Reformed Church",
 			"city": "Wyoming",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"family",
 				"fellowship_food",
 				"serve_outreach"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "644eddf9-8404-45ab-9a4b-a5a0a94bf18d",
 			"name": "Family of Christ Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"family",
 				"fellowship_food",
 				"serve_outreach"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c",
 			"name": "Magnify Church - Northview Campus",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"bible_study",
@@ -105,25 +106,25 @@
 				"mens",
 				"womens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "b2e653a1-d4e1-4c86-9643-1fb2c6fef771",
 			"name": "Messiah Christian Reformed Church",
 			"city": "Hudsonville",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"other",
 				"seniors"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "92cb85cc-9560-4f56-8034-c3b327762700",
 			"name": "Mosaic Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"arts_culture",
@@ -131,26 +132,26 @@
 				"womens",
 				"young_adults"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "f7d70ea6-2be4-4ffc-bd32-1dbf9b9ed6dd",
 			"name": "New Hope Lutheran Church",
 			"city": "Hudsonville",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"fellowship_food",
 				"kids",
 				"seniors"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "733ce479-dbf9-4e2a-ab72-1ecb06643674",
 			"name": "New Life Baptist Church",
 			"city": "Walker",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"fellowship_food",
@@ -160,13 +161,13 @@
 				"serve_outreach",
 				"womens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "6cc6bb67-0b58-4bd1-bbed-4a494d1da0c8",
 			"name": "New Life Grand Rapids",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"sunday_service",
@@ -179,28 +180,29 @@
 			"churchId": "6fa5b464-1304-43d8-b0de-b9fdd3539547",
 			"name": "Set Free Ministries (SF Ministry Center)",
 			"city": "Wyoming",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"class_training"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "72eb675c-24a5-49f9-903e-46c3a7e8375b",
 			"name": "Stones Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"mens"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f",
 			"name": "Sunshine Community Church",
 			"city": "Grand Rapids",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"fellowship_food",
@@ -210,19 +212,18 @@
 				"young_adults",
 				"youth"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		},
 		{
 			"churchId": "0547626e-8dc0-44fd-b9a8-0338c1eafab6",
 			"name": "Wyoming Church of God",
 			"city": "Wyoming",
+			"approved": true,
 			"on": true,
 			"themes": [
 				"fellowship_food",
 				"kids"
 			],
-			"ownCampus": false,
 			"addedAt": "2026-09-01"
 		}
 	],

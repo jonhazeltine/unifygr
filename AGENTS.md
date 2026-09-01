@@ -46,12 +46,21 @@ publish, and nothing about it is baked into the repo:
   far ahead) are the ONLY thing besides the panel that can drop an event, and
   all three are visible and toggleable in the panel. Do not add a hidden rule:
   if a gathering is missing, the reason must be a switch on that screen.
+- **Two layers on a church, and they are not the same thing.** *Approved* (the
+  star) is the judgement — we would put our name next to this church; it is what
+  makes a church count as available in the middle column of the coverage list.
+  *Showing* (the tick) is whether its dates are on the calendar today. A church
+  can sit approved and not showing indefinitely, which is the point: a pastor
+  approves churches, and whoever runs the calendar decides which of their event
+  kinds to show. Showing implies approved — the code enforces it both ways
+  (`showing()` in settings.ts requires `approved && on && themes.length`).
+  *Declined* removes a church from the pool entirely, counts included.
 - **The panel is organised kind-first.** "Where our calendar stands" lists every
-  kind of gathering with three figures — what we show, what our churches offer,
-  what is published nearby — and each row opens onto the churches offering it, a
-  map of where they sit, and a tick per church. Ticking a church we have not
-  added adds it. The church-first list below it stays, for managing partners as
-  churches. Both edit the same settings and re-render together.
+  kind of gathering with three figures — what we show, what our approved
+  churches offer, what is published nearby — and each row opens onto the
+  churches offering it, a map of where they sit, and a tick per church. The
+  church list below filters by those states. Both edit the same settings and
+  re-render together.
 - **Map pins** are resolved by `src/lib/partners/locations.ts`, which reads
   `church-funnel.json` and `church-candidates.json` first — both already in the
   repo, both keyed by The Church Map's church id, and between them they cover

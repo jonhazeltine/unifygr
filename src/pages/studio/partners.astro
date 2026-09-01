@@ -52,8 +52,8 @@ export const prerender = false;
 						Every kind of gathering churches around us are publishing: what we show, what the
 						churches we've switched on are already offering us, and what exists across every
 						church we can read. <strong>Open a row</strong> to see which churches those are and
-						where they sit, and to tick them on or off from there — ticking a church we haven't
-						added yet adds it.
+						where they sit, and to tick them on or off from there — ticking a church we have not
+						approved yet approves it and shows it.
 					</p>
 					<div id="coverage"></div>
 				</section>
@@ -69,19 +69,24 @@ export const prerender = false;
 				<section class="pc-block">
 					<div class="pc-block__head">
 						<h2>Churches</h2>
-						<span class="pc-count" id="church-count"></span>
 					</div>
 					<p class="pc-block__note">
-						Every church publishing a calendar we can read. Tick one to take dates from it, then
-						open it to choose which kinds of gathering. The city is worth reading — this list
-						reaches further than we do.
+						Two steps, deliberately. <strong>Star</strong> a church to approve it — we would put
+						our name next to this one — and it joins what counts as available above. <strong>Tick</strong>
+						it to actually show its dates, then open it to choose which kinds. A church can sit
+						approved and not showing for as long as you like. <strong>Not for us</strong> takes one
+						off the table for good.
 					</p>
-					<label class="field pc-search">
-						<span>Search</span>
-						<input id="search" type="search" placeholder="Church name or city" autocomplete="off" />
-					</label>
+					<div class="pc-filters">
+						<label class="field pc-search">
+							<span>Search</span>
+							<input id="search" type="search" placeholder="Church name or city" autocomplete="off" />
+						</label>
+						<div class="pc-chips" id="filters"></div>
+					</div>
 					<div id="churches"></div>
 					<p class="pc-empty" id="churches-empty" hidden>No church matches that.</p>
+					<p class="pc-empty" id="churches-loading">Reading what churches are publishing…</p>
 					<div id="declined"></div>
 				</section>
 			</div>
@@ -201,19 +206,31 @@ export const prerender = false;
 			.pc-days input { width: 5rem; padding: 0.5rem 0.7rem; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font: inherit; }
 			.pc-days small { color: var(--muted); }
 
+			.pc-filters { display: flex; gap: 1.4rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.2rem; }
+			.pc-chips { display: flex; gap: 0.45rem; flex-wrap: wrap; padding-bottom: 0.15rem; }
+			.pc-chip { font: inherit; font-size: 0.85rem; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 0.45rem 0.85rem; cursor: pointer; }
+			.pc-chip:hover { border-color: var(--gold, #c8a24a); }
+			.pc-chip b { color: var(--text); font-weight: 600; margin-left: 0.2rem; }
+			.pc-chip.is-on { border-color: var(--gold, #c8a24a); color: var(--text); background: color-mix(in srgb, var(--gold, #c8a24a) 14%, transparent); }
+
+			.pc-star { font: inherit; font-size: 1.05rem; line-height: 1; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0.2rem; flex: none; }
+			.pc-star:hover { color: var(--gold, #c8a24a); }
+			.pc-star.is-on { color: var(--gold, #c8a24a); }
+
 			.pc-church { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); margin-bottom: 0.4rem; padding: 0.55rem 1.1rem; }
 			.pc-church.is-open { border-color: var(--gold, #c8a24a); }
+			.pc-church.is-new .pc-church__name { color: var(--muted); }
+			.pc-church.is-declined { opacity: 0.5; }
+			.pc-church.is-declined .pc-church__sum { font-style: italic; }
 			.pc-church__top { display: flex; gap: 1rem; align-items: center; }
 			.pc-church__hit { flex: 1; min-width: 0; display: grid; grid-template-columns: auto 1fr 14rem; gap: 0.9rem; align-items: center; cursor: pointer; }
 			.pc-church__hit input { width: 1.1rem; height: 1.1rem; accent-color: var(--gold, #c8a24a); }
 			.pc-church__id { min-width: 0; display: grid; gap: 0.1rem; }
 			.pc-church__name { font-weight: 500; font-size: 0.98rem; }
-			.pc-church.is-on .pc-church__name { color: var(--gold, #c8a24a); }
+			.pc-church.is-showing .pc-church__name { color: var(--gold, #c8a24a); }
 			.pc-church__where { color: var(--muted); font-size: 0.82rem; }
 			.pc-church__sum { color: var(--muted); font-size: 0.82rem; text-align: right; }
 			.pc-church__acts { display: flex; gap: 0.7rem; align-items: center; flex: none; }
-			.pc-church__no { opacity: 0; transition: opacity 0.12s; }
-			.pc-church:hover .pc-church__no, .pc-church__no:focus-visible { opacity: 1; }
 			.pc-church__dupe { color: var(--rose); font-size: 0.82rem; margin: 0.4rem 0 0; line-height: 1.45; }
 			.pc-church__silent { color: var(--muted); font-size: 0.82rem; font-style: italic; margin: 0.4rem 0 0; }
 			@media (max-width: 46rem) {
@@ -285,12 +302,26 @@ export const prerender = false;
 			type Row = { c: string; t: string; d: string; s: 0 | 1; h: 0 | 1; k: string };
 
 			type Declined = { churchId: string; name: string; city: string | null; at?: string };
+
+			// Two layers, deliberately. Approving is a judgement about a church —
+			// would we put our name next to it. Showing is a switch on whether its
+			// dates are on the calendar today. An approved church counts as available
+			// whether or not it is showing, which is what makes "one tick away" mean
+			// anything: it can only be a tick away if we already trust the church.
+			const FILTERS = [
+				{ key: "all", label: "All" },
+				{ key: "showing", label: "Showing" },
+				{ key: "approved", label: "Approved" },
+				{ key: "new", label: "Not looked at" },
+				{ key: "declined", label: "Ruled out" },
+			] as const;
 			let settings: { globals: any; partners: Partner[]; declined: Declined[] } = {
 				globals: {},
 				partners: [],
 				declined: [],
 			};
 			let showDeclined = false;
+			let filter: "all" | "showing" | "approved" | "new" | "declined" = "all";
 			let roster: ChurchRow[] = [];
 			let rows: Row[] = [];
 			// churchId → theme → how many gatherings would actually show under
@@ -368,7 +399,10 @@ export const prerender = false;
 
 				// Totals fold duplicate church records the same way the calendar does,
 				// so a church listed once per campus is not counted twice.
-				const on = new Map(settings.partners.filter((p) => p.on).map((p) => [p.churchId, p]));
+				// "Ours" is what we have APPROVED, not what is switched on. A church we
+				// trust but have not turned on is still available to us, and saying so
+				// is what makes "one tick away" true rather than wishful.
+				const ok = new Map(settings.partners.filter((p) => p.approved).map((p) => [p.churchId, p]));
 				const seen = {
 					showing: new Map<string, Set<string>>(),
 					ours: new Map<string, Set<string>>(),
@@ -381,10 +415,10 @@ export const prerender = false;
 				};
 				for (const r of kept) {
 					add(seen.town, r.t, r.k);
-					const partner = on.get(r.c);
+					const partner = ok.get(r.c);
 					if (!partner) continue;
 					add(seen.ours, r.t, r.k);
-					if (partner.themes.includes(r.t)) add(seen.showing, r.t, r.k);
+					if (partner.on && partner.themes.includes(r.t)) add(seen.showing, r.t, r.k);
 				}
 				coverage = THEMES.map((theme) => ({
 					theme,
@@ -414,14 +448,15 @@ export const prerender = false;
 			}
 
 			function renderSummary() {
-				const on = settings.partners.filter((p) => p.on).length;
+				const on = settings.partners.filter((p) => p.approved && p.on).length;
 				const kinds = new Set<string>();
-				for (const p of settings.partners) if (p.on) p.themes.forEach((t) => kinds.add(t));
+				for (const p of settings.partners)
+					if (p.approved && p.on) p.themes.forEach((t) => kinds.add(t));
 				const silent = settings.partners.filter(
 					(p) => p.on && p.themes.length > 0 && !p.themes.some((t) => liveCount(p.churchId, t)),
 				).length;
 				$("summary").innerHTML = `
-					<div><strong>${on}</strong><span>churches switched on</span></div>
+					<div><strong>${on}</strong><span>churches showing</span></div>
 					<div><strong>${kinds.size}</strong><span>kinds of gathering open</span></div>
 					<div><strong>${shownCount()}</strong><span>gatherings this would show</span></div>
 					${silent ? `<div><strong class="pc-summary__warn">${silent}</strong><span>on, but bringing nothing</span></div>` : ""}`;
@@ -468,6 +503,7 @@ export const prerender = false;
 				n: number;
 				partner: boolean;
 				taken: boolean;
+				approved: boolean;
 				lat?: number;
 				lng?: number;
 			};
@@ -488,7 +524,8 @@ export const prerender = false;
 						city: row?.city ?? partner?.city ?? null,
 						n,
 						partner: !!partner,
-						taken: !!partner?.on && !!partner?.themes.includes(theme),
+						taken: !!partner?.approved && !!partner?.on && !!partner?.themes.includes(theme),
+						approved: !!partner?.approved,
 						lat: at?.[0],
 						lng: at?.[1],
 					});
@@ -498,7 +535,7 @@ export const prerender = false;
 				return out.sort(
 					(a, b) =>
 						Number(b.taken) - Number(a.taken) ||
-						Number(b.partner) - Number(a.partner) ||
+						Number(b.approved) - Number(a.approved) ||
 						b.n - a.n ||
 						a.name.localeCompare(b.name),
 				);
@@ -545,17 +582,17 @@ export const prerender = false;
 						<span class="pc-pick__where">${escape(c.city || "—")}${c.lat == null ? " · no pin" : ""}</span>
 						<span class="pc-pick__n">${c.n}</span>
 					</label>
-					<span class="pc-pick__tag">${c.partner ? "" : "adds this church"}</span>
+					<span class="pc-pick__tag">${c.approved ? "" : "approves this church"}</span>
 					<button class="pc-link pc-pick__no" type="button" data-decline="${c.churchId}" title="Stop offering this church anywhere">not for us</button>
 				</div>`;
-				const ours = list.filter((c) => c.partner);
-				const theirs = list.filter((c) => !c.partner);
+				const ours = list.filter((c) => c.approved);
+				const theirs = list.filter((c) => !c.approved);
 				const refusedHere = refusedOffering(theme);
 				return `<div class="pc-kind__body">
 					${renderMap(list)}
 					<div class="pc-picks">
-						${ours.length ? `<p class="pc-picks__head">Churches we've added</p>${ours.map(line).join("")}` : ""}
-						${theirs.length ? `<p class="pc-picks__head">Churches we haven't added</p>${theirs.map(line).join("")}` : ""}
+						${ours.length ? `<p class="pc-picks__head">Churches we've approved</p>${ours.map(line).join("")}` : ""}
+						${theirs.length ? `<p class="pc-picks__head">Churches we haven't approved</p>${theirs.map(line).join("")}` : ""}
 						${
 							refusedHere.length
 								? `<p class="pc-picks__ruled">${refusedHere.length} ruled out and not counted above: ${refusedHere
@@ -581,7 +618,7 @@ export const prerender = false;
 							<button class="pc-cov ${state}" type="button" data-kind="${c.theme}" aria-expanded="${isOpen}">
 								<span class="pc-cov__kind"><i class="pc-cov__caret" aria-hidden="true"></i>${THEME_LABEL[c.theme]}</span>
 								<span class="pc-cov__n"><b>${c.showing}</b><small>we show</small></span>
-								<span class="pc-cov__n"><b>${c.ours}</b><small>our churches</small></span>
+								<span class="pc-cov__n"><b>${c.ours}</b><small>approved</small></span>
 								<span class="pc-cov__n"><b>${c.town}</b><small>nearby</small></span>
 								<span class="pc-cov__say">${
 									takeable > 0
@@ -658,54 +695,95 @@ export const prerender = false;
 
 
 			/** Every church we can read, plus any we hold a choice for that has gone quiet. */
-			function allChurches() {
-				const refused = new Set((settings.declined || []).map((d) => d.churchId));
+			type Listed = {
+				id: string;
+				name: string;
+				city: string | null;
+				row?: ChurchRow;
+				p?: Partner;
+				state: "showing" | "approved" | "new" | "declined";
+			};
+
+			function allChurches(): Listed[] {
+				const refused = new Map((settings.declined || []).map((d) => [d.churchId, d]));
 				const byId = new Map(settings.partners.map((p) => [p.churchId, p]));
 				const seen = new Set<string>();
-				const out: { id: string; name: string; city: string | null; row?: ChurchRow; p?: Partner }[] = [];
+				const stateOf = (id: string, p?: Partner): Listed["state"] =>
+					refused.has(id) ? "declined" : p?.approved ? (p.on ? "showing" : "approved") : "new";
+				const out: Listed[] = [];
 				for (const row of roster) {
-					if (refused.has(row.churchId)) continue;
 					seen.add(row.churchId);
-					out.push({ id: row.churchId, name: row.name, city: row.city, row, p: byId.get(row.churchId) });
+					const p = byId.get(row.churchId);
+					out.push({
+						id: row.churchId,
+						name: row.name,
+						city: row.city,
+						row,
+						p,
+						state: stateOf(row.churchId, p),
+					});
 				}
 				// A church that has stopped publishing vanishes from the feed but not
 				// from our choices, and it is the only place that would tell us.
 				for (const p of settings.partners) {
-					if (refused.has(p.churchId) || seen.has(p.churchId)) continue;
-					out.push({ id: p.churchId, name: p.name, city: p.city, p });
+					if (seen.has(p.churchId)) continue;
+					seen.add(p.churchId);
+					out.push({ id: p.churchId, name: p.name, city: p.city, p, state: stateOf(p.churchId, p) });
 				}
+				for (const [id, d] of refused) {
+					if (seen.has(id)) continue;
+					out.push({ id, name: d.name, city: d.city, state: "declined" });
+				}
+				const rank = { showing: 0, approved: 1, new: 2, declined: 3 };
 				return out.sort(
 					(a, b) =>
-						Number(!!b.p?.on) - Number(!!a.p?.on) ||
+						rank[a.state] - rank[b.state] ||
 						(b.row?.total || 0) - (a.row?.total || 0) ||
 						a.name.localeCompare(b.name),
 				);
 			}
 
+			/** Approved is the pool, so it holds the churches already showing too. */
+			function matches(c: Listed, key: string) {
+				if (key === "all") return c.state !== "declined";
+				if (key === "approved") return c.state === "approved" || c.state === "showing";
+				return c.state === key;
+			}
+
+			function renderFilters(all: Listed[]) {
+				const n = (key: string) => all.filter((c) => matches(c, key)).length;
+				$("filters").innerHTML = FILTERS.map(
+					(f) =>
+						`<button class="pc-chip ${filter === f.key ? "is-on" : ""}" type="button" data-filter="${f.key}">${f.label} <b>${n(f.key)}</b></button>`,
+				).join("");
+			}
+
 			function renderChurches() {
 				const q = ($("search") as HTMLInputElement).value.trim().toLowerCase();
 				const all = allChurches();
-				const list = all.filter(
-					(c) => !q || c.name.toLowerCase().includes(q) || (c.city || "").toLowerCase().includes(q),
-				);
-				const on = all.filter((c) => c.p?.on).length;
-				$("church-count").textContent = `${on} of ${all.length} switched on`;
+				renderFilters(all);
+				const list = all
+					.filter((c) => matches(c, filter))
+					.filter(
+						(c) => !q || c.name.toLowerCase().includes(q) || (c.city || "").toLowerCase().includes(q),
+					);
+				$("churches-loading").hidden = true;
 				$("churches-empty").hidden = list.length > 0;
 				$("churches").innerHTML = list
-					.map(({ id, name, city, row, p }) => {
-						const isOn = !!p?.on;
+					.map(({ id, name, city, row, p, state }) => {
 						const isOpen = open.has(id);
-						const taking = isOn ? p!.themes.filter((t) => liveCount(id, t) > 0).length : 0;
-						const showing = isOn
-							? p!.themes.reduce((n, t) => n + liveCount(id, t), 0)
-							: 0;
+						const taking = p?.approved && p.on ? p.themes.filter((t) => liveCount(id, t) > 0).length : 0;
+						const shown = p?.approved && p.on ? p.themes.reduce((n, t) => n + liveCount(id, t), 0) : 0;
 						const kinds = row ? Object.keys(row.themes).length : 0;
 						const kindWord = kinds === 1 ? "kind" : "kinds";
-						const summary = isOn
-							? `${showing} of ${row?.total ?? 0} · ${taking} of ${kinds} ${kindWord}`
-							: row
-								? `${row.total} published · ${kinds} ${kindWord}`
-								: "";
+						const summary =
+							state === "declined"
+								? "ruled out"
+								: state === "showing"
+									? `${shown} of ${row?.total ?? 0} · ${taking} of ${kinds} ${kindWord}`
+									: row
+										? `${row.total} published · ${kinds} ${kindWord}`
+										: "";
 						const sample =
 							isOpen && row?.sample.length
 								? `<div class="pc-sample"><ul>${row.sample
@@ -715,10 +793,14 @@ export const prerender = false;
 										)
 										.join("")}</ul></div>`
 								: "";
-						return `<article class="pc-church ${isOn ? "is-on" : ""} ${isOpen ? "is-open" : ""}">
+						const approved = state === "showing" || state === "approved";
+						return `<article class="pc-church is-${state} ${isOpen ? "is-open" : ""}">
 							<div class="pc-church__top">
+								<button class="pc-star ${approved ? "is-on" : ""}" type="button" data-approve="${id}"
+									aria-pressed="${approved}"
+									title="${approved ? "Approved — we would put our name next to this church. Click to un-approve." : "Approve this church: we would put our name next to it."}">${approved ? "★" : "☆"}</button>
 								<label class="pc-church__hit">
-									<input type="checkbox" data-on="${id}" ${isOn ? "checked" : ""} />
+									<input type="checkbox" data-on="${id}" ${state === "showing" ? "checked" : ""} ${state === "declined" ? "disabled" : ""} />
 									<span class="pc-church__id">
 										<span class="pc-church__name">${escape(name)}</span>
 										<span class="pc-church__where">${escape(city || "—")}${p?.ownCampus ? " · our campus" : ""}</span>
@@ -726,13 +808,17 @@ export const prerender = false;
 									<span class="pc-church__sum">${summary}</span>
 								</label>
 								<span class="pc-church__acts">
-									<button class="pc-link" type="button" data-peek="${id}">${isOpen ? "close" : "open"}</button>
-									<button class="pc-link pc-church__no" type="button" data-decline="${id}" title="Stop offering this church anywhere">not for us</button>
+									${row ? `<button class="pc-link" type="button" data-peek="${id}">${isOpen ? "close" : "open"}</button>` : ""}
+									${
+										state === "declined"
+											? `<button class="pc-link" type="button" data-undecline="${id}">put back</button>`
+											: `<button class="pc-link" type="button" data-decline="${id}">not for us</button>`
+									}
 								</span>
 							</div>
 							${row?.duplicateOf ? `<p class="pc-church__dupe">Publishes the same calendar as ${escape(row.duplicateOf)} — keep one of the two, not both.</p>` : ""}
-							${!row ? `<p class="pc-church__silent">Publishing nothing at the moment. Our choices are kept; anything they post will show up.</p>` : ""}
-							${isOpen ? `<div class="pc-themes">${themeChips(p ?? { churchId: id, name, city, on: false, themes: [] }, row)}</div>${sample}` : ""}
+							${!row && state !== "declined" ? `<p class="pc-church__silent">Publishing nothing at the moment. Our choices are kept; anything they post will show up.</p>` : ""}
+							${isOpen ? `<div class="pc-themes">${themeChips(p ?? { churchId: id, name, city, approved: false, on: false, themes: [] }, row)}</div>${sample}` : ""}
 						</article>`;
 					})
 					.join("");
@@ -798,13 +884,12 @@ export const prerender = false;
 					const id = el.dataset.on;
 					let p = settings.partners.find((x) => x.churchId === id);
 					if (!p) {
-						// Ticking a church we have never taken from is how it gets added.
-						// Its kinds are chosen next, either here or inside a category.
 						const row = rowFor(id);
 						p = {
 							churchId: id,
 							name: row?.name || "Unknown church",
 							city: row?.city ?? null,
+							approved: true,
 							on: true,
 							themes: [],
 							addedAt: new Date().toISOString().slice(0, 10),
@@ -813,6 +898,9 @@ export const prerender = false;
 						settings.partners.sort((a, b) => a.name.localeCompare(b.name));
 						open.add(id);
 					}
+					// Showing a church is also approving it: you cannot put a church on
+					// the calendar you have not said yes to.
+					if (el.checked) p.approved = true;
 					p.on = el.checked;
 					markDirty();
 					renderAll();
@@ -829,6 +917,7 @@ export const prerender = false;
 							churchId,
 							name: row?.name || "Unknown church",
 							city: row?.city ?? null,
+							approved: true,
 							on: true,
 							themes: [],
 							addedAt: new Date().toISOString().slice(0, 10),
@@ -836,6 +925,7 @@ export const prerender = false;
 						settings.partners.push(partner);
 						settings.partners.sort((a, b) => a.name.localeCompare(b.name));
 					}
+					partner.approved = true;
 					partner.on = true;
 					partner.themes = el.checked
 						? [...new Set([...partner.themes, theme])]
@@ -864,6 +954,36 @@ export const prerender = false;
 			panel.addEventListener("click", (e) => {
 				const btn = (e.target as HTMLElement).closest("button");
 				if (!btn) return;
+				if (btn.dataset.filter) {
+					filter = btn.dataset.filter as typeof filter;
+					renderChurches();
+					return;
+				}
+				if (btn.dataset.approve) {
+					const id = btn.dataset.approve;
+					let p = settings.partners.find((x) => x.churchId === id);
+					if (!p) {
+						const row = rowFor(id);
+						p = {
+							churchId: id,
+							name: row?.name || "Unknown church",
+							city: row?.city ?? null,
+							approved: true,
+							on: false,
+							themes: [],
+							addedAt: new Date().toISOString().slice(0, 10),
+						};
+						settings.partners.push(p);
+						settings.partners.sort((a, b) => a.name.localeCompare(b.name));
+					} else {
+						p.approved = !p.approved;
+						// Un-approving a church cannot leave it showing.
+						if (!p.approved) p.on = false;
+					}
+					markDirty();
+					renderAll();
+					return;
+				}
 				if (btn.dataset.decline) {
 					const id = btn.dataset.decline;
 					const row = rowFor(id);
