@@ -1,6 +1,5 @@
 ---
 import Interior from "../../layouts/Interior.astro";
-import MinistryCard from "../../components/MinistryCard.astro";
 import SignatureCard from "../../components/SignatureCard.astro";
 import {
 	allFamiliesIncludingSpecialised,
@@ -30,14 +29,19 @@ const curatedOffering = outOfHouse.filter((e) => isOffering(e) && isListable(e))
 const curatedHosts = new Set(curatedOffering.map((e) => e.venue ?? e.org ?? e.name)).size;
 const curatedTowns = new Set(curatedOffering.map((e) => e.city).filter(Boolean)).size;
 
-// Deliberate order, not alphabetical: Sunday is the front door, prayer is the
-// engine underneath it, then belonging, then what we send out, then the city.
+// Deliberate order, not alphabetical. Sunday is the front door and prayer is the
+// engine under it; then belonging, then the two ways we look after our own; then
+// the three directions we go — overseas, to another church, to our own street;
+// then the city we are trying to be one with.
 const SIGNATURE_ORDER = [
 	"new-life-worship",
 	"corporate-prayer",
 	"life-groups",
-	"mission-trips-dominican-republic",
-	"mission-trips-haiti",
+	"childrens-ministry",
+	"pastoral-care",
+	"mission-of-hope-trips",
+	"ambassador-teams",
+	"outreach",
 	"unify-gr",
 ];
 const signature = inHouse
@@ -47,8 +51,6 @@ const signature = inHouse
 		const bi = SIGNATURE_ORDER.indexOf(b.slug);
 		return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi) || a.name.localeCompare(b.name);
 	});
-const alsoOurs = sortEntries(inHouse.filter((e) => e.tier !== "signature"));
-const ours = [...signature, ...alsoOurs];
 
 // A picture per signature ministry. The art already exists per theme, so this is
 // a mapping rather than anything clever; anything unmatched falls back to the
@@ -56,12 +58,32 @@ const ours = [...signature, ...alsoOurs];
 const SIGNATURE_ART: Record<string, string> = {
 	"new-life-worship": "/art/generated/worship-still.png",
 	"corporate-prayer": "/art/generated/prayer-still.png",
-	"mission-trips-dominican-republic": "/art/generated/mission-still.png",
-	"mission-trips-haiti": "/art/ministries/mission.jpg",
-	"unify-gr": "/art/generated/unity-still.png",
 	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
+	"childrens-ministry": "/art/ministries/kids.jpg",
+	"pastoral-care": "/art/ministries/health.jpg",
+	"mission-of-hope-trips": "/art/generated/mission-still.png",
+	"ambassador-teams": "/art/ministries/church-leaders.jpg",
+	outreach: "/art/ministries/practical-care.jpg",
+	"unify-gr": "/art/generated/unity-still.png",
 };
 const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-unity.png";
+
+// A ministry can point at a page of its own, but a page that is still a draft
+// answers a real 404 to everyone but staff. So the card falls back to the
+// ministry's own page until the fuller one is published, and picks the better
+// link up on its own the day it is.
+const pageStatus = Object.fromEntries(
+	Object.entries(import.meta.glob<{ status?: string }>("../../../content/pages/*.json", { eager: true })).map(
+		([file, mod]) => [file.split("/").pop()!.replace(".json", ""), mod.status ?? "draft"],
+	),
+);
+function linkFor(entry: { slug: string; href?: string | null }): string {
+	const href = entry.href;
+	if (!href) return `/ministry/${entry.slug}`;
+	const slug = href.replace(/^\//, "");
+	if (slug in pageStatus && pageStatus[slug] !== "live") return `/ministry/${entry.slug}`;
+	return href;
+}
 
 const curatedByFamily = allFamiliesIncludingSpecialised
 	.map((family) => {
@@ -131,26 +153,20 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 			<div class="prose-block__body reveal is-visible">
 				<p>
 					Sunday morning at 10 at 2777 Knapp. Prayer. Life Groups meeting weekly in homes across
-					the city. Teams to the Dominican Republic and Haiti every summer. Unify GR.
+					the city. Our kids, and the people who show up at the hospital. Teams going overseas,
+					to another church in this city, and out onto our own street. Unify GR.
 				</p>
 				<p>
-					These {ours.length} are where our focus goes, and every one of them is open to anyone
-					in the city.
+					These {signature.length} are where our focus goes, and every one of them is open to
+					anyone in the city.
 				</p>
 			</div>
 			<div class="sig-grid reveal is-visible">
-				{signature.map((entry) => <SignatureCard entry={entry} image={artFor(entry.slug)} />)}
+				{signature.map((entry) => (
+					<SignatureCard entry={entry} image={artFor(entry.slug)} href={linkFor(entry)} />
+				))}
 			</div>
-			{alsoOurs.length > 0 && (
-				<>
-					<div class="prose-block__body reveal is-visible">
-						<p>And the everyday work that holds the rest of it up.</p>
-					</div>
-					<div class="min-grid reveal is-visible">
-						{alsoOurs.map((entry) => <MinistryCard entry={entry} />)}
-					</div>
-				</>
-			)}
+
 		</div>
 	</section>
 

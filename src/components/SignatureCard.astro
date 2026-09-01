@@ -11,9 +11,11 @@ interface Props {
 	entry: Entry;
 	/** Background image for the card. */
 	image: string;
+	/** Where "more about" goes — resolved by the page, since a draft page 404s. */
+	href?: string;
 }
 
-const { entry, image } = Astro.props;
+const { entry, image, href } = Astro.props;
 const id = `sig-${entry.slug}`;
 // Ours meet in our building; what travels says where it goes.
 const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ?? entry.venue ?? null);
@@ -47,7 +49,7 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 			{entry.handoff?.how && (<><dt>Taking a step</dt><dd>{entry.handoff.how}</dd></>)}
 		</dl>
 		<p class="sig__go">
-			<a href={entry.href ?? `/ministry/${entry.slug}`}>More about {entry.name}</a>
+			<a href={href ?? entry.href ?? `/ministry/${entry.slug}`}>More about {entry.name}</a>
 		</p>
 	</div>
 </article>
