@@ -46,6 +46,19 @@ publish, and nothing about it is baked into the repo:
   far ahead) are the ONLY thing besides the panel that can drop an event, and
   all three are visible and toggleable in the panel. Do not add a hidden rule:
   if a gathering is missing, the reason must be a switch on that screen.
+- **The panel is organised kind-first.** "Where our calendar stands" lists every
+  kind of gathering with three figures — what we show, what our churches offer,
+  what is published nearby — and each row opens onto the churches offering it, a
+  map of where they sit, and a tick per church. Ticking a church we have not
+  added adds it. The church-first list below it stays, for managing partners as
+  churches. Both edit the same settings and re-render together.
+- **Map pins** come from `content/church-locations.json` (church id → lat/lng,
+  public data from The Church Map, refreshed by
+  `scripts/refresh-church-locations.py`). The events feed carries no
+  coordinates, and matching churches by name is unreliable — roughly a third
+  match — so do not try. The site holds no Church Map database credentials by
+  design; a church with no entry is listed without a pin and the panel says so.
+  The basemaps and projection are shared with `MinistryMap.astro`.
 - `content/curation-rules.json` and `scripts/build-curated-calendar.py` are
   **history**. They were the guesswork that stood in for a person before the
   panel existed. The script now only refreshes `content/curated-events.json`,
