@@ -23,6 +23,17 @@ export type Interest = {
 	id: string;
 	/** what the person reads on the form */
 	label: string;
+	/**
+	 * The heading this sits under on the form. Eleven flat radios was a wall on
+	 * a phone, and four of them said the same thing four ways.
+	 */
+	group: string;
+	/**
+	 * A second-level choice, shown only once someone has said they want to
+	 * serve. Routing is unchanged — these are still their own interests, with
+	 * their own Asana titles — they just stop shouting from the top level.
+	 */
+	underServe?: true;
 	/** CCB process this queue belongs to (for the admin display) */
 	process: string;
 	/**
@@ -56,7 +67,8 @@ export type Interest = {
 export const INTERESTS: Interest[] = [
 	{
 		id: "first-time",
-		label: "I'm new here — I'd like someone to reach out",
+		group: "New here",
+		label: "I'm new — I'd like someone to reach out",
 		process: "Connections – Direct and Connect",
 		queueId: 178, // 1st Connect Call
 		action: "First connect call",
@@ -64,7 +76,8 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "jesus",
-		label: "I want to know Jesus / I made a decision",
+		group: "A step with Jesus",
+		label: "I want to know Jesus, or I've made a decision",
 		process: "Connections – New Believers",
 		// No queueId: CCB's "Launch new Believer Drip" is dead — empty but for one untouched entry (checked 2026-09-01).
 		action: "New believer follow-up",
@@ -72,6 +85,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "baptism",
+		group: "A step with Jesus",
 		label: "I'd like to be baptized",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Water Baptism" is dead — only admin accounts, three stalled (checked 2026-09-01).
@@ -80,6 +94,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "prayer",
+		group: "Prayer and care",
 		label: "I have a prayer request",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Prayer" is dead — one untouched test entry (checked 2026-09-01).
@@ -88,6 +103,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "care",
+		group: "Prayer and care",
 		label: "I need to talk to a pastor",
 		process: "Pastoral Care Connect",
 		queueId: 99, // Initial Contact
@@ -96,8 +112,9 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "serve",
+		group: "Serving and going",
 		serving: true,
-		label: "I want to serve on a team",
+		label: "I want to serve or go with a team",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Serving interest",
@@ -107,8 +124,10 @@ export const INTERESTS: Interest[] = [
 		// The three ways we go. Each carries its own Asana task title so staff can
 		// tell a church visit from a mission trip from a serve day at a glance.
 		id: "ambassador",
+		underServe: true,
+		group: "Serving and going",
 		serving: true,
-		label: "I want to go with an Ambassador Team to another church",
+		label: "An Ambassador Team — visiting another church",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Ambassador Team interest",
@@ -117,8 +136,10 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "missions",
+		underServe: true,
+		group: "Serving and going",
 		serving: true,
-		label: "I want to go on a Missions Team (overseas)",
+		label: "A Missions Team — overseas",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Missions Team interest",
@@ -127,8 +148,10 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "outreach",
+		underServe: true,
+		group: "Serving and going",
 		serving: true,
-		label: "I want to serve our city with an Outreach Team",
+		label: "An Outreach Team — serving our city",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
 		action: "Outreach Team interest",
@@ -137,7 +160,8 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "group",
-		label: "I'd like to join a life group",
+		group: "Getting connected",
+		label: "Join a life group",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Invitation to Small Group" is dead — nobody in it at all (checked 2026-09-01).
 		action: "Life group invitation",
@@ -145,7 +169,8 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "growth-track",
-		label: "I want to take the next step (Growth Track)",
+		group: "Getting connected",
+		label: "Take the next step (Growth Track)",
 		process: "Growth Track",
 		// No queueId: CCB's "101" is dead — nobody in it at all (checked 2026-09-01).
 		action: "Growth Track 101",
