@@ -129,14 +129,26 @@ export async function deliverToAsana(s: Submission): Promise<Submission["asana"]
 		const who = `${s.firstName} ${s.lastName}`.trim();
 		// The task spells out the whole path, because the second half of it — the
 		// hand-add into Planning Center — is the step that gets forgotten.
-		const handoff = interest.scheduler
+		// The board is the gate, so the card explains what moving it does.
+		const handoff = interest.serving
 			? [
 					"",
-					"WHEN YOU'VE APPROVED THEM",
-					`Add them to the "${interest.scheduler.team}" team in Planning Center (under ${interest.scheduler.serviceType}), then schedule them onto a date.`,
-					"CCB is the CRM and Planning Center is the scheduler, so this only happens in that order — nobody gets added to a team who hasn't come through here first.",
-				].join("\n")
-			: "";
+					"MOVING THIS CARD",
+					'Drag to "Ready to serve" and they go onto the Serving Interest workflow in Planning Center. Nothing happens until you do.',
+					interest.scheduler
+						? `Once they're placed, that means the "${interest.scheduler.team}" team (under ${interest.scheduler.serviceType}).`
+						: "",
+					'Drag to "Reached out" once a person has actually texted or called them, so we can see who is still waiting.',
+					"",
+					"They're already in CCB — that happened the moment they hit send. This is about what happens to them next.",
+				]
+					.filter(Boolean)
+					.join("\n")
+			: [
+					"",
+					'Drag to "Reached out" once a person has actually texted or called them, so we can see who is still waiting.',
+					"They're already in CCB — that happened the moment they hit send.",
+				].join("\n");
 
 		const task = await createFollowUpTask({
 			name: `${interest.action} — ${who}`,

@@ -6,7 +6,7 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { deliverToAsana, deliverToCcb, deliverToPlanningCenter } from "../../../lib/connect/deliver";
+import { deliverToAsana, deliverToCcb } from "../../../lib/connect/deliver";
 import { DEFAULT_INTEREST, interestById } from "../../../lib/connect/routing";
 import { newId, save, type Submission } from "../../../lib/connect/store";
 
@@ -51,6 +51,7 @@ export const POST: APIRoute = async ({ request }) => {
 		source: clean(raw.source, 200),
 		ccb: { status: "pending" },
 		asana: { status: "pending" },
+		// Opens when a human moves the card to "Ready to serve", not before.
 		planningCenter: { status: "pending" },
 	};
 
@@ -62,10 +63,11 @@ export const POST: APIRoute = async ({ request }) => {
 		return json({ ok: false, error: "Something went wrong on our end. Please try again, or call the church office." }, 500);
 	}
 
-	// CCB first, always: it is the CRM, and nobody reaches the scheduler who is
-	// not in it. Planning Center only ever sees people who already landed here.
+	// Record everything instantly; commit nothing automatically. CCB gets the
+	// person — losing someone's details is the only thing here we cannot undo —
+	// and the board gets a card. Planning Center waits: their card opens when a
+	// human drags them to "Ready to serve" (see asana-hook.ts).
 	submission.ccb = await deliverToCcb(submission);
-	submission.planningCenter = await deliverToPlanningCenter(submission);
 	submission.asana = await deliverToAsana(submission);
 	await save(submission).catch((err) => console.error("connect: could not update submission", err));
 
