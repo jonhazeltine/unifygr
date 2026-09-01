@@ -251,7 +251,7 @@
 		$("sd-close").addEventListener("click", close);
 		$("sd-undo").addEventListener("click", undoLast);
 		$("sd-builder").addEventListener("click", () => { location.href = "/studio/builder"; });
-		$("sd-partners").addEventListener("click", () => { location.href = "/admin/partners"; });
+		$("sd-partners").addEventListener("click", () => { location.href = "/studio/partners"; });
 		$("sd-composer").addEventListener("submit", send);
 		$("sd-signout").addEventListener("click", async () => {
 			await api("/api/studio/session", { method: "DELETE" });

@@ -34,7 +34,7 @@ publish, and nothing about it is baked into the repo:
   (`src/lib/partners/churchmap.ts`), cached five minutes. Every event arrives
   already tagged with a theme and a church id.
 - **The decision** is `content/ministry-partners.json`: which churches we carry,
-  and which themes we take from each. Staff edit it at **`/admin/partners`**
+  and which themes we take from each. Staff edit it at **`/studio/partners`**
   (Studio passcode). On the live site the saved copy lives in Vercel Blob so a
   switch takes effect on the next page view; on a laptop the committed file is
   the live copy. `src/lib/partners/settings.ts` handles both.
