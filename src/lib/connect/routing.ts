@@ -35,6 +35,12 @@ export type Interest = {
 	 * CCB, written out for the Asana task. Omitted where no team exists yet.
 	 */
 	scheduler?: { team: string; serviceType: string };
+	/**
+	 * True for the interests that mean "I want to serve". These also open a
+	 * card on the Planning Center serving workflow — after CCB, never instead
+	 * of it — so a leader picks them up where they already schedule from.
+	 */
+	serving?: true;
 };
 
 export const INTERESTS: Interest[] = [
@@ -80,6 +86,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "serve",
+		serving: true,
 		label: "I want to serve on a team",
 		process: "Connections – Direct and Connect",
 		queueId: 111, // Interested in Serving
@@ -92,6 +99,7 @@ export const INTERESTS: Interest[] = [
 		// so staff can tell a church visit from a mission trip from a serve day
 		// without opening the task.
 		id: "ambassador",
+		serving: true,
 		label: "I want to go with an Ambassador Team to another church",
 		process: "Connections – Direct and Connect",
 		queueId: 111, // Interested in Serving
@@ -101,6 +109,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "missions",
+		serving: true,
 		label: "I want to go on a Missions Team (overseas)",
 		process: "Connections – Direct and Connect",
 		queueId: 111, // Interested in Serving
@@ -110,6 +119,7 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "outreach",
+		serving: true,
 		label: "I want to serve our city with an Outreach Team",
 		process: "Connections – Direct and Connect",
 		queueId: 111, // Interested in Serving
