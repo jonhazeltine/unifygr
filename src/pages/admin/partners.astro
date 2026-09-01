@@ -56,11 +56,11 @@ export const prerender = false;
 
 				<section class="pc-block">
 					<div class="pc-block__head">
-						<h2>Churches we carry</h2>
-						<span class="pc-count" id="carried-count"></span>
+						<h2>Churches we take dates from</h2>
+						<span class="pc-count" id="partners-count"></span>
 					</div>
-					<div id="carried"></div>
-					<p class="pc-empty" id="carried-empty" hidden>
+					<div id="partners"></div>
+					<p class="pc-empty" id="partners-empty" hidden>
 						No churches yet. Add one below and the calendar fills in.
 					</p>
 				</section>
@@ -97,7 +97,7 @@ export const prerender = false;
 		<!-- Global rather than scoped: most of this page is rendered in the
 		     browser after the settings load, and Astro's scoped styles only
 		     reach markup that existed at build time. Nothing here is shared —
-		     this page carries no site layout. -->
+		     this page has no site layout of its own. -->
 		<style is:global>
 			/* Several blocks below set display, which would otherwise win over the
 			   hidden attribute and show the panel before sign-in. */
@@ -216,7 +216,7 @@ export const prerender = false;
 			let settings: { globals: any; partners: Partner[] } = { globals: {}, partners: [] };
 			let roster: ChurchRow[] = [];
 			let rows: Row[] = [];
-			// churchId → theme → how many gatherings would actually be carried under
+			// churchId → theme → how many gatherings would actually show under
 			// the switches as they currently stand. Recomputed whenever a switch moves,
 			// so every number on this page is one you can hold us to.
 			let live = new Map<string, Record<string, number>>();
@@ -281,8 +281,8 @@ export const prerender = false;
 				return live.get(churchId)?.[theme] || 0;
 			}
 
-			// What the calendar would carry with the choices currently on screen.
-			function carriedCount() {
+			// What the calendar would show with the choices currently on screen.
+			function shownCount() {
 				let n = 0;
 				for (const p of settings.partners) {
 					if (!p.on) continue;
@@ -301,7 +301,7 @@ export const prerender = false;
 				$("summary").innerHTML = `
 					<div><strong>${on}</strong><span>churches switched on</span></div>
 					<div><strong>${kinds.size}</strong><span>kinds of gathering open</span></div>
-					<div><strong>${carriedCount()}</strong><span>gatherings this would carry</span></div>
+					<div><strong>${shownCount()}</strong><span>gatherings this would show</span></div>
 					${silent ? `<div><strong class="pc-summary__warn">${silent}</strong><span>on, but bringing nothing</span></div>` : ""}`;
 			}
 
@@ -368,10 +368,10 @@ export const prerender = false;
 				return chips + none + more;
 			}
 
-			function renderCarried() {
-				const host = $("carried");
-				$("carried-count").textContent = `${settings.partners.length} on the list`;
-				$("carried-empty").hidden = settings.partners.length > 0;
+			function renderPartners() {
+				const host = $("partners");
+				$("partners-count").textContent = `${settings.partners.length} on the list`;
+				$("partners-empty").hidden = settings.partners.length > 0;
 				host.innerHTML = settings.partners
 					.map((p) => {
 						const row = rowFor(p.churchId);
@@ -390,8 +390,8 @@ export const prerender = false;
 								<div class="pc-church__id">
 									<p class="pc-church__name">${escape(p.name)}</p>
 									<p class="pc-church__where">${escape(p.city || "—")}${row ? ` · ${row.total} gatherings published` : ""}${p.ownCampus ? " · our campus" : ""}</p>
-									${row?.duplicateOf ? `<p class="pc-church__dupe">Publishes the same calendar as ${escape(row.duplicateOf)} — carry one of the two, not both.</p>` : ""}
-									${!row ? `<p class="pc-church__silent">Publishing nothing at the moment. Kept on the list; anything they post will be carried.</p>` : ""}
+									${row?.duplicateOf ? `<p class="pc-church__dupe">Publishes the same calendar as ${escape(row.duplicateOf)} — keep one of the two, not both.</p>` : ""}
+									${!row ? `<p class="pc-church__silent">Publishing nothing at the moment. Kept on the list; anything they post will show up.</p>` : ""}
 								</div>
 								<div class="pc-church__acts">
 									<label class="pc-switch">
@@ -452,7 +452,7 @@ export const prerender = false;
 			function renderAll() {
 				recount();
 				renderSummary();
-				renderCarried();
+				renderPartners();
 				renderAvailable();
 			}
 
@@ -504,13 +504,13 @@ export const prerender = false;
 				if (btn.dataset.kinds) {
 					const id = btn.dataset.kinds;
 					allKinds.has(id) ? allKinds.delete(id) : allKinds.add(id);
-					renderCarried();
+					renderPartners();
 					return;
 				}
 				if (btn.dataset.peek) {
 					const id = btn.dataset.peek;
 					open.has(id) ? open.delete(id) : open.add(id);
-					renderCarried();
+					renderPartners();
 					return;
 				}
 				if (btn.dataset.remove) {
@@ -529,7 +529,7 @@ export const prerender = false;
 						name: row.name,
 						city: row.city,
 						on: true,
-						// Added on, carrying nothing yet: the next thing you do is pick
+						// Added on, with nothing picked yet: the next thing you do is choose
 						// which of their gatherings you actually want.
 						themes: [],
 						addedAt: new Date().toISOString().slice(0, 10),
