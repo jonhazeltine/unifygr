@@ -32,7 +32,6 @@ export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Sp
 export const MOUNTED: Record<string, string> = {
 	"mission-trips": "/mission-trips",
 	"membership": "/membership",
-	"spiritual-formation": "/spiritual-formation",
 	"staff": "/staff",
 	"giving": "/giving",
 	"tap": "/tap",

@@ -21,12 +21,37 @@
 		{
 			"type": "Callout",
 			"props": {
+				"id": "Callout-membership-welcome",
+				"eyebrow": "New here? Start your journey",
+				"title": "Welcome to New Life.",
+				"body": "The Welcome Path is the plainest answer to what this church is — our values and culture, the vision, the mission, our story, and how a person becomes part of this community. It is five lessons in the New Life app, and it is where the road to membership starts.",
+				"buttons": [
+					{
+						"label": "Begin the Welcome Path →",
+						"href": "https://theformation.app/m/welcome-to-new-life",
+						"style": "primary"
+					},
+					{
+						"label": "All of our formation",
+						"href": "/spiritual-formation",
+						"style": "secondary"
+					}
+				]
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
 				"id": "Callout-membership",
 				"eyebrow": "Coming Soon",
-				"title": "This page is ready for your content.",
-				"body": "What membership means at New Life, the path to becoming a member, and how to take the next step. Staff can fill this in directly in the Page Builder.",
+				"title": "What membership means here.",
+				"body": "Moving from attending to belonging — what we ask of members, what you can ask of us, and how to take the step. Staff can fill this in directly in the Page Builder.",
 				"buttons": [
-					{ "label": "Connect Card", "href": "/connect", "style": "primary" }
+					{
+						"label": "Connect Card",
+						"href": "/connect",
+						"style": "primary"
+					}
 				]
 			}
 		}
