@@ -57,6 +57,12 @@ export type Entry = {
 	categories: string[];
 	summary: string;
 	why?: string | null;
+	/**
+	 * Whether we list this ministry at all. Absent means yes — the directory
+	 * predates the switch. Set false at /studio/partners to take one down
+	 * without deleting what we know about it.
+	 */
+	listed?: boolean;
 	/** Where this ministry meets. The church is the address, not the headline. */
 	venue?: string | null;
 	venueUrl?: string | null;
@@ -166,7 +172,9 @@ export function getEntry(slug: string): Entry | undefined {
 
 /** Held back from browsing until someone gets us a time and a place. */
 export function isListable(entry: Entry): boolean {
-	return entry.status !== "no-details";
+	// `listed` is the switch a person controls; `no-details` is the data telling
+	// us there is nothing here worth showing.
+	return entry.status !== "no-details" && entry.listed !== false;
 }
 
 export function entriesInCategory(categorySlug: string): Entry[] {

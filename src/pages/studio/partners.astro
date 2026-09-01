@@ -68,20 +68,23 @@ export const prerender = false;
 
 				<section class="pc-block">
 					<div class="pc-block__head">
-						<h2>Churches</h2>
+						<h2>Churches and ministries</h2>
 					</div>
 					<p class="pc-block__note">
-						Two steps, deliberately. <strong>Star</strong> a church to approve it — we would put
-						our name next to this one — and it joins what counts as available above. <strong>Tick</strong>
-						it to actually show its dates, then open it to choose which kinds. A church can sit
-						approved and not showing for as long as you like. <strong>Not for us</strong> takes one
-						off the table for good.
+						<strong>Churches</strong> feed the calendar. Star one to approve it — we would put our
+						name next to this — and it joins what counts as available above; tick it to show its
+						dates, then open it to choose which kinds. <strong>Ministries</strong> are the
+						organisations we point people to, like Mel Trotter and Guiding Light. They carry no
+						dates, so there is nothing to approve by kind: tick one to list it on the ministry
+						pages, untick it to take it down. Directory changes go live in a minute or two rather
+						than at once, because the directory is part of the site rather than a setting.
 					</p>
 					<div class="pc-filters">
 						<label class="field pc-search">
 							<span>Search</span>
-							<input id="search" type="search" placeholder="Church name or city" autocomplete="off" />
+							<input id="search" type="search" placeholder="Name, city or what they do" autocomplete="off" />
 						</label>
+						<div class="pc-chips" id="kinds"></div>
 						<div class="pc-chips" id="filters"></div>
 					</div>
 					<div id="churches"></div>
@@ -214,6 +217,10 @@ export const prerender = false;
 			.pc-chip b { color: var(--text); font-weight: 600; margin-left: 0.2rem; }
 			.pc-chip.is-on { border-color: var(--gold, #c8a24a); color: var(--text); background: color-mix(in srgb, var(--gold, #c8a24a) 14%, transparent); }
 
+			.pc-chip--kind { border-style: dashed; }
+			.pc-church--org .pc-church__where { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+			.pc-star--none { width: 1.05rem; display: inline-block; flex: none; }
+			.pc-church__unconfirmed { font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
 			.pc-star { font: inherit; font-size: 1.05rem; line-height: 1; background: none; border: 0; color: var(--muted); cursor: pointer; padding: 0.2rem; flex: none; }
 			.pc-star:hover { color: var(--gold, #c8a24a); }
 			.pc-star.is-on { color: var(--gold, #c8a24a); }
@@ -336,6 +343,18 @@ export const prerender = false;
 			// What each church looked like when we last loaded or saved, so a row can
 			// say that it has been touched and the save bar can say how many.
 			let baseline = new Map<string, string>();
+
+			type DirectoryOrg = {
+				slug: string; name: string; summary: string; city: string | null; area: string | null;
+				categories: string[]; offering: boolean; confirmed: boolean; listed: boolean;
+			};
+			// The ministry directory — Mel Trotter, Guiding Light, Celebrate Recovery.
+			// These carry no events; their switch decides whether we list them at all.
+			let orgs: DirectoryOrg[] = [];
+			let orgEdits = new Map<string, boolean>();
+			// Churches and organisations answer different questions, so the list can be
+			// held to one or the other.
+			let kind: "all" | "churches" | "orgs" = "all";
 			let roster: ChurchRow[] = [];
 			let rows: Row[] = [];
 			// churchId → theme → how many gatherings would actually show under
@@ -360,12 +379,15 @@ export const prerender = false;
 				el.hidden = !msg;
 			}
 
-			function markDirty(state = true) {
+			function markDirty(state?: boolean) {
+				if (state === undefined) state = true;
+				// Unsaved means either side of the panel has something waiting.
+				if (state === false && orgEdits.size) state = true;
 				dirty = state;
 				const label = $("savestate");
-				const n = state ? changedChurches().length : 0;
+				const n = state ? changedChurches().length + orgEdits.size : 0;
 				label.textContent = state
-					? `${n} ${n === 1 ? "church" : "churches"} changed — not saved yet`
+					? `${n} ${n === 1 ? "change" : "changes"} — not saved yet`
 					: "All changes saved";
 				label.classList.toggle("is-dirty", state);
 				($("save") as HTMLButtonElement).disabled = !state;
@@ -812,6 +834,61 @@ export const prerender = false;
 				return c.state === key;
 			}
 
+			function orgListed(o: DirectoryOrg): boolean {
+				return orgEdits.has(o.slug) ? orgEdits.get(o.slug)! : o.listed;
+			}
+
+			function renderKinds() {
+				const shownOrgs = orgs.filter(orgListed).length;
+				const rows = [
+					{ key: "all", label: "Everything", n: allChurches().filter((c) => c.state !== "declined").length + orgs.length },
+					{ key: "churches", label: "Churches", n: allChurches().filter((c) => c.state !== "declined").length },
+					{ key: "orgs", label: "Ministries", n: orgs.length },
+				];
+				$("kinds").innerHTML = rows
+					.map(
+						(r) =>
+							`<button class="pc-chip pc-chip--kind ${kind === r.key ? "is-on" : ""}" type="button" data-kindfilter="${r.key}">${r.label} <b>${r.n}</b></button>`,
+					)
+					.join("");
+				$("filters").hidden = kind === "orgs";
+				return shownOrgs;
+			}
+
+			function renderOrgRows(q: string) {
+				const list = orgs.filter(
+					(o) =>
+						!q ||
+						o.name.toLowerCase().includes(q) ||
+						(o.city || "").toLowerCase().includes(q) ||
+						o.summary.toLowerCase().includes(q),
+				);
+				return list
+					.map((o) => {
+						const on = orgListed(o);
+						const changed = orgEdits.has(o.slug) && orgEdits.get(o.slug) !== o.listed;
+						return `<article class="pc-church pc-church--org ${on ? "is-showing" : "is-new"} ${changed ? "is-changed" : ""}">
+							<div class="pc-church__top">
+								<span class="pc-star pc-star--none" aria-hidden="true"></span>
+								<label class="pc-church__hit">
+									<input type="checkbox" data-org="${o.slug}" ${on ? "checked" : ""} />
+									<span class="pc-church__id">
+										<span class="pc-church__name">${escape(o.name)}</span>
+										<span class="pc-church__where">${escape(o.city || o.area || "—")} · ${escape(o.summary.slice(0, 90))}</span>
+									</span>
+									<span class="pc-church__sum">${changed ? `<span class="pc-church__flag">changed</span>` : ""}${
+										o.offering ? `listed on ${o.categories.length} ${o.categories.length === 1 ? "page" : "pages"}` : "specialised list only"
+									}</span>
+								</label>
+								<span class="pc-church__acts">
+									${o.confirmed ? "" : `<span class="pc-church__unconfirmed" title="Nobody at New Life has confirmed this one yet">unconfirmed</span>`}
+								</span>
+							</div>
+						</article>`;
+					})
+					.join("");
+			}
+
 			function renderFilters(all: Listed[]) {
 				const n = (key: string) => all.filter((c) => matches(c, key)).length;
 				$("filters").innerHTML = FILTERS.map(
@@ -823,7 +900,15 @@ export const prerender = false;
 			function renderChurches() {
 				const q = ($("search") as HTMLInputElement).value.trim().toLowerCase();
 				const all = allChurches();
+				renderKinds();
 				renderFilters(all);
+				if (kind === "orgs") {
+					const html = renderOrgRows(q);
+					$("churches-loading").hidden = true;
+					$("churches-empty").hidden = html.length > 0;
+					$("churches").innerHTML = html;
+					return;
+				}
 				const fresh = all
 					.filter((c) => matches(c, filter))
 					.filter(
@@ -843,6 +928,7 @@ export const prerender = false;
 				const touched = new Set(changedChurches());
 				$("churches-loading").hidden = true;
 				$("churches-empty").hidden = list.length > 0;
+				const orgHtml = kind === "all" ? renderOrgRows(q) : "";
 				$("churches").innerHTML = list
 					.map(({ id, name, city, row, p, state }) => {
 						const isOpen = open.has(id);
@@ -896,7 +982,7 @@ export const prerender = false;
 							${isOpen ? `<div class="pc-themes">${themeChips(p ?? { churchId: id, name, city, approved: false, on: false, themes: [] }, row)}</div>${sample}` : ""}
 						</article>`;
 					})
-					.join("");
+					.join("") + orgHtml;
 			}
 
 			function renderDeclined() {
@@ -981,6 +1067,15 @@ export const prerender = false;
 					renderAll();
 					return;
 				}
+				if (el.dataset.org) {
+					const slug = el.dataset.org;
+					const original = orgs.find((o) => o.slug === slug)?.listed ?? true;
+					if (el.checked === original) orgEdits.delete(slug);
+					else orgEdits.set(slug, el.checked);
+					markDirty();
+					renderChurches();
+					return;
+				}
 				if (el.dataset.pick && el.dataset.picktheme) {
 					const { pick: churchId, picktheme: theme } = el.dataset;
 					let partner = settings.partners.find((p) => p.churchId === churchId);
@@ -1032,6 +1127,12 @@ export const prerender = false;
 			panel.addEventListener("click", (e) => {
 				const btn = (e.target as HTMLElement).closest("button");
 				if (!btn) return;
+				if (btn.dataset.kindfilter) {
+					kind = btn.dataset.kindfilter as typeof kind;
+					frozen = null;
+					renderChurches();
+					return;
+				}
 				if (btn.dataset.filter) {
 					filter = btn.dataset.filter as typeof filter;
 					// Asking for a different slice is a deliberate move, so the held
@@ -1117,7 +1218,19 @@ export const prerender = false;
 						method: "PUT",
 						body: JSON.stringify(settings),
 					});
-					show("");
+					if (orgEdits.size) {
+						const res = await api("/api/partners/orgs", {
+							method: "PUT",
+							body: JSON.stringify({ changes: Object.fromEntries(orgEdits) }),
+						});
+						orgs = res.orgs;
+						orgEdits = new Map();
+						show(
+							"Church changes are live. The ministry list is part of the site, so those go live in a minute or two.",
+						);
+					} else {
+						show("");
+					}
 					markDirty(false);
 					// Saved: the running order settles and every row loses its flag.
 					frozenKind = null;
@@ -1156,6 +1269,11 @@ export const prerender = false;
 				} catch (err: any) {
 					// The saved choices still load and still save; only the counts and
 					// the "add a church" list need the live feed.
+					show(err.message);
+				}
+				try {
+					orgs = (await api("/api/partners/orgs")).orgs;
+				} catch (err: any) {
 					show(err.message);
 				}
 				rebaseline();
