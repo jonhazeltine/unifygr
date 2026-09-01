@@ -17,6 +17,12 @@ function paras(text: string) {
 		.filter(Boolean);
 }
 
+// A link that leaves the site opens in a new tab, so a tap page stays put
+// behind whatever someone taps into. Anything relative ("/connect") is ours.
+function isExternal(href: string): boolean {
+	return /^https?:\/\//i.test(href) && !/^https?:\/\/(www\.)?unifygr\.com/i.test(href);
+}
+
 // Pull a YouTube video id out of any pasted link (or accept a bare id).
 function youtubeId(input: string): string | null {
 	const s = String(input || "").trim();
@@ -561,6 +567,105 @@ export const blocksConfig: Config = {
 						))}
 					</div>
 				</section>
+			),
+		},
+
+		TapButtons: {
+			label: "Tap page (big phone buttons)",
+			fields: {
+				brand: { type: "text", label: "Small line at the top" },
+				heading: { type: "text", label: "Big heading (two or three short words)" },
+				lede: { type: "text", label: "One line under the heading" },
+				links: {
+					type: "array",
+					label: "Buttons",
+					arrayFields: {
+						label: { type: "text", label: "Button text" },
+						blurb: { type: "textarea", label: "Small line underneath" },
+						href: { type: "text", label: "Where it goes — paste the full link" },
+						feature: {
+							type: "radio",
+							label: "Style",
+							options: [
+								{ label: "Normal", value: "no" },
+								{ label: "Gold (the main one)", value: "yes" },
+							],
+						},
+					},
+					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no" },
+					getItemSummary: (item: any) => item?.label || "Button",
+				},
+				footLabel: { type: "text", label: "Small link at the bottom" },
+				footHref: { type: "text", label: "Where the bottom link goes" },
+			},
+			defaultProps: {
+				brand: "New Life Grand Rapids",
+				heading: "Start here.",
+				lede: "",
+				links: [{ label: "A next step", blurb: "", href: "", feature: "no" }],
+				footLabel: "Everything else at New Life",
+				footHref: "/",
+			},
+			render: ({ brand, heading, lede, links, footLabel, footHref }) => (
+				<div className="tap">
+					<div className="tap__glow" aria-hidden="true"></div>
+					<div className="tap__inner">
+						<div className="tap__head">
+							{brand ? (
+								<a className="tap__brand" href="/">
+									{brand}
+								</a>
+							) : null}
+							{heading ? <h1 className="tap__title">{heading}</h1> : null}
+							{lede ? <p className="tap__lede">{lede}</p> : null}
+						</div>
+
+						<nav className="tap__stack" aria-label="Take a step">
+							{(links || []).map((l: any, i: number) => {
+								const href = String(l?.href || "").trim();
+								const cls = [
+									"tapbtn",
+									l?.feature === "yes" ? "tapbtn--feature" : "",
+									href ? "" : "tapbtn--empty",
+								]
+									.filter(Boolean)
+									.join(" ");
+								const body = (
+									<>
+										<span className="tapbtn__label">{l?.label || "Untitled"}</span>
+										{l?.blurb ? <span className="tapbtn__blurb">{l.blurb}</span> : null}
+										<span className="tapbtn__arrow" aria-hidden="true">
+											→
+										</span>
+									</>
+								);
+								// A button with no link yet is shown to staff as a placeholder
+								// rather than rendered as a link that goes nowhere.
+								return href ? (
+									<a
+										className={cls}
+										href={href}
+										key={i}
+										target={isExternal(href) ? "_blank" : undefined}
+										rel={isExternal(href) ? "noopener" : undefined}
+									>
+										{body}
+									</a>
+								) : (
+									<span className={cls} key={i}>
+										{body}
+									</span>
+								);
+							})}
+						</nav>
+
+						{footLabel ? (
+							<div className="tap__foot">
+								<a href={footHref || "/"}>{footLabel}</a>
+							</div>
+						) : null}
+					</div>
+				</div>
 			),
 		},
 

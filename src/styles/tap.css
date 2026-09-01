@@ -1,0 +1,208 @@
+/* ---------------------------------------------------------------------------
+   Tap pages — one screen, one thumb.
+
+   A tap page is a link you text out, print on a card, or put behind a QR code:
+   a heading and a short stack of full-width buttons, sized so the last one is
+   still above the fold on the smallest phone anyone still carries.
+
+   Loaded by Bare.astro (the published page) and by the Page Builder, so what
+   staff drag around in the editor is what a visitor sees.
+
+   The tokens are redeclared on .tap rather than inherited from body.v2, because
+   the builder's canvas is not the site's <body> — a tap block dragged into the
+   editor has to bring its own colour and type with it.
+--------------------------------------------------------------------------- */
+
+.tap {
+	--ink: #06070a;
+	--ink-raised: #10141c;
+	--ivory: #f7f2ea;
+	--muted: rgba(247, 242, 234, 0.66);
+	--faint: rgba(247, 242, 234, 0.42);
+	--gold: #f2d2a2;
+	--gold-ink: #1c1305;
+	--line: rgba(247, 242, 234, 0.14);
+	--display: "Fraunces", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+	--body: "Atkinson", system-ui, -apple-system, sans-serif;
+	--gutter: 1.35rem;
+
+	background: var(--ink);
+	color: var(--ivory);
+	font-family: var(--body);
+	font-size: 17px;
+	line-height: 1.55;
+	-webkit-font-smoothing: antialiased;
+
+	position: relative;
+	/* The dynamic viewport unit so iOS Safari's shrinking address bar can't
+	   push the last button off the screen. */
+	min-height: 100dvh;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+}
+
+/* Atmosphere sits behind the answers, never in front of them: the still is
+   held far back and the ink is painted over it so every label stays crisp. */
+.tap__glow {
+	position: absolute;
+	inset: 0;
+	background:
+		linear-gradient(180deg, rgba(6, 7, 10, 0.72) 0%, rgba(6, 7, 10, 0.92) 46%, var(--ink) 88%),
+		radial-gradient(110% 55% at 50% 0%, rgba(242, 210, 162, 0.18), transparent 60%),
+		url("/art/generated/hero-silhouette-thumb.webp") center top / cover no-repeat;
+	pointer-events: none;
+}
+
+.tap__inner {
+	position: relative;
+	width: 100%;
+	max-width: 30rem;
+	margin: 0 auto;
+	padding: 2.6rem var(--gutter) 2.2rem;
+	display: grid;
+	gap: 1.9rem;
+}
+
+.tap__head {
+	display: grid;
+	gap: 0.55rem;
+	text-align: center;
+}
+
+.tap__brand {
+	font-size: 0.78rem;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--gold);
+	text-decoration: none;
+}
+
+/* A tap-page heading is two or three short words. The site's global
+   `text-wrap: balance` splits them across lines, which reads as a stumble
+   rather than a headline. */
+.tap__title {
+	width: 100%;
+	margin: 0;
+	font-family: var(--display);
+	font-weight: 600;
+	font-size: clamp(1.9rem, 9vw, 2.8rem);
+	letter-spacing: -0.02em;
+	line-height: 1.06;
+	text-wrap: nowrap;
+}
+
+.tap__lede {
+	margin: 0;
+	color: var(--muted);
+	font-size: 1rem;
+}
+
+.tap *,
+.tap *::before,
+.tap *::after {
+	box-sizing: border-box;
+}
+
+.tap__stack {
+	display: grid;
+	gap: 0.9rem;
+}
+
+/* Full-width and thumb-sized. The whole card is the tap target — nothing here
+   asks for a precise finger. */
+.tapbtn {
+	position: relative;
+	display: grid;
+	gap: 0.28rem;
+	min-height: 5.6rem;
+	align-content: center;
+	padding: 1.15rem 3rem 1.15rem 1.35rem;
+	border: 1px solid var(--line);
+	border-radius: 18px;
+	background: var(--ink-raised);
+	text-decoration: none;
+	transition: border-color 0.18s ease, background 0.18s ease, transform 0.12s ease;
+}
+
+.tapbtn:active {
+	transform: scale(0.985);
+}
+
+@media (hover: hover) {
+	.tapbtn:hover {
+		border-color: var(--gold);
+		background: #151a24;
+	}
+}
+
+/* One button per page can be marked "featured" — the step we most want taken. */
+.tapbtn--feature {
+	background: var(--gold);
+	border-color: var(--gold);
+}
+
+.tapbtn--feature .tapbtn__label,
+.tapbtn--feature .tapbtn__arrow {
+	color: var(--gold-ink);
+}
+
+.tapbtn--feature .tapbtn__blurb {
+	color: rgba(28, 19, 5, 0.72);
+}
+
+@media (hover: hover) {
+	.tapbtn--feature:hover {
+		background: #f7dcb4;
+		border-color: #f7dcb4;
+	}
+}
+
+.tapbtn__label {
+	font-family: var(--display);
+	font-weight: 600;
+	font-size: 1.32rem;
+	letter-spacing: -0.01em;
+	line-height: 1.15;
+}
+
+.tapbtn__blurb {
+	color: var(--muted);
+	font-size: 0.92rem;
+	line-height: 1.4;
+}
+
+.tapbtn__arrow {
+	position: absolute;
+	right: 1.25rem;
+	top: 50%;
+	transform: translateY(-50%);
+	font-size: 1.15rem;
+	color: var(--faint);
+}
+
+/* A button with no link yet. Staff see it in the builder; nobody can tap it
+   into a dead end on the live site, because the page won't publish it. */
+.tapbtn--empty {
+	opacity: 0.55;
+	border-style: dashed;
+}
+
+.tap__foot {
+	text-align: center;
+}
+
+.tap__foot a {
+	color: var(--faint);
+	font-size: 0.9rem;
+	text-decoration: none;
+	border-bottom: 1px solid var(--line);
+	padding-bottom: 0.15rem;
+}
+
+@media (min-width: 700px) {
+	.tap__inner {
+		padding-top: 3.4rem;
+		padding-bottom: 3rem;
+	}
+}

@@ -1,0 +1,32 @@
+---
+// The layout with nothing in it.
+//
+// Tap pages are one screen and one decision: a link texted out, printed on a
+// card, or sitting behind a QR code. A menu and a footer would be two more
+// things to read before the first button, so this layout carries neither —
+// only the page itself, the site's type and colour, and the Studio dock so
+// staff can still get to the editor from here.
+import BaseHead from "../components/BaseHead.astro";
+import StudioDock from "../components/StudioDock.astro";
+import "../styles/sunday.css";
+import "../styles/tap.css";
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
+	</head>
+	<body class="v2">
+		<slot />
+		<StudioDock />
+	</body>
+</html>

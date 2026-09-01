@@ -25,7 +25,7 @@ const PAGES_DIR = path.join(ROOT, "content", "pages");
 const BUNDLED: Record<string, any> = import.meta.glob("../../../content/pages/*.json", { eager: true });
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
-export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards"] as const;
+export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards", "TapButtons"] as const;
 
 // Builder pages mounted at REAL site routes (their .astro files render the
 // page JSON). These can't be deleted from the builder — the nav links to them.
@@ -35,7 +35,13 @@ export const MOUNTED: Record<string, string> = {
 	"spiritual-formation": "/spiritual-formation",
 	"staff": "/staff",
 	"giving": "/giving",
+	"tap": "/tap",
+	"next-steps": "/next-steps",
 };
+
+// Pages that render with no header, footer or menu — a single screen of big
+// buttons. Their .astro route passes `bare` to MountedPage.
+export const BARE = new Set(["tap", "next-steps"]);
 
 export type PageStatus = "draft" | "live";
 
