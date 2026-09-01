@@ -4,7 +4,8 @@
 	"root": {
 		"props": {
 			"title": "Welcome",
-			"kicker": "New Life"
+			"kicker": "New Life",
+			"description": ""
 		}
 	},
 	"content": [
