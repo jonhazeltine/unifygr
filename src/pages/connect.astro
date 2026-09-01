@@ -1,7 +1,13 @@
 ---
 import Interior from "../layouts/Interior.astro";
-import { INTERESTS } from "../lib/connect/routing";
+import { INTERESTS, interestById } from "../lib/connect/routing";
 export const prerender = false;
+
+// A link can land here with the reason already chosen — the tap page sends
+// people straight to the Ambassador option. An unknown id just falls back to
+// the first choice, so a stale link can never land on nothing.
+const wanted = interestById(Astro.url.searchParams.get("interest") ?? "")?.id;
+const from = Astro.url.searchParams.get("from")?.slice(0, 40) ?? "";
 ---
 
 <Interior
@@ -46,7 +52,12 @@ export const prerender = false;
 					<legend>What would you like from us?</legend>
 					{INTERESTS.map((interest, i) => (
 						<label class="choice">
-							<input type="radio" name="interest" value={interest.id} checked={i === 0} />
+							<input
+								type="radio"
+								name="interest"
+								value={interest.id}
+								checked={wanted ? interest.id === wanted : i === 0}
+							/>
 							<span>{interest.label}</span>
 						</label>
 					))}
@@ -56,6 +67,8 @@ export const prerender = false;
 					<span>Anything you'd like us to know</span>
 					<textarea name="message" rows="5" placeholder="A prayer request, a question, or just how you found us."></textarea>
 				</label>
+
+				{from && <input type="hidden" name="source" value={`Website — ${from}`} />}
 
 				{/* Not shown to people — only bots fill this in. */}
 				<div class="connect-hp" aria-hidden="true">

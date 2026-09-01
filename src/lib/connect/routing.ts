@@ -69,6 +69,18 @@ export const INTERESTS: Interest[] = [
 		dueInDays: 5,
 	},
 	{
+		// Short-term mission teams. There is no Ambassador-specific queue in CCB,
+		// so this rides the serving queue — but the Asana task is titled
+		// differently so staff can tell an Ambassador Team ask from a
+		// serve-on-Sunday ask without opening it.
+		id: "ambassador",
+		label: "I want to join an Ambassador Team (short-term missions)",
+		process: "Connections – Direct and Connect",
+		queueId: 111, // Interested in Serving
+		action: "Ambassador Team interest",
+		dueInDays: 5,
+	},
+	{
 		id: "group",
 		label: "I'd like to join a life group",
 		process: "Connections – Direct and Connect",
