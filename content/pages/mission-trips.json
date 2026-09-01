@@ -29,11 +29,26 @@
 				"image": "/art/generated/mission-ambient-v2-thumb.webp",
 				"video": "/art/generated/mission-ambient-v2.mp4",
 				"buttons": [
-					{ "label": "Give to the Team", "href": "/giving", "style": "primary" }
+					{
+						"label": "Mission trip application",
+						"href": "https://newlife.ccbchurch.com/goto/forms/273/responses/new",
+						"style": "primary"
+					},
+					{
+						"label": "Give to the team",
+						"href": "https://newlife.ccbchurch.com/goto/forms/339/responses/new",
+						"style": "secondary"
+					}
 				],
 				"facts": [
-					{ "label": "Partner", "value": "Mission of Hope" },
-					{ "label": "Cost", "value": "About $2,000 (7 nights / 8 days, includes airfare, lodging, food, transfers, and an end-of-trip excursion)" }
+					{
+						"label": "Partner",
+						"value": "Mission of Hope"
+					},
+					{
+						"label": "Cost",
+						"value": "About $2,000 (7 nights / 8 days, includes airfare, lodging, food, transfers, and an end-of-trip excursion)"
+					}
 				]
 			}
 		},
@@ -44,15 +59,47 @@
 				"eyebrow": "Good to Know",
 				"title": "Frequently asked.",
 				"items": [
-					{ "q": "Where are we going?", "a": "Jarabacoa, in the mountains of the Dominican Republic, to work with Mission of Hope." },
-					{ "q": "Who is Mission of Hope?", "a": "A missions organization that started over 20 years ago in Haiti, working to see life transformation for every man, woman and child in Haiti, the Dominican Republic, and across the Caribbean. New Life has partnered with them since 2015." },
-					{ "q": "Is it safe?", "a": "Yes. We chose a partner we could trust with the teams we send. Whether you're a family with young kids, a high school student, or traveling in your retirement years, it's a safe environment. Mission of Hope takes excellent care of our teams." },
-					{ "q": "What do we do on a trip?", "a": "Each trip is shaped by the team — medical care, sports ministry, kids clubs, planting fruit trees, painting or construction, visiting orphanages, and ministering at churches." },
-					{ "q": "What are the lodging options?", "a": "Summer-camp-style bunk rooms, separated by gender, usually each with its own bathroom. Family or special-accommodation housing can often be arranged." },
-					{ "q": "Do I need a passport?", "a": "Yes. Start your application right away — it can take several months, and we can't buy a plane ticket without it." },
-					{ "q": "Are there required vaccines?", "a": "None required, but ask your doctor for recommendations. Some consider Tetanus, HepA, HepB, Rabies, and Typhoid." },
-					{ "q": "Can I drink the water?", "a": "Not from the tap, but Mission of Hope provides plenty of safe bottled water." }
+					{
+						"q": "Where are we going?",
+						"a": "Jarabacoa, in the mountains of the Dominican Republic, to work with Mission of Hope."
+					},
+					{
+						"q": "Who is Mission of Hope?",
+						"a": "A missions organization that started over 20 years ago in Haiti, working to see life transformation for every man, woman and child in Haiti, the Dominican Republic, and across the Caribbean. New Life has partnered with them since 2015."
+					},
+					{
+						"q": "Is it safe?",
+						"a": "Yes. We chose a partner we could trust with the teams we send. Whether you're a family with young kids, a high school student, or traveling in your retirement years, it's a safe environment. Mission of Hope takes excellent care of our teams."
+					},
+					{
+						"q": "What do we do on a trip?",
+						"a": "Each trip is shaped by the team — medical care, sports ministry, kids clubs, planting fruit trees, painting or construction, visiting orphanages, and ministering at churches."
+					},
+					{
+						"q": "What are the lodging options?",
+						"a": "Summer-camp-style bunk rooms, separated by gender, usually each with its own bathroom. Family or special-accommodation housing can often be arranged."
+					},
+					{
+						"q": "Do I need a passport?",
+						"a": "Yes. Start your application right away — it can take several months, and we can't buy a plane ticket without it."
+					},
+					{
+						"q": "Are there required vaccines?",
+						"a": "None required, but ask your doctor for recommendations. Some consider Tetanus, HepA, HepB, Rabies, and Typhoid."
+					},
+					{
+						"q": "Can I drink the water?",
+						"a": "Not from the tap, but Mission of Hope provides plenty of safe bottled water."
+					}
 				]
+			}
+		},
+		{
+			"type": "Video",
+			"props": {
+				"id": "Video-moh-partner",
+				"url": "https://www.youtube.com/watch?v=2G5jE_ZuBeI",
+				"caption": "Mission of Hope — who we go with"
 			}
 		}
 	],

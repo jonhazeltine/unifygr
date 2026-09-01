@@ -2,33 +2,58 @@
 // Renders a builder page (content/pages/<slug>.json) — used both by /p/<slug>
 // and by real routes that have been "blockified" (e.g. /staff). Drafts are
 // staff-only with a banner; visitors get a 404.
+//
+// Tap pages (/tap, /next-steps) pass `bare`: one screen of big buttons, with
+// no header, footer or menu wrapped around it.
 import { Render } from "@measured/puck";
 import Interior from "../../layouts/Interior.astro";
+import Bare from "../../layouts/Bare.astro";
 import { blocksConfig } from "./blocks";
 import { readPage } from "../../lib/studio/pages";
 import { isAuthed } from "../../lib/studio/auth";
 
 interface Props {
 	slug: string;
+	bare?: boolean;
 }
 
-const { slug } = Astro.props;
+const { slug, bare = false } = Astro.props;
 const data = await readPage(slug);
 const staff = isAuthed(Astro.cookies);
 
-if (!data || (data.status !== "live" && !staff)) {
-	return new Response("Not found", { status: 404 });
+// A draft is invisible to anyone but staff. Returning a Response from a
+// component only blanked the body — the route still answered 200, which is a
+// blank page a search engine will happily index. Setting the status on the
+// shared response makes it a real 404.
+const hidden = !data || (data.status !== "live" && !staff);
+if (hidden) {
+	Astro.response.status = 404;
+	Astro.response.headers.set("x-robots-tag", "noindex");
 }
-const isDraftPreview = data.status !== "live";
-const title = `New Life | ${data.root.props.title || "Page"}`;
-const description = data.root.props.description || data.root.props.title || "New Life Grand Rapids";
+const isDraftPreview = !hidden && data!.status !== "live";
+const title = hidden ? "New Life | Not found" : `New Life | ${data!.root.props.title || "Page"}`;
+const description = hidden
+	? "That page isn't here."
+	: data!.root.props.description || data!.root.props.title || "New Life Grand Rapids";
+const Layout = bare ? Bare : Interior;
 ---
 
-<Interior title={title} description={description}>
+<Layout title={title} description={description}>
+	{hidden ? (
+		<section class="section">
+			<div class="container">
+				<h1>Not found</h1>
+				<p style="margin-top:.8rem"><a href="/">Back to New Life</a></p>
+			</div>
+		</section>
+	) : (
+	<>
 	{isDraftPreview && (
 		<div style="position:sticky;top:0;z-index:50;background:#f2d2a2;color:#12100c;text-align:center;font:600 13px/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:9px 12px;letter-spacing:.02em;">
 			DRAFT — only staff can see this page. Flip it live in the Page Builder.
 		</div>
 	)}
-	<Render config={blocksConfig} data={data} />
-</Interior>
+	<Render config={blocksConfig} data={data!} />
+	</>
+	)}
+</Layout>

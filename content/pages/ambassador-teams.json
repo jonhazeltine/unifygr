@@ -1,0 +1,96 @@
+{
+	"status": "draft",
+	"order": 31,
+	"root": {
+		"props": {
+			"title": "Church Ambassador Teams",
+			"kicker": "Change the World",
+			"description": "Short-term teams from New Life Grand Rapids, going to serve alongside Mission of Hope in the Caribbean."
+		}
+	},
+	"content": [
+		{
+			"type": "Hero",
+			"props": {
+				"id": "Hero-amb",
+				"kicker": "Change the World",
+				"heading": "Church Ambassador Teams",
+				"lede": "Short-term teams carrying the good news out — going to serve, and coming back changed."
+			}
+		},
+		{
+			"type": "Feature",
+			"props": {
+				"id": "Feature-amb",
+				"eyebrow": "What an Ambassador Team is",
+				"heading": "A team from this church, sent out.",
+				"subline": "Next team: Jarabacoa, Dominican Republic · July 15–22, 2026",
+				"body": "Our vision is to encounter God, be transformed, and change the world. An Ambassador Team is that third part with a plane ticket attached: a group from New Life going somewhere specific, for a week, to serve alongside people already doing the work there.\n\nAsk God whether you should go. Be open to hearing from Him about whether this trip is for you — or prayerfully consider giving so someone else can.",
+				"image": "/uploads/mission-trips-team.jpg",
+				"video": "",
+				"buttons": [
+					{
+						"label": "Apply to go",
+						"href": "https://newlife.ccbchurch.com/goto/forms/273/responses/new",
+						"style": "primary"
+					},
+					{
+						"label": "Give to the team",
+						"href": "https://newlife.ccbchurch.com/goto/forms/339/responses/new",
+						"style": "secondary"
+					}
+				],
+				"facts": [
+					{
+						"label": "Partner",
+						"value": "Mission of Hope"
+					},
+					{
+						"label": "Where",
+						"value": "Jarabacoa, in the mountains of the Dominican Republic"
+					},
+					{
+						"label": "How long",
+						"value": "7 nights, 8 days"
+					},
+					{
+						"label": "Cost",
+						"value": "About $2,000 — airfare, lodging, food, transfers, and an end-of-trip excursion"
+					}
+				]
+			}
+		},
+		{
+			"type": "Prose",
+			"props": {
+				"id": "Prose-amb-who",
+				"eyebrow": "Who goes",
+				"title": "Nearly anyone can go.",
+				"body": "Families with young kids, high schoolers, people traveling in their retirement years — we have sent all of them. Mission of Hope takes care of our teams, and each trip is shaped around the people who make it up: medical care, sports ministry, kids clubs, planting fruit trees, painting and construction, visiting orphanages, ministering at churches.\n\nIf you are even slightly interested, start your passport application now. It can take several months, and we can't buy a ticket without one.",
+				"tinted": true
+			}
+		},
+		{
+			"type": "Callout",
+			"props": {
+				"id": "Callout-amb",
+				"eyebrow": "The next step",
+				"title": "Tell us you're interested.",
+				"body": "Fill out the application and we'll get you the details — or let us know here and someone will follow up.",
+				"buttons": [
+					{
+						"label": "Mission trip application",
+						"href": "https://newlife.ccbchurch.com/goto/forms/273/responses/new",
+						"style": "primary"
+					},
+					{
+						"label": "Just have a question",
+						"href": "/connect?interest=ambassador&from=ambassador+teams+page",
+						"style": "secondary"
+					}
+				]
+			}
+		}
+	],
+	"zones": {}
+}

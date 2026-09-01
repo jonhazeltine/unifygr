@@ -25,7 +25,7 @@ const PAGES_DIR = path.join(ROOT, "content", "pages");
 const BUNDLED: Record<string, any> = import.meta.glob("../../../content/pages/*.json", { eager: true });
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
-export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards"] as const;
+export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards", "TapButtons", "Gallery"] as const;
 
 // Builder pages mounted at REAL site routes (their .astro files render the
 // page JSON). These can't be deleted from the builder — the nav links to them.
@@ -35,7 +35,15 @@ export const MOUNTED: Record<string, string> = {
 	"spiritual-formation": "/spiritual-formation",
 	"staff": "/staff",
 	"giving": "/giving",
+	"tap": "/tap",
+	"next-steps": "/next-steps",
+	"meals-of-hope": "/meals-of-hope",
+	"ambassador-teams": "/ambassador-teams",
 };
+
+// Pages that render with no header, footer or menu — a single screen of big
+// buttons. Their .astro route passes `bare` to MountedPage.
+export const BARE = new Set(["tap", "next-steps"]);
 
 export type PageStatus = "draft" | "live";
 
@@ -198,4 +206,17 @@ export async function deletePage(slug: string): Promise<{ via: "fs" | "git" }> {
 		);
 		return { via: "git" };
 	}
+}
+
+/**
+ * The 404 for a page nobody outside staff may see.
+ *
+ * This has to run in the ROUTE, not in MountedPage: a Response returned from a
+ * component blanks the body but leaves the status at 200, and a blank 200 is a
+ * page a search engine will index. Routes return this before rendering.
+ */
+export async function draftGuard(slug: string, staff: boolean): Promise<Response | null> {
+	const data = await readPage(slug);
+	if (data && (data.status === "live" || staff)) return null;
+	return new Response("Not found", { status: 404, headers: { "x-robots-tag": "noindex" } });
 }

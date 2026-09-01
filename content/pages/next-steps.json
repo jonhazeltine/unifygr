@@ -1,0 +1,45 @@
+{
+	"status": "live",
+	"order": 21,
+	"root": {
+		"props": {
+			"title": "Next steps",
+			"kicker": "New Life Grand Rapids",
+			"description": "Your next step at New Life: join a life group, take the membership class, or sign up for an Ambassador Team."
+		}
+	},
+	"content": [
+		{
+			"type": "TapButtons",
+			"props": {
+				"id": "TapButtons-next-steps",
+				"brand": "New Life Grand Rapids",
+				"heading": "Next steps.",
+				"lede": "Pick the one that's yours.",
+				"links": [
+					{
+						"label": "Join a Life Group",
+						"blurb": "A handful of people who will actually know you.",
+						"href": "/connect?interest=group&from=next+steps+page",
+						"feature": "yes"
+					},
+					{
+						"label": "Take the Membership Class",
+						"blurb": "Welcome to New Life \u2014 what we believe and how to belong.",
+						"href": "/membership",
+						"feature": "no"
+					},
+					{
+						"label": "Join an Ambassador Team",
+						"blurb": "Go and serve \u2014 short-term teams carrying the good news out.",
+						"href": "/connect?interest=ambassador&from=next+steps+page",
+						"feature": "no"
+					}
+				],
+				"footLabel": "Everything else at New Life",
+				"footHref": "/"
+			}
+		}
+	],
+	"zones": {}
+}
