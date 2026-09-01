@@ -5,7 +5,7 @@
 		"props": {
 			"title": "Church Ambassador Teams",
 			"kicker": "Change the World",
-			"description": "Short-term teams from New Life Grand Rapids, going to serve alongside Mission of Hope in the Caribbean."
+			"description": "One Sunday a month, a team from New Life worships at another Grand Rapids church, prays for them, and hands over a letter and a gift."
 		}
 	},
 	"content": [
@@ -15,47 +15,73 @@
 				"id": "Hero-amb",
 				"kicker": "Change the World",
 				"heading": "Church Ambassador Teams",
-				"lede": "Short-term teams carrying the good news out — going to serve, and coming back changed."
+				"lede": "One Sunday a month we go and worship at another church in Grand Rapids — not to recruit anyone, and not to fix anything. To pray for them, and to say out loud that we are one Church in this city."
 			}
 		},
 		{
 			"type": "Feature",
 			"props": {
 				"id": "Feature-amb",
-				"eyebrow": "What an Ambassador Team is",
-				"heading": "A team from this church, sent out.",
-				"subline": "Next team: Jarabacoa, Dominican Republic · July 15–22, 2026",
-				"body": "Our vision is to encounter God, be transformed, and change the world. An Ambassador Team is that third part with a plane ticket attached: a group from New Life going somewhere specific, for a week, to serve alongside people already doing the work there.\n\nAsk God whether you should go. Be open to hearing from Him about whether this trip is for you — or prayerfully consider giving so someone else can.",
-				"image": "/uploads/mission-trips-team.jpg",
+				"eyebrow": "Pray & Go",
+				"heading": "We go as guests, not as visitors.",
+				"subline": "The fourth Sunday of the month",
+				"body": "Every month one Grand Rapids church becomes the church we pray for. Our whole congregation prays for them by name, all month. Then on the fourth Sunday a team from New Life shows up at their service, sits in their pews, sings their songs, and worships under their pastor.\n\nWe bring two things with us: a letter telling that church what we have been praying for them, and a gift of $200 toward whatever they are already doing. Then we stay in touch — their pastor is in our prayers long after the Sunday is over.",
+				"image": "/uploads/unify-gr-city.jpg",
 				"video": "",
 				"buttons": [
 					{
-						"label": "Apply to go",
-						"href": "https://newlife.ccbchurch.com/goto/forms/273/responses/new",
+						"label": "Go with a team",
+						"href": "/connect?interest=ambassador&from=ambassador+teams+page",
 						"style": "primary"
-					},
-					{
-						"label": "Give to the team",
-						"href": "https://newlife.ccbchurch.com/goto/forms/339/responses/new",
-						"style": "secondary"
 					}
 				],
 				"facts": [
 					{
-						"label": "Partner",
-						"value": "Mission of Hope"
-					},
-					{
-						"label": "Where",
-						"value": "Jarabacoa, in the mountains of the Dominican Republic"
+						"label": "When",
+						"value": "The fourth Sunday of the month"
 					},
 					{
 						"label": "How long",
-						"value": "7 nights, 8 days"
+						"value": "One service — you are home by lunch"
 					},
 					{
-						"label": "Cost",
-						"value": "About $2,000 — airfare, lodging, food, transfers, and an end-of-trip excursion"
+						"label": "What we bring",
+						"value": "A letter of encouragement and a $200 gift"
+					},
+					{
+						"label": "Who can go",
+						"value": "Anyone. Families, students, first-timers — you are a guest, not a volunteer"
+					}
+				]
+			}
+		},
+		{
+			"type": "Cards",
+			"props": {
+				"id": "Cards-amb-how",
+				"eyebrow": "How a month goes",
+				"title": "Pray first. Then go.",
+				"style": "numbered",
+				"cards": [
+					{
+						"title": "We choose the church",
+						"text": "One church in Grand Rapids, picked a month ahead, and we ask their pastor what they would want prayed for."
+					},
+					{
+						"title": "The whole church prays",
+						"text": "They go up on the screen on Sunday and into the reminders our Dream Team gets all month. You do not have to go to be part of this."
+					},
+					{
+						"title": "A team goes on the fourth Sunday",
+						"text": "We arrive together, worship with them, and let their service be their service."
+					},
+					{
+						"title": "We hand over the letter and the gift",
+						"text": "A written letter of encouragement and $200 toward their work — given to their leader, in person."
+					},
+					{
+						"title": "We stay connected",
+						"text": "Their pastor stays on our prayer list, and their church stays on the map. This is not a one-Sunday relationship."
 					}
 				]
 			}
@@ -63,29 +89,60 @@
 		{
 			"type": "Prose",
 			"props": {
-				"id": "Prose-amb-who",
-				"eyebrow": "Who goes",
-				"title": "Nearly anyone can go.",
-				"body": "Families with young kids, high schoolers, people traveling in their retirement years — we have sent all of them. Mission of Hope takes care of our teams, and each trip is shaped around the people who make it up: medical care, sports ministry, kids clubs, planting fruit trees, painting and construction, visiting orphanages, ministering at churches.\n\nIf you are even slightly interested, start your passport application now. It can take several months, and we can't buy a ticket without one.",
+				"id": "Prose-amb-why",
+				"eyebrow": "Why we do it",
+				"title": "One Body. One witness.",
+				"body": "Two of our five commitments are to unite the Church and to reveal Jesus to this city. Those are easy to agree with and hard to actually do, because doing them means going somewhere that is not ours and being glad about it.\n\nGrand Rapids does not need one more church competing for a Sunday morning. It needs churches that pray for each other by name and can prove it. That is all this is — the vision, with a date on the calendar.",
 				"tinted": true
+			}
+		},
+		{
+			"type": "Cards",
+			"props": {
+				"id": "Cards-amb-schedule",
+				"eyebrow": "Where we're going",
+				"title": "This year's churches.",
+				"style": "simple",
+				"cards": [
+					{
+						"title": "September 27",
+						"text": "Indwelling Community Church"
+					},
+					{
+						"title": "October 25",
+						"text": "Crossroads Bible Church"
+					},
+					{
+						"title": "November 22",
+						"text": "St Alphonsus"
+					},
+					{
+						"title": "January 24",
+						"text": "City Life Grand Rapids"
+					},
+					{
+						"title": "February 28",
+						"text": "Bethlehem Lutheran Church"
+					}
+				]
 			}
 		},
 		{
 			"type": "Callout",
 			"props": {
 				"id": "Callout-amb",
-				"eyebrow": "The next step",
-				"title": "Tell us you're interested.",
-				"body": "Fill out the application and we'll get you the details — or let us know here and someone will follow up.",
+				"eyebrow": "Come with us",
+				"title": "Pick a month.",
+				"body": "Tell us you want to go and we'll let you know which church, when to be there, and what to expect. You can come once or come every month.",
 				"buttons": [
 					{
-						"label": "Mission trip application",
-						"href": "https://newlife.ccbchurch.com/goto/forms/273/responses/new",
+						"label": "Go with a team",
+						"href": "/connect?interest=ambassador&from=ambassador+teams+page",
 						"style": "primary"
 					},
 					{
-						"label": "Just have a question",
-						"href": "/connect?interest=ambassador&from=ambassador+teams+page",
+						"label": "See the churches of Grand Rapids",
+						"href": "https://thechurchmap.com/grandrapids",
 						"style": "secondary"
 					}
 				]
