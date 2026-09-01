@@ -59,6 +59,30 @@ request time (`src/lib/youtube.ts`), edge-cached 5 minutes, so new services
 appear on their own. The `sermons` list in `content/site.json` is only the
 offline fallback and a place to override a video's title/tag by ID.
 
+## CCB is the CRM. Planning Center is the scheduler.
+
+People enter through the CRM, never through the scheduler. A Connect Card
+submission creates or matches the person in **CCB**, drops them in a CCB
+follow-up queue, and opens an Asana task. A human works that queue. Only after
+they approve does anyone get hand-added to a **Planning Center** team, by that
+team's leader, and then scheduled onto dates.
+
+**The website must never write to Planning Center.** The API would allow it —
+posting to a PCO Form creates a person and opens a workflow card — and doing so
+would put someone in the scheduler who does not exist in the CRM. That is the
+thing this church has deliberately avoided. Planning Center is read-only from
+here: we look at rosters and plans, we never create them. (Its Services API is
+read-only through our connection anyway, but the rule is the reason, not the
+limitation.)
+
+As of 2026-09-01 Planning Center has **no Forms and no Workflows at all** —
+every approval queue lives in CCB. Don't propose moving approvals to Planning
+Center without saying that out loud first.
+
+The weak link is the hand-add after approval, so `Interest.scheduler` in
+`src/lib/connect/routing.ts` names the Planning Center team each interest ends
+up on, and the Asana task spells the step out.
+
 ## Rules
 
 - **All imagery follows `AI_ART_DIRECTION.md`** — one visual language

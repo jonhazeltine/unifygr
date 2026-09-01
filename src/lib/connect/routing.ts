@@ -3,6 +3,19 @@
 // Every interest maps to a real CCB follow-up queue (verified against the live
 // CCB account) and to the wording staff will see on the Asana task. Queue ids
 // are stable in CCB; if a queue is ever renamed the id keeps working.
+//
+// THE ORDER MATTERS. CCB is the CRM; Planning Center is the scheduler. Nobody
+// enters through the scheduler. A person arrives here, lands in CCB, is worked
+// by a human in a CCB queue, and only then is added to a Planning Center team
+// — by hand, by that team's leader. The website never writes to Planning
+// Center, and it never should: doing so would create a person there who does
+// not exist in the CRM.
+//
+// `scheduler` is what makes that handoff visible. It rides along on the Asana
+// task so whoever approves someone reads the next step instead of remembering
+// it. That step is where people fall on the floor: the Ambassador team has an
+// empty rota through next February while the grocery rota, seeded by hand in
+// January, has seventeen people on it.
 
 export type Interest = {
 	/** value stored on the submission */
@@ -17,6 +30,11 @@ export type Interest = {
 	action: string;
 	/** days from submission for the Asana due date */
 	dueInDays: number;
+	/**
+	 * The Planning Center team this person joins AFTER staff approve them in
+	 * CCB, written out for the Asana task. Omitted where no team exists yet.
+	 */
+	scheduler?: { team: string; serviceType: string };
 };
 
 export const INTERESTS: Interest[] = [
@@ -79,6 +97,7 @@ export const INTERESTS: Interest[] = [
 		queueId: 111, // Interested in Serving
 		action: "Ambassador Team interest",
 		dueInDays: 5,
+		scheduler: { team: "Ambassador Team", serviceType: "Church Ambassador Teams" },
 	},
 	{
 		id: "missions",
@@ -87,6 +106,7 @@ export const INTERESTS: Interest[] = [
 		queueId: 111, // Interested in Serving
 		action: "Missions Team interest",
 		dueInDays: 5,
+		// No Planning Center team — a trip roster is not a Sunday rota.
 	},
 	{
 		id: "outreach",
@@ -95,6 +115,7 @@ export const INTERESTS: Interest[] = [
 		queueId: 111, // Interested in Serving
 		action: "Outreach Team interest",
 		dueInDays: 5,
+		scheduler: { team: "Grocery Deliveries", serviceType: "Hospitality & Connections" },
 	},
 	{
 		id: "group",
