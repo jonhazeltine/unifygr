@@ -5,6 +5,12 @@
   "compatibility_date": "2026-09-08",
   "compatibility_flags": ["nodejs_compat"],
   "keep_vars": true,
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [
+    { "pattern": "unifygr.com", "custom_domain": true },
+    { "pattern": "www.unifygr.com", "custom_domain": true }
+  ],
   "secrets": {
     "required": [
       "ANTHROPIC_API_KEY",
