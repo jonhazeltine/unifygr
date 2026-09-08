@@ -354,6 +354,7 @@ export const prerender = false;
 			// The ministry directory — Mel Trotter, Guiding Light, Celebrate Recovery.
 			// These carry no events; their switch decides whether we list them at all.
 			let orgs: DirectoryOrg[] = [];
+			let orgVersion = "seed";
 			type OrgEdit = { listed?: boolean; confirmed?: boolean };
 			let orgEdits = new Map<string, OrgEdit>();
 			// Churches and organisations answer different questions, so the list can be
@@ -1303,9 +1304,10 @@ export const prerender = false;
 					if (orgEdits.size) {
 						const res = await api("/api/partners/orgs", {
 							method: "PUT",
-							body: JSON.stringify({ changes: Object.fromEntries(orgEdits) }),
-						});
-						orgs = res.orgs;
+						body: JSON.stringify({ changes: Object.fromEntries(orgEdits), version: orgVersion }),
+					});
+					orgs = res.orgs;
+					orgVersion = res.version || orgVersion;
 						orgEdits = new Map();
 						show(
 							"Church changes are live. The ministry list is part of the site, so those go live in a minute or two.",
@@ -1354,7 +1356,9 @@ export const prerender = false;
 					show(err.message);
 				}
 				try {
-					orgs = (await api("/api/partners/orgs")).orgs;
+					const directory = await api("/api/partners/orgs");
+					orgs = directory.orgs;
+					orgVersion = directory.version || "seed";
 				} catch (err: any) {
 					show(err.message);
 				}

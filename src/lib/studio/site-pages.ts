@@ -7,7 +7,9 @@
 // titles come from a friendly map, with a prettified fallback.
 
 // Keys look like "../../pages/visit.astro".
-const PAGE_FILES = Object.keys(import.meta.glob("../../pages/*.astro"));
+const PAGE_FILES = typeof import.meta.glob === "function"
+	? Object.keys(import.meta.glob("../../pages/*.astro"))
+	: [];
 
 // Routes that aren't public content pages — plus pages that have been
 // "blockified" (mounted builder pages), which list as builder pages instead.

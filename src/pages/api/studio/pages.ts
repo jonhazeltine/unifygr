@@ -13,6 +13,7 @@ import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { listPages, readPageState, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
 import { listHandBuiltPages } from "../../../lib/studio/site-pages";
+import { ContentConflict } from "../../../lib/studio/runtime-content";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -41,14 +42,14 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 		}
 		if (body?.data) {
 			const res = await writePage(body.slug, body.data, undefined, body?.version, locals);
-			return json({ ok: true, data: res.data, via: res.via });
+			return json({ ok: true, data: res.data, via: res.via, version: res.version });
 		}
 		if (body?.status || body?.order != null) {
 			const res = await updatePageMeta(body.slug, { status: body.status, order: body.order }, body?.version, locals);
-			return json({ ok: true, data: res.data, via: res.via });
+			return json({ ok: true, data: res.data, via: res.via, version: res.version });
 		}
 		return json({ ok: false, error: "Nothing to do." }, 400);
 	} catch (err) {
-		return json({ ok: false, error: (err as Error).message }, 400);
+		return json({ ok: false, error: (err as Error).message }, err instanceof ContentConflict ? 409 : 400);
 	}
 };

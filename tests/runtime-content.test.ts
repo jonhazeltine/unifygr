@@ -14,7 +14,8 @@ import {
 	readPage,
 	writePage,
 } from "../src/lib/studio/pages.ts";
-import { publicBuilderLink } from "../src/lib/studio/page-links.ts";
+import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
+import { validateImageBytes } from "../src/lib/studio/media.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -40,6 +41,24 @@ function memoryBlob() {
 }
 
 const locals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+
+async function authedCookies() {
+	process.env.STUDIO_PASSCODE = "runtime-content-test";
+	const { grant } = await import("../src/lib/studio/auth.ts");
+	let value = "";
+	grant({ set: (_key: string, next: string) => { value = next; } } as any);
+	return { get: () => ({ value }) } as any;
+}
+
+async function studioPost(path: string, payload: unknown, cookies: any) {
+	const module = await import(path);
+	const response = await module.POST({
+		request: new Request(`https://example.test${path}`, { method: "POST", body: JSON.stringify(payload) }),
+		cookies,
+		locals,
+	} as any);
+	return { status: response.status, body: await response.json() };
+}
 
 test("concurrent publishes from one version allow exactly one pointer update", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
@@ -89,6 +108,16 @@ test("an existing runtime index does not hide a newly bundled seed page", async 
 	assert.deepEqual(new Set((await listPages(locals)).map((entry) => entry.slug)), new Set(["new-seed", "old", "runtime"]));
 });
 
+test("concurrent new pages merge into the runtime index", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({});
+	await Promise.all([
+		writePage("first-page", page("draft", "First"), undefined, "seed", locals),
+		writePage("second-page", page("draft", "Second"), undefined, "seed", locals),
+	]);
+	assert.deepEqual(new Set((await listPages(locals)).map((entry) => entry.slug)), new Set(["first-page", "second-page"]));
+});
+
 test("directory links follow the live runtime page status", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
 	__setBundledPagesForTests({ "/content/pages/partner.json": page("draft", "Partner") });
@@ -100,6 +129,47 @@ test("directory links follow the live runtime page status", async () => {
 	await writePage("partner", partner, { status: "live" }, "seed", locals);
 	statuses = new Map((await listPages(locals)).map((listing) => [listing.slug, listing.status] as const));
 	assert.equal(publicBuilderLink(entry, statuses), "/partner");
+	assert.equal(publicBuilderDetailLink(entry, statuses), "/partner");
+	const liveVersion = (await listPages(locals)).find((listing) => listing.slug === "partner")!.version;
+	await writePage("partner", partner, { status: "draft" }, liveVersion, locals);
+	statuses = new Map((await listPages(locals)).map((listing) => [listing.slug, listing.status] as const));
+	assert.equal(publicBuilderDetailLink(entry, statuses), undefined);
+	assert.equal(publicBuilderDetailLink(entry, statuses, true), undefined);
+});
+
+test("nav API returns a fresh version for the next save and rejects a stale client", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const cookies = await authedCookies();
+	const first = await studioPost("../src/pages/api/studio/nav.ts", { nav: { groups: [], cta: { label: "One", href: "/" } }, version: "seed" }, cookies);
+	assert.equal(first.status, 200);
+	assert.equal(typeof first.body.version, "string");
+	const second = await studioPost("../src/pages/api/studio/nav.ts", { nav: { groups: [], cta: { label: "Two", href: "/" } }, version: first.body.version }, cookies);
+	assert.equal(second.status, 200);
+	assert.notEqual(second.body.version, first.body.version);
+	const stale = await studioPost("../src/pages/api/studio/nav.ts", { nav: { groups: [], cta: { label: "Old", href: "/" } }, version: "seed" }, cookies);
+	assert.equal(stale.status, 409);
+});
+
+test("page API returns a fresh version for content and metadata saves", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({});
+	const cookies = await authedCookies();
+	const first = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", data: page("draft", "One"), version: "seed", create: true }, cookies);
+	assert.equal(first.status, 200);
+	assert.equal(typeof first.body.version, "string");
+	const second = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", data: page("draft", "Two"), version: first.body.version }, cookies);
+	assert.equal(second.status, 200);
+	assert.equal(typeof second.body.version, "string");
+	const meta = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "live", version: second.body.version }, cookies);
+	assert.equal(meta.status, 200);
+	assert.equal(meta.body.data.status, "live");
+	const stale = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "draft", version: first.body.version }, cookies);
+	assert.equal(stale.status, 409);
+});
+
+test("media accepts only bytes that match its fixed response image type", () => {
+	assert.equal(validateImageBytes("photo.png", new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])), "image/png");
+	assert.throws(() => validateImageBytes("active.png", new TextEncoder().encode("<svg onload=alert(1)>")));
 });
 
 test.after(() => {

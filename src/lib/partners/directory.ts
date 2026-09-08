@@ -1,121 +1,64 @@
-// Reading and writing the ministry directory's listing switches.
-//
-// The directory is content, not settings: it lives in content/ministries.json
-// alongside everything else the site is built from, and every page that lists a
-// ministry already asks isListable(). So the switch lives on the entry itself,
-// as `listed`, and nothing downstream had to change.
-//
-// That also means a change here goes live the way any content change does — a
-// commit to main and a rebuild, a minute or two — rather than instantly like a
-// church switch. Different things, honestly different speeds. The panel says so.
-//
-// Organisations carry no events: nothing in the site reads their calendar feeds
-// and most publish none. Their switch decides whether we list them at all.
+// Runtime-only switches for the public ministry directory. Repository JSON is
+// the seed; staff changes stay in Blob so routine curation does not deploy.
+import directoryJson from "../../../content/ministries.json";
+import { ContentConflict, publish, readPublished, type RuntimeLocals } from "../studio/runtime-content";
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { commitToMain } from "../studio/github";
+const KEY = "partners/directory-overrides.json";
+type Entry = Record<string, any>;
 
-const FILE = "content/ministries.json";
-
-export type DirectoryOrg = {
-	slug: string;
-	name: string;
-	summary: string;
-	city: string | null;
-	area: string | null;
-	categories: string[];
-	/** whether this entry is one someone can turn up to, or reference-only */
-	offering: boolean;
-	/** a human at New Life has confirmed it */
-	confirmed: boolean;
-	listed: boolean;
-};
-
-function filePath(): string {
-	return path.join(process.cwd(), FILE);
-}
-
-async function readRaw(): Promise<string> {
-	return fs.readFile(filePath(), "utf8");
-}
-
-/** True when a ministry is somewhere a person could actually go. */
-function isOffering(e: any): boolean {
-	return Boolean(
-		e.house === "in" ||
-			e.handoff ||
-			e.rhythm ||
-			e.address ||
-			e.calendar?.format === "ics" ||
-			e.calendar?.format === "watched",
-	);
-}
-
-export async function readOrgs(): Promise<DirectoryOrg[]> {
-	const doc = JSON.parse(await readRaw());
-	return (doc.entries as any[])
-		.filter((e) => e.house === "out" && e.status !== "no-details")
-		.map((e) => ({
-			slug: e.slug,
-			name: e.name,
-			summary: e.summary || "",
-			city: e.city ?? null,
-			area: e.area ?? null,
-			categories: e.categories || [],
-			offering: isOffering(e),
-			confirmed: e.status === "live",
-			listed: e.listed !== false,
-		}))
-		.sort((a, b) => a.name.localeCompare(b.name));
-}
-
+export type DirectoryOrg = { slug: string; name: string; summary: string; city: string | null; area: string | null; categories: string[]; offering: boolean; confirmed: boolean; listed: boolean };
 export type OrgChange = { listed?: boolean; confirmed?: boolean };
+export type DirectoryState = { orgs: DirectoryOrg[]; version: string };
 
-/**
- * Apply changes. Only entries whose value actually differs are touched, and
- * `listed: true` is written as an absent key so the file stays as it reads — an
- * entry is listed unless we have said otherwise.
- *
- * Confirmed is the directory's own `status`: the file has always said an
- * out-of-house entry sits at "proposed" until a person at New Life confirms it.
- * That was true and unreachable. The star sets it.
- */
-export async function writeOrgs(changes: Record<string, OrgChange>): Promise<number> {
-	const raw = await readRaw();
-	const doc = JSON.parse(raw);
-	let touched = 0;
-	for (const entry of doc.entries as any[]) {
+function isOffering(entry: any): boolean {
+	return Boolean(entry.house === "in" || entry.handoff || entry.rhythm || entry.address || entry.calendar?.format === "ics" || entry.calendar?.format === "watched");
+}
+
+function apply(entries: Entry[], changes: Record<string, OrgChange>): Entry[] {
+	return entries.map((entry) => {
 		const change = changes[entry.slug];
-		if (!change) continue;
-		let moved = false;
-		if (change.listed !== undefined) {
-			const now = entry.listed !== false;
-			if (change.listed !== now) {
-				if (change.listed) delete entry.listed;
-				else entry.listed = false;
-				moved = true;
-			}
-		}
-		if (change.confirmed !== undefined) {
-			const now = entry.status === "live";
-			if (change.confirmed !== now) {
-				entry.status = change.confirmed ? "live" : "proposed";
-				moved = true;
-			}
-		}
-		if (moved) touched++;
-	}
-	if (!touched) return 0;
+		if (!change) return entry;
+		return { ...entry, ...(change.listed === undefined ? {} : { listed: change.listed }), ...(change.confirmed === undefined ? {} : { status: change.confirmed ? "live" : "proposed" }) };
+	});
+}
 
-	const body = JSON.stringify(doc, null, "\t") + "\n";
-	if (process.env.GITHUB_TOKEN) {
-		await commitToMain(
-			[{ path: FILE, content: body }],
-			`content(ministries): ${touched} ${touched === 1 ? "change" : "changes"} from the partners panel`,
-		);
-	} else {
-		await fs.writeFile(filePath(), body, "utf8");
+export async function runtimeDirectoryEntries(locals?: RuntimeLocals): Promise<Entry[]> {
+	const stored = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
+	return apply(directoryJson.entries, stored.value);
+}
+
+function orgs(entries: Entry[]): DirectoryOrg[] {
+	return entries.filter((entry) => entry.house === "out" && entry.status !== "no-details").map((entry) => ({
+		slug: entry.slug, name: entry.name, summary: entry.summary || "", city: entry.city ?? null, area: entry.area ?? null,
+		categories: entry.categories || [], offering: isOffering(entry), confirmed: entry.status === "live", listed: entry.listed !== false,
+	})).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export async function readOrgs(locals?: RuntimeLocals): Promise<DirectoryState> {
+	const stored = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
+	return { orgs: orgs(apply(directoryJson.entries, stored.value)), version: stored.version };
+}
+
+export async function writeOrgs(changes: Record<string, OrgChange>, expectedVersion?: string, locals?: RuntimeLocals): Promise<{ touched: number; version: string }> {
+	const current = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
+	if (!expectedVersion || expectedVersion !== current.version) throw new ContentConflict();
+	const before = apply(directoryJson.entries, current.value);
+	const next = structuredClone(current.value);
+	let touched = 0;
+	for (const seed of directoryJson.entries as Entry[]) {
+		const change = changes[seed.slug];
+		if (!change || seed.house !== "out") continue;
+		const was = before.find((entry) => entry.slug === seed.slug)!;
+		const listed = change.listed ?? (was.listed !== false);
+		const confirmed = change.confirmed ?? (was.status === "live");
+		if (listed !== (was.listed !== false) || confirmed !== (was.status === "live")) touched++;
+		const override: OrgChange = {};
+		if (listed !== (seed.listed !== false)) override.listed = listed;
+		if (confirmed !== (seed.status === "live")) override.confirmed = confirmed;
+		if (Object.keys(override).length) next[seed.slug] = override;
+		else delete next[seed.slug];
 	}
-	return touched;
+	if (!touched) return { touched: 0, version: current.version };
+	const saved = await publish(KEY, next, {}, current.version, locals);
+	return { touched, version: saved.version };
 }

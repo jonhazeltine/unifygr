@@ -8,16 +8,16 @@ export const prerender = false;
 const json = (body: unknown, status = 200) =>
 	new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 
-export const GET: APIRoute = async ({ cookies }) => {
+export const GET: APIRoute = async ({ cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Sign in first." }, 401);
 	try {
-		return json({ orgs: await readOrgs() });
+		return json(await readOrgs(locals));
 	} catch (err: any) {
 		return json({ error: `Couldn't read the directory: ${err?.message || "no reason given"}` }, 500);
 	}
 };
 
-export const PUT: APIRoute = async ({ request, cookies }) => {
+export const PUT: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Sign in first." }, 401);
 	let body: any;
 	try {
@@ -28,8 +28,8 @@ export const PUT: APIRoute = async ({ request, cookies }) => {
 	if (!body || typeof body.changes !== "object" || body.changes === null)
 		return json({ error: "That save didn't arrive in one piece. Try again." }, 400);
 	try {
-		const touched = await writeOrgs(body.changes as Record<string, OrgChange>);
-		return json({ touched, orgs: await readOrgs() });
+		const saved = await writeOrgs(body.changes as Record<string, OrgChange>, body.version, locals);
+		return json({ ...saved, ...(await readOrgs(locals)) });
 	} catch (err: any) {
 		return json({ error: `Couldn't save: ${err?.message || "no reason given"}` }, 500);
 	}

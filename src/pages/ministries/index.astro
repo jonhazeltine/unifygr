@@ -1,7 +1,7 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import SignatureCard from "../../components/SignatureCard.astro";
-import { listPages } from "../../lib/studio/pages";
+import { listPages, readPageState } from "../../lib/studio/pages";
 import { publicBuilderLink } from "../../lib/studio/page-links";
 
 export const prerender = false;
@@ -9,21 +9,28 @@ import {
 	allFamiliesIncludingSpecialised,
 	families,
 	standard,
-	counts,
-	outOfHouse,
-	inHouse,
-	familyCount,
 	familyImage,
 	familyCalendarCount,
-	withLiveCalendar,
 	isOffering,
 	isListable,
-	entriesInFamily,
 	sortEntries,
 } from "../../data/ministries";
 import { pillars } from "../../data/site";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
-const live = withLiveCalendar();
+const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const inHouse = runtimeEntries.filter((entry) => entry.house === "in");
+const outOfHouse = runtimeEntries.filter((entry) => entry.house === "out");
+const live = sortEntries(runtimeEntries.filter((entry) => entry.calendar?.sync === "available" || entry.calendar?.sync === "page-current"));
+const entriesInFamily = (slug: string) => {
+	const family = allFamiliesIncludingSpecialised.find((candidate) => candidate.slug === slug);
+	const categories = new Set(family ? family.categories.map((category) => category.slug) : []);
+	return runtimeEntries.filter((entry) => entry.categories.some((category) => categories.has(category)) && isListable(entry));
+};
+const familyCount = (slug: string) => entriesInFamily(slug).filter(isOffering).length;
+const listedOfferings = outOfHouse.filter((entry) => isOffering(entry) && isListable(entry));
+const awaitingVerification = outOfHouse.filter((entry) => entry.status !== "live" && isListable(entry)).length;
+const uncovered = allFamiliesIncludingSpecialised.flatMap((family) => family.categories).filter((category) => !runtimeEntries.some((entry) => entry.categories.includes(category.slug) && isListable(entry))).length;
 
 // Our signature ministries, signature tier first. These open the page on their
 // own, no curated
@@ -77,8 +84,13 @@ const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-
 // ministry's own page until the fuller one is published, and picks the better
 // link up on its own the day it is.
 const pageStatus = new Map((await listPages(Astro.locals)).map((page) => [page.slug, page.status] as const));
+const linkedSlugs = [...new Set(outOfHouse.map((entry) => entry.href?.startsWith("/") ? entry.href.replace(/^\//, "") : "").filter(Boolean))];
+const removedBuilderPages = new Set((await Promise.all(linkedSlugs.map(async (slug) =>
+	(await readPageState(slug, Astro.locals)) === null ? slug : null,
+))).filter((slug): slug is string => Boolean(slug)));
 function linkFor(entry: { slug: string; href?: string | null }): string {
-	return publicBuilderLink(entry, pageStatus);
+	const slug = entry.href?.replace(/^\//, "") ?? "";
+	return publicBuilderLink(entry, pageStatus, removedBuilderPages.has(slug));
 }
 
 const curatedByFamily = allFamiliesIncludingSpecialised
@@ -177,7 +189,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				<p>
 					We went looking for the best of it. The deepest discipleship, the strongest care, the
 					challenge that will actually stretch you, and the group where your daughter will be
-					known by name. We found {counts.outOfHouse} of them, run by {curatedHosts} churches
+					known by name. We found {listedOfferings.length} of them, run by {curatedHosts} churches
 					and ministries across {curatedTowns} towns.
 				</p>
 				<p>
@@ -267,9 +279,9 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 			</div>
 			<div class="min-note reveal is-visible">
 				<p>
-					<strong>Where this stands.</strong> {counts.outOfHouse} ministries are listed and
-					{" "}{counts.awaitingVerification} are still waiting on a conversation with someone here, which
-					their cards say plainly. {counts.uncovered} categories have nobody in them yet. If you lead
+					<strong>Where this stands.</strong> {listedOfferings.length} ministries are listed and
+					{" "}{awaitingVerification} are still waiting on a conversation with someone here, which
+					their cards say plainly. {uncovered} categories have nobody in them yet. If you lead
 					one of these ministries, or know one we are missing, tell us.
 				</p>
 				<a class="button button--secondary" href="/connect">

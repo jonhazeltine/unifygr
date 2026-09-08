@@ -1,5 +1,7 @@
 ---
 import Interior from "../../layouts/Interior.astro";
+import { listPages, readPageState } from "../../lib/studio/pages";
+import { publicBuilderDetailLink } from "../../lib/studio/page-links";
 
 export const prerender = false;
 import MinistryCard from "../../components/MinistryCard.astro";
@@ -36,6 +38,12 @@ for (const slug of entry.categories) {
 
 const primary = cats[0];
 const kicker = inHouse ? "Signature Ministry" : "Curated Ministry";
+const pageStatuses = new Map((await listPages(Astro.locals)).map((page) => [page.slug, page.status] as const));
+const linkedSlug = entry.href?.startsWith("/") ? entry.href.replace(/^\//, "") : "";
+// A tombstoned page is not present in the list. Its direct reader result makes
+// that distinction so an old ministry reference cannot expose a dead target.
+const removedBuilderTarget = Boolean(linkedSlug) && (await readPageState(linkedSlug, Astro.locals)) === null;
+const learnMore = publicBuilderDetailLink(entry, pageStatuses, removedBuilderTarget);
 ---
 
 <Interior
@@ -100,7 +108,7 @@ const kicker = inHouse ? "Signature Ministry" : "Curated Ministry";
 					)}
 				</dl>
 				<div class="min-actions">
-					{entry.href && <a class="button button--primary" href={entry.href}>Learn more</a>}
+					{learnMore && <a class="button button--primary" href={learnMore}>Learn more</a>}
 					{entry.website && (
 						<a class="button button--secondary" href={entry.website} target="_blank" rel="noopener">
 							Visit their site

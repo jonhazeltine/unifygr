@@ -14,7 +14,7 @@
 //    bundle; writes commit to GitHub via commitToMain(), and Vercel's rebuild
 //    makes them live a minute or two later.
 
-import { publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
+import { ContentConflict, publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
 // The guard also lets the storage behavior run in the node:test suite, where
@@ -111,6 +111,24 @@ function bundledSlugs(): string[] {
 }
 const keyFor = (slug: string) => `studio/pages/${slug}/published.json`;
 
+async function updatePageIndex(
+	change: (slugs: string[]) => string[],
+	locals?: RuntimeLocals,
+): Promise<void> {
+	const seeds = bundledSlugs();
+	for (let attempt = 0; attempt < 5; attempt++) {
+		const index = await readPublished("studio/pages/index.json", seeds, locals);
+		const next = change(index.value);
+		if (next.length === index.value.length && next.every((slug, i) => slug === index.value[i])) return;
+		try {
+			await publish("studio/pages/index.json", next, seeds, index.version, locals);
+			return;
+		} catch (error) {
+			if (!(error instanceof ContentConflict) || attempt === 4) throw error;
+		}
+	}
+}
+
 export type PageListing = {
 	slug: string;
 	title: string;
@@ -196,9 +214,7 @@ export async function writePage(
 	});
 	const current = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
 	const saved = await publish(keyFor(slug), clean, bundled, expectedVersion ?? current.version, locals);
-	const seeds = bundledSlugs();
-	const index = await readPublished("studio/pages/index.json", seeds, locals);
-	if (!index.value.includes(slug)) await publish("studio/pages/index.json", [...index.value, slug], seeds, index.version, locals);
+	await updatePageIndex((slugs) => slugs.includes(slug) ? slugs : [...slugs, slug], locals);
 	return { data: clean, via: "runtime", version: saved.version };
 }
 
@@ -218,9 +234,7 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	await publish<PageData | null>(keyFor(slug), null, bundled, current.version, locals);
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
-	const seeds = bundledSlugs();
-	const index = await readPublished("studio/pages/index.json", seeds, locals);
-	await publish("studio/pages/index.json", index.value.filter((entry) => entry !== slug), seeds, index.version, locals);
+	await updatePageIndex((entries) => entries.filter((entry) => entry !== slug), locals);
 	return { via: "runtime" };
 }
 

@@ -5,6 +5,7 @@ export const prerender = false;
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { readNavState, writeNav } from "../../../lib/studio/nav";
+import { ContentConflict } from "../../../lib/studio/runtime-content";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -20,8 +21,8 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	try {
 		if (typeof body?.version !== "string") return json({ ok: false, error: "Refresh the menu before saving." }, 409);
 		const res = await writeNav(body?.nav, body.version, locals);
-		return json({ ok: true, nav: res.nav, via: res.via });
+		return json({ ok: true, nav: res.nav, via: res.via, version: res.version });
 	} catch (err) {
-		return json({ ok: false, error: (err as Error).message }, 400);
+		return json({ ok: false, error: (err as Error).message }, err instanceof ContentConflict ? 409 : 400);
 	}
 };
