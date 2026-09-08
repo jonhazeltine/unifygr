@@ -239,14 +239,25 @@ export function familyCount(familySlug: string): number {
  * can carry. If nobody does, it moves to the shelf. That maintains itself: as
  * curation fills an area, it comes back on its own.
  */
-export const specialisedFamilies = new Set<string>(
-	allFamilies
-		.filter((f) => forced.has(f.slug) || familyCount(f.slug) === 0)
-		.map((f) => f.slug),
-);
+export function classifyFamilies(currentEntries: Entry[]) {
+	const count = (family: Family) => {
+		const categories = new Set(family.categories.map((category) => category.slug));
+		return currentEntries.filter((entry) => isListable(entry) && isOffering(entry) && entry.categories.some((category) => categories.has(category))).length;
+	};
+	const specialisedFamilies = new Set<string>(
+		allFamilies.filter((family) => forced.has(family.slug) || count(family) === 0).map((family) => family.slug),
+	);
+	return {
+		families: allFamilies.filter((family) => !specialisedFamilies.has(family.slug)),
+		specialisedFamilies,
+	};
+}
+
+const seedClassification = classifyFamilies(entries);
+export const specialisedFamilies = seedClassification.specialisedFamilies;
 
 /** The families someone browses. */
-export const families: Family[] = allFamilies.filter((f) => !specialisedFamilies.has(f.slug));
+export const families: Family[] = seedClassification.families;
 
 /**
  * Whether a ministry belongs on the page as somewhere to go.

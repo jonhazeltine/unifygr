@@ -7,6 +7,7 @@ import { readContent } from "../lib/studio/store";
 
 function churchFor(content: any) {
 const c = content.church;
+const address = [c.street, c.city, c.state, c.zip].filter(Boolean).join(", ");
 
 // Editable basics come from content/site.json (edited in the Studio).
 // Technical links (socials, CCB, giving, calendar) stay in code.
@@ -24,7 +25,7 @@ return {
 	phone: c.phone,
 	email: c.email,
 	mapUrl:
-		"https://www.google.com/maps/place/2777+Knapp+St+NE,+Grand+Rapids,+MI+49525",
+		`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
 	social: {
 		facebook: "https://www.facebook.com/NewLifeGr",
 		instagram: "https://www.instagram.com/newlifegr/",

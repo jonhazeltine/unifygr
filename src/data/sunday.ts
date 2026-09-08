@@ -5,17 +5,25 @@
 // because the person finds out standing in the lobby.
 
 export const service = {
-	day: "Sunday",
-	time: "10am",
-	/** Used wherever the answer has to fit on one line. */
-	shortWhen: "Sundays at 10am",
 	length: "About 90 minutes",
-	street: "2777 Knapp St NE",
-	city: "Grand Rapids",
-	state: "MI",
-	zip: "49525",
 	area: "Knapp's Corner",
 };
+
+type ChurchVisit = {
+	serviceTime: string;
+	address: { street: string; city: string; state: string; zip: string };
+};
+
+/** Combine live Studio fields with the visit details that are not editable. */
+export function serviceForChurch(church: ChurchVisit) {
+	return { ...service, shortWhen: church.serviceTime, ...church.address };
+}
+
+/** Split the configured service time for the large two-line home heading. */
+export function serviceTimeHeading(serviceTime: string): { lead: string; emphasis: string } {
+	const match = serviceTime.trim().match(/^(.*?)\s+(at\s+.+)$/i);
+	return match ? { lead: match[1], emphasis: match[2] } : { lead: serviceTime, emphasis: "" };
+}
 
 /** The questions people actually ask, in the order they ask them. */
 export const answers = [
@@ -50,6 +58,15 @@ export const answers = [
 		key: false,
 	},
 ];
+
+export function answersForChurch(church: ChurchVisit) {
+	const visit = serviceForChurch(church);
+	return answers.map((answer) => {
+		if (answer.q === "When is it?") return { ...answer, a: `${visit.shortWhen}. One service. Plan on ${visit.length.toLowerCase()}.` };
+		if (answer.q === "Where is it?") return { ...answer, a: `${visit.street}, ${visit.city}, ${visit.state} ${visit.zip} — out at ${visit.area}.` };
+		return answer;
+	});
+}
 
 /** Two sentences on who these people are — for someone who will not read an essay. */
 export const identity = {

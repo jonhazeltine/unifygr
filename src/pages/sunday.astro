@@ -1,14 +1,16 @@
 ---
 import Site from "../layouts/Site.astro";
 import { runtimeSite } from "../data/site";
-import { service, answers } from "../data/sunday";
+import { answersForChurch, serviceForChurch } from "../data/sunday";
 
 export const prerender = false;
 const { church } = await runtimeSite(Astro.locals);
+const service = serviceForChurch(church);
+const answers = answersForChurch(church);
 ---
 
 <Site
-	title="A Sunday at New Life — 10am, 2777 Knapp St NE"
+	title={`A Sunday at ${church.shortName || church.name} — ${church.serviceTime}, ${church.address.street}`}
 	description="When we meet, where to find us, what to wear, what happens with your kids, and what actually happens in the service."
 >
 	<section class="pagehead">

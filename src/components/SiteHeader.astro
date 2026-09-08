@@ -1,16 +1,20 @@
 ---
 import { readNav } from "../lib/studio/nav";
-import { service } from "../data/sunday";
+import { runtimeSite } from "../data/site";
+import { serviceForChurch } from "../data/sunday";
 
 interface Props {
 	/** Where the wordmark points. */
 	brandHref?: string;
+	church?: Awaited<ReturnType<typeof runtimeSite>>["church"];
 }
 
-const { brandHref = "/" } = Astro.props;
+const { brandHref = "/", church: suppliedChurch } = Astro.props;
 
 // The menus are content (content/nav.json), editable in the Page Builder.
 const nav = await readNav(Astro.locals);
+const church = suppliedChurch ?? (await runtimeSite(Astro.locals)).church;
+const service = serviceForChurch(church);
 ---
 
 <header class="chrome">

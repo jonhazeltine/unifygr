@@ -1,8 +1,8 @@
 import type { APIRoute } from "astro";
 import {
   allFamiliesIncludingSpecialised as families,
-  entries,
 } from "../data/ministries";
+import { runtimeDirectoryEntries } from "../lib/partners/directory";
 import { pillars } from "../data/site";
 import { publicPaths, sitemapXml } from "../lib/discovery";
 import { publicSiteUrl } from "../lib/public-site";
@@ -12,6 +12,10 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ locals }) => {
   const pages = await listPages(locals);
+  const entries = (await runtimeDirectoryEntries(locals)).map((entry) => ({
+    slug: String(entry.slug),
+    listed: entry.listed !== false,
+  }));
   const body = sitemapXml(
     publicSiteUrl(),
     publicPaths({ pillars, families, entries, pages }),

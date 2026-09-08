@@ -1,11 +1,14 @@
 ---
 import Site from "../layouts/Site.astro";
 import { runtimeSite } from "../data/site";
-import { service, answers, identity } from "../data/sunday";
+import { answersForChurch, identity, serviceForChurch, serviceTimeHeading } from "../data/sunday";
 
 export const prerender = false;
 
 const { church, sermons } = await runtimeSite(Astro.locals);
+const service = serviceForChurch(church);
+const answers = answersForChurch(church);
+const serviceHeading = serviceTimeHeading(church.serviceTime);
 
 // The hero already gives the when and the where, so this list picks up at the
 // next thing a stranger wants to know. Everything else is one tap away.
@@ -24,8 +27,8 @@ const vision = [
 ---
 
 <Site
-	title="New Life Grand Rapids — Sundays at 10am"
-	description="A church at 2777 Knapp St NE in Grand Rapids. Sundays at 10am, about 90 minutes, kids welcome, come as you are."
+	title={`${church.name} — ${church.serviceTime}`}
+	description={`A church at ${church.address.street} in ${church.address.city}. ${church.serviceTime}, about 90 minutes, kids welcome, come as you are.`}
 >
 	<section class="opener">
 		<!-- An optimized frame from the existing worship ambient keeps the original
@@ -37,7 +40,7 @@ const vision = [
 			<p class="opener__id">New Life — a church in Grand Rapids, built around Jesus.</p>
 
 			<h1 class="opener__when">
-				Sundays<br /><em>at 10am</em>
+				{serviceHeading.lead}{serviceHeading.emphasis && <><br /><em>{serviceHeading.emphasis}</em></>}
 			</h1>
 
 			<p class="opener__where">

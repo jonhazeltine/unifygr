@@ -4,11 +4,12 @@
 // category pages stay clean for what someone can actually attend; this is the
 // reference shelf behind them.
 import Interior from "../../layouts/Interior.astro";
-import { allFamiliesIncludingSpecialised as families, isOffering, isListable, specialisedFamilies, type Entry } from "../../data/ministries";
+import { allFamiliesIncludingSpecialised as families, classifyFamilies, isOffering, isListable, type Entry } from "../../data/ministries";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
 export const prerender = false;
 const entries = await runtimeDirectoryEntries(Astro.locals);
+const { specialisedFamilies } = classifyFamilies(entries);
 
 const shelf = entries.filter((e) => !isOffering(e) && isListable(e));
 

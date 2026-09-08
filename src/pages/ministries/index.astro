@@ -7,7 +7,7 @@ import { publicBuilderLink } from "../../lib/studio/page-links";
 export const prerender = false;
 import {
 	allFamiliesIncludingSpecialised,
-	families,
+	classifyFamilies,
 	standard,
 	familyImage,
 	familyCalendarCount,
@@ -19,6 +19,7 @@ import { pillars } from "../../data/site";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
 const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const { families } = classifyFamilies(runtimeEntries);
 const inHouse = runtimeEntries.filter((entry) => entry.house === "in");
 const outOfHouse = runtimeEntries.filter((entry) => entry.house === "out");
 const live = sortEntries(runtimeEntries.filter((entry) => entry.calendar?.sync === "available" || entry.calendar?.sync === "page-current"));

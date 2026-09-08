@@ -37,7 +37,7 @@ Available blocks (the "type" of each content item) and their props:
 - CtaCards: { cards: [{ label, title, body, buttonLabel, buttonHref, featured }] } — action cards (featured is boolean).
 Only these types: ${ALLOWED_BLOCKS.join(", ")}.`;
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 
 	const body = await request.json().catch(() => null);
@@ -45,7 +45,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 	if (!message || typeof message !== "string") return json({ error: "No message." }, 400);
 
 	const current = sanitizeData(data);
-	const images = (await listSiteImages()).slice(0, 80);
+	const images = (await listSiteImages(locals)).slice(0, 80);
 	const prompt = [
 		"You are the page-building assistant for the New Life Grand Rapids church website.",
 		"You edit ONE page document (JSON). You have no file access — you only return an updated document.",
@@ -103,6 +103,7 @@ async function viaApi(prompt: string): Promise<{ reply: string; data: any }> {
 			tool_choice: { type: "tool", name: "return_page" },
 			messages: [{ role: "user", content: prompt }],
 		}),
+		signal: AbortSignal.timeout(30_000),
 	});
 	if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${(await res.text()).slice(0, 150)}`);
 	const body = await res.json();
