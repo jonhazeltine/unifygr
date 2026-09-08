@@ -16,6 +16,7 @@ import {
 } from "../src/lib/studio/pages.ts";
 import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
 import { validateImageBytes } from "../src/lib/studio/media.ts";
+import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -170,6 +171,16 @@ test("page API returns a fresh version for content and metadata saves", async ()
 test("media accepts only bytes that match its fixed response image type", () => {
 	assert.equal(validateImageBytes("photo.png", new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10])), "image/png");
 	assert.throws(() => validateImageBytes("active.png", new TextEncoder().encode("<svg onload=alert(1)>")));
+});
+
+test("partner directory saves runtime overrides with a version and keeps them out of Git", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const initial = await readOrgs(locals);
+	const org = initial.orgs[0];
+	const saved = await writeOrgs({ [org.slug]: { listed: !org.listed } }, initial.version, locals);
+	assert.notEqual(saved.version, initial.version);
+	assert.equal((await runtimeDirectoryEntries(locals)).find((entry) => entry.slug === org.slug)?.listed, !org.listed);
+	await assert.rejects(() => writeOrgs({ [org.slug]: { listed: org.listed } }, initial.version, locals), ContentConflict);
 });
 
 test.after(() => {

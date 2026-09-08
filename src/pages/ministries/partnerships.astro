@@ -6,7 +6,6 @@
 export const prerender = false;
 import Interior from "../../layouts/Interior.astro";
 import {
-	entries,
 	isOffering,
 	isListable,
 	familyOf,
@@ -14,6 +13,9 @@ import {
 	hasLiveCalendar,
 	type Entry,
 } from "../../data/ministries";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+
+const entries = await runtimeDirectoryEntries(Astro.locals);
 
 const curated = sortEntries(
 	entries.filter((e) => e.house === "out" && isOffering(e) && isListable(e)),

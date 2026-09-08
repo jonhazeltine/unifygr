@@ -8,8 +8,6 @@ import MinistryCard from "../../components/MinistryCard.astro";
 import MinistryMap from "../../components/MinistryMap.astro";
 import {
 	allFamiliesIncludingSpecialised as families,
-	entriesInCategory,
-	entriesInFamily,
 	splitOffering,
 	newLifeNote,
 	curationNote,
@@ -17,9 +15,17 @@ import {
 	isOffering,
 	type Entry,
 } from "../../data/ministries";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
 const family = families.find((candidate) => candidate.slug === Astro.params.family);
 if (!family) return new Response("Not found", { status: 404 });
+const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const entriesInFamily = (slug: string) => {
+	const target = families.find((candidate) => candidate.slug === slug);
+	const categories = new Set(target ? target.categories.map((category) => category.slug) : []);
+	return runtimeEntries.filter((entry) => entry.categories.some((category) => categories.has(category)) && entry.status !== "no-details" && entry.listed !== false);
+};
+const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
 
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 

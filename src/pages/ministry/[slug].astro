@@ -6,7 +6,6 @@ import { publicBuilderDetailLink } from "../../lib/studio/page-links";
 export const prerender = false;
 import MinistryCard from "../../components/MinistryCard.astro";
 import {
-	entries,
 	getCategory,
 	familyOf,
 	entriesInCategory,
@@ -14,6 +13,9 @@ import {
 	TIER_LABEL,
 	STATUS_LABEL,
 } from "../../data/ministries";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+
+const entries = await runtimeDirectoryEntries(Astro.locals);
 
 const entry = entries.find((candidate) => candidate.slug === Astro.params.slug);
 if (!entry) return new Response("Not found", { status: 404 });
@@ -29,7 +31,7 @@ const cats = entry.categories.map((slug) => ({
 const seen = new Set([entry.slug]);
 const alternatives: Entry[] = [];
 for (const slug of entry.categories) {
-	for (const other of sortEntries(entriesInCategory(slug))) {
+	for (const other of sortEntries(entries.filter((candidate) => candidate.categories.includes(slug) && candidate.status !== "no-details" && candidate.listed !== false))) {
 		if (seen.has(other.slug)) continue;
 		seen.add(other.slug);
 		alternatives.push(other);
