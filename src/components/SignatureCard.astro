@@ -104,7 +104,11 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 	.sig__face--light .sig__when { color: #765a2b; }
 	.sig__face--light .sig__name { color: #17202b; }
 	.sig__face--light .sig__line { color: rgba(23,32,43,.72); }
-	.sig__face--light .sig__more { color: #17202b; background: rgba(255,253,249,.94); border-color: rgba(23,32,43,.2); }
+	.sig__face--light .sig__more {
+		position: relative; top: auto; right: auto; display: inline-flex; width: fit-content;
+		margin: 0 1.2rem 1.2rem; color: #17202b; background: rgba(255,253,249,.94);
+		border-color: rgba(23,32,43,.2);
+	}
 
 	.sig__more-shut { display: none; }
 	.sig__face[aria-expanded="true"] .sig__more-open { display: none; }
