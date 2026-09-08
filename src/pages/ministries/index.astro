@@ -65,9 +65,8 @@ const signature = inHouse
 		return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi) || a.name.localeCompare(b.name);
 	});
 
-// A picture per signature ministry. The art already exists per theme, so this is
-// a mapping rather than anything clever; anything unmatched falls back to the
-// city, which is never wrong for a church in Grand Rapids.
+// Candidate art per signature ministry. The render path below only displays
+// entries with an explicitly approved people-first image and native dimensions.
 const SIGNATURE_ART: Record<string, string> = {
 	"new-life-worship": "/art/ministries/worship-approved.webp",
 	"corporate-prayer": "/art/ministries/prayer-approved.webp",
