@@ -70,11 +70,11 @@ const signature = inHouse
 const SIGNATURE_ART: Record<string, string> = {
 	"new-life-worship": "/art/ministries/worship-approved.webp",
 	"corporate-prayer": "/art/ministries/prayer-approved.webp",
-	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
+	"life-groups": "/art/ministries/life-groups-approved.webp",
 	"childrens-ministry": "/art/ministries/kids.webp",
-	"pastoral-care": "/art/ministries/health.jpg",
+	"pastoral-care": "/art/ministries/pastoral-care-approved.webp",
 	"mission-of-hope-trips": "/art/ministries/mission-approved.webp",
-	"ambassador-teams": "/art/ministries/church-leaders.jpg",
+	"ambassador-teams": "/art/ministries/ambassador-approved.webp",
 	outreach: "/art/ministries/practical-care.webp",
 	"unify-gr": "/art/generated/unity-still.png",
 };
@@ -82,6 +82,9 @@ const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-
 const approvedSignatureArt: Partial<Record<string, { width: number; height: number }>> = {
 	"new-life-worship": { width: 760, height: 286 },
 	"corporate-prayer": { width: 1536, height: 1024 },
+	"life-groups": { width: 946, height: 479 },
+	"pastoral-care": { width: 946, height: 454 },
+	"ambassador-teams": { width: 946, height: 563 },
 	"childrens-ministry": { width: 730, height: 425 },
 	"mission-of-hope-trips": { width: 756, height: 288 },
 	outreach: { width: 746, height: 424 },
