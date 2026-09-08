@@ -9,16 +9,18 @@ import {
 	getCategory,
 	familyOf,
 	entriesInCategory,
+	isListable,
 	sortEntries,
 	TIER_LABEL,
 	STATUS_LABEL,
+	type Entry,
 } from "../../data/ministries";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
 const entries = await runtimeDirectoryEntries(Astro.locals);
 
 const entry = entries.find((candidate) => candidate.slug === Astro.params.slug);
-if (!entry) return new Response("Not found", { status: 404 });
+if (!entry || !isListable(entry as Entry)) return new Response("Not found", { status: 404 });
 
 const inHouse = entry.house === "in";
 const unverified = entry.status !== "live";

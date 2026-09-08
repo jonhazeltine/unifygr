@@ -101,18 +101,38 @@ test("family browse classification follows a zero-to-one runtime offering transi
 test("runtime directory switches and Builder status drive the sitemap route", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
 	const entry = seedEntries.find((candidate) => candidate.listed !== false)!;
+	const noDetails = seedEntries.find((candidate) => candidate.status === "no-details")!;
 	try {
-		const hidden = await publish("partners/directory-overrides.json", { [entry.slug]: { listed: false } }, {}, "seed", locals);
+		const hidden = await publish(
+			"partners/directory-overrides.json",
+			{
+				[entry.slug]: { listed: false },
+			},
+			{},
+			"seed",
+			locals,
+		);
 		const sitemap = await import("../src/pages/sitemap.xml.ts");
 		let response = await sitemap.GET({ locals } as any);
 		let xml = await response.text();
 		assert(!xml.includes(`/ministry/${entry.slug}</loc>`));
+		assert(!xml.includes(`/ministry/${noDetails.slug}</loc>`));
 		assert(!xml.includes("/go</loc>"), "a draft mounted Builder route must stay out of the sitemap");
 
-		await publish("partners/directory-overrides.json", { [entry.slug]: { listed: true } }, {}, hidden.version, locals);
+		await publish(
+			"partners/directory-overrides.json",
+			{
+				[entry.slug]: { listed: true },
+				[noDetails.slug]: { confirmed: true },
+			},
+			{},
+			hidden.version,
+			locals,
+		);
 		response = await sitemap.GET({ locals } as any);
 		xml = await response.text();
 		assert(xml.includes(`/ministry/${entry.slug}</loc>`));
+		assert(xml.includes(`/ministry/${noDetails.slug}</loc>`));
 
 		const { publicPaths } = await import("../src/lib/discovery.ts");
 		const livePaths = publicPaths({ pillars: [], families: [], entries: [], pages: [{ path: "/go", status: "live" }] });
@@ -120,6 +140,11 @@ test("runtime directory switches and Builder status drive the sitemap route", as
 	} finally {
 		__setRuntimeContentDriverForTests();
 	}
+});
+
+test("the public ministry detail route rejects hidden directory entries", async () => {
+	const source = await readFile(new URL("../src/pages/ministry/[slug].astro", import.meta.url), "utf8");
+	assert.match(source, /!entry \|\| !isListable\(entry as Entry\)/);
 });
 
 test("page AI receives Worker locals and applies a bounded provider timeout", async () => {
