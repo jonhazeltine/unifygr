@@ -4,7 +4,7 @@
 import { get, put } from "@vercel/blob";
 import { publish, readPublished, runtimeToken, type RuntimeLocals } from "./runtime-content";
 
-const EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg"]);
+const EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"]);
 const MAX_BYTES = 8 * 1024 * 1024;
 const INDEX = "studio/media/published.json";
 const BUNDLED_KEYS = [
@@ -39,7 +39,7 @@ export async function saveUpload(name: string, dataBase64: string, locals?: Runt
 export async function promoteUpload(stageId: string, locals?: RuntimeLocals): Promise<{ src: string; via: "runtime" }> {
 	const token = runtimeToken(locals);
 	if (!token) throw new Error("Runtime content storage is not configured on this deployment.");
-	if (!/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif|svg)$/i.test(stageId)) throw new Error("Unknown staged upload.");
+	if (!/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif)$/i.test(stageId)) throw new Error("Unknown staged upload.");
 	const staged = await get(`studio/media/staged/${stageId}`, { access: "private", useCache: false, token });
 	if (!staged) throw new Error("That staged upload is no longer available.");
 	if (!staged.stream) throw new Error("The staged upload could not be read.");
@@ -52,6 +52,6 @@ export async function promoteUpload(stageId: string, locals?: RuntimeLocals): Pr
 
 export async function publishedUpload(file: string, locals?: RuntimeLocals) {
 	const token = runtimeToken(locals);
-	if (!token || !/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif|svg)$/i.test(file)) return null;
+	if (!token || !/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif)$/i.test(file)) return null;
 	return get(`studio/media/published/${file}`, { access: "private", useCache: true, token });
 }

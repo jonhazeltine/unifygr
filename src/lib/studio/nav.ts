@@ -45,7 +45,12 @@ export function sanitizeNav(input: any): Nav {
 }
 
 export async function readNav(locals?: RuntimeLocals): Promise<Nav> {
-	return sanitizeNav((await readPublished(KEY, seed, locals)).value);
+	return (await readNavState(locals)).nav;
+}
+
+export async function readNavState(locals?: RuntimeLocals): Promise<{ nav: Nav; version: string }> {
+	const stored = await readPublished(KEY, seed, locals);
+	return { nav: sanitizeNav(stored.value), version: stored.version };
 }
 
 export async function writeNav(input: any, expectedVersion?: string, locals?: RuntimeLocals): Promise<{ nav: Nav; via: "runtime"; version: string }> {

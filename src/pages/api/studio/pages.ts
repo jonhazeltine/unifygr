@@ -11,7 +11,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { listPages, readPage, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
+import { listPages, readPageState, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
 import { listHandBuiltPages } from "../../../lib/studio/site-pages";
 
 const json = (data: unknown, status = 200) =>
@@ -21,8 +21,8 @@ export const GET: APIRoute = async ({ url, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const slug = url.searchParams.get("slug");
 	if (slug) {
-		const data = await readPage(slug, locals);
-		return data ? json({ data }) : json({ error: "Not found" }, 404);
+		const page = await readPageState(slug, locals);
+		return page ? json(page) : json({ error: "Not found" }, 404);
 	}
 	return json({ pages: await listPages(locals), sitePages: listHandBuiltPages() });
 };
@@ -31,6 +31,10 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const body = await request.json().catch(() => ({}));
 	try {
+		if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before publishing your edits." }, 409);
+		if (body?.create && (await listPages(locals)).some((page) => page.slug === body.slug)) {
+			return json({ ok: false, error: "That page already exists. Open the latest copy before saving." }, 409);
+		}
 		if (body?.delete) {
 			const res = await deletePage(body.slug, body?.version, locals);
 			return json({ ok: true, via: res.via });

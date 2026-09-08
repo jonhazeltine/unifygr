@@ -15,6 +15,7 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	const body = await request.json().catch(() => ({}));
 	const edits: Edit[] = Array.isArray(body?.edits) ? body.edits : [];
 	if (edits.length === 0) return json({ error: "No edits to publish." }, 400);
+	if (typeof body?.version !== "string") return json({ error: "This content changed. Refresh and review it before publishing." }, 409);
 
 	try {
 		const { version } = await applyEdits(edits, body?.summary || "Edit via studio", body?.version, locals);

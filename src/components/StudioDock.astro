@@ -152,6 +152,7 @@
 			fetch(path, { headers: { "content-type": "application/json" }, ...opts }).then((r) => r.json());
 		const LOG_KEY = "sd_log", OPEN_KEY = "sd_open";
 		let pending: any = null;
+		let contentVersion: string | null = null;
 
 		// Friendly page name from the URL, e.g. "/vision-values" → "vision values".
 		const path = location.pathname;
@@ -186,6 +187,7 @@
 			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false; $("sd-partners").hidden = false;
 			sessionStorage.setItem(OPEN_KEY, "1"); // stay open as staff navigate
 			renderLog();
+			api("/api/studio/content").then((r) => { contentVersion = r.version || null; });
 			if (loadLog().length === 0) addMsg(`Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
 			setTimeout(() => $("sd-msg")?.focus(), 50);
 		}
@@ -239,8 +241,9 @@
 		async function publish() {
 			if (!pending?.edits?.length) return;
 			($("sd-pub") as HTMLButtonElement).disabled = true;
-			const res = await api("/api/studio/apply", { method: "POST", body: JSON.stringify({ edits: pending.edits, summary: pending.reply }) });
+			const res = await api("/api/studio/apply", { method: "POST", body: JSON.stringify({ edits: pending.edits, summary: pending.reply, version: pending.version || contentVersion }) });
 			if (res.ok) {
+				contentVersion = res.version?.id || contentVersion;
 				toast("Published ✓"); $("sd-proposal").innerHTML = ""; pending = null;
 				addMsg("Done — it's live. Reload to see it on the page.", "ai");
 			} else { addMsg("Couldn't publish: " + (res.error || "error"), "ai"); ($("sd-pub") as HTMLButtonElement).disabled = false; }

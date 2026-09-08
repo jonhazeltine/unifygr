@@ -20,6 +20,14 @@ export class ContentConflict extends Error {
 	}
 }
 
+type BlobDriver = { get: typeof get; put: typeof put; list: typeof list };
+let driver: BlobDriver = { get, put, list };
+
+/** Test-only seam. Production always uses the Vercel Blob SDK. */
+export function __setRuntimeContentDriverForTests(next?: BlobDriver): void {
+	driver = next ?? { get, put, list };
+}
+
 export function runtimeToken(locals?: RuntimeLocals): string | undefined {
 	return locals?.runtime?.env?.BLOB_READ_WRITE_TOKEN;
 }
@@ -28,17 +36,15 @@ function version(): string {
 	return `${new Date().toISOString().replace(/[-:.TZ]/g, "")}-${crypto.randomUUID().slice(0, 8)}`;
 }
 
-async function read<T>(key: string, fallback: T, locals?: RuntimeLocals): Promise<Stored<T>> {
+type ReadStored<T> = Stored<T> & { etag?: string; exists: boolean };
+
+async function read<T>(key: string, fallback: T, locals?: RuntimeLocals): Promise<ReadStored<T>> {
 	const accessToken = runtimeToken(locals);
-	if (!accessToken) return { value: fallback, version: "seed", publishedAt: "" };
-	try {
-		const found = await get(key, { access: "private", useCache: false, token: accessToken });
-		if (!found) return { value: fallback, version: "seed", publishedAt: "" };
-		return JSON.parse(await new Response(found.stream).text()) as Stored<T>;
-	} catch {
-		// The committed seed keeps the public site readable if storage is unavailable.
-		return { value: fallback, version: "seed", publishedAt: "" };
-	}
+	if (!accessToken) return { value: fallback, version: "seed", publishedAt: "", exists: false };
+	const found = await driver.get(key, { access: "private", useCache: false, token: accessToken });
+	if (!found) return { value: fallback, version: "seed", publishedAt: "", exists: false };
+	if (found.statusCode !== 200 || !found.stream) throw new Error("Content storage returned an incomplete response.");
+	return { ...(JSON.parse(await new Response(found.stream).text()) as Stored<T>), etag: found.blob.etag, exists: true };
 }
 
 async function write<T>(key: string, value: T, expectedVersion: string | undefined, fallback: T, locals?: RuntimeLocals): Promise<Stored<T>> {
@@ -46,15 +52,25 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 	if (!accessToken) throw new Error("Runtime content storage is not configured on this deployment.");
 	const current = await read(key, fallback, locals);
 	if (expectedVersion && expectedVersion !== current.version) throw new ContentConflict();
+	if (!current.exists) {
+		// The seed is a real first revision, so the very first publish can undo.
+		await driver.put(`studio/revisions/${key}/seed.json`, JSON.stringify({ value: fallback, version: "seed", publishedAt: "", previousVersion: null }), {
+			access: "private", contentType: "application/json", addRandomSuffix: false, token: accessToken,
+		}).catch(() => {});
+	}
 	const next: Stored<T> = { value, version: version(), publishedAt: new Date().toISOString() };
-	// Blob versions are immutable audit records; the published pointer is the only
-	// mutable key. The expected-version check prevents stale editor publishes.
-	await put(`studio/revisions/${key}/${next.version}.json`, JSON.stringify({ ...next, previousVersion: current.version }), {
+	await driver.put(`studio/revisions/${key}/${next.version}.json`, JSON.stringify({ ...next, previousVersion: current.version }), {
 		access: "private", contentType: "application/json", addRandomSuffix: false, token: accessToken,
 	});
-	await put(key, JSON.stringify(next), {
-		access: "private", contentType: "application/json", addRandomSuffix: false, allowOverwrite: true, token: accessToken,
-	});
+	try {
+		await driver.put(key, JSON.stringify(next), {
+			access: "private", contentType: "application/json", addRandomSuffix: false,
+			...(current.exists ? { ifMatch: current.etag! } : { allowOverwrite: false }), token: accessToken,
+		});
+	} catch (error) {
+		if ((error as Error)?.name === "BlobPreconditionFailedError" || current.exists) throw new ContentConflict();
+		throw error;
+	}
 	return next;
 }
 
@@ -69,13 +85,28 @@ export async function publish<T>(key: string, value: T, fallback: T, expectedVer
 export async function revisions(key: string, locals?: RuntimeLocals): Promise<string[]> {
 	const accessToken = runtimeToken(locals);
 	if (!accessToken) return [];
-	const result = await list({ prefix: `studio/revisions/${key}/`, token: accessToken, limit: 500 });
+	const result = await driver.list({ prefix: `studio/revisions/${key}/`, token: accessToken, limit: 500 });
 	return result.blobs.map((blob) => blob.pathname).sort().reverse();
 }
 
 export async function readRevision<T>(path: string, locals?: RuntimeLocals): Promise<(Stored<T> & { previousVersion?: string }) | null> {
 	const accessToken = runtimeToken(locals);
 	if (!accessToken) return null;
-	const found = await get(path, { access: "private", useCache: false, token: accessToken });
+	const found = await driver.get(path, { access: "private", useCache: false, token: accessToken });
 	return found ? JSON.parse(await new Response(found.stream).text()) : null;
+}
+
+/** Move the published pointer to an existing immutable revision using CAS. */
+export async function restorePublished<T>(key: string, revision: Stored<T>, expectedVersion: string, locals?: RuntimeLocals): Promise<void> {
+	const accessToken = runtimeToken(locals);
+	if (!accessToken) throw new Error("Runtime content storage is not configured on this deployment.");
+	const current = await read(key, revision.value, locals);
+	if (current.version !== expectedVersion || !current.etag) throw new ContentConflict();
+	try {
+		await driver.put(key, JSON.stringify(revision), {
+			access: "private", contentType: "application/json", addRandomSuffix: false, ifMatch: current.etag, token: accessToken,
+		});
+	} catch {
+		throw new ContentConflict();
+	}
 }

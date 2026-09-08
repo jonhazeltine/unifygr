@@ -3,7 +3,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { readContent } from "../../../lib/studio/store";
+import { contentVersion, readContent } from "../../../lib/studio/store";
 import { proposeEdits } from "../../../lib/studio/brain";
 
 const json = (data: unknown, status = 200) =>
@@ -17,5 +17,5 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 
 	const content = await readContent(locals);
 	const proposal = await proposeEdits(message, content, { path, page });
-	return json(proposal);
+	return json({ ...proposal, version: await contentVersion(locals) });
 };

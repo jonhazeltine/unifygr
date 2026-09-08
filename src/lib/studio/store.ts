@@ -4,7 +4,7 @@
 
 import seed from "../../../content/site.json";
 import { isEditable } from "./schema";
-import { publish, readPublished, readRevision, revisions, type RuntimeLocals } from "./runtime-content";
+import { publish, readPublished, readRevision, restorePublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 const KEY = "studio/site/published.json";
 
@@ -58,9 +58,9 @@ export async function historyCount(locals?: RuntimeLocals): Promise<number> {
 export async function undo(locals?: RuntimeLocals): Promise<{ content: any; restoredFrom: string } | null> {
 	const current = await readPublished(KEY, seed, locals);
 	const latest = await readRevision<any>(`studio/revisions/${KEY}/${current.version}.json`, locals);
-	if (!latest?.previousVersion || latest.previousVersion === "seed") return null;
+	if (!latest?.previousVersion) return null;
 	const prior = await readRevision<any>(`studio/revisions/${KEY}/${latest.previousVersion}.json`, locals);
 	if (!prior) return null;
-	await publish(KEY, prior.value, seed, current.version, locals);
+	await restorePublished(KEY, prior, current.version, locals);
 	return { content: prior.value, restoredFrom: latest.previousVersion };
 }

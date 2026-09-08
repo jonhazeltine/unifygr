@@ -104,6 +104,7 @@ export type PageListing = {
 	path: string;
 	/** mounted pages are part of the site structure and can't be deleted */
 	mounted: boolean;
+	version: string;
 };
 
 export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> {
@@ -115,8 +116,9 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 	const out: PageListing[] = [];
 	for (const slug of slugs) {
 		if (!validSlug(slug)) continue;
-		const data = await readPage(slug, locals);
-		if (data) {
+		const record = await readPageState(slug, locals);
+		if (record) {
+			const data = record.data;
 			out.push({
 				slug,
 				title: String(data.root.props.title || slug),
@@ -124,6 +126,7 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 				order: data.order,
 				path: MOUNTED[slug] || `/p/${slug}`,
 				mounted: Boolean(MOUNTED[slug]),
+				version: record.version,
 			});
 		}
 	}
@@ -131,9 +134,17 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 }
 
 export async function readPage(slug: string, locals?: RuntimeLocals): Promise<PageData | null> {
+	return (await readPageState(slug, locals))?.data ?? null;
+}
+
+export async function readPageState(slug: string, locals?: RuntimeLocals): Promise<{ data: PageData; version: string } | null> {
 	if (!validSlug(slug)) return null;
 	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
-	return sanitizeData((await readPublished(keyFor(slug), bundled, locals)).value);
+	const stored = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
+	// A tombstone wins over the repository seed so deleting a Builder page never
+	// leaves it publicly reachable after the index changes.
+	if (stored.value === null) return null;
+	return { data: sanitizeData(stored.value), version: stored.version };
 }
 
 function serialize(data: PageData): string {
@@ -163,7 +174,7 @@ export async function writePage(
 		status: meta?.status ?? existing?.status ?? "draft",
 		order: meta?.order ?? existing?.order ?? (existing ? 0 : Date.now() % 100000),
 	});
-	const current = await readPublished(keyFor(slug), bundled, locals);
+	const current = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
 	const saved = await publish(keyFor(slug), clean, bundled, expectedVersion ?? current.version, locals);
 	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
 	if (!index.value.includes(slug)) await publish("studio/pages/index.json", [...index.value, slug], bundledSlugs, index.version, locals);
@@ -183,6 +194,7 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
 	const current = await readPublished(keyFor(slug), bundled, locals);
 	if (expectedVersion && expectedVersion !== current.version) throw new Error("This page changed while you were editing it. Refresh and review it before publishing.");
+	await publish<PageData | null>(keyFor(slug), null, bundled, current.version, locals);
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
 	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);

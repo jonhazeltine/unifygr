@@ -32,6 +32,7 @@ export default function BuilderApp() {
 	const [menuMode, setMenuMode] = useState(false);
 	const [slug, setSlug] = useState<string | null>(null);
 	const [data, setData] = useState<any>(null);
+	const [versions, setVersions] = useState<Record<string, string>>({});
 	const [rev, setRev] = useState(0); // bump to remount Puck after AI edits
 	const [aiBusy, setAiBusy] = useState(false);
 	const [aiNote, setAiNote] = useState<string>("");
@@ -43,13 +44,14 @@ export default function BuilderApp() {
 	const refresh = useCallback(async () => {
 		const res = await api("/api/studio/pages");
 		setPages(res.pages || []);
+		setVersions(Object.fromEntries((res.pages || []).map((page: any) => [page.slug, page.version])));
 		setSitePages(res.sitePages || []);
 	}, []);
 	useEffect(() => { refresh(); }, [refresh]);
 
 	async function openPage(s: string) {
 		const res = await api(`/api/studio/pages?slug=${encodeURIComponent(s)}`);
-		if (res.data) { setSlug(s); setData(res.data); live.current = res.data; setRev((r) => r + 1); setAiNote(""); }
+		if (res.data) { setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote(""); }
 	}
 
 	function newPage() {
@@ -57,33 +59,34 @@ export default function BuilderApp() {
 		if (!title) return;
 		const s = slugify(title);
 		if (!s) return;
-		setSlug(s); const d = EMPTY(title); setData(d); live.current = d; setRev((r) => r + 1); setAiNote("");
+		setSlug(s); setVersions((v) => ({ ...v, [s]: "seed" })); const d = EMPTY(title); setData(d); live.current = d; setRev((r) => r + 1); setAiNote("");
 	}
 
 	async function save(d: any) {
 		if (!slug) return;
-		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug, data: d }) });
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug, data: d, version: versions[slug], create: !pages.some((p) => p.slug === slug) }) });
 		if (res.ok) {
 			if (res.data) { setData(res.data); live.current = res.data; }
-			say(res.via === "git" ? "Saved — going live in a minute or two" : "Saved ✓");
+			setVersions((v) => ({ ...v, [slug]: res.version })); say("Saved ✓");
 			refresh();
 		} else { say(res.error || "Couldn't save"); }
 	}
 
 	async function setStatus(s: string, status: "draft" | "live") {
-		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status }) });
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status, version: versions[s] }) });
 		if (res.ok) {
 			say(status === "live"
 				? (res.via === "git" ? "Going live in a minute or two" : "Live ✓")
 				: "Back to draft");
 			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
+			setVersions((v) => ({ ...v, [s]: res.version }));
 			refresh();
 		} else { say(res.error || "Couldn't update"); }
 	}
 
 	async function removePage(s: string, title: string) {
 		if (!window.confirm(`Delete "${title}"? This removes the page completely.`)) return;
-		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, delete: true }) });
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, delete: true, version: versions[s] }) });
 		if (res.ok) { say("Deleted"); if (slug === s) { setSlug(null); setData(null); } refresh(); }
 		else { say(res.error || "Couldn't delete"); }
 	}
@@ -97,7 +100,7 @@ export default function BuilderApp() {
 		next.splice(to, 0, moved);
 		setPages(next);
 		await Promise.all(next.map((p, i) =>
-			api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: p.slug, order: i }) }),
+			api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: p.slug, order: i, version: versions[p.slug] }) }),
 		));
 		refresh();
 	}
