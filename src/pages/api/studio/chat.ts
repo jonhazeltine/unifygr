@@ -3,7 +3,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { contentVersion, readContent } from "../../../lib/studio/store";
+import { readContentSnapshot } from "../../../lib/studio/store";
 import { proposeEdits } from "../../../lib/studio/brain";
 
 const json = (data: unknown, status = 200) =>
@@ -21,10 +21,10 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
   if (!message || typeof message !== "string")
     return json({ error: "No message." }, 400);
 
-	const content = await readContent(locals);
-	const proposal = await proposeEdits(message, content, {
+	const snapshot = await readContentSnapshot(locals);
+	const proposal = await proposeEdits(message, snapshot.content, {
     path: typeof path === "string" ? path : undefined,
     page: typeof page === "string" ? page : undefined,
   });
-	return json({ ...proposal, version: await contentVersion(locals) });
+	return json({ ...proposal, version: snapshot.version });
 };

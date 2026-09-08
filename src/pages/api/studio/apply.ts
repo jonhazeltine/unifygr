@@ -5,6 +5,7 @@ export const prerender = false;
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { applyEdits, historyCount, type Edit } from "../../../lib/studio/store";
+import { ContentConflict } from "../../../lib/studio/runtime-content";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -18,9 +19,9 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (typeof body?.version !== "string") return json({ error: "This content changed. Refresh and review it before publishing." }, 409);
 
 	try {
-		const { version } = await applyEdits(edits, body?.summary || "Edit via studio", body?.version, locals);
-		return json({ ok: true, version, canUndo: (await historyCount(locals)) > 0 });
+		const { content, version } = await applyEdits(edits, body?.summary || "Edit via studio", body?.version, locals);
+		return json({ ok: true, content, version, canUndo: (await historyCount(locals)) > 0 });
 	} catch (err) {
-		return json({ ok: false, error: (err as Error).message }, 400);
+		return json({ ok: false, error: (err as Error).message }, err instanceof ContentConflict ? 409 : 400);
 	}
 };

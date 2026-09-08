@@ -6,7 +6,7 @@ import {
 	publish,
 	readPublished,
 } from "../src/lib/studio/runtime-content.ts";
-import { applyEdits, readContent, undo } from "../src/lib/studio/store.ts";
+import { applyEdits, readContent, readContentSnapshot, undo } from "../src/lib/studio/store.ts";
 import {
 	__setBundledPagesForTests,
 	deletePage,
@@ -84,6 +84,28 @@ test("first publish undoes to the seed and repeated undo walks backward", async 
 	assert.equal((await undo(locals))?.content.church.tagline, seed.church.tagline);
 	assert.equal(await undo(locals), null);
 	void one; void three;
+});
+
+test("content snapshots bind the published value to its exact version", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const saved = await applyEdits([{ path: "church.tagline", to: "Snapshot" }], "snapshot", "seed", locals);
+	const snapshot = await readContentSnapshot(locals);
+	assert.equal(snapshot.content.church.tagline, "Snapshot");
+	assert.equal(snapshot.version, saved.version.id);
+});
+
+test("apply API returns 409 for a stale content version", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const cookies = await authedCookies();
+	const first = await studioPost("../src/pages/api/studio/apply.ts", {
+		edits: [{ path: "church.tagline", to: "Fresh" }], summary: "fresh", version: "seed",
+	}, cookies);
+	assert.equal(first.status, 200);
+	assert.equal(first.body.content.church.tagline, "Fresh");
+	const stale = await studioPost("../src/pages/api/studio/apply.ts", {
+		edits: [{ path: "church.tagline", to: "Stale" }], summary: "stale", version: "seed",
+	}, cookies);
+	assert.equal(stale.status, 409);
 });
 
 function page(status: "draft" | "live", title: string) {

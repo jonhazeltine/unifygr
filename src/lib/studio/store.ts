@@ -4,7 +4,7 @@
 
 import seed from "../../../content/site.json";
 import { isEditable } from "./schema";
-import { publish, readPublished, readRevision, restorePublished, revisions, type RuntimeLocals } from "./runtime-content";
+import { ContentConflict, publish, readPublished, readRevision, restorePublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 const KEY = "studio/site/published.json";
 
@@ -26,6 +26,11 @@ export async function readContent(locals?: RuntimeLocals): Promise<any> {
 	return (await readPublished(KEY, seed, locals)).value;
 }
 
+export async function readContentSnapshot(locals?: RuntimeLocals): Promise<{ content: any; version: string }> {
+	const stored = await readPublished(KEY, seed, locals);
+	return { content: stored.value, version: stored.version };
+}
+
 export async function contentVersion(locals?: RuntimeLocals): Promise<string> {
 	return (await readPublished(KEY, seed, locals)).version;
 }
@@ -35,7 +40,7 @@ export async function applyEdits(
 ): Promise<{ content: any; version: Version }> {
 	const current = await readPublished(KEY, seed, locals);
 	if (expectedVersion && expectedVersion !== current.version) {
-		throw new Error("This content changed while you were editing it. Refresh and review the latest copy before publishing.");
+		throw new ContentConflict();
 	}
 	const content = clone(current.value);
 	const applied: Edit[] = [];
@@ -55,12 +60,12 @@ export async function historyCount(locals?: RuntimeLocals): Promise<number> {
 	return (await revisions(KEY, locals)).length;
 }
 
-export async function undo(locals?: RuntimeLocals): Promise<{ content: any; restoredFrom: string } | null> {
+export async function undo(locals?: RuntimeLocals): Promise<{ content: any; restoredFrom: string; version: string } | null> {
 	const current = await readPublished(KEY, seed, locals);
 	const latest = await readRevision<any>(`studio/revisions/${KEY}/${current.version}.json`, locals);
 	if (!latest?.previousVersion) return null;
 	const prior = await readRevision<any>(`studio/revisions/${KEY}/${latest.previousVersion}.json`, locals);
 	if (!prior) return null;
 	await restorePublished(KEY, prior, current.version, locals);
-	return { content: prior.value, restoredFrom: latest.previousVersion };
+	return { content: prior.value, restoredFrom: latest.previousVersion, version: prior.version };
 }

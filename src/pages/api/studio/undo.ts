@@ -13,5 +13,5 @@ export const POST: APIRoute = async ({ cookies, locals }) => {
 
 	const result = await undo(locals);
 	if (!result) return json({ ok: false, error: "Nothing to undo." }, 400);
-	return json({ ok: true, restoredFrom: result.restoredFrom, canUndo: (await historyCount(locals)) > 0 });
+	return json({ ok: true, content: result.content, version: result.version, restoredFrom: result.restoredFrom, canUndo: (await historyCount(locals)) > 0 });
 };
