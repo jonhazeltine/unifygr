@@ -17,11 +17,15 @@
 import { ContentConflict, publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
-// The guard also lets the storage behavior run in the node:test suite, where
-// Vite's import.meta.glob transform is not present.
-const BUNDLED: Record<string, any> = typeof import.meta.glob === "function"
-	? import.meta.glob("../../../content/pages/*.json", { eager: true })
-	: {};
+// Keep the glob call direct so Vite replaces it with the production manifest.
+// Plain Node does not provide import.meta.glob, so the test runner falls back
+// through the catch and uses its explicit bundled-page seam below.
+let BUNDLED: Record<string, any> = {};
+try {
+	BUNDLED = import.meta.glob("../../../content/pages/*.json", { eager: true });
+} catch {
+	BUNDLED = {};
+}
 let bundledOverrideForTests: Record<string, any> | undefined;
 
 /** Test-only seed seam; production always reads the bundled repository files. */

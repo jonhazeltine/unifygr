@@ -7,11 +7,16 @@ import { publish, readPublished, runtimeToken, type RuntimeLocals } from "./runt
 const EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"]);
 const MAX_BYTES = 8 * 1024 * 1024;
 const INDEX = "studio/media/published.json";
-const glob = typeof import.meta.glob === "function" ? import.meta.glob : () => ({});
-const BUNDLED_KEYS = [
-	...Object.keys(glob("../../../public/art/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
-	...Object.keys(glob("../../../public/uploads/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
-].map((key) => key.replace(/^.*\/public\//, "/"));
+let BUNDLED_KEYS: string[] = [];
+try {
+	// Keep both calls direct so Vite can replace them with build-time manifests.
+	BUNDLED_KEYS = [
+		...Object.keys(import.meta.glob("../../../public/art/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
+		...Object.keys(import.meta.glob("../../../public/uploads/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
+	].map((key) => key.replace(/^.*\/public\//, "/"));
+} catch {
+	BUNDLED_KEYS = [];
+}
 
 const MIME: Record<string, string> = {
 	".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp", ".avif": "image/avif", ".gif": "image/gif",

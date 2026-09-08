@@ -6,10 +6,14 @@
 // Discovered from the source tree at build time (works in production too);
 // titles come from a friendly map, with a prettified fallback.
 
-// Keys look like "../../pages/visit.astro".
-const PAGE_FILES = typeof import.meta.glob === "function"
-	? Object.keys(import.meta.glob("../../pages/*.astro"))
-	: [];
+// Keys look like "../../pages/visit.astro". Vite only transforms direct
+// import.meta.glob calls; plain Node reaches the catch in unit tests.
+let PAGE_FILES: string[] = [];
+try {
+	PAGE_FILES = Object.keys(import.meta.glob("../../pages/*.astro"));
+} catch {
+	PAGE_FILES = [];
+}
 
 // Routes that aren't public content pages — plus pages that have been
 // "blockified" (mounted builder pages), which list as builder pages instead.
