@@ -7,7 +7,6 @@
     "@astrojs/mdx": "4.3.12",
     "@astrojs/react": "^6.0.1",
     "@astrojs/rss": "4.0.14",
-    "@astrojs/sitemap": "3.6.0",
     "@measured/puck": "^0.20.2",
     "@vercel/blob": "^2.8.0",
     "astro": "5.16.2",
@@ -22,13 +21,14 @@
     "build": "astro build",
     "check": "astro build && tsc",
     "dev": "astro dev",
-    "test": "node --test --experimental-strip-types test/*.test.ts",
-    "preview": "wrangler dev",
+		"preview": "wrangler dev",
+		"test": "tsx --test test/*.test.ts domain-redirects.test.mjs tests/runtime-content.test.ts",
     "worker:check": "npm run build && wrangler deploy --dry-run",
     "worker:types": "wrangler types --include-runtime=false"
   },
   "type": "module",
   "devDependencies": {
+    "tsx": "4.23.13",
     "wrangler": "4.129.1"
   }
 }

@@ -1,24 +1,14 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
 import cloudflare from "@astrojs/cloudflare";
 
-import taxonomy from "./content/ministry-taxonomy.json" with { type: "json" };
-
-// The ministry category pages render per request now, so their calendars are
-// live. Astro's sitemap only sees prerendered routes, so they are listed here
-// by hand — they are real pages and they belong in the sitemap.
-const categoryUrls = taxonomy.families.flatMap((family) =>
-	family.categories.map((c) => `https://unifygr.com/ministries/${family.slug}/${c.slug}`),
-);
-
 // https://astro.build/config
 export default defineConfig({
 	site: process.env.PUBLIC_SITE_URL ?? "https://unifygr.com",
-	integrations: [mdx(), sitemap({ customPages: categoryUrls }), react()],
+	integrations: [mdx(), react()],
 	adapter: cloudflare({
 		// Expose Worker bindings at Astro.locals.runtime during local development,
 		// matching the production request context.
