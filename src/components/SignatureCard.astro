@@ -28,7 +28,7 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 <article class="sig">
 	<button class:list={["sig__face", { "sig__face--light": light }]} type="button" aria-expanded="false" aria-controls={id}>
 		{light && image ? (
-			<img class="sig__image" src={image} width={imageSize?.width} height={imageSize?.height} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+			<img class="sig__image" src={image} width={imageSize?.width} height={imageSize?.height} alt="" aria-hidden="true" loading={light ? "eager" : "lazy"} decoding="async" />
 		) : !light ? (
 			<>
 				<span class="sig__art" style={`background-image:url(${image})`} aria-hidden="true"></span>
