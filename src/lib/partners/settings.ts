@@ -79,10 +79,6 @@ const DEFAULT_GLOBALS: Globals = {
 	daysAhead: 60,
 };
 
-function blobToken(): string | undefined {
-	return process.env.BLOB_READ_WRITE_TOKEN || (import.meta as any).env?.BLOB_READ_WRITE_TOKEN;
-}
-
 /** Fill in anything a stored or hand-edited file left out. */
 export function normalise(raw: any): Settings {
 	const globals = { ...DEFAULT_GLOBALS, ...(raw?.globals || {}) };
@@ -134,53 +130,9 @@ export async function readSettingsState(locals?: RuntimeLocals): Promise<{ setti
 	return { settings: normalise(stored.value), version: stored.version };
 }
 
-/** What the site should use right now. Never throws: falls back to the seed. */
-export async function readSettings(): Promise<Settings> {
-	const token = blobToken();
-	if (token) {
-		try {
-			const { get } = await import("@vercel/blob");
-			const found = await get(BLOB_PATH, { access: "private", useCache: false, token });
-			if (found) {
-				const text = await new Response(found.stream).text();
-				return normalise(JSON.parse(text));
-			}
-		} catch {
-			// Nothing saved yet, or the store is unreachable. The seed is a good
-			// answer to both — the calendar keeps working either way.
-		}
-		return seedSettings();
-	}
-	// Laptop: the committed file is the live copy.
-	try {
-		const { promises: fs } = await import("node:fs");
-		const path = await import("node:path");
-		const file = path.join(process.cwd(), "content", "ministry-partners.json");
-		return normalise(JSON.parse(await fs.readFile(file, "utf8")));
-	} catch {
-		return seedSettings();
-	}
-}
-
-export async function writeSettings(next: Settings): Promise<Settings> {
-	const clean = normalise({ ...next, updatedAt: new Date().toISOString() });
-	const body = JSON.stringify(clean, null, "\t") + "\n";
-	const token = blobToken();
-	if (token) {
-		const { put } = await import("@vercel/blob");
-		await put(BLOB_PATH, body, {
-			access: "private",
-			contentType: "application/json",
-			addRandomSuffix: false,
-			allowOverwrite: true,
-			token,
-		});
-		return clean;
-	}
-	const { promises: fs } = await import("node:fs");
-	const path = await import("node:path");
-	await fs.writeFile(path.join(process.cwd(), "content", "ministry-partners.json"), body, "utf8");
-	return clean;
+/** What the public site should use right now. Storage failures must be visible. */
+export async function readSettings(locals?: RuntimeLocals): Promise<Settings> {
+	return (await readSettingsState(locals)).settings;
 }
 
 /** Worker API write: versioned and fail-closed; the committed file remains seed. */

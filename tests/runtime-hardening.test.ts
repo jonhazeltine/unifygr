@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { __setRuntimeContentDriverForTests, ContentConflict, publish, readPublished } from "../src/lib/studio/runtime-content.ts";
-import { readSettingsState, writeSettingsVersioned } from "../src/lib/partners/settings.ts";
+import { readSettings, readSettingsState, writeSettingsVersioned } from "../src/lib/partners/settings.ts";
 import { applyEdits, undo } from "../src/lib/studio/store.ts";
 
 type Entry = { body: string; etag: string };
@@ -40,6 +40,14 @@ test("a stale settings save is rejected after another client saves", async () =>
 	const state = await readSettingsState(locals);
 	await writeSettingsVersioned(state.settings, state.version, locals);
 	await assert.rejects(() => writeSettingsVersioned(state.settings, state.version, locals), ContentConflict);
+});
+
+test("the public settings reader unwraps a versioned settings save", async () => {
+	const d = memory(); __setRuntimeContentDriverForTests(d as any);
+	const state = await readSettingsState(locals);
+	const saved = await writeSettingsVersioned({ ...state.settings, globals: { ...state.settings.globals, daysAhead: 59 } }, state.version, locals);
+	assert.equal((await readSettings(locals)).globals.daysAhead, 59);
+	assert.notEqual(saved.version, "seed");
 });
 
 test("transient runtime read fails closed instead of returning a writable seed", async () => {

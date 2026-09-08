@@ -13,6 +13,7 @@
 import snapshot from "../../../content/curated-events.json";
 import { feed, type RawEvent } from "./churchmap";
 import { readSettings, showing, type Settings } from "./settings";
+import type { RuntimeLocals } from "../studio/runtime-content";
 import { THEME_CATEGORIES, themeLabel } from "./themes";
 
 export type CalendarEvent = {
@@ -164,8 +165,8 @@ function fromSnapshot(settings: Settings): CalendarEvent[] {
 }
 
 /** The calendar as the site should render it right now. */
-export async function calendar(): Promise<Calendar> {
-	const settings = await readSettings();
+export async function calendar(locals?: RuntimeLocals): Promise<Calendar> {
+	const settings = await readSettings(locals);
 	let events: CalendarEvent[];
 	let stale = false;
 	try {

@@ -33,7 +33,7 @@ const signature = offering.filter((e) => e.house === "in");
 const curated = offering.filter((e) => e.house === "out");
 
 // Only this category's gatherings belong on this page's calendar.
-const { events: allEvents } = await calendar();
+const { events: allEvents } = await calendar(Astro.locals);
 const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).slice(0, 12);
 // Fresh within a few minutes, but served from cache like a static page. A
 // switch flipped in the partners panel shows here within five minutes.

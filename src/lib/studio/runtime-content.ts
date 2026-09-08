@@ -29,7 +29,9 @@ export function __setRuntimeContentDriverForTests(next?: BlobDriver): void {
 }
 
 export function runtimeToken(locals?: RuntimeLocals): string | undefined {
-	return locals?.runtime?.env?.BLOB_READ_WRITE_TOKEN;
+	return locals?.runtime?.env?.BLOB_READ_WRITE_TOKEN
+		|| process.env.BLOB_READ_WRITE_TOKEN
+		|| (import.meta as any).env?.BLOB_READ_WRITE_TOKEN;
 }
 
 function version(): string {
