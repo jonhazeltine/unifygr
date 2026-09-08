@@ -8,10 +8,11 @@ text; this file is the real orientation doc.
 ## Stack
 
 - Astro 5 (MDX, RSS, React integrations) + `@astrojs/cloudflare` Worker adapter.
-- `wrangler.jsonc` configures the Cloudflare target. Repository configuration is
-  not proof of a production cutover: verify live DNS and response headers before
-  reporting hosting status. The migration candidate was prepared while
-  unifygr.com was still served by Vercel on September 8, 2026.
+- `unifygr.com` and `www.unifygr.com` are bound to Cloudflare Worker `unifygr`.
+  On September 8, 2026 the registrar delegation changed to Cloudflare and live
+  HTTPS passed against both Cloudflare hosts. Verify current DNS and response
+  headers before reporting hosting state; recursive caches can retain Vercel
+  during propagation. `wrangler.jsonc` preserves both custom-domain bindings.
 - Many pages now (`src/pages/`), with editable copy in `content/site.json`,
   constants in `src/data/site.ts`, styles in `src/styles/`, and generated art
   under `public/art/generated/`.
@@ -32,8 +33,10 @@ text; this file is the real orientation doc.
 - `npm test` — auth, domain redirects, discovery and runtime content/API tests.
 - `npm run build` — emits the Worker and static assets in `dist/`.
 - `npm run worker:check` — build plus Wrangler deployment dry run.
-- `npm run preview` — local Wrangler runtime. Actual deployment requires the
-  configured Cloudflare account and existing secrets; never commit credentials.
+- `npm run preview` — local Wrangler runtime. Deploy with the project-local
+  `npx wrangler deploy` after checks; existing production secrets are preserved.
+  Never commit credentials. The public verification address is
+  https://unifygr.jhazeltine.workers.dev.
 - `PUBLIC_SITE_URL` defaults to unifygr.com. Set it to https://newlifegr.com only
   for the authorized final-domain activation. Old-host API callbacks remain
   direct while human pages redirect; email DNS records must be preserved.
@@ -156,3 +159,12 @@ board, routines, and PRs. To hand it a finding outside your task: read
 names in session listings come from working directories, not titles. If it isn't
 reachable, write the finding onto this project's Mirror board with a clear
 recommendation instead. (No such session or file exists on a clone elsewhere.)
+
+## Compiled content verification
+
+Keep `import.meta.glob` calls literal and direct so Vite transforms them. Do not
+guard them with `typeof import.meta.glob` or alias the function: the production
+bundle loses its page/media manifests even when Node tests pass. Verify the
+compiled Worker serves `/giving`, `/membership`, `/staff`, and `/mission-trips`,
+and that authenticated Studio lists bundled pages and media. Node-only tests
+with seeded manifests cannot prove this build-time integration.
