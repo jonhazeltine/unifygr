@@ -7,21 +7,36 @@ text; this file is the real orientation doc.
 
 ## Stack
 
-- Astro 5 (MDX, sitemap, RSS, React integrations) + `@astrojs/vercel` adapter.
-- Deployed on **Vercel** at unifygr.com; every push to `main` deploys.
+- Astro 5 (MDX, RSS, React integrations) + `@astrojs/cloudflare` Worker adapter.
+- `wrangler.jsonc` configures the Cloudflare target. Repository configuration is
+  not proof of a production cutover: verify live DNS and response headers before
+  reporting hosting status. The migration candidate was prepared while
+  unifygr.com was still served by Vercel on September 8, 2026.
 - Many pages now (`src/pages/`), with editable copy in `content/site.json`,
   constants in `src/data/site.ts`, styles in `src/styles/`, and generated art
   under `public/art/generated/`.
 - **The Studio is the CMS** — a staff-only dock on the live site
   (`src/components/StudioDock.astro`, `src/lib/studio/`, `/api/studio/*`).
-  It edits fenced fields in `content/site.json` and commits pages, nav and
-  media to `main`. TinaCMS was removed 2026-08-25; don't reintroduce it.
+  Hosted text, page, navigation and ministry-directory changes persist in
+  private Vercel Blob at runtime, with version checks and immutable revisions.
+  Repository JSON is the initial seed; ordinary saves do not commit or rebuild.
+  Studio proposals require an explicit Publish action. Draft media requires
+  explicit promotion. Local CLI tools are unavailable in hosted Workers;
+  hosted proposals use the configured Anthropic API. TinaCMS was removed
+  2026-08-25; do not reintroduce it.
 
 ## Build & deploy
 
 - `npm run dev` — local dev at :4321.
 - `npm run check` — build + typecheck.
-- `npm run build` — what Vercel runs; merging to `main` is how the site ships.
+- `npm test` — auth, domain redirects, discovery and runtime content/API tests.
+- `npm run build` — emits the Worker and static assets in `dist/`.
+- `npm run worker:check` — build plus Wrangler deployment dry run.
+- `npm run preview` — local Wrangler runtime. Actual deployment requires the
+  configured Cloudflare account and existing secrets; never commit credentials.
+- `PUBLIC_SITE_URL` defaults to unifygr.com. Set it to https://newlifegr.com only
+  for the authorized final-domain activation. Old-host API callbacks remain
+  direct while human pages redirect; email DNS records must be preserved.
 - `.github/workflows/mirror-plan-codework.yml` is the Mirror app's dispatch
   workflow (Claude code-work runs from Mirror plans) — don't remove it.
 
@@ -40,8 +55,10 @@ publish, and nothing about it is baked into the repo:
   the live copy. `src/lib/partners/settings.ts` handles both.
 - **The assembly** is `src/lib/partners/calendar.ts`, consumed by
   `/ministries/calendar` and every `/ministries/<family>/<category>` page. Both
-  are `prerender = false` with a 5-minute edge cache. Because they no longer
-  prerender, their URLs are listed in the sitemap by hand in `astro.config.mjs`.
+  are `prerender = false` with a 5-minute edge cache. The runtime sitemap
+  (`src/pages/sitemap.xml.ts`, `src/lib/discovery.ts`) includes their URLs and
+  live builder pages, excluding drafts and private routes. Canonical URLs and
+  robots use the configured public site origin.
 - **Three global switches** (housekeeping, other churches' Sunday mornings, how
   far ahead) are the ONLY thing besides the panel that can drop an event, and
   all three are visible and toggleable in the panel. Do not add a hidden rule:
