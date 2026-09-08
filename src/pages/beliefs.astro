@@ -149,28 +149,7 @@ export const prerender = false;
 		</div>
 	</section>
 
-	<!-- Section 6 — What this means (and what it doesn't) -->
-	<section class="section prose-block">
-		<div class="container">
-			<p class="eyebrow reveal">What this means</p>
-			<h2 class="prose-block__title reveal">Let's be clear.</h2>
-			<div class="clarify">
-				<ul class="clarify__col clarify__col--not">
-					<li class="reveal">This does <strong>not</strong> mean doctrine doesn't matter. It does.</li>
-					<li class="reveal">This does <strong>not</strong> mean we're soft on our convictions. We're not.</li>
-					<li class="reveal">This does <strong>not</strong> mean visiting or praying for another church endorses everything they believe.</li>
-					<li class="reveal">This does <strong>not</strong> mean working alongside unbelievers or other organizations endorses everything they stand for.</li>
-				</ul>
-				<ul class="clarify__col clarify__col--does">
-					<li class="reveal">We hold our convictions firmly <em>and</em> refuse to break fellowship with believers who land somewhere different on secondary things.</li>
-					<li class="reveal">We think division within Christ's body is a real and present danger that diminishes the testimony and name of Jesus.</li>
-					<li class="reveal">We don't measure our unity by how well we treat the outside world. The test is whether we will still pray beside a believer we <em>know</em> is wrong.</li>
-				</ul>
-			</div>
-		</div>
-	</section>
-
-	<!-- Section 7 — Where the rest lives + CTA -->
+	<!-- Section 6 — Where the rest lives + CTA -->
 	<section class="section prose-block prose-block--tinted">
 		<div class="container">
 			<p class="eyebrow reveal">Where the rest lives</p>
@@ -437,56 +416,6 @@ export const prerender = false;
 		line-height: 1.1;
 		color: var(--text);
 		margin: 2.6rem 0 0;
-	}
-
-	/* --- Section 5: clarify columns --- */
-	.clarify {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1.6rem;
-		margin-top: 2rem;
-	}
-	.clarify__col {
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		gap: 0.9rem;
-		align-content: start;
-	}
-	.clarify__col li {
-		position: relative;
-		padding: 1.1rem 1.2rem 1.1rem 2.5rem;
-		border: 1px solid var(--line);
-		border-radius: 14px;
-		background: var(--panel);
-		color: var(--muted);
-		font-size: clamp(0.95rem, 1.3vw, 1.02rem);
-		line-height: 1.6;
-	}
-	.clarify__col li strong {
-		color: var(--text);
-	}
-	.clarify__col li em {
-		color: var(--text);
-		font-style: italic;
-	}
-	.clarify__col li::before {
-		position: absolute;
-		left: 0.95rem;
-		top: 1rem;
-		font-family: "Iowan Old Style", Georgia, serif;
-	}
-	.clarify__col--not li::before {
-		content: "×";
-		color: var(--rose);
-	}
-	.clarify__col--does li {
-		border-color: var(--gold-soft);
-	}
-	.clarify__col--does li::before {
-		content: "✓";
-		color: var(--gold);
 	}
 
 	/* --- Section 6: pull line + CTA --- */
