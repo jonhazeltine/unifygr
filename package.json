@@ -22,7 +22,7 @@
     "check": "astro build && tsc",
     "dev": "astro dev",
 		"preview": "wrangler dev",
-		"test": "tsx --test test/*.test.ts domain-redirects.test.mjs tests/runtime-content.test.ts",
+		"test": "tsx --test test/*.test.ts domain-redirects.test.mjs tests/*.test.ts",
     "worker:check": "npm run build && wrangler deploy --dry-run",
     "worker:types": "wrangler types --include-runtime=false"
   },

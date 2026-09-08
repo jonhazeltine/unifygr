@@ -230,7 +230,7 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	if (MOUNTED[slug]) throw new Error("This page is part of the site's structure — it can't be deleted (unpublish it instead).");
 	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
 	const current = await readPublished(keyFor(slug), bundled, locals);
-	if (expectedVersion && expectedVersion !== current.version) throw new Error("This page changed while you were editing it. Refresh and review it before publishing.");
+	if (expectedVersion && expectedVersion !== current.version) throw new ContentConflict();
 	await publish<PageData | null>(keyFor(slug), null, bundled, current.version, locals);
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
