@@ -4,12 +4,15 @@
 export const prerender = false;
 
 import MountedPage from "../../components/builder/MountedPage.astro";
-import { MOUNTED } from "../../lib/studio/pages";
+import { isAuthed } from "../../lib/studio/auth";
+import { draftGuard, MOUNTED } from "../../lib/studio/pages";
 
 const { slug } = Astro.params;
 if (slug && MOUNTED[slug]) {
 	return Astro.redirect(MOUNTED[slug]);
 }
+const notFound = await draftGuard(slug!, isAuthed(Astro.cookies), Astro.locals);
+if (notFound) return notFound;
 ---
 
 <MountedPage slug={slug!} />

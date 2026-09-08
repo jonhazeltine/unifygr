@@ -1,10 +1,8 @@
 // The BRAIN — turns a staff member's plain-English message into proposed edits.
 //
-// This is the seam where Claude plugs in. Right now it runs a rule-based STUB
-// so the whole editor works with no API key: it figures out which fenced field
-// you mean and what to set it to. When the real key lands, only proposeEdits()
-// changes — it will call the Claude API with the editable fields as tools and
-// return the SAME { reply, edits } shape. Nothing downstream changes.
+// Hosted Studio uses the Anthropic API and a forced structured tool response.
+// Local development keeps the signed-in Claude CLI path. If neither is
+// configured, the narrow rule-based editor still handles simple field edits.
 
 import { editableFields, type EditableField } from "./schema";
 import type { Edit } from "./store";
@@ -119,16 +117,20 @@ async function proposeEditsViaApi(message: string, content: any, context: PageCo
 			tool_choice: { type: "tool", name: "return_edits" },
 			messages: [{ role: "user", content: prompt }],
 		}),
+		signal: AbortSignal.timeout(30_000),
 	});
 	if (!response.ok) throw new Error(`Studio AI returned ${response.status}.`);
 	const body = await response.json() as any;
 	const output = body.content?.find((item: any) => item.type === "tool_use")?.input;
-	if (!output || !Array.isArray(output.edits)) throw new Error("Studio AI returned no proposal.");
+	if (!output || typeof output !== "object" || !Array.isArray(output.edits)) throw new Error("Studio AI returned no proposal.");
 	const allowed = new Set(fields.map((field) => field.path));
 	const edits: Edit[] = output.edits
-		.filter((edit: any) => edit && allowed.has(edit.path))
-		.map((edit: any) => ({ path: edit.path, from: getPath(content, edit.path), to: String(edit.to) }));
-	return { reply: String(output.reply || "Here's the change — review and Publish."), edits };
+		.filter((edit: any) => edit && typeof edit.path === "string" && typeof edit.to === "string" && allowed.has(edit.path))
+		.map((edit: any) => ({ path: edit.path, from: getPath(content, edit.path), to: edit.to }));
+	const reply = typeof output.reply === "string" && output.reply.trim()
+		? output.reply
+		: "Here's the change — review and Publish.";
+	return { reply, edits };
 }
 
 function proposeEditsStub(message: string, content: any): Proposal {
@@ -180,9 +182,3 @@ function proposeEditsStub(message: string, content: any): Proposal {
 		edits: [{ path: best.f.path, from: current, to: value }],
 	};
 }
-
-// ── When the API key is ready, proposeEdits() becomes roughly: ───────────────
-//   const tools = editableFields(content).map(fieldToTool)
-//   const res = await anthropic.messages.create({ model, tools, system, messages })
-//   → map Claude's tool calls to Edit[] (each already fence-checked) and return
-//     { reply: res.text, edits }.  The store still re-verifies every path.
