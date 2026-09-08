@@ -8,6 +8,7 @@
 
 import { editableFields, type EditableField } from "./schema";
 import type { Edit } from "./store";
+import { isCloudflareWorker } from "../runtime";
 
 export type Proposal = {
 	/** conversational reply shown in the chat */
@@ -70,7 +71,10 @@ export async function proposeEdits(
 	content: any,
 	context: PageContext = {},
 ): Promise<Proposal> {
-	if (process.env.STUDIO_BRAIN !== "stub") {
+	if (isCloudflareWorker() && process.env.ANTHROPIC_API_KEY) {
+		return proposeEditsViaApi(message, content, context);
+	}
+	if (import.meta.env.DEV && process.env.STUDIO_BRAIN !== "stub") {
 		try {
 			const { proposeEditsViaClaude } = await import("./brain-claude");
 			return await proposeEditsViaClaude(message, content, context);
@@ -79,6 +83,52 @@ export async function proposeEdits(
 		}
 	}
 	return proposeEditsStub(message, content);
+}
+
+async function proposeEditsViaApi(message: string, content: any, context: PageContext): Promise<Proposal> {
+	const fields = editableFields(content);
+	const prompt = [
+		"You edit the New Life Grand Rapids church website's approved text fields.",
+		"Return only changes to the exact fields listed below. Ask a brief clarifying question and return no edits if the request is unclear.",
+		...fields.map((field) => `- ${field.path}: ${JSON.stringify(String(getPath(content, field.path) ?? ""))}${field.hint ? ` (${field.hint})` : ""}`),
+		`Current page: ${context.page || context.path || "the site"}`,
+		`Staff request: ${JSON.stringify(message)}`,
+	].join("\n");
+	const response = await fetch("https://api.anthropic.com/v1/messages", {
+		method: "POST",
+		headers: {
+			"x-api-key": process.env.ANTHROPIC_API_KEY,
+			"anthropic-version": "2023-06-01",
+			"content-type": "application/json",
+		},
+		body: JSON.stringify({
+			model: process.env.STUDIO_API_MODEL || "claude-sonnet-5",
+			max_tokens: 2048,
+			tools: [{
+				name: "return_edits",
+				description: "Return a brief reply and proposed edits to approved fields.",
+				input_schema: {
+					type: "object",
+					properties: {
+						reply: { type: "string" },
+						edits: { type: "array", items: { type: "object", properties: { path: { type: "string" }, to: { type: "string" } }, required: ["path", "to"] } },
+					},
+					required: ["reply", "edits"],
+				},
+			}],
+			tool_choice: { type: "tool", name: "return_edits" },
+			messages: [{ role: "user", content: prompt }],
+		}),
+	});
+	if (!response.ok) throw new Error(`Studio AI returned ${response.status}.`);
+	const body = await response.json() as any;
+	const output = body.content?.find((item: any) => item.type === "tool_use")?.input;
+	if (!output || !Array.isArray(output.edits)) throw new Error("Studio AI returned no proposal.");
+	const allowed = new Set(fields.map((field) => field.path));
+	const edits: Edit[] = output.edits
+		.filter((edit: any) => edit && allowed.has(edit.path))
+		.map((edit: any) => ({ path: edit.path, from: getPath(content, edit.path), to: String(edit.to) }));
+	return { reply: String(output.reply || "Here's the change — review and Publish."), edits };
 }
 
 function proposeEditsStub(message: string, content: any): Proposal {

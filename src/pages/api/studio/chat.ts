@@ -22,9 +22,13 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
     return json({ error: "No message." }, 400);
 
 	const snapshot = await readContentSnapshot(locals);
-	const proposal = await proposeEdits(message, snapshot.content, {
-    path: typeof path === "string" ? path : undefined,
-    page: typeof page === "string" ? page : undefined,
-  });
-	return json({ ...proposal, version: snapshot.version });
+	try {
+		const proposal = await proposeEdits(message, snapshot.content, {
+			path: typeof path === "string" ? path : undefined,
+			page: typeof page === "string" ? page : undefined,
+		});
+		return json({ ...proposal, version: snapshot.version });
+	} catch {
+		return json({ error: "The editor couldn't prepare that change. Try again." }, 502);
+	}
 };
