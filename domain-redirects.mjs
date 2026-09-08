@@ -74,24 +74,17 @@ export function redirectForRequest(request, siteUrl = process.env.PUBLIC_SITE_UR
 	const targetPath = LEGACY_PATH_REDIRECTS[incoming.pathname];
 	const targetIsExternal = typeof targetPath === "string" && /^https?:\/\//.test(targetPath);
 
-	// A final-domain request with an old path needs the same path mapping as an
-	// old-domain request. A canonical final URL with no old path is already done.
-	if (!mapped && !oldHost && !(finalActive && finalWww)) return null;
-	if (!mapped && !finalActive) return null;
-
-	const destination = configuredSiteUrl(siteUrl);
+	const canonicalizeHost = finalActive && (oldHost || finalWww);
+	if (!mapped && !canonicalizeHost) return null;
 	if (mapped && targetIsExternal) return mapped;
-	if (mapped) {
-		const mappedUrl = new URL(mapped, incoming.origin);
-		destination.pathname = mappedUrl.pathname;
-		destination.search = mappedUrl.search;
-		destination.hash = mappedUrl.hash;
-	} else {
-		destination.pathname = incoming.pathname;
-		destination.search = incoming.search;
-		destination.hash = incoming.hash;
+
+	// Path-only redirects retain the request origin, including a local preview
+	// port. Only explicitly activated production hosts change origin.
+	const destination = mapped ? new URL(mapped, incoming.origin) : new URL(incoming);
+	if (canonicalizeHost) {
+		destination.protocol = "https:";
+		destination.hostname = FINAL_HOST;
+		destination.port = "";
 	}
-	if (!finalActive) destination.hostname = incoming.hostname;
-	else destination.hostname = FINAL_HOST;
-	return destination.toString();
+	return destination.toString() === incoming.toString() ? null : destination.toString();
 }

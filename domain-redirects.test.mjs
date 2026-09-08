@@ -98,3 +98,18 @@ test("keeps old-host API callbacks local while redirecting human pages", () => {
 		"https://newlifegr.com/about",
 	);
 });
+
+
+test("identity paths do not redirect to themselves on production or local previews", () => {
+ for (const origin of ["https://unifygr.com", "http://127.0.0.1:4324", "http://localhost:4324", "https://preview.workers.dev"]) {
+  for (const path of ["/", "/giving", "/watch"]) {
+   assert.equal(redirectForRequest(new Request(origin + path), "https://unifygr.com"), null);
+  }
+ }
+});
+
+test("local legacy paths preserve protocol and port even with the final domain configured", () => {
+ for (const site of ["https://unifygr.com", "https://newlifegr.com"]) {
+  assert.equal(redirectForRequest(new Request("http://127.0.0.1:4324/home?x=1"), site), "http://127.0.0.1:4324/?x=1");
+ }
+});
