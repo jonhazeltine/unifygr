@@ -3,21 +3,20 @@
 Use one visual language across every image:
 
 - Cinematic spiritual minimalism
-- Midnight blue and charcoal base
-- Warm gold halos and soft ivory light
+- Deep blue and charcoal as an accent, with clear daylight, warm gold, and soft ivory as equal parts of the frame
 - A faint cool-blue secondary glow
 - Volumetric light beams, mist, and soft grain
-- Monumental composition, negative space, and calm framing
-- Reverent tone, not fantasy-game art, not kitsch church stock
+- Human-scale composition, generous daylight, and calm framing
+- Reverent and welcoming, never ominous or fantasy-game art
 - No text, logos, UI, or obvious poster treatment inside the image
 
 Global negative prompt:
 
-`cartoon, anime, comic, low detail, cheesy church clipart, smiling stock models, over-sharpened HDR, neon cyberpunk, purple fantasy, extra limbs, malformed hands, text, watermark, logo, frame, collage, split layout`
+`cartoon, anime, comic, low detail, cheesy church clipart, over-sharpened HDR, neon cyberpunk, purple fantasy, extra limbs, malformed hands, text, watermark, logo, frame, collage, split layout, blacked-out faces, children in shadow, children running away from camera, ominous doorway`
 
 Hero prompt:
 
-`A cinematic, reverent portrait scene of Jesus as a luminous silhouette standing above a dark city at dawn, centered composition, monumental scale, robe shape readable but facial features mostly lost in shadow, radiant warm halo, soft volumetric light beams descending from above, midnight blue and charcoal environment, pale gold rim light, faint blue atmospheric haze, minimal but emotionally powerful, Apple-launch-level restraint, premium editorial lighting, ultra cohesive color palette, realistic light behavior, wide hero image`
+`A cinematic, reverent dawn scene over Grand Rapids with a clear blue sky, warm ivory light, and human-scale welcome; a luminous symbolic figure may be present but must read in soft daylight rather than as a black silhouette. Open composition, natural light behavior, calm premium editorial mood, wide hero image`
 
 Worship prompt:
 
@@ -51,7 +50,7 @@ Sixteen areas, sixteen distinct images — no sharing between areas.
 
 Shared spine, appended to every per-area subject so the set reads as one family:
 
-`Cinematic spiritual minimalism, midnight blue and charcoal palette, warm gold light, faint cool-blue secondary glow, visible volumetric light beams, soft mist and fine grain, monumental composition with generous negative space, reverent and restrained. Luminous and generously lit — the light fills much of the frame and the subject reads clearly; rich midtones, not underexposed, not a black frame. Premium editorial lighting, realistic light behaviour, no faces visible, no text or logos.`
+`Cinematic spiritual minimalism with natural daylight, warm gold and soft ivory light, blue used as an accent, subtle haze and fine grain, generous negative space, welcoming and restrained. The subject reads clearly in rich midtones; never underexposed or a black frame. Premium editorial lighting, realistic light behaviour, no text or logos.`
 
 Per-area subjects (change only this half):
 
@@ -59,7 +58,7 @@ Per-area subjects (change only this half):
 |---|---|
 | worship-and-prayer | glowing circular window of light above a congregation in silhouette |
 | formation | long table, one open book under a hanging lamp, empty chairs |
-| kids | children in silhouette running toward a tall lit doorway |
+| kids | diverse elementary-age children playing together outdoors in bright morning light, faces naturally visible, an adult leader nearby, safe and joyful rather than posed |
 | students | young figures on a rooftop edge at blue hour, city glow beyond |
 | marriage-family | two figures walking a narrow lit path together |
 | foster-adoption | an adult and a child at a warmly lit doorway, seen from behind |
@@ -74,8 +73,11 @@ Per-area subjects (change only this half):
 | creative | light through a tall patterned window, instruments in silhouette |
 | seniors | two figures on a bench facing a golden horizon over water |
 
-**Exposure rule.** The card crops a short horizontal band and lays a gradient over
-it, so anything underexposed becomes a black rectangle. After generating,
-normalise the whole set to a mean luminance of ~56 with a per-image gamma
-(floor the gamma at 0.42 so noise is not lifted out of true black). Straight
-out of the model these ranged 15–55; without the pass the set looks unrelated.
+**Children and families.** Do not use silhouettes, obscured faces, children
+moving toward darkness, or isolated children. Use age-appropriate daylight,
+visible supervision, ordinary play or belonging, and a clearly safe setting.
+
+**Exposure rule.** The card crops a short horizontal band and lays a text
+gradient over it. Generate a well-exposed original with a mean luminance around
+56 or higher; preserve real daylight and skin tones rather than lifting a dark
+frame afterward.

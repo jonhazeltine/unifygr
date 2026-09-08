@@ -117,10 +117,12 @@ up on, and the Asana task spells the step out.
 
 ## Rules
 
-- **All imagery follows `AI_ART_DIRECTION.md`** — one visual language
-  (cinematic spiritual minimalism, midnight blue/charcoal + warm gold), with
-  the global negative prompt and per-scene prompts defined there. Read it
-  before generating or swapping any art.
+- **All imagery follows `AI_ART_DIRECTION.md`** — cinematic spiritual
+  minimalism with natural daylight, warm gold and soft ivory, using deep blue
+  as an accent. Ministry images must be welcoming and age-appropriate; never
+  put children in shadow or isolate them in an unsafe-looking scene. Read the
+  global negative prompt and per-scene guidance before generating or swapping
+  any art.
 - Public repo: never commit secrets or personal data. `.env.local` is
   gitignored; keep it that way.
 - Ship via feature branch → PR → squash-merge to `main` (auto-merge is

@@ -299,19 +299,19 @@ body.v2 :focus-visible {
 	height: 100%;
 	object-fit: cover;
 	object-position: 50% 30%;
-	opacity: 0.5;
+	opacity: 0.78;
 }
 
-/* Atmosphere sits behind a scrim heavy enough that type never fights it. */
+/* Keep a readable text lane without turning the whole image into a dark wash. */
 .opener__bg::after {
 	content: "";
 	position: absolute;
 	inset: 0;
 	background: linear-gradient(
 		180deg,
-		rgba(6, 7, 10, 0.72) 0%,
-		rgba(6, 7, 10, 0.86) 55%,
-		var(--ink) 100%
+		rgba(6, 7, 10, 0.35) 0%,
+		rgba(6, 7, 10, 0.54) 55%,
+		rgba(6, 7, 10, 0.76) 100%
 	);
 }
 
