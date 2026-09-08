@@ -29,12 +29,14 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 	<button class:list={["sig__face", { "sig__face--light": light }]} type="button" aria-expanded="false" aria-controls={id}>
 		{light && image ? (
 			<img class="sig__image" src={image} width={imageSize?.width} height={imageSize?.height} alt="" aria-hidden="true" loading={light ? "eager" : "lazy"} decoding="async" />
-		) : !light ? (
+		) : light ? (
+			<span class="sig__placeholder" aria-hidden="true"></span>
+		) : (
 			<>
 				<span class="sig__art" style={`background-image:url(${image})`} aria-hidden="true"></span>
 				<span class="sig__scrim" aria-hidden="true"></span>
 			</>
-		) : null}
+		)}
 		<span class="sig__head">
 			{entry.rhythm && <span class="sig__when">{entry.rhythm}</span>}
 			<span class="sig__name">{entry.name}</span>
@@ -99,7 +101,12 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 	/* On ministry pages, people are the art. Preserve the approved photograph's
 	   native framing instead of turning it into a dark text backdrop. */
 	.sig__face--light { background: #fffdf9; color: #17202b; }
-	.sig__image { display: block; width: 100%; height: auto; max-height: 28rem; object-fit: contain; background: #f0e9de; }
+	.sig__image, .sig__placeholder {
+		display: block; width: 100%; aspect-ratio: 16 / 9; height: auto;
+		object-fit: cover; background: #ece4d6;
+	}
+	.sig__placeholder { background: linear-gradient(145deg, #f0e9de, #e5dac9); }
+	.sig__image[src$="prayer-approved.webp"] { object-position: center 55%; }
 	.sig__face--light .sig__head { padding-top: clamp(1.2rem, 3vw, 1.9rem); }
 	.sig__face--light .sig__when { color: #765a2b; }
 	.sig__face--light .sig__name { color: #17202b; }

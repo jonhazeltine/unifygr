@@ -222,14 +222,14 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 					const cur = inArea.length - sig;
 					return (
 						<a class="min-family" href={`/ministries/${family.slug}`}>
-							{approvedArt && familyImage(family.slug) && (
-								<span class:list={["min-family__art", "min-family__art--approved", { "min-family__art--pair": approvedArt.extraImages?.length }]} aria-hidden="true" style={`--approved-aspect-ratio: ${approvedArt.aspectRatio};`}>
+							{approvedArt && familyImage(family.slug) ? (
+								<span class:list={["min-family__art", "min-family__art--approved", { "min-family__art--pair": approvedArt.extraImages?.length }]} aria-hidden="true">
 									<img src={familyImage(family.slug)} alt="" loading="lazy" decoding="async" />
 									{approvedArt.extraImages?.map((image) => (
 										<img src={image.src} alt="" loading="lazy" decoding="async" />
 									))}
 								</span>
-							)}
+							) : <span class="min-family__art min-family__art--placeholder" aria-hidden="true"></span>}
 							<div class="min-family__head">
 								<h3>{family.name}</h3>
 								<span class={n ? "min-family__n" : "min-family__n min-family__n--empty"}>
