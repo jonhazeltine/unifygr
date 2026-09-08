@@ -1,29 +1,24 @@
 // @ts-check
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
 import react from "@astrojs/react";
 
-import vercel from "@astrojs/vercel";
-
-import taxonomy from "./content/ministry-taxonomy.json" with { type: "json" };
-
-// The ministry category pages render per request now, so their calendars are
-// live. Astro's sitemap only sees prerendered routes, so they are listed here
-// by hand — they are real pages and they belong in the sitemap.
-const categoryUrls = taxonomy.families.flatMap((family) =>
-	family.categories.map((c) => `https://unifygr.com/ministries/${family.slug}/${c.slug}`),
-);
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	site: "https://unifygr.com",
-	integrations: [mdx(), sitemap({ customPages: categoryUrls }), react()],
-	adapter: vercel(),
+	site: process.env.PUBLIC_SITE_URL ?? "https://unifygr.com",
+	integrations: [mdx(), react()],
+	adapter: cloudflare({
+		// Expose Worker bindings at Astro.locals.runtime during local development,
+		// matching the production request context.
+		imageService: "compile",
+		platformProxy: { enabled: true },
+	}),
 	// The Studio agent runs a build to verify its edits; don't let that build's
 	// output disturb the dev server's file watcher (or its route manifest).
 	vite: {
-		server: { watch: { ignored: ["**/.vercel/**", "**/dist/**", "**/.studio/**"] } },
+		server: { watch: { ignored: ["**/.wrangler/**", "**/dist/**", "**/.studio/**"] } },
 	},
 	// Clean short link for the (password-gated) land-sale update page.
 	redirects: {

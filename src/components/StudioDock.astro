@@ -7,9 +7,11 @@
 //
 // Included once before </body> on every page (via Interior.astro + index.astro).
 // Pages stay static; this checks the session client-side and reveals on demand.
+
+const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 ---
 
-<div id="sd-root" class="sd-root" data-state="hidden" aria-live="polite">
+<div id="sd-root" class="sd-root" data-state="hidden" data-runtime={workerHosted ? "worker" : "local"} aria-live="polite">
 	<!-- Launcher pill -->
 	<button id="sd-launch" class="sd-launch" type="button" aria-label="Open the site editor">
 		<span class="sd-spark">✦</span> Edit
@@ -147,11 +149,13 @@
 <script>
 	const root = document.getElementById("sd-root");
 	if (root) {
+		const hosted = root.dataset.runtime === "worker";
 		const $ = (id: string) => document.getElementById(id) as HTMLElement;
 		const api = (path: string, opts?: RequestInit) =>
 			fetch(path, { headers: { "content-type": "application/json" }, ...opts }).then((r) => r.json());
 		const LOG_KEY = "sd_log", OPEN_KEY = "sd_open";
 		let pending: any = null;
+		let contentVersion: string | null = null;
 
 		// Friendly page name from the URL, e.g. "/vision-values" → "vision values".
 		const path = location.pathname;
@@ -186,7 +190,10 @@
 			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false; $("sd-partners").hidden = false;
 			sessionStorage.setItem(OPEN_KEY, "1"); // stay open as staff navigate
 			renderLog();
-			if (loadLog().length === 0) addMsg(`Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
+			api("/api/studio/content").then((r) => { contentVersion = r.version || null; });
+			if (loadLog().length === 0) addMsg(hosted
+				? `Hi! You're on ${pageName}. Tell me which published field you'd like to reword. I'll show the proposed change before it goes live.`
+				: `Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
 			setTimeout(() => $("sd-msg")?.focus(), 50);
 		}
 		function showSignin() {
@@ -196,8 +203,11 @@
 		}
 
 		async function undoLast() {
-			const res = await api("/api/studio/agent-undo", { method: "POST" });
-			if (res.ok) { toast("Reverted ✓"); addMsg(res.reply || "Reverted the last change.", "ai"); }
+			const res = await api(hosted ? "/api/studio/undo" : "/api/studio/agent-undo", { method: "POST" });
+			if (res.ok) {
+				toast("Reverted ✓"); addMsg(res.reply || "Reverted the last change.", "ai");
+				if (hosted) setTimeout(() => location.reload(), 500);
+			}
 			else { addMsg(res.reply || res.error || "Nothing to undo.", "ai"); }
 		}
 
@@ -228,9 +238,10 @@
 			think.className = "sd-bubble ai sd-thinking"; think.textContent = "Working on it…";
 			$("sd-log").appendChild(think); $("sd-log").scrollTop = $("sd-log").scrollHeight;
 			try {
-				const res = await api("/api/studio/agent", { method: "POST", body: JSON.stringify({ message: msg, path, page: pageName }) });
+				const res = await api(hosted ? "/api/studio/chat" : "/api/studio/agent", { method: "POST", body: JSON.stringify({ message: msg, path, page: pageName }) });
 				think.remove();
 				addMsg(res.reply || res.error || "…", "ai");
+				if (hosted) renderProposal(res);
 				if (res.changed && res.changed.length) addMsg("↻ Updated " + res.changed.join(", ") + " — reload the page to see it.", "ai");
 			} catch { think.remove(); addMsg("Something went wrong — try again.", "ai"); }
 			finally { btn.disabled = false; input.focus(); }
@@ -239,10 +250,15 @@
 		async function publish() {
 			if (!pending?.edits?.length) return;
 			($("sd-pub") as HTMLButtonElement).disabled = true;
-			const res = await api("/api/studio/apply", { method: "POST", body: JSON.stringify({ edits: pending.edits, summary: pending.reply }) });
+			const res = await api("/api/studio/apply", {
+				method: "POST",
+				body: JSON.stringify({ edits: pending.edits, message: pending.reply, summary: pending.reply, version: pending.version || contentVersion }),
+			});
 			if (res.ok) {
+				contentVersion = res.version?.id || contentVersion;
 				toast("Published ✓"); $("sd-proposal").innerHTML = ""; pending = null;
-				addMsg("Done — it's live. Reload to see it on the page.", "ai");
+				addMsg("Done — it's live.", "ai");
+				if (hosted) setTimeout(() => location.reload(), 500);
 			} else { addMsg("Couldn't publish: " + (res.error || "error"), "ai"); ($("sd-pub") as HTMLButtonElement).disabled = false; }
 		}
 

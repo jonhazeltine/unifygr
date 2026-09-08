@@ -1,11 +1,13 @@
 ---
 import Interior from "../layouts/Interior.astro";
-import { church, sermons } from "../data/site";
+import { runtimeSite } from "../data/site";
 import { fetchChannelVideos } from "../lib/youtube";
 
 // Rendered per request (edge-cached below) so the list of services follows the
 // YouTube channel automatically — no rebuild, no hand-editing after a Sunday.
 export const prerender = false;
+
+const { church, sermons } = await runtimeSite(Astro.locals);
 
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;

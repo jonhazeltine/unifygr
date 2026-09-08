@@ -76,8 +76,7 @@ export const prerender = false;
 						dates, then open it to choose which kinds. <strong>Ministries</strong> are the
 						organisations we point people to, like Mel Trotter and Guiding Light. They carry no
 						dates, so there is nothing to approve by kind: tick one to list it on the ministry
-						pages, untick it to take it down. Directory changes go live in a minute or two rather
-						than at once, because the directory is part of the site rather than a setting.
+						pages, untick it to take it down. Directory changes appear immediately after saving.
 					</p>
 					<div class="pc-filters">
 						<label class="field pc-search">
@@ -333,6 +332,7 @@ export const prerender = false;
 				partners: [],
 				declined: [],
 			};
+			let settingsVersion = "seed";
 			let showDeclined = false;
 			let filter: "all" | "showing" | "approved" | "new" | "declined" = "all";
 			// The list sorts and filters by a church's state, so changing that state
@@ -354,6 +354,7 @@ export const prerender = false;
 			// The ministry directory — Mel Trotter, Guiding Light, Celebrate Recovery.
 			// These carry no events; their switch decides whether we list them at all.
 			let orgs: DirectoryOrg[] = [];
+			let orgVersion = "seed";
 			type OrgEdit = { listed?: boolean; confirmed?: boolean };
 			let orgEdits = new Map<string, OrgEdit>();
 			// Churches and organisations answer different questions, so the list can be
@@ -1296,19 +1297,23 @@ export const prerender = false;
 				btn.disabled = true;
 				$("savestate").textContent = "Saving…";
 				try {
-					settings = await api("/api/partners/settings", {
+					const savedSettings = await api("/api/partners/settings", {
 						method: "PUT",
-						body: JSON.stringify(settings),
+						body: JSON.stringify({ ...settings, version: settingsVersion }),
 					});
+					if (savedSettings.error) throw new Error(savedSettings.error);
+					settings = savedSettings.settings;
+					settingsVersion = savedSettings.version;
 					if (orgEdits.size) {
 						const res = await api("/api/partners/orgs", {
 							method: "PUT",
-							body: JSON.stringify({ changes: Object.fromEntries(orgEdits) }),
-						});
-						orgs = res.orgs;
+						body: JSON.stringify({ changes: Object.fromEntries(orgEdits), version: orgVersion }),
+					});
+					orgs = res.orgs;
+					orgVersion = res.version || orgVersion;
 						orgEdits = new Map();
 						show(
-							"Church changes are live. The ministry list is part of the site, so those go live in a minute or two.",
+							"Church changes are live now.",
 						);
 					} else {
 						show("");
@@ -1339,7 +1344,9 @@ export const prerender = false;
 				gate.hidden = true;
 				panel.hidden = false;
 				savebar.hidden = false;
-				settings = await api("/api/partners/settings");
+				const loadedSettings = await api("/api/partners/settings");
+				settings = loadedSettings.settings;
+				settingsVersion = loadedSettings.version;
 				markDirty(false);
 				renderGlobals();
 				try {
@@ -1354,7 +1361,9 @@ export const prerender = false;
 					show(err.message);
 				}
 				try {
-					orgs = (await api("/api/partners/orgs")).orgs;
+					const directory = await api("/api/partners/orgs");
+					orgs = directory.orgs;
+					orgVersion = directory.version || "seed";
 				} catch (err: any) {
 					show(err.message);
 				}

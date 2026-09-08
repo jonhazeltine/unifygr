@@ -1,44 +1,80 @@
-// Staff passcode gate for the AI editor.
+// Staff passcode gate for the Studio and partners editor.
 //
-// Stage 1: a single shared passcode compared against the STUDIO_PASSCODE env
-// var (with a dev default), stored as an httpOnly cookie once entered. This is
-// a simple gate to keep the editor staff-only, not a full identity system —
-// good enough while the editor only touches the fenced content fields.
+// The configured passcode never goes into the cookie. Instead, the server
+// derives a purpose-bound HMAC token from it and verifies that token on every
+// protected request. Changing the passcode invalidates every existing session.
 
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import type { AstroCookies } from "astro";
 
 const COOKIE = "studio_auth";
+const SESSION_PURPOSE = "unifygr:studio-session:v1";
+const SESSION_KEY_PURPOSE = "unifygr:studio-session-key:v1";
+const PASSCODE_PURPOSE = "unifygr:studio-passcode-check:v1";
+const TOKEN_PREFIX = "v1.";
+const SESSION_SECONDS = 60 * 60 * 12;
+const TOKEN_PATTERN = /^v1\.(\d{1,13})\.([0-9a-f]{32})\.([0-9a-f]{64})$/u;
 
-function passcode(): string {
-	return process.env.STUDIO_PASSCODE || import.meta.env.STUDIO_PASSCODE || "newlife2026";
+function passcode(): string | null {
+	const configured = process.env.STUDIO_PASSCODE;
+	return typeof configured === "string" && configured.length > 0 ? configured : null;
 }
 
-// The cookie value is derived from the passcode so it can't be guessed from
-// the cookie name alone, and it invalidates automatically if the passcode changes.
-function tokenFor(code: string): string {
-	let h = 2166136261;
-	for (let i = 0; i < code.length; i++) {
-		h ^= code.charCodeAt(i);
-		h = Math.imul(h, 16777619);
-	}
-	return "s" + (h >>> 0).toString(36);
+function passcodeDigest(code: string): Buffer {
+	return createHash("sha256").update(PASSCODE_PURPOSE).update("\0").update(code).digest();
 }
 
-export function checkPasscode(code: string): boolean {
-	return typeof code === "string" && code.length > 0 && code === passcode();
+function sessionKey(code: string): Buffer {
+	return createHash("sha256").update(SESSION_KEY_PURPOSE).update("\0").update(code).digest();
+}
+
+function signatureFor(code: string, payload: string): Buffer {
+	return createHmac("sha256", sessionKey(code)).update(SESSION_PURPOSE).update("\0").update(payload).digest();
+}
+
+function tokenFor(code: string, issuedAt: number): string {
+	const payload = `${issuedAt}.${randomBytes(16).toString("hex")}`;
+	return TOKEN_PREFIX + payload + "." + signatureFor(code, payload).toString("hex");
+}
+
+function validToken(value: unknown, code: string, now: number): boolean {
+	if (typeof value !== "string") return false;
+	const match = TOKEN_PATTERN.exec(value);
+	if (!match) return false;
+
+	const issuedAt = Number(match[1]);
+	if (!Number.isSafeInteger(issuedAt) || issuedAt > now || now - issuedAt > SESSION_SECONDS) return false;
+
+	const payload = `${match[1]}.${match[2]}`;
+	const supplied = Buffer.from(match[3], "hex");
+	return timingSafeEqual(supplied, signatureFor(code, payload));
+}
+
+export function checkPasscode(code: unknown): boolean {
+	const configured = passcode();
+	if (!configured || typeof code !== "string" || code.length === 0) return false;
+
+	return timingSafeEqual(passcodeDigest(code), passcodeDigest(configured));
 }
 
 export function grant(cookies: AstroCookies): void {
-	cookies.set(COOKIE, tokenFor(passcode()), {
+	const configured = passcode();
+	if (!configured) return;
+
+	cookies.set(COOKIE, tokenFor(configured, Math.floor(Date.now() / 1000)), {
 		httpOnly: true,
+		secure: process.env.NODE_ENV === "production",
 		sameSite: "lax",
 		path: "/",
-		maxAge: 60 * 60 * 12, // 12 hours
+		maxAge: SESSION_SECONDS,
 	});
 }
 
 export function isAuthed(cookies: AstroCookies): boolean {
-	return cookies.get(COOKIE)?.value === tokenFor(passcode());
+	const configured = passcode();
+	if (!configured) return false;
+
+	return validToken(cookies.get(COOKIE)?.value, configured, Math.floor(Date.now() / 1000));
 }
 
 export function revoke(cookies: AstroCookies): void {

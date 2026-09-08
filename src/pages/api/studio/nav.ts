@@ -4,23 +4,25 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { readNav, writeNav } from "../../../lib/studio/nav";
+import { readNavState, writeNav } from "../../../lib/studio/nav";
+import { ContentConflict } from "../../../lib/studio/runtime-content";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
-export const GET: APIRoute = async ({ cookies }) => {
+export const GET: APIRoute = async ({ cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
-	return json({ nav: await readNav() });
+	return json(await readNavState(locals));
 };
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const body = await request.json().catch(() => ({}));
 	try {
-		const res = await writeNav(body?.nav);
-		return json({ ok: true, nav: res.nav, via: res.via });
+		if (typeof body?.version !== "string") return json({ ok: false, error: "Refresh the menu before saving." }, 409);
+		const res = await writeNav(body?.nav, body.version, locals);
+		return json({ ok: true, nav: res.nav, via: res.via, version: res.version });
 	} catch (err) {
-		return json({ ok: false, error: (err as Error).message }, 400);
+		return json({ ok: false, error: (err as Error).message }, err instanceof ContentConflict ? 409 : 400);
 	}
 };

@@ -3,12 +3,15 @@
 // reshaping the pages that consume it.
 
 import siteContent from "../../content/site.json";
+import { readContent } from "../lib/studio/store";
 
-const c = siteContent.church;
+function churchFor(content: any) {
+const c = content.church;
+const address = [c.street, c.city, c.state, c.zip].filter(Boolean).join(", ");
 
 // Editable basics come from content/site.json (edited in the Studio).
 // Technical links (socials, CCB, giving, calendar) stay in code.
-export const church = {
+return {
 	name: c.name,
 	shortName: c.shortName,
 	tagline: c.tagline,
@@ -22,7 +25,7 @@ export const church = {
 	phone: c.phone,
 	email: c.email,
 	mapUrl:
-		"https://www.google.com/maps/place/2777+Knapp+St+NE,+Grand+Rapids,+MI+49525",
+		`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`,
 	social: {
 		facebook: "https://www.facebook.com/NewLifeGr",
 		instagram: "https://www.instagram.com/newlifegr/",
@@ -42,10 +45,19 @@ export const church = {
 		formationWelcome: "https://theformation.app/m/welcome-to-new-life",
 	},
 };
+}
+
+export const church = churchFor(siteContent);
 
 // Recent messages — the Sunday morning live services (and worship nights).
 // Fallback + title overrides for the Watch page; the live list comes from YouTube.
 export const sermons = siteContent.sermons;
+
+/** Runtime copy for hosted pages. Static exports remain the build seed only. */
+export async function runtimeSite(locals?: Record<string, any>) {
+	const content = await readContent(locals);
+	return { church: churchFor(content), sermons: content.sermons ?? [], mission: content.mission ?? [] };
+}
 
 export type PillarItem = {
 	label: string;

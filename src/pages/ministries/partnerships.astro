@@ -3,9 +3,9 @@
 // with each of them actually stands. This page has two readers. A visitor
 // wanting to know whether we really know these people, and Jon wanting to see
 // who he has not yet spoken to.
+export const prerender = false;
 import Interior from "../../layouts/Interior.astro";
 import {
-	entries,
 	isOffering,
 	isListable,
 	familyOf,
@@ -13,6 +13,9 @@ import {
 	hasLiveCalendar,
 	type Entry,
 } from "../../data/ministries";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+
+const entries = await runtimeDirectoryEntries(Astro.locals);
 
 const curated = sortEntries(
 	entries.filter((e) => e.house === "out" && isOffering(e) && isListable(e)),

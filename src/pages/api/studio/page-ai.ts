@@ -5,8 +5,8 @@
 export const prerender = false;
 
 import type { APIRoute } from "astro";
-import { execFile } from "node:child_process";
 import { isAuthed } from "../../../lib/studio/auth";
+import { isCloudflareWorker } from "../../../lib/runtime";
 import { sanitizeData, ALLOWED_BLOCKS } from "../../../lib/studio/pages";
 import { listSiteImages } from "../../../lib/studio/media";
 
@@ -37,14 +37,15 @@ Available blocks (the "type" of each content item) and their props:
 - CtaCards: { cards: [{ label, title, body, buttonLabel, buttonHref, featured }] } — action cards (featured is boolean).
 Only these types: ${ALLOWED_BLOCKS.join(", ")}.`;
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 
-	const { message, data } = await request.json().catch(() => ({}));
+	const body = await request.json().catch(() => null);
+	const { message, data } = body && typeof body === "object" ? (body as Record<string, unknown>) : {};
 	if (!message || typeof message !== "string") return json({ error: "No message." }, 400);
 
 	const current = sanitizeData(data);
-	const images = (await listSiteImages()).slice(0, 80);
+	const images = (await listSiteImages(locals)).slice(0, 80);
 	const prompt = [
 		"You are the page-building assistant for the New Life Grand Rapids church website.",
 		"You edit ONE page document (JSON). You have no file access — you only return an updated document.",
@@ -66,6 +67,9 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 	].join("\n");
 
 	try {
+		if (!process.env.ANTHROPIC_API_KEY && isCloudflareWorker()) {
+			return json({ reply: "The AI editor isn't connected on this deployment.", error: "AI unavailable" }, 503);
+		}
 		const out = process.env.ANTHROPIC_API_KEY ? await viaApi(prompt) : await viaCli(prompt);
 		if (!out?.data) throw new Error("no structured output");
 		return json({ reply: String(out.reply || "Done — review the change."), data: sanitizeData(out.data) });
@@ -99,6 +103,7 @@ async function viaApi(prompt: string): Promise<{ reply: string; data: any }> {
 			tool_choice: { type: "tool", name: "return_page" },
 			messages: [{ role: "user", content: prompt }],
 		}),
+		signal: AbortSignal.timeout(30_000),
 	});
 	if (!res.ok) throw new Error(`Anthropic API ${res.status}: ${(await res.text()).slice(0, 150)}`);
 	const body = await res.json();
@@ -109,6 +114,7 @@ async function viaApi(prompt: string): Promise<{ reply: string; data: any }> {
 
 // Local brain: the claude CLI on the signed-in machine (your subscription).
 async function viaCli(prompt: string): Promise<{ reply: string; data: any }> {
+	const { execFile } = await import("node:child_process");
 	const stdout = await new Promise<string>((resolve, reject) => {
 		execFile(
 			"claude",

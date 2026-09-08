@@ -1,25 +1,38 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import SignatureCard from "../../components/SignatureCard.astro";
+import { listPages, readPageState } from "../../lib/studio/pages";
+import { publicBuilderLink } from "../../lib/studio/page-links";
+
+export const prerender = false;
 import {
 	allFamiliesIncludingSpecialised,
-	families,
+	classifyFamilies,
 	standard,
-	counts,
-	outOfHouse,
-	inHouse,
-	familyCount,
 	familyImage,
 	familyCalendarCount,
-	withLiveCalendar,
 	isOffering,
 	isListable,
-	entriesInFamily,
 	sortEntries,
 } from "../../data/ministries";
+import { approvedFamilyArt } from "../../data/ministry-art-approvals";
 import { pillars } from "../../data/site";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
-const live = withLiveCalendar();
+const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const { families } = classifyFamilies(runtimeEntries);
+const inHouse = runtimeEntries.filter((entry) => entry.house === "in");
+const outOfHouse = runtimeEntries.filter((entry) => entry.house === "out");
+const live = sortEntries(runtimeEntries.filter((entry) => entry.calendar?.sync === "available" || entry.calendar?.sync === "page-current"));
+const entriesInFamily = (slug: string) => {
+	const family = allFamiliesIncludingSpecialised.find((candidate) => candidate.slug === slug);
+	const categories = new Set(family ? family.categories.map((category) => category.slug) : []);
+	return runtimeEntries.filter((entry) => entry.categories.some((category) => categories.has(category)) && isListable(entry));
+};
+const familyCount = (slug: string) => entriesInFamily(slug).filter(isOffering).length;
+const listedOfferings = outOfHouse.filter((entry) => isOffering(entry) && isListable(entry));
+const awaitingVerification = outOfHouse.filter((entry) => entry.status !== "live" && isListable(entry)).length;
+const uncovered = allFamiliesIncludingSpecialised.flatMap((family) => family.categories).filter((category) => !runtimeEntries.some((entry) => entry.categories.includes(category.slug) && isListable(entry))).length;
 
 // Our signature ministries, signature tier first. These open the page on their
 // own, no curated
@@ -52,37 +65,43 @@ const signature = inHouse
 		return (ai < 0 ? 99 : ai) - (bi < 0 ? 99 : bi) || a.name.localeCompare(b.name);
 	});
 
-// A picture per signature ministry. The art already exists per theme, so this is
-// a mapping rather than anything clever; anything unmatched falls back to the
-// city, which is never wrong for a church in Grand Rapids.
+// Candidate art per signature ministry. The render path below only displays
+// entries with an explicitly approved people-first image and native dimensions.
 const SIGNATURE_ART: Record<string, string> = {
-	"new-life-worship": "/art/generated/worship-still.png",
-	"corporate-prayer": "/art/generated/prayer-still.png",
-	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
-	"childrens-ministry": "/art/ministries/kids.jpg",
-	"pastoral-care": "/art/ministries/health.jpg",
-	"mission-of-hope-trips": "/art/generated/mission-still.png",
-	"ambassador-teams": "/art/ministries/church-leaders.jpg",
-	outreach: "/art/ministries/practical-care.jpg",
+	"new-life-worship": "/art/ministries/worship-approved.webp",
+	"corporate-prayer": "/art/ministries/prayer-approved.webp",
+	"life-groups": "/art/ministries/life-groups-approved.webp",
+	"childrens-ministry": "/art/ministries/kids.webp",
+	"pastoral-care": "/art/ministries/pastoral-care-approved.webp",
+	"mission-of-hope-trips": "/art/ministries/mission-approved.webp",
+	"ambassador-teams": "/art/ministries/ambassador-approved.webp",
+	outreach: "/art/ministries/practical-care.webp",
 	"unify-gr": "/art/generated/unity-still.png",
 };
 const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-unity.png";
+const approvedSignatureArt: Partial<Record<string, { width: number; height: number }>> = {
+	"new-life-worship": { width: 760, height: 286 },
+	"corporate-prayer": { width: 1536, height: 1024 },
+	"life-groups": { width: 946, height: 479 },
+	"pastoral-care": { width: 946, height: 454 },
+	"ambassador-teams": { width: 946, height: 563 },
+	"childrens-ministry": { width: 730, height: 425 },
+	"mission-of-hope-trips": { width: 756, height: 288 },
+	outreach: { width: 746, height: 424 },
+};
 
 // A ministry can point at a page of its own, but a page that is still a draft
 // answers a real 404 to everyone but staff. So the card falls back to the
 // ministry's own page until the fuller one is published, and picks the better
 // link up on its own the day it is.
-const pageStatus = Object.fromEntries(
-	Object.entries(import.meta.glob<{ status?: string }>("../../../content/pages/*.json", { eager: true })).map(
-		([file, mod]) => [file.split("/").pop()!.replace(".json", ""), mod.status ?? "draft"],
-	),
-);
+const pageStatus = new Map((await listPages(Astro.locals)).map((page) => [page.slug, page.status] as const));
+const linkedSlugs = [...new Set(outOfHouse.map((entry) => entry.href?.startsWith("/") ? entry.href.replace(/^\//, "") : "").filter(Boolean))];
+const removedBuilderPages = new Set((await Promise.all(linkedSlugs.map(async (slug) =>
+	(await readPageState(slug, Astro.locals)) === null ? slug : null,
+))).filter((slug): slug is string => Boolean(slug)));
 function linkFor(entry: { slug: string; href?: string | null }): string {
-	const href = entry.href;
-	if (!href) return `/ministry/${entry.slug}`;
-	const slug = href.replace(/^\//, "");
-	if (slug in pageStatus && pageStatus[slug] !== "live") return `/ministry/${entry.slug}`;
-	return href;
+	const slug = entry.href?.replace(/^\//, "") ?? "";
+	return publicBuilderLink(entry, pageStatus, removedBuilderPages.has(slug));
 }
 
 const curatedByFamily = allFamiliesIncludingSpecialised
@@ -162,9 +181,12 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				</p>
 			</div>
 			<div class="sig-grid reveal is-visible">
-				{signature.map((entry) => (
-					<SignatureCard entry={entry} image={artFor(entry.slug)} href={linkFor(entry)} />
-				))}
+				{signature.map((entry) => {
+					const imageSize = approvedSignatureArt[entry.slug];
+					// Only the explicitly approved people imagery belongs in this light
+					// ministry presentation. New concepts arrive through human review.
+					return <SignatureCard entry={entry} image={imageSize ? artFor(entry.slug) : undefined} imageSize={imageSize} href={linkFor(entry)} light />;
+				})}
 			</div>
 
 		</div>
@@ -181,7 +203,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				<p>
 					We went looking for the best of it. The deepest discipleship, the strongest care, the
 					challenge that will actually stretch you, and the group where your daughter will be
-					known by name. We found {counts.outOfHouse} of them, run by {curatedHosts} churches
+					known by name. We found {listedOfferings.length} of them, run by {curatedHosts} churches
 					and ministries across {curatedTowns} towns.
 				</p>
 				<p>
@@ -196,17 +218,21 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 			</div>
 			<div class="min-families reveal is-visible">
 				{families.map((family) => {
+					const approvedArt = approvedFamilyArt[family.slug];
 					const n = familyCount(family.slug);
 					const inArea = entriesInFamily(family.slug).filter(isOffering);
 					const sig = inArea.filter((e) => e.house === "in").length;
 					const cur = inArea.length - sig;
 					return (
 						<a class="min-family" href={`/ministries/${family.slug}`}>
-							{familyImage(family.slug) && (
-								<span class="min-family__art" aria-hidden="true">
+							{approvedArt && familyImage(family.slug) ? (
+								<span class:list={["min-family__art", "min-family__art--approved", { "min-family__art--pair": approvedArt.extraImages?.length }]} aria-hidden="true">
 									<img src={familyImage(family.slug)} alt="" loading="lazy" decoding="async" />
+									{approvedArt.extraImages?.map((image) => (
+										<img src={image.src} alt="" loading="lazy" decoding="async" />
+									))}
 								</span>
-							)}
+							) : <span class="min-family__art min-family__art--placeholder" aria-hidden="true"></span>}
 							<div class="min-family__head">
 								<h3>{family.name}</h3>
 								<span class={n ? "min-family__n" : "min-family__n min-family__n--empty"}>
@@ -271,9 +297,9 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 			</div>
 			<div class="min-note reveal is-visible">
 				<p>
-					<strong>Where this stands.</strong> {counts.outOfHouse} ministries are listed and
-					{" "}{counts.awaitingVerification} are still waiting on a conversation with someone here, which
-					their cards say plainly. {counts.uncovered} categories have nobody in them yet. If you lead
+					<strong>Where this stands.</strong> {listedOfferings.length} ministries are listed and
+					{" "}{awaitingVerification} are still waiting on a conversation with someone here, which
+					their cards say plainly. {uncovered} categories have nobody in them yet. If you lead
 					one of these ministries, or know one we are missing, tell us.
 				</p>
 				<a class="button button--secondary" href="/connect">

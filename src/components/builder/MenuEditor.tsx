@@ -17,11 +17,12 @@ export default function MenuEditor({ paths, onBack, say }: {
 	say: (m: string) => void;
 }) {
 	const [nav, setNav] = useState<Nav | null>(null);
+	const [version, setVersion] = useState<string | null>(null);
 	const [saving, setSaving] = useState(false);
 	const dragFrom = useRef<number | null>(null);
 
 	useEffect(() => {
-		api("/api/studio/nav").then((r) => setNav(r.nav || null));
+		api("/api/studio/nav").then((r) => { setNav(r.nav || null); setVersion(r.version || null); });
 	}, []);
 
 	if (!nav) return <div style={{ padding: 24, color: "#9aa3b2" }}>Loading the menu…</div>;
@@ -31,8 +32,8 @@ export default function MenuEditor({ paths, onBack, say }: {
 	async function save() {
 		setSaving(true);
 		try {
-			const res = await api("/api/studio/nav", { method: "POST", body: JSON.stringify({ nav }) });
-			if (res.ok) { setNav(res.nav); say(res.via === "git" ? "Menu saved — live in a minute or two" : "Menu saved ✓"); }
+			const res = await api("/api/studio/nav", { method: "POST", body: JSON.stringify({ nav, version }) });
+			if (res.ok) { setNav(res.nav); setVersion(res.version); say("Menu saved ✓"); }
 			else say(res.error || "Couldn't save the menu");
 		} finally { setSaving(false); }
 	}

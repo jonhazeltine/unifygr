@@ -1,25 +1,26 @@
 ---
 import Interior from "../../layouts/Interior.astro";
+import { listPages, readPageState } from "../../lib/studio/pages";
+import { publicBuilderDetailLink } from "../../lib/studio/page-links";
+
+export const prerender = false;
 import MinistryCard from "../../components/MinistryCard.astro";
 import {
-	entries,
 	getCategory,
 	familyOf,
 	entriesInCategory,
+	isListable,
 	sortEntries,
 	TIER_LABEL,
 	STATUS_LABEL,
 	type Entry,
 } from "../../data/ministries";
+import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
-export function getStaticPaths() {
-	return entries.map((entry) => ({
-		params: { slug: entry.slug },
-		props: { entry },
-	}));
-}
+const entries = await runtimeDirectoryEntries(Astro.locals);
 
-const { entry } = Astro.props as { entry: Entry };
+const entry = entries.find((candidate) => candidate.slug === Astro.params.slug);
+if (!entry || !isListable(entry as Entry)) return new Response("Not found", { status: 404 });
 
 const inHouse = entry.house === "in";
 const unverified = entry.status !== "live";
@@ -32,7 +33,7 @@ const cats = entry.categories.map((slug) => ({
 const seen = new Set([entry.slug]);
 const alternatives: Entry[] = [];
 for (const slug of entry.categories) {
-	for (const other of sortEntries(entriesInCategory(slug))) {
+	for (const other of sortEntries(entries.filter((candidate) => candidate.categories.includes(slug) && candidate.status !== "no-details" && candidate.listed !== false))) {
 		if (seen.has(other.slug)) continue;
 		seen.add(other.slug);
 		alternatives.push(other);
@@ -41,6 +42,12 @@ for (const slug of entry.categories) {
 
 const primary = cats[0];
 const kicker = inHouse ? "Signature Ministry" : "Curated Ministry";
+const pageStatuses = new Map((await listPages(Astro.locals)).map((page) => [page.slug, page.status] as const));
+const linkedSlug = entry.href?.startsWith("/") ? entry.href.replace(/^\//, "") : "";
+// A tombstoned page is not present in the list. Its direct reader result makes
+// that distinction so an old ministry reference cannot expose a dead target.
+const removedBuilderTarget = Boolean(linkedSlug) && (await readPageState(linkedSlug, Astro.locals)) === null;
+const learnMore = publicBuilderDetailLink(entry, pageStatuses, removedBuilderTarget);
 ---
 
 <Interior
@@ -105,7 +112,7 @@ const kicker = inHouse ? "Signature Ministry" : "Curated Ministry";
 					)}
 				</dl>
 				<div class="min-actions">
-					{entry.href && <a class="button button--primary" href={entry.href}>Learn more</a>}
+					{learnMore && <a class="button button--primary" href={learnMore}>Learn more</a>}
 					{entry.website && (
 						<a class="button button--secondary" href={entry.website} target="_blank" rel="noopener">
 							Visit their site

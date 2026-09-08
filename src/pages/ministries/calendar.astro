@@ -2,14 +2,16 @@
 import Interior from "../../layouts/Interior.astro";
 import { calendar, type CalendarEvent as Ev } from "../../lib/partners/calendar";
 import { entries } from "../../data/ministries";
-import { church } from "../../data/site";
+import { runtimeSite } from "../../data/site";
 
 // Built on every request from the churches we carry and the kinds of gathering
 // we take from each, both set at /studio/partners. A church that posts a new
 // date is on this page the same day, with nothing to rebuild.
 export const prerender = false;
 
-const data = await calendar();
+const { church } = await runtimeSite(Astro.locals);
+
+const data = await calendar(Astro.locals);
 // Fresh within a few minutes, but served from cache like a static page. A
 // switch flipped in the partners panel shows here within five minutes.
 Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=3600");

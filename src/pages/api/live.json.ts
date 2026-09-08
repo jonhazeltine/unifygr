@@ -1,11 +1,12 @@
-import { church } from "../../data/site";
+import { runtimeSite } from "../../data/site";
 import { fetchChannelVideos } from "../../lib/youtube";
 
 // On-demand (server) route — checks the YouTube channel's live status and the
 // latest uploads, server-side (no CORS). Cached briefly at the edge.
 export const prerender = false;
 
-export async function GET() {
+export async function GET({ locals }: any) {
+	const { church } = await runtimeSite(locals);
 	const channelId = church.youtube.channelId;
 	let live = false;
 	let liveId: string | null = null;

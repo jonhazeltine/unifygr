@@ -1,81 +1,65 @@
 # AI Art Direction
 
-Use one visual language across every image:
+## Section direction — approved September 8, 2026
 
-- Cinematic spiritual minimalism
-- Midnight blue and charcoal base
-- Warm gold halos and soft ivory light
-- A faint cool-blue secondary glow
-- Volumetric light beams, mist, and soft grain
-- Monumental composition, negative space, and calm framing
-- Reverent tone, not fantasy-game art, not kitsch church stock
-- No text, logos, UI, or obvious poster treatment inside the image
+Ministry pages (`/ministries`, its child routes, and `/ministry/*`) use a light,
+people-focused presentation: ivory backgrounds, dark readable copy, natural
+skin tones, and clear faces. This includes Worship and Prayer when shown inside
+the ministry section. Use images above the copy rather than dark overlays that
+hide people. Preserve every person's face in desktop and phone layouts; a
+technically valid center crop is not sufficient.
 
-Global negative prompt:
+Everywhere else retains the site's dark, moody cinematic direction: midnight
+blue, charcoal, warm gold, atmospheric worship and prayer, restrained spiritual
+symbolism. Do not brighten those sections as a side effect of ministry changes.
 
-`cartoon, anime, comic, low detail, cheesy church clipart, smiling stock models, over-sharpened HDR, neon cyberpunk, purple fantasy, extra limbs, malformed hands, text, watermark, logo, frame, collage, split layout`
-
-Hero prompt:
-
-`A cinematic, reverent portrait scene of Jesus as a luminous silhouette standing above a dark city at dawn, centered composition, monumental scale, robe shape readable but facial features mostly lost in shadow, radiant warm halo, soft volumetric light beams descending from above, midnight blue and charcoal environment, pale gold rim light, faint blue atmospheric haze, minimal but emotionally powerful, Apple-launch-level restraint, premium editorial lighting, ultra cohesive color palette, realistic light behavior, wide hero image`
-
-Worship prompt:
-
-`A cinematic worship environment with a glowing circular window of light above a gathered congregation in silhouette, reverent and quiet, no stage clutter, dark sanctuary, warm gold illumination, soft haze, minimal composition, premium editorial atmosphere, midnight blue palette with ivory highlights`
-
-Prayer prompt:
-
-`A cinematic night prayer scene with a solitary kneeling figure in silhouette beneath a large moonlike halo, cool dark landscape, warm gold light touching the figure, subtle mist, contemplative, minimal, elegant, premium spiritual editorial style`
-
-Mission prompt:
-
-`A cinematic city mission scene at blue hour, layered urban skyline with soft warm windows, one radiant source of light breaking across the city, sense of movement outward and blessing, moody midnight palette, gold and ivory accents, atmospheric haze, minimal and premium`
-
-Unity prompt:
-
-`A cinematic symbolic unity scene with converging paths of light leading toward a central radiant source over a dark landscape and distant city, calm, monumental, midnight blue and charcoal, gold halo light, soft mist, restrained premium composition, spiritual but contemporary`
-
-Recommended generation settings:
-
-- Aspect ratio:
-  - Hero: `4:3` or `16:10`
-  - Section images: `4:3`
-- Keep prompt style consistent across all images.
-- Reuse the same seed family when the tool supports it.
-- Reduce prompt variation between scenes; change only subject matter.
+New image concepts require human approval before publication. The nine ministry
+concepts approved September 8 may be extracted and optimized without regenerating
+or changing their people, scene, or identity. New variants remain drafts.
 
 ## Ministry card art
 
-One image per ministry area in `public/art/ministries/<family-slug>.jpg`, 900×600.
+Image mappings live in `content/ministry-art.json`; approved photo extracts use
+optimized WebP files in `public/art/ministries/`. Preserve their native aspect
+ratios so faces remain visible.
 Sixteen areas, sixteen distinct images — no sharing between areas.
 
 Shared spine, appended to every per-area subject so the set reads as one family:
 
-`Cinematic spiritual minimalism, midnight blue and charcoal palette, warm gold light, faint cool-blue secondary glow, visible volumetric light beams, soft mist and fine grain, monumental composition with generous negative space, reverent and restrained. Luminous and generously lit — the light fills much of the frame and the subject reads clearly; rich midtones, not underexposed, not a black frame. Premium editorial lighting, realistic light behaviour, no faces visible, no text or logos.`
+`Cinematic spiritual minimalism with natural daylight, warm gold and soft ivory light, blue used as an accent, subtle haze and fine grain, generous negative space, welcoming and restrained. The subject reads clearly in rich midtones; never underexposed or a black frame. Premium editorial lighting, realistic light behaviour, no text or logos.`
 
 Per-area subjects (change only this half):
 
 | Area | Subject |
 |---|---|
-| worship-and-prayer | glowing circular window of light above a congregation in silhouette |
-| formation | long table, one open book under a hanging lamp, empty chairs |
-| kids | children in silhouette running toward a tall lit doorway |
-| students | young figures on a rooftop edge at blue hour, city glow beyond |
-| marriage-family | two figures walking a narrow lit path together |
-| foster-adoption | an adult and a child at a warmly lit doorway, seen from behind |
-| men-women | a circle of empty chairs under one hanging lamp |
-| recovery | a figure walking out of a tunnel into warm gold light |
-| mental-health | a figure at a tall window as dawn floods a quiet room |
-| practical-care | a lit doorway at night, crates stacked in silhouette outside |
-| health | a bedroom at dawn, light across a made bed and a glass of water |
-| justice | a heavy gate standing open, dawn light flooding through |
-| mission | city skyline at blue hour, one light breaking outward across it |
-| church-leaders | an empty lectern under a broad shaft of light |
-| creative | light through a tall patterned window, instruments in silhouette |
-| seniors | two figures on a bench facing a golden horizon over water |
+| worship-and-prayer | a warmly lit gathering with clearly visible people, or an airy prayer space |
+| formation | an open Bible and notebooks around a sunlit study table |
+| kids | a colorful activity table with blocks and a picture Bible in daylight; alternatively, approved photos of supervised children playing and learning |
+| students | young people together in a safe park or bright shared space; no rooftop edges or isolated silhouettes |
+| marriage-family | a family sharing an ordinary activity in a welcoming daylight setting |
+| foster-adoption | a welcoming family space or approved family photo in natural light; no anonymous child at a dark doorway |
+| men-women | a bright shared table ready for conversation, or an approved group photo |
+| recovery | an open, peaceful garden path in daylight, suggesting support and hope without a tunnel or trapped figure |
+| mental-health | a comfortable, light-filled space for conversation; avoid depicting someone as isolated or distressed |
+| practical-care | clearly visible groceries and volunteers at a bright distribution table |
+| health | a welcoming care setting with natural daylight and practical, familiar details |
+| justice | a bright open path and welcoming community space; avoid prison-like scenery |
+| mission | overseas ministry with children and local leaders, reflecting the Mission of Hope partnership in the Caribbean |
+| church-leaders | a bright table prepared for conversation and shared study |
+| creative | colorful art materials or musical instruments in natural daylight |
+| seniors | a welcoming garden bench or approved photo of older adults connecting in daylight |
 
-**Exposure rule.** The card crops a short horizontal band and lays a gradient over
-it, so anything underexposed becomes a black rectangle. After generating,
-normalise the whole set to a mean luminance of ~56 with a per-image gamma
-(floor the gamma at 0.42 so noise is not lifted out of true black). Straight
-out of the model these ranged 15–55; without the pass the set looks unrelated.
+**Children and families.** Do not use silhouettes, obscured faces, children
+moving toward darkness, or isolated children. Use age-appropriate daylight,
+visible supervision, ordinary play or belonging, and a clearly safe setting.
+
+**Exposure and crops.** Check the actual desktop and phone crops. Subjects must
+remain clearly visible without brightening a dark original. Family-card labels
+sit below the image, so those images need no dark overlay. Where text overlaps
+art, confine shading to the text area and verify readability.
+
+**Source and approval.** Prefer suitable, approved real ministry photos when
+available. Generated concepts must not imply they document our actual people or
+facilities. Keep new generated art in a draft/review location until a person
+approves the specific image for publication. A revised prompt is not approval
+of a generated result.
