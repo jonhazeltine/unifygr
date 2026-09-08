@@ -64,6 +64,9 @@ export function redirectForPath(pathname, search = "", hash = "") {
  */
 export function redirectForRequest(request, siteUrl = process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL) {
 	const incoming = new URL(request.url);
+	// Webhooks and API clients keep using the old host during the domain
+	// transition. Serve them directly so POST bodies and signatures survive.
+	if (incoming.pathname === "/api" || incoming.pathname.startsWith("/api/")) return null;
 	const finalActive = finalDomainActive(siteUrl);
 	const oldHost = LEGACY_HOSTS.has(incoming.hostname);
 	const finalWww = incoming.hostname === `www.${FINAL_HOST}`;

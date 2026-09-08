@@ -3,6 +3,7 @@ import test from "node:test";
 
 import { publicPaths, sitemapXml } from "../src/lib/discovery.ts";
 import { publicSiteUrl } from "../src/lib/public-site.ts";
+import { isCloudflareWorker } from "../src/lib/runtime.ts";
 
 test("public paths include live runtime pages and exclude drafts and private routes", () => {
   const paths = publicPaths({
@@ -43,4 +44,10 @@ test("sitemap uses the configured origin and escapes XML", () => {
   const xml = sitemapXml("https://newlifegr.com", ["/", "/search?q=one&two=2"]);
   assert(xml.includes("<loc>https://newlifegr.com/</loc>"));
   assert(xml.includes("https://newlifegr.com/search?q=one&amp;two=2"));
+});
+
+test("Worker-only local tools can be gated without environment guessing", () => {
+  assert.equal(isCloudflareWorker("Cloudflare-Workers"), true);
+  assert.equal(isCloudflareWorker("Node.js/22"), false);
+  assert.equal(isCloudflareWorker(undefined), false);
 });

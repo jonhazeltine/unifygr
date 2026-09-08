@@ -87,3 +87,14 @@ test("uses an incoming fragment safely when one is present", () => {
 		"https://newlifegr.com/sunday?source=old#arrive",
 	);
 });
+
+test("keeps old-host API callbacks local while redirecting human pages", () => {
+	assert.equal(
+		redirectForRequest(new Request("https://unifygr.com/api/maintenance/incoming"), "https://newlifegr.com"),
+		null,
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://unifygr.com/about"), "https://newlifegr.com"),
+		"https://newlifegr.com/about",
+	);
+});
