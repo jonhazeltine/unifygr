@@ -37,15 +37,16 @@ test("preserves query strings", () => {
 	);
 });
 
-test("keeps host redirects disabled before final activation", () => {
+test("maps old paths on the current host before final activation", () => {
 	assert.equal(finalDomainActive("https://unifygr.com"), false);
 	assert.equal(
 		redirectForRequest(new Request("https://unifygr.com/about-us/our-staff?x=1"), "https://unifygr.com"),
-		null,
+		"https://unifygr.com/staff?x=1",
 	);
+	assert.equal(redirectForRequest(new Request("https://unifygr.com/unknown?x=1"), "https://unifygr.com"), null);
 });
 
-test("redirects the old host only when SITE_URL is final, preserving path/query", () => {
+test("redirects old paths to the final host only when PUBLIC_SITE_URL is final", () => {
 	assert.equal(
 		redirectForRequest(
 			new Request("https://unifygr.com/about-us/our-staff?x=1"),
@@ -59,5 +60,30 @@ test("redirects the old host only when SITE_URL is final, preserving path/query"
 			"https://newlifegr.com",
 		),
 		"https://newlifegr.com/sunday?source=old#when-where",
+	);
+});
+
+test("maps legacy paths on the final host and canonicalises www without a loop", () => {
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/about-us/our-staff?x=1"), "https://newlifegr.com"),
+		"https://newlifegr.com/staff?x=1",
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/staff?x=1"), "https://newlifegr.com"),
+		null,
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://www.newlifegr.com/staff?x=1"), "https://newlifegr.com"),
+		"https://newlifegr.com/staff?x=1",
+	);
+});
+
+test("uses an incoming fragment safely when one is present", () => {
+	assert.equal(
+		redirectForRequest(
+			new Request("https://newlifegr.com/home/when-where?source=old#arrive"),
+			"https://newlifegr.com",
+		),
+		"https://newlifegr.com/sunday?source=old#arrive",
 	);
 });
