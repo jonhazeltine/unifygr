@@ -7,6 +7,7 @@ export type ApprovedFamilyArt = {
 };
 
 export const approvedFamilyArt: Partial<Record<string, ApprovedFamilyArt>> = {
+	"worship-and-prayer": { aspectRatio: "760 / 286" },
 	kids: { aspectRatio: "730 / 425" },
 	students: { aspectRatio: "730 / 425" },
 	"foster-adoption": { aspectRatio: "730 / 436" },

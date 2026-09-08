@@ -1,7 +1,7 @@
 {
 	"_comment": "Card art per ministry area — one generated image each, no sharing. Prompts and the exposure rule live in AI_ART_DIRECTION.md under 'Ministry card art'. To replace one, drop a new file in under the same filename.",
 	"images": {
-		"worship-and-prayer": "/art/ministries/worship-and-prayer.jpg",
+		"worship-and-prayer": "/art/ministries/worship-approved.webp",
 		"formation": "/art/ministries/formation.webp",
 		"kids": "/art/ministries/kids.webp",
 		"students": "/art/ministries/students.webp",

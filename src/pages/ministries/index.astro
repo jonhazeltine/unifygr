@@ -69,8 +69,8 @@ const signature = inHouse
 // a mapping rather than anything clever; anything unmatched falls back to the
 // city, which is never wrong for a church in Grand Rapids.
 const SIGNATURE_ART: Record<string, string> = {
-	"new-life-worship": "/art/generated/worship-still.png",
-	"corporate-prayer": "/art/generated/prayer-still.png",
+	"new-life-worship": "/art/ministries/worship-approved.webp",
+	"corporate-prayer": "/art/ministries/prayer-approved.webp",
 	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
 	"childrens-ministry": "/art/ministries/kids.webp",
 	"pastoral-care": "/art/ministries/health.jpg",
@@ -81,6 +81,8 @@ const SIGNATURE_ART: Record<string, string> = {
 };
 const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-unity.png";
 const approvedSignatureArt: Partial<Record<string, { width: number; height: number }>> = {
+	"new-life-worship": { width: 760, height: 286 },
+	"corporate-prayer": { width: 1536, height: 1024 },
 	"childrens-ministry": { width: 730, height: 425 },
 	"mission-of-hope-trips": { width: 756, height: 288 },
 	outreach: { width: 746, height: 424 },
