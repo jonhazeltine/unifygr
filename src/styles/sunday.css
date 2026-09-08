@@ -58,6 +58,25 @@ body.v2::after {
 	display: none;
 }
 
+/* Ministry pages are intentionally daylight-bright: clear people, clear next
+   steps, and no dark atmosphere over the directory or its details. */
+body.v2.v2--ministry {
+	--ink: #f7f2ea;
+	--ink-raised: #fffdf9;
+	--ivory: #17202b;
+	--muted: rgba(23, 32, 43, 0.68);
+	--faint: rgba(23, 32, 43, 0.46);
+	--gold: #7b5d2b;
+	--gold-ink: #fffdf9;
+	--line: rgba(23, 32, 43, 0.16);
+	--panel: #fffdf9;
+	--panel-strong: #f0e9de;
+	--text: #17202b;
+	--gold-soft: rgba(123, 93, 43, 0.22);
+	--gold-strong: #5e461f;
+	--shadow: 0 24px 60px rgba(42, 32, 19, 0.12);
+}
+
 body.v2 * {
 	box-sizing: border-box;
 }
@@ -751,3 +770,45 @@ body.v2 :focus-visible {
 		transition-duration: 0.001ms !important;
 	}
 }
+
+/* The ministry directory and every detail route share this bright reading
+   surface. These selectors replace older dark-page literals that predate the
+   ministry treatment. */
+body.v2--ministry .chrome {
+	background: rgba(255, 253, 249, 0.95);
+	color: #17202b;
+	border-bottom-color: rgba(23, 32, 43, 0.16);
+}
+body.v2--ministry .foot { background: #f0e9de; color: rgba(23, 32, 43, 0.68); }
+body.v2--ministry .foot__grid a { color: rgba(23, 32, 43, 0.76); }
+body.v2--ministry .min-family__n--empty,
+body.v2--ministry .min-family__cats,
+body.v2--ministry .min-family__mix,
+body.v2--ministry .min-area__more,
+body.v2--ministry .min-half__extra,
+body.v2--ministry .min-card__also,
+body.v2--ministry .minmap__tipDist,
+body.v2--ministry .minmap__tipArea,
+body.v2--ministry .minmap__n--plain,
+body.v2--ministry .minmap__d,
+body.v2--ministry .spec-row__where,
+body.v2--ministry .min-ev__area,
+body.v2--ministry .min-bio__where,
+body.v2--ministry .min-bio__label,
+body.v2--ministry .min-bio__runs span,
+body.v2--ministry .min-devlist__why,
+body.v2--ministry .min-bio__nobio {
+	color: rgba(23, 32, 43, 0.62);
+}
+body.v2--ministry .minmap__tip {
+	background: #fffdf9;
+	border-color: rgba(23, 32, 43, 0.16);
+	box-shadow: 0 12px 34px rgba(42, 32, 19, 0.18);
+}
+body.v2--ministry .minmap__tip::after { border-top-color: #fffdf9; }
+body.v2--ministry .minmap__hereLabel { text-shadow: 0 1px 4px rgba(255, 253, 249, 0.9); }
+body.v2--ministry .min-gaps,
+body.v2--ministry .min-legend__key { background: rgba(123, 93, 43, 0.06); }
+
+/* This link is a text control, not a translucent border. */
+body.v2--ministry .sig__go a { color: #765a2b; }

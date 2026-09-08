@@ -9,22 +9,32 @@ import type { Entry } from "../data/ministries";
 
 interface Props {
 	entry: Entry;
-	/** Background image for the card. */
-	image: string;
+	/** Background image for the card, when it has an approved people-first treatment. */
+	image?: string;
 	/** Where "more about" goes — resolved by the page, since a draft page 404s. */
 	href?: string;
+	/** Ministry directories use a light, uncropped people-first treatment. */
+	light?: boolean;
+	/** Reserves the approved image's native aspect ratio before it lazy-loads. */
+	imageSize?: { width: number; height: number };
 }
 
-const { entry, image, href } = Astro.props;
+const { entry, image, href, light = false, imageSize } = Astro.props;
 const id = `sig-${entry.slug}`;
 // Ours meet in our building; what travels says where it goes.
 const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ?? entry.venue ?? null);
 ---
 
 <article class="sig">
-	<button class="sig__face" type="button" aria-expanded="false" aria-controls={id}>
-		<span class="sig__art" style={`background-image:url(${image})`} aria-hidden="true"></span>
-		<span class="sig__scrim" aria-hidden="true"></span>
+	<button class:list={["sig__face", { "sig__face--light": light }]} type="button" aria-expanded="false" aria-controls={id}>
+		{light && image ? (
+			<img class="sig__image" src={image} width={imageSize?.width} height={imageSize?.height} alt="" aria-hidden="true" loading="lazy" decoding="async" />
+		) : !light ? (
+			<>
+				<span class="sig__art" style={`background-image:url(${image})`} aria-hidden="true"></span>
+				<span class="sig__scrim" aria-hidden="true"></span>
+			</>
+		) : null}
 		<span class="sig__head">
 			{entry.rhythm && <span class="sig__when">{entry.rhythm}</span>}
 			<span class="sig__name">{entry.name}</span>
@@ -85,6 +95,17 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 		color: #f6f0e7; background: rgba(8,10,16,0.5); border: 1px solid rgba(246,240,231,0.35);
 		border-radius: 999px; padding: 0.42rem 0.85rem; backdrop-filter: blur(6px);
 	}
+
+	/* On ministry pages, people are the art. Preserve the approved photograph's
+	   native framing instead of turning it into a dark text backdrop. */
+	.sig__face--light { background: #fffdf9; color: #17202b; }
+	.sig__image { display: block; width: 100%; height: auto; max-height: 28rem; object-fit: contain; background: #f0e9de; }
+	.sig__face--light .sig__head { padding-top: clamp(1.2rem, 3vw, 1.9rem); }
+	.sig__face--light .sig__when { color: #765a2b; }
+	.sig__face--light .sig__name { color: #17202b; }
+	.sig__face--light .sig__line { color: rgba(23,32,43,.72); }
+	.sig__face--light .sig__more { color: #17202b; background: rgba(255,253,249,.94); border-color: rgba(23,32,43,.2); }
+
 	.sig__more-shut { display: none; }
 	.sig__face[aria-expanded="true"] .sig__more-open { display: none; }
 	.sig__face[aria-expanded="true"] .sig__more-shut { display: inline; }

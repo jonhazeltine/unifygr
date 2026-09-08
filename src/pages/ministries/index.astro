@@ -74,12 +74,17 @@ const SIGNATURE_ART: Record<string, string> = {
 	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
 	"childrens-ministry": "/art/ministries/kids.webp",
 	"pastoral-care": "/art/ministries/health.jpg",
-	"mission-of-hope-trips": "/art/generated/mission-still.png",
+	"mission-of-hope-trips": "/art/ministries/mission-approved.webp",
 	"ambassador-teams": "/art/ministries/church-leaders.jpg",
 	outreach: "/art/ministries/practical-care.webp",
 	"unify-gr": "/art/generated/unity-still.png",
 };
 const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-unity.png";
+const approvedSignatureArt: Partial<Record<string, { width: number; height: number }>> = {
+	"childrens-ministry": { width: 730, height: 425 },
+	"mission-of-hope-trips": { width: 756, height: 288 },
+	outreach: { width: 746, height: 424 },
+};
 
 // A ministry can point at a page of its own, but a page that is still a draft
 // answers a real 404 to everyone but staff. So the card falls back to the
@@ -172,9 +177,12 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				</p>
 			</div>
 			<div class="sig-grid reveal is-visible">
-				{signature.map((entry) => (
-					<SignatureCard entry={entry} image={artFor(entry.slug)} href={linkFor(entry)} />
-				))}
+				{signature.map((entry) => {
+					const imageSize = approvedSignatureArt[entry.slug];
+					// Only the explicitly approved people imagery belongs in this light
+					// ministry presentation. New concepts arrive through human review.
+					return <SignatureCard entry={entry} image={imageSize ? artFor(entry.slug) : undefined} imageSize={imageSize} href={linkFor(entry)} light />;
+				})}
 			</div>
 
 		</div>
@@ -213,9 +221,12 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 					const cur = inArea.length - sig;
 					return (
 						<a class="min-family" href={`/ministries/${family.slug}`}>
-							{familyImage(family.slug) && (
-								<span class={`min-family__art${approvedArt ? " min-family__art--approved" : ""}`} aria-hidden="true" style={approvedArt ? `--approved-aspect-ratio: ${approvedArt.aspectRatio};` : undefined}>
+							{approvedArt && familyImage(family.slug) && (
+								<span class:list={["min-family__art", "min-family__art--approved", { "min-family__art--pair": approvedArt.extraImages?.length }]} aria-hidden="true" style={`--approved-aspect-ratio: ${approvedArt.aspectRatio};`}>
 									<img src={familyImage(family.slug)} alt="" loading="lazy" decoding="async" />
+									{approvedArt.extraImages?.map((image) => (
+										<img src={image.src} alt="" loading="lazy" decoding="async" />
+									))}
 								</span>
 							)}
 							<div class="min-family__head">
