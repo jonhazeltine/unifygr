@@ -32,18 +32,18 @@ const originalNodeEnv = process.env.NODE_ENV;
 const originalDateNow = Date.now;
 
 afterEach(() => {
-	if (originalPasscode === undefined) delete process.env.STUDIO_PASSCODE;
+	if (originalPasscode === undefined) Reflect.deleteProperty(process.env, "STUDIO_PASSCODE");
 	else process.env.STUDIO_PASSCODE = originalPasscode;
-	if (originalConnectPasscode === undefined) delete process.env.CONNECT_ADMIN_PASSCODE;
+	if (originalConnectPasscode === undefined) Reflect.deleteProperty(process.env, "CONNECT_ADMIN_PASSCODE");
 	else process.env.CONNECT_ADMIN_PASSCODE = originalConnectPasscode;
-	if (originalNodeEnv === undefined) delete process.env.NODE_ENV;
+	if (originalNodeEnv === undefined) Reflect.deleteProperty(process.env, "NODE_ENV");
 	else process.env.NODE_ENV = originalNodeEnv;
 	Date.now = originalDateNow;
 });
 
 describe("Studio authentication", () => {
 	it("fails closed when STUDIO_PASSCODE is absent", () => {
-		delete process.env.STUDIO_PASSCODE;
+		Reflect.deleteProperty(process.env, "STUDIO_PASSCODE");
 		const cookies = new Cookies();
 
 		assert.equal(checkPasscode("anything"), false);
