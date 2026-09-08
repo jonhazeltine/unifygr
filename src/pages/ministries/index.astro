@@ -15,6 +15,7 @@ import {
 	isListable,
 	sortEntries,
 } from "../../data/ministries";
+import { approvedFamilyArt } from "../../data/ministry-art-approvals";
 import { pillars } from "../../data/site";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
@@ -71,11 +72,11 @@ const SIGNATURE_ART: Record<string, string> = {
 	"new-life-worship": "/art/generated/worship-still.png",
 	"corporate-prayer": "/art/generated/prayer-still.png",
 	"life-groups": "/art/generated/hero-dawn-figure-clean.png",
-	"childrens-ministry": "/art/ministries/kids.jpg",
+	"childrens-ministry": "/art/ministries/kids.webp",
 	"pastoral-care": "/art/ministries/health.jpg",
 	"mission-of-hope-trips": "/art/generated/mission-still.png",
 	"ambassador-teams": "/art/ministries/church-leaders.jpg",
-	outreach: "/art/ministries/practical-care.jpg",
+	outreach: "/art/ministries/practical-care.webp",
 	"unify-gr": "/art/generated/unity-still.png",
 };
 const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-unity.png";
@@ -205,6 +206,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 			</div>
 			<div class="min-families reveal is-visible">
 				{families.map((family) => {
+					const approvedArt = approvedFamilyArt[family.slug];
 					const n = familyCount(family.slug);
 					const inArea = entriesInFamily(family.slug).filter(isOffering);
 					const sig = inArea.filter((e) => e.house === "in").length;
@@ -212,7 +214,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 					return (
 						<a class="min-family" href={`/ministries/${family.slug}`}>
 							{familyImage(family.slug) && (
-								<span class="min-family__art" aria-hidden="true">
+								<span class={`min-family__art${approvedArt ? " min-family__art--approved" : ""}`} aria-hidden="true" style={approvedArt ? `--approved-aspect-ratio: ${approvedArt.aspectRatio};` : undefined}>
 									<img src={familyImage(family.slug)} alt="" loading="lazy" decoding="async" />
 								</span>
 							)}

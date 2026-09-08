@@ -2,20 +2,20 @@
 	"_comment": "Card art per ministry area — one generated image each, no sharing. Prompts and the exposure rule live in AI_ART_DIRECTION.md under 'Ministry card art'. To replace one, drop a new file in under the same filename.",
 	"images": {
 		"worship-and-prayer": "/art/ministries/worship-and-prayer.jpg",
-		"formation": "/art/ministries/formation.jpg",
-		"kids": "/art/ministries/kids.jpg",
-		"students": "/art/ministries/students.jpg",
-		"marriage-family": "/art/ministries/marriage-family.jpg",
-		"foster-adoption": "/art/ministries/foster-adoption.jpg",
+		"formation": "/art/ministries/formation.webp",
+		"kids": "/art/ministries/kids.webp",
+		"students": "/art/ministries/students.webp",
+		"marriage-family": "/art/ministries/marriage-family.webp",
+		"foster-adoption": "/art/ministries/foster-adoption.webp",
 		"men-women": "/art/ministries/men-women.jpg",
-		"recovery": "/art/ministries/recovery.jpg",
-		"mental-health": "/art/ministries/mental-health.jpg",
-		"practical-care": "/art/ministries/practical-care.jpg",
+		"recovery": "/art/ministries/recovery.webp",
+		"mental-health": "/art/ministries/mental-health.webp",
+		"practical-care": "/art/ministries/practical-care.webp",
 		"health": "/art/ministries/health.jpg",
 		"justice": "/art/ministries/justice.jpg",
 		"mission": "/art/ministries/mission.jpg",
 		"church-leaders": "/art/ministries/church-leaders.jpg",
 		"creative": "/art/ministries/creative.jpg",
-		"seniors": "/art/ministries/seniors.jpg"
+		"seniors": "/art/ministries/seniors.webp"
 	}
 }

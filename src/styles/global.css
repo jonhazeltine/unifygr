@@ -2575,6 +2575,10 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
 	width: 100%; height: 100%; object-fit: cover; display: block;
 	transition: transform 500ms ease, filter 500ms ease;
 }
+.min-family__art--approved {
+	height: auto;
+	aspect-ratio: var(--approved-aspect-ratio);
+}
 .min-family:hover .min-family__art img { transform: scale(1.04); filter: saturate(1) brightness(1.06); }
 .min-family__mix { margin-top: 0.4rem; font-size: 0.74rem; letter-spacing: 0.08em; color: rgba(246,240,231,0.5); }
 /* Both halves are the same line of information, so they get the same type. */
