@@ -433,35 +433,6 @@ body.v2 :focus-visible {
 	padding-bottom: 2px;
 }
 
-/* --- Open questions ----------------------------------------------------- */
-
-.open-qs {
-	border: 1px dashed rgba(247, 242, 234, 0.28);
-	border-radius: 14px;
-	padding: 1.4rem 1.4rem 1.5rem;
-}
-
-.open-qs h3 {
-	font-size: 1.2rem;
-	margin-bottom: 0.5rem;
-}
-
-.open-qs p {
-	color: var(--muted);
-	font-size: 0.95rem;
-	margin-bottom: 1rem;
-}
-
-.open-qs ul {
-	margin: 0;
-	padding-left: 1.1rem;
-	color: var(--faint);
-}
-
-.open-qs li {
-	margin-bottom: 0.4rem;
-}
-
 /* --- Belief ------------------------------------------------------------- */
 
 .creed__line {
