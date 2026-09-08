@@ -333,6 +333,7 @@ export const prerender = false;
 				partners: [],
 				declined: [],
 			};
+			let settingsVersion = "seed";
 			let showDeclined = false;
 			let filter: "all" | "showing" | "approved" | "new" | "declined" = "all";
 			// The list sorts and filters by a church's state, so changing that state
@@ -1297,10 +1298,13 @@ export const prerender = false;
 				btn.disabled = true;
 				$("savestate").textContent = "Saving…";
 				try {
-					settings = await api("/api/partners/settings", {
+					const savedSettings = await api("/api/partners/settings", {
 						method: "PUT",
-						body: JSON.stringify(settings),
+						body: JSON.stringify({ ...settings, version: settingsVersion }),
 					});
+					if (savedSettings.error) throw new Error(savedSettings.error);
+					settings = savedSettings.settings;
+					settingsVersion = savedSettings.version;
 					if (orgEdits.size) {
 						const res = await api("/api/partners/orgs", {
 							method: "PUT",
@@ -1341,7 +1345,9 @@ export const prerender = false;
 				gate.hidden = true;
 				panel.hidden = false;
 				savebar.hidden = false;
-				settings = await api("/api/partners/settings");
+				const loadedSettings = await api("/api/partners/settings");
+				settings = loadedSettings.settings;
+				settingsVersion = loadedSettings.version;
 				markDirty(false);
 				renderGlobals();
 				try {

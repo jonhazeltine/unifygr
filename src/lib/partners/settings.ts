@@ -13,6 +13,7 @@
 // opened on a fresh deployment, that file is what it starts from.
 
 import seed from "../../../content/ministry-partners.json";
+import { ContentConflict, publish, readPublished, type RuntimeLocals } from "../studio/runtime-content";
 
 const BLOB_PATH = "partners/settings.json";
 
@@ -128,6 +129,11 @@ export function seedSettings(): Settings {
 	return normalise(seed);
 }
 
+export async function readSettingsState(locals?: RuntimeLocals): Promise<{ settings: Settings; version: string }> {
+	const stored = await readPublished<Settings>(BLOB_PATH, seedSettings(), locals);
+	return { settings: normalise(stored.value), version: stored.version };
+}
+
 /** What the site should use right now. Never throws: falls back to the seed. */
 export async function readSettings(): Promise<Settings> {
 	const token = blobToken();
@@ -175,6 +181,15 @@ export async function writeSettings(next: Settings): Promise<Settings> {
 	const path = await import("node:path");
 	await fs.writeFile(path.join(process.cwd(), "content", "ministry-partners.json"), body, "utf8");
 	return clean;
+}
+
+/** Worker API write: versioned and fail-closed; the committed file remains seed. */
+export async function writeSettingsVersioned(next: Settings, expectedVersion: string, locals?: RuntimeLocals): Promise<{ settings: Settings; version: string }> {
+	const current = await readPublished<Settings>(BLOB_PATH, seedSettings(), locals);
+	if (current.version !== expectedVersion) throw new ContentConflict();
+	const settings = normalise({ ...next, updatedAt: new Date().toISOString() });
+	const saved = await publish(BLOB_PATH, settings, seedSettings(), current.version, locals);
+	return { settings, version: saved.version };
 }
 
 /** The churches whose dates actually reach the calendar right now. */

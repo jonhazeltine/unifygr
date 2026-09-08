@@ -44,7 +44,13 @@ async function read<T>(key: string, fallback: T, locals?: RuntimeLocals): Promis
 	const found = await driver.get(key, { access: "private", useCache: false, token: accessToken });
 	if (!found) return { value: fallback, version: "seed", publishedAt: "", exists: false };
 	if (found.statusCode !== 200 || !found.stream) throw new Error("Content storage returned an incomplete response.");
-	return { ...(JSON.parse(await new Response(found.stream).text()) as Stored<T>), etag: found.blob.etag, exists: true };
+	const parsed = JSON.parse(await new Response(found.stream).text());
+	// Older private Blob documents (notably partner settings) predate the
+	// version envelope. Treat them as the seed revision and CAS-wrap them on
+	// their first runtime save, preserving their value without a live migration.
+	if (!parsed || typeof parsed !== "object" || !("value" in parsed) || !("version" in parsed))
+		return { value: parsed as T, version: "seed", publishedAt: "", etag: found.blob.etag, exists: true };
+	return { ...(parsed as Stored<T>), etag: found.blob.etag, exists: true };
 }
 
 async function write<T>(key: string, value: T, expectedVersion: string | undefined, fallback: T, locals?: RuntimeLocals): Promise<Stored<T>> {
