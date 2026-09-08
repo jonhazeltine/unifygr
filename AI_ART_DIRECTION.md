@@ -1,11 +1,11 @@
 # AI Art Direction
 
-Use one visual language across every image:
+Use a consistent, welcoming visual language, with lighting suited to each ministry:
 
 - Cinematic spiritual minimalism
 - Deep blue and charcoal as an accent, with clear daylight, warm gold, and soft ivory as equal parts of the frame
 - A faint cool-blue secondary glow
-- Volumetric light beams, mist, and soft grain
+- Natural light and restrained texture; dramatic light beams and mist are optional for symbolic worship art, never requirements for everyday ministry scenes
 - Human-scale composition, generous daylight, and calm framing
 - Reverent and welcoming, never ominous or fantasy-game art
 - No text, logos, UI, or obvious poster treatment inside the image
@@ -20,19 +20,19 @@ Hero prompt:
 
 Worship prompt:
 
-`A cinematic worship environment with a glowing circular window of light above a gathered congregation in silhouette, reverent and quiet, no stage clutter, dark sanctuary, warm gold illumination, soft haze, minimal composition, premium editorial atmosphere, midnight blue palette with ivory highlights`
+`A warmly lit church gathering, natural skin tones and clearly visible people, a calm sense of worship and shared attention, soft ivory and gold light, restrained editorial composition, no dramatic black silhouettes or invented church branding`
 
 Prayer prompt:
 
-`A cinematic night prayer scene with a solitary kneeling figure in silhouette beneath a large moonlike halo, cool dark landscape, warm gold light touching the figure, subtle mist, contemplative, minimal, elegant, premium spiritual editorial style`
+`A quiet sunlit space for prayer, an open Bible and a chair beside a window, warm wood and soft ivory, peaceful and approachable, natural shadows with visible detail`
 
 Mission prompt:
 
-`A cinematic city mission scene at blue hour, layered urban skyline with soft warm windows, one radiant source of light breaking across the city, sense of movement outward and blessing, moody midnight palette, gold and ivory accents, atmospheric haze, minimal and premium`
+`Grand Rapids in clear morning light, streets and community life visible, warm and welcoming, natural colors and human-scale composition, no ominous skyline or supernatural beams`
 
 Unity prompt:
 
-`A cinematic symbolic unity scene with converging paths of light leading toward a central radiant source over a dark landscape and distant city, calm, monumental, midnight blue and charcoal, gold halo light, soft mist, restrained premium composition, spiritual but contemporary`
+`A bright shared table with chairs gathered around it, natural light and warm materials, a simple visual invitation to connection, calm and human-scale, no monumental dark landscape`
 
 Recommended generation settings:
 
@@ -56,28 +56,34 @@ Per-area subjects (change only this half):
 
 | Area | Subject |
 |---|---|
-| worship-and-prayer | glowing circular window of light above a congregation in silhouette |
-| formation | long table, one open book under a hanging lamp, empty chairs |
-| kids | diverse elementary-age children playing together outdoors in bright morning light, faces naturally visible, an adult leader nearby, safe and joyful rather than posed |
-| students | young figures on a rooftop edge at blue hour, city glow beyond |
-| marriage-family | two figures walking a narrow lit path together |
-| foster-adoption | an adult and a child at a warmly lit doorway, seen from behind |
-| men-women | a circle of empty chairs under one hanging lamp |
-| recovery | a figure walking out of a tunnel into warm gold light |
-| mental-health | a figure at a tall window as dawn floods a quiet room |
-| practical-care | a lit doorway at night, crates stacked in silhouette outside |
-| health | a bedroom at dawn, light across a made bed and a glass of water |
-| justice | a heavy gate standing open, dawn light flooding through |
-| mission | city skyline at blue hour, one light breaking outward across it |
-| church-leaders | an empty lectern under a broad shaft of light |
-| creative | light through a tall patterned window, instruments in silhouette |
-| seniors | two figures on a bench facing a golden horizon over water |
+| worship-and-prayer | a warmly lit gathering with clearly visible people, or an airy prayer space |
+| formation | an open Bible and notebooks around a sunlit study table |
+| kids | a colorful activity table with blocks and a picture Bible in daylight; alternatively, approved photos of supervised children playing and learning |
+| students | young people together in a safe park or bright shared space; no rooftop edges or isolated silhouettes |
+| marriage-family | a family sharing an ordinary activity in a welcoming daylight setting |
+| foster-adoption | a welcoming family space or approved family photo in natural light; no anonymous child at a dark doorway |
+| men-women | a bright shared table ready for conversation, or an approved group photo |
+| recovery | an open, peaceful garden path in daylight, suggesting support and hope without a tunnel or trapped figure |
+| mental-health | a comfortable, light-filled space for conversation; avoid depicting someone as isolated or distressed |
+| practical-care | clearly visible groceries and volunteers at a bright distribution table |
+| health | a welcoming care setting with natural daylight and practical, familiar details |
+| justice | a bright open path and welcoming community space; avoid prison-like scenery |
+| mission | a recognizable city street or approved outreach photo in daylight |
+| church-leaders | a bright table prepared for conversation and shared study |
+| creative | colorful art materials or musical instruments in natural daylight |
+| seniors | a welcoming garden bench or approved photo of older adults connecting in daylight |
 
 **Children and families.** Do not use silhouettes, obscured faces, children
 moving toward darkness, or isolated children. Use age-appropriate daylight,
 visible supervision, ordinary play or belonging, and a clearly safe setting.
 
-**Exposure rule.** The card crops a short horizontal band and lays a text
-gradient over it. Generate a well-exposed original with a mean luminance around
-56 or higher; preserve real daylight and skin tones rather than lifting a dark
-frame afterward.
+**Exposure and crops.** Check the actual desktop and phone crops. Subjects must
+remain clearly visible without brightening a dark original. Family-card labels
+sit below the image, so those images need no dark overlay. Where text overlaps
+art, confine shading to the text area and verify readability.
+
+**Source and approval.** Prefer suitable, approved real ministry photos when
+available. Generated concepts must not imply they document our actual people or
+facilities. Keep new generated art in a draft/review location until a person
+approves the specific image for publication. A revised prompt is not approval
+of a generated result.
