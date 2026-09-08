@@ -1,51 +1,27 @@
 # AI Art Direction
 
-Use a consistent, welcoming visual language, with lighting suited to each ministry:
+## Section direction — approved September 8, 2026
 
-- Cinematic spiritual minimalism
-- Deep blue and charcoal as an accent, with clear daylight, warm gold, and soft ivory as equal parts of the frame
-- A faint cool-blue secondary glow
-- Natural light and restrained texture; dramatic light beams and mist are optional for symbolic worship art, never requirements for everyday ministry scenes
-- Human-scale composition, generous daylight, and calm framing
-- Reverent and welcoming, never ominous or fantasy-game art
-- No text, logos, UI, or obvious poster treatment inside the image
+Ministry pages (`/ministries`, its child routes, and `/ministry/*`) use a light,
+people-focused presentation: ivory backgrounds, dark readable copy, natural
+skin tones, and clear faces. This includes Worship and Prayer when shown inside
+the ministry section. Use images above the copy rather than dark overlays that
+hide people. Preserve every person's face in desktop and phone layouts; a
+technically valid center crop is not sufficient.
 
-Global negative prompt:
+Everywhere else retains the site's dark, moody cinematic direction: midnight
+blue, charcoal, warm gold, atmospheric worship and prayer, restrained spiritual
+symbolism. Do not brighten those sections as a side effect of ministry changes.
 
-`cartoon, anime, comic, low detail, cheesy church clipart, over-sharpened HDR, neon cyberpunk, purple fantasy, extra limbs, malformed hands, text, watermark, logo, frame, collage, split layout, blacked-out faces, children in shadow, children running away from camera, ominous doorway`
-
-Hero prompt:
-
-`A cinematic, reverent dawn scene over Grand Rapids with a clear blue sky, warm ivory light, and human-scale welcome; a luminous symbolic figure may be present but must read in soft daylight rather than as a black silhouette. Open composition, natural light behavior, calm premium editorial mood, wide hero image`
-
-Worship prompt:
-
-`A warmly lit church gathering, natural skin tones and clearly visible people, a calm sense of worship and shared attention, soft ivory and gold light, restrained editorial composition, no dramatic black silhouettes or invented church branding`
-
-Prayer prompt:
-
-`A quiet sunlit space for prayer, an open Bible and a chair beside a window, warm wood and soft ivory, peaceful and approachable, natural shadows with visible detail`
-
-Mission prompt:
-
-`Grand Rapids in clear morning light, streets and community life visible, warm and welcoming, natural colors and human-scale composition, no ominous skyline or supernatural beams`
-
-Unity prompt:
-
-`A bright shared table with chairs gathered around it, natural light and warm materials, a simple visual invitation to connection, calm and human-scale, no monumental dark landscape`
-
-Recommended generation settings:
-
-- Aspect ratio:
-  - Hero: `4:3` or `16:10`
-  - Section images: `4:3`
-- Keep prompt style consistent across all images.
-- Reuse the same seed family when the tool supports it.
-- Reduce prompt variation between scenes; change only subject matter.
+New image concepts require human approval before publication. The nine ministry
+concepts approved September 8 may be extracted and optimized without regenerating
+or changing their people, scene, or identity. New variants remain drafts.
 
 ## Ministry card art
 
-One image per ministry area in `public/art/ministries/<family-slug>.jpg`, 900×600.
+Image mappings live in `content/ministry-art.json`; approved photo extracts use
+optimized WebP files in `public/art/ministries/`. Preserve their native aspect
+ratios so faces remain visible.
 Sixteen areas, sixteen distinct images — no sharing between areas.
 
 Shared spine, appended to every per-area subject so the set reads as one family:
@@ -68,7 +44,7 @@ Per-area subjects (change only this half):
 | practical-care | clearly visible groceries and volunteers at a bright distribution table |
 | health | a welcoming care setting with natural daylight and practical, familiar details |
 | justice | a bright open path and welcoming community space; avoid prison-like scenery |
-| mission | a recognizable city street or approved outreach photo in daylight |
+| mission | overseas ministry with children and local leaders, reflecting the Mission of Hope partnership in the Caribbean |
 | church-leaders | a bright table prepared for conversation and shared study |
 | creative | colorful art materials or musical instruments in natural daylight |
 | seniors | a welcoming garden bench or approved photo of older adults connecting in daylight |
