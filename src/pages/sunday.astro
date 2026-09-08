@@ -1,7 +1,7 @@
 ---
 import Site from "../layouts/Site.astro";
 import { church } from "../data/site";
-import { service, answers, unanswered } from "../data/sunday";
+import { service, answers } from "../data/sunday";
 ---
 
 <Site
@@ -51,23 +51,6 @@ import { service, answers, unanswered } from "../data/sunday";
 			</ul>
 		</div>
 	</section>
-
-	{unanswered.length > 0 && (
-		<section class="band">
-			<div class="shell">
-				<div class="open-qs">
-					<h3>Questions we still owe you an answer to</h3>
-					<p>
-						These belong on this page and are not written yet. Until they are, call the office
-						on {church.phone} and a real person will tell you.
-					</p>
-					<ul>
-						{unanswered.map((q) => <li>{q}</li>)}
-					</ul>
-				</div>
-			</div>
-		</section>
-	)}
 
 	<section class="band band--raised">
 		<div class="shell">
