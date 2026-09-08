@@ -7,6 +7,14 @@ import {
 	readPublished,
 } from "../src/lib/studio/runtime-content.ts";
 import { applyEdits, readContent, undo } from "../src/lib/studio/store.ts";
+import {
+	__setBundledPagesForTests,
+	deletePage,
+	listPages,
+	readPage,
+	writePage,
+} from "../src/lib/studio/pages.ts";
+import { publicBuilderLink } from "../src/lib/studio/page-links.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -58,4 +66,43 @@ test("first publish undoes to the seed and repeated undo walks backward", async 
 	void one; void three;
 });
 
-test.after(() => __setRuntimeContentDriverForTests());
+function page(status: "draft" | "live", title: string) {
+	return { status, order: 1, root: { props: { title } }, content: [] };
+}
+
+test("a page tombstone hides a repository seed from direct reads and listings", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/alpha.json": page("live", "Alpha") });
+	await deletePage("alpha", "seed", locals);
+	assert.equal(await readPage("alpha", locals), null);
+	assert.deepEqual((await listPages(locals)).map((entry) => entry.slug), []);
+});
+
+test("an existing runtime index does not hide a newly bundled seed page", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/old.json": page("live", "Old") });
+	await writePage("runtime", page("draft", "Runtime"), undefined, "seed", locals);
+	__setBundledPagesForTests({
+		"/content/pages/old.json": page("live", "Old"),
+		"/content/pages/new-seed.json": page("live", "New seed"),
+	});
+	assert.deepEqual(new Set((await listPages(locals)).map((entry) => entry.slug)), new Set(["new-seed", "old", "runtime"]));
+});
+
+test("directory links follow the live runtime page status", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/partner.json": page("draft", "Partner") });
+	const entry = { slug: "partner-ministry", href: "/partner" };
+	let statuses = new Map((await listPages(locals)).map((listing) => [listing.slug, listing.status] as const));
+	assert.equal(publicBuilderLink(entry, statuses), "/ministry/partner-ministry");
+	const partner = await readPage("partner", locals);
+	assert.ok(partner);
+	await writePage("partner", partner, { status: "live" }, "seed", locals);
+	statuses = new Map((await listPages(locals)).map((listing) => [listing.slug, listing.status] as const));
+	assert.equal(publicBuilderLink(entry, statuses), "/partner");
+});
+
+test.after(() => {
+	__setRuntimeContentDriverForTests();
+	__setBundledPagesForTests();
+});

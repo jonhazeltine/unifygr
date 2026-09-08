@@ -17,7 +17,21 @@
 import { publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
-const BUNDLED: Record<string, any> = import.meta.glob("../../../content/pages/*.json", { eager: true });
+// The guard also lets the storage behavior run in the node:test suite, where
+// Vite's import.meta.glob transform is not present.
+const BUNDLED: Record<string, any> = typeof import.meta.glob === "function"
+	? import.meta.glob("../../../content/pages/*.json", { eager: true })
+	: {};
+let bundledOverrideForTests: Record<string, any> | undefined;
+
+/** Test-only seed seam; production always reads the bundled repository files. */
+export function __setBundledPagesForTests(next?: Record<string, any>): void {
+	bundledOverrideForTests = next;
+}
+
+function bundledPages(): Record<string, any> {
+	return bundledOverrideForTests ?? BUNDLED;
+}
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
 export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards", "TapButtons", "Gallery"] as const;
@@ -86,13 +100,15 @@ export function sanitizeData(input: any): PageData {
 }
 
 function bundledPage(slug: string): any | null {
-	for (const [key, mod] of Object.entries(BUNDLED)) {
+	for (const [key, mod] of Object.entries(bundledPages())) {
 		if (key.endsWith(`/${slug}.json`)) return (mod as any).default ?? mod;
 	}
 	return null;
 }
 
-const bundledSlugs = Object.keys(BUNDLED).map((k) => k.split("/").pop()!.replace(/\.json$/, ""));
+function bundledSlugs(): string[] {
+	return Object.keys(bundledPages()).map((key) => key.split("/").pop()!.replace(/\.json$/, ""));
+}
 const keyFor = (slug: string) => `studio/pages/${slug}/published.json`;
 
 export type PageListing = {
@@ -110,8 +126,12 @@ export type PageListing = {
 export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> {
 	// Listing runtime-created pages needs an index. It is updated alongside each
 	// save; committed files remain the seed list on a fresh deployment.
-	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
-	const slugs = new Set<string>(index.value);
+	const seeds = bundledSlugs();
+	const index = await readPublished("studio/pages/index.json", seeds, locals);
+	// The index tracks runtime-created pages. Always merge it with the current
+	// bundle so a later code deploy can add a seed page without losing it merely
+	// because a previous runtime index already exists.
+	const slugs = new Set<string>([...seeds, ...index.value]);
 
 	const out: PageListing[] = [];
 	for (const slug of slugs) {
@@ -176,8 +196,9 @@ export async function writePage(
 	});
 	const current = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
 	const saved = await publish(keyFor(slug), clean, bundled, expectedVersion ?? current.version, locals);
-	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
-	if (!index.value.includes(slug)) await publish("studio/pages/index.json", [...index.value, slug], bundledSlugs, index.version, locals);
+	const seeds = bundledSlugs();
+	const index = await readPublished("studio/pages/index.json", seeds, locals);
+	if (!index.value.includes(slug)) await publish("studio/pages/index.json", [...index.value, slug], seeds, index.version, locals);
 	return { data: clean, via: "runtime", version: saved.version };
 }
 
@@ -197,8 +218,9 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	await publish<PageData | null>(keyFor(slug), null, bundled, current.version, locals);
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
-	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
-	await publish("studio/pages/index.json", index.value.filter((entry) => entry !== slug), bundledSlugs, index.version, locals);
+	const seeds = bundledSlugs();
+	const index = await readPublished("studio/pages/index.json", seeds, locals);
+	await publish("studio/pages/index.json", index.value.filter((entry) => entry !== slug), seeds, index.version, locals);
 	return { via: "runtime" };
 }
 

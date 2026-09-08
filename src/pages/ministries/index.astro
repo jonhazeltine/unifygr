@@ -1,6 +1,8 @@
 ---
 import Interior from "../../layouts/Interior.astro";
 import SignatureCard from "../../components/SignatureCard.astro";
+import { listPages } from "../../lib/studio/pages";
+import { publicBuilderLink } from "../../lib/studio/page-links";
 
 export const prerender = false;
 import {
@@ -74,17 +76,9 @@ const artFor = (slug: string) => SIGNATURE_ART[slug] ?? "/art/generated/gr-city-
 // answers a real 404 to everyone but staff. So the card falls back to the
 // ministry's own page until the fuller one is published, and picks the better
 // link up on its own the day it is.
-const pageStatus = Object.fromEntries(
-	Object.entries(import.meta.glob<{ status?: string }>("../../../content/pages/*.json", { eager: true })).map(
-		([file, mod]) => [file.split("/").pop()!.replace(".json", ""), mod.status ?? "draft"],
-	),
-);
+const pageStatus = new Map((await listPages(Astro.locals)).map((page) => [page.slug, page.status] as const));
 function linkFor(entry: { slug: string; href?: string | null }): string {
-	const href = entry.href;
-	if (!href) return `/ministry/${entry.slug}`;
-	const slug = href.replace(/^\//, "");
-	if (slug in pageStatus && pageStatus[slug] !== "live") return `/ministry/${entry.slug}`;
-	return href;
+	return publicBuilderLink(entry, pageStatus);
 }
 
 const curatedByFamily = allFamiliesIncludingSpecialised
