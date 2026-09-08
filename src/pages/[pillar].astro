@@ -2,11 +2,10 @@
 import Interior from "../layouts/Interior.astro";
 import { pillars } from "../data/site";
 
-export function getStaticPaths() {
-	return pillars.map((p) => ({ params: { pillar: p.slug }, props: { pillar: p } }));
-}
+export const prerender = false;
 
-const { pillar } = Astro.props;
+const pillar = pillars.find((candidate) => candidate.slug === Astro.params.pillar);
+if (!pillar) return new Response("Not found", { status: 404 });
 const isExternal = (href: string) => href.startsWith("http");
 ---
 

@@ -1,5 +1,7 @@
 ---
 import Interior from "../../layouts/Interior.astro";
+
+export const prerender = false;
 import MinistryCard from "../../components/MinistryCard.astro";
 import {
 	entries,
@@ -9,17 +11,10 @@ import {
 	sortEntries,
 	TIER_LABEL,
 	STATUS_LABEL,
-	type Entry,
 } from "../../data/ministries";
 
-export function getStaticPaths() {
-	return entries.map((entry) => ({
-		params: { slug: entry.slug },
-		props: { entry },
-	}));
-}
-
-const { entry } = Astro.props as { entry: Entry };
+const entry = entries.find((candidate) => candidate.slug === Astro.params.slug);
+if (!entry) return new Response("Not found", { status: 404 });
 
 const inHouse = entry.house === "in";
 const unverified = entry.status !== "live";

@@ -1,67 +1,57 @@
-// Shared media-library logic: list the site's images (existing art + staff
-// uploads) and save new uploads. Used by the media API and the AI co-editor
-// (so the AI can place real images, never invented paths).
+// New uploads are private staging objects. A staff member must explicitly
+// promote one before a page receives a public /uploads/ URL.
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { commitToMain } from "./github";
+import { get, put } from "@vercel/blob";
+import { publish, readPublished, runtimeToken, type RuntimeLocals } from "./runtime-content";
 
-const ROOT = process.cwd();
-const SCAN_DIRS = ["public/art", "public/uploads"];
 const EXT = new Set([".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif", ".svg"]);
 const MAX_BYTES = 8 * 1024 * 1024;
-
-// Build-time snapshot of image paths (keys only, nothing imported) — the
-// listing fallback in production where the filesystem isn't readable.
+const INDEX = "studio/media/published.json";
 const BUNDLED_KEYS = [
 	...Object.keys(import.meta.glob("../../../public/art/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
 	...Object.keys(import.meta.glob("../../../public/uploads/**/*.{png,jpg,jpeg,webp,avif,gif,svg}")),
-].map((k) => k.replace(/^.*\/public\//, "/"));
+].map((key) => key.replace(/^.*\/public\//, "/"));
 
-async function walk(dir: string, out: string[]): Promise<void> {
-	let entries;
-	try { entries = await fs.readdir(dir, { withFileTypes: true }); } catch { return; }
-	for (const e of entries) {
-		const p = path.join(dir, e.name);
-		if (e.isDirectory()) await walk(p, out);
-		else if (EXT.has(path.extname(e.name).toLowerCase())) out.push(p);
-	}
-}
-
-/** All site images as web paths ("/art/…", "/uploads/…"). */
-export async function listSiteImages(): Promise<string[]> {
-	const files: string[] = [];
-	for (const d of SCAN_DIRS) await walk(path.join(ROOT, d), files);
-	if (files.length === 0) return [...BUNDLED_KEYS].sort(); // production: build-time list
-	return files
-		.map((f) => "/" + path.relative(path.join(ROOT, "public"), f).split(path.sep).join("/"))
-		.sort();
-}
-
-export type UploadResult = { src: string; via: "fs" | "git" };
-
-/** Save an uploaded image to public/uploads/ (fs locally, git commit in prod). */
-export async function saveUpload(name: string, dataBase64: string): Promise<UploadResult> {
-	const ext = path.extname(String(name)).toLowerCase();
+function safeFile(name: string): string {
+	const ext = name.slice(name.lastIndexOf(".")).toLowerCase();
 	if (!EXT.has(ext)) throw new Error("Images only (png, jpg, webp, gif, svg).");
+	const base = name.slice(0, -ext.length).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "image";
+	return `${base}-${Date.now().toString(36)}${ext}`;
+}
 
-	const base = path.basename(String(name), ext).toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60) || "image";
-	const b64 = String(dataBase64).replace(/^data:[^,]+,/, "");
-	const buf = Buffer.from(b64, "base64");
-	if (buf.length === 0) throw new Error("Empty file.");
-	if (buf.length > MAX_BYTES) throw new Error("Too big — keep images under 8 MB.");
+export async function listSiteImages(locals?: RuntimeLocals): Promise<string[]> {
+	const saved = await readPublished(INDEX, [] as string[], locals);
+	return [...new Set([...BUNDLED_KEYS, ...saved.value])].sort();
+}
 
-	const file = `${base}-${Date.now().toString(36)}${ext}`;
-	try {
-		const dir = path.join(ROOT, "public", "uploads");
-		await fs.mkdir(dir, { recursive: true });
-		await fs.writeFile(path.join(dir, file), buf);
-		return { src: `/uploads/${file}`, via: "fs" };
-	} catch {
-		await commitToMain(
-			[{ path: `public/uploads/${file}`, contentBase64: b64 }],
-			`content: studio upload "${file}"`,
-		);
-		return { src: `/uploads/${file}`, via: "git" };
-	}
+export async function saveUpload(name: string, dataBase64: string, locals?: RuntimeLocals): Promise<{ stageId: string }> {
+	const token = runtimeToken(locals);
+	if (!token) throw new Error("Runtime content storage is not configured on this deployment.");
+	const file = safeFile(String(name));
+	const data = String(dataBase64).replace(/^data:[^,]+,/, "");
+	const bytes = Uint8Array.from(atob(data), (char) => char.charCodeAt(0));
+	if (!bytes.length) throw new Error("Empty file.");
+	if (bytes.length > MAX_BYTES) throw new Error("Too big — keep images under 8 MB.");
+	await put(`studio/media/staged/${file}`, new Blob([bytes]), { access: "private", addRandomSuffix: false, token });
+	return { stageId: file };
+}
+
+export async function promoteUpload(stageId: string, locals?: RuntimeLocals): Promise<{ src: string; via: "runtime" }> {
+	const token = runtimeToken(locals);
+	if (!token) throw new Error("Runtime content storage is not configured on this deployment.");
+	if (!/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif|svg)$/i.test(stageId)) throw new Error("Unknown staged upload.");
+	const staged = await get(`studio/media/staged/${stageId}`, { access: "private", useCache: false, token });
+	if (!staged) throw new Error("That staged upload is no longer available.");
+	if (!staged.stream) throw new Error("The staged upload could not be read.");
+	await put(`studio/media/published/${stageId}`, await new Response(staged.stream).blob(), { access: "private", addRandomSuffix: false, token });
+	const current = await readPublished(INDEX, [] as string[], locals);
+	const src = `/uploads/${stageId}`;
+	if (!current.value.includes(src)) await publish(INDEX, [src, ...current.value], [] as string[], current.version, locals);
+	return { src, via: "runtime" };
+}
+
+export async function publishedUpload(file: string, locals?: RuntimeLocals) {
+	const token = runtimeToken(locals);
+	if (!token || !/^[a-z0-9-]+\.(png|jpe?g|webp|avif|gif|svg)$/i.test(file)) return null;
+	return get(`studio/media/published/${file}`, { access: "private", useCache: true, token });
 }

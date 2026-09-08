@@ -1,6 +1,10 @@
 ---
 import Interior from "../layouts/Interior.astro";
-import { vision, values, mission, pillars } from "../data/site";
+import { vision, values, pillars, runtimeSite } from "../data/site";
+
+export const prerender = false;
+
+const { mission } = await runtimeSite(Astro.locals);
 ---
 
 <Interior

@@ -17,30 +17,30 @@ import { listHandBuiltPages } from "../../../lib/studio/site-pages";
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
-export const GET: APIRoute = async ({ url, cookies }) => {
+export const GET: APIRoute = async ({ url, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const slug = url.searchParams.get("slug");
 	if (slug) {
-		const data = await readPage(slug);
+		const data = await readPage(slug, locals);
 		return data ? json({ data }) : json({ error: "Not found" }, 404);
 	}
-	return json({ pages: await listPages(), sitePages: listHandBuiltPages() });
+	return json({ pages: await listPages(locals), sitePages: listHandBuiltPages() });
 };
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const body = await request.json().catch(() => ({}));
 	try {
 		if (body?.delete) {
-			const res = await deletePage(body.slug);
+			const res = await deletePage(body.slug, body?.version, locals);
 			return json({ ok: true, via: res.via });
 		}
 		if (body?.data) {
-			const res = await writePage(body.slug, body.data);
+			const res = await writePage(body.slug, body.data, undefined, body?.version, locals);
 			return json({ ok: true, data: res.data, via: res.via });
 		}
 		if (body?.status || body?.order != null) {
-			const res = await updatePageMeta(body.slug, { status: body.status, order: body.order });
+			const res = await updatePageMeta(body.slug, { status: body.status, order: body.order }, body?.version, locals);
 			return json({ ok: true, data: res.data, via: res.via });
 		}
 		return json({ ok: false, error: "Nothing to do." }, 400);

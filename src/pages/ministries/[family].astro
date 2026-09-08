@@ -2,6 +2,7 @@
 // A family page is the way into its categories. Like the category pages, it
 // shows only what someone can turn up to; everything else sits on the
 // specialised list.
+export const prerender = false;
 import Interior from "../../layouts/Interior.astro";
 import MinistryCard from "../../components/MinistryCard.astro";
 import MinistryMap from "../../components/MinistryMap.astro";
@@ -15,17 +16,10 @@ import {
 	sortEntries,
 	isOffering,
 	type Entry,
-	type Family,
 } from "../../data/ministries";
 
-export function getStaticPaths() {
-	return families.map((family) => ({
-		params: { family: family.slug },
-		props: { family },
-	}));
-}
-
-const { family } = Astro.props as { family: Family };
+const family = families.find((candidate) => candidate.slug === Astro.params.family);
+if (!family) return new Response("Not found", { status: 404 });
 
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 

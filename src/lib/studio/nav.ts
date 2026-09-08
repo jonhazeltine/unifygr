@@ -4,15 +4,10 @@
 // is the fence: labels and links only, capped counts and lengths — nothing
 // executable can enter the header.
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { commitToMain } from "./github";
+import seed from "../../../content/nav.json";
+import { publish, readPublished, type RuntimeLocals } from "./runtime-content";
 
-const ROOT = process.cwd();
-const NAV_PATH = path.join(ROOT, "content", "nav.json");
-
-// Build-time snapshot — the read fallback where there's no filesystem.
-const BUNDLED: any = import.meta.glob("../../../content/nav.json", { eager: true });
+const KEY = "studio/nav/published.json";
 
 export type NavItem = { label: string; href: string; blurb?: string };
 export type NavGroup = { label: string; href: string; items: NavItem[] };
@@ -49,23 +44,13 @@ export function sanitizeNav(input: any): Nav {
 	};
 }
 
-export async function readNav(): Promise<Nav> {
-	try {
-		return sanitizeNav(JSON.parse(await fs.readFile(NAV_PATH, "utf8")));
-	} catch {
-		const mod: any = Object.values(BUNDLED)[0];
-		return sanitizeNav(mod?.default ?? mod ?? {});
-	}
+export async function readNav(locals?: RuntimeLocals): Promise<Nav> {
+	return sanitizeNav((await readPublished(KEY, seed, locals)).value);
 }
 
-export async function writeNav(input: any): Promise<{ nav: Nav; via: "fs" | "git" }> {
+export async function writeNav(input: any, expectedVersion?: string, locals?: RuntimeLocals): Promise<{ nav: Nav; via: "runtime"; version: string }> {
 	const nav = sanitizeNav(input);
-	const json = JSON.stringify(nav, null, "\t") + "\n";
-	try {
-		await fs.writeFile(NAV_PATH, json, "utf8");
-		return { nav, via: "fs" };
-	} catch {
-		await commitToMain([{ path: "content/nav.json", content: json }], "content: studio edit navigation");
-		return { nav, via: "git" };
-	}
+	const current = await readPublished(KEY, seed, locals);
+	const saved = await publish(KEY, nav, seed, expectedVersion ?? current.version, locals);
+	return { nav, via: "runtime", version: saved.version };
 }

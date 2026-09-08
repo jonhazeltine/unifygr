@@ -5,23 +5,23 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { listSiteImages, saveUpload } from "../../../lib/studio/media";
+import { listSiteImages, promoteUpload, saveUpload } from "../../../lib/studio/media";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
-export const GET: APIRoute = async ({ cookies }) => {
+export const GET: APIRoute = async ({ cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
-	return json({ images: await listSiteImages() });
+	return json({ images: await listSiteImages(locals) });
 };
 
-export const POST: APIRoute = async ({ request, cookies }) => {
+export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
-	const { name, dataBase64 } = await request.json().catch(() => ({}));
-	if (!name || !dataBase64) return json({ error: "Missing file." }, 400);
+	const { name, dataBase64, promote } = await request.json().catch(() => ({}));
 	try {
-		const res = await saveUpload(name, dataBase64);
-		return json({ ok: true, src: res.src, via: res.via });
+		if (promote) return json({ ok: true, ...(await promoteUpload(String(promote), locals)) });
+		if (!name || !dataBase64) return json({ error: "Missing file." }, 400);
+		return json({ ok: true, ...(await saveUpload(name, dataBase64, locals)) });
 	} catch (err) {
 		return json({ error: (err as Error).message }, 400);
 	}

@@ -18,7 +18,7 @@ interface Props {
 }
 
 const { slug, bare = false } = Astro.props;
-const data = await readPage(slug);
+const data = await readPage(slug, Astro.locals);
 const staff = isAuthed(Astro.cookies);
 
 // A draft is invisible to anyone but staff. Returning a Response from a

@@ -14,12 +14,7 @@
 //    bundle; writes commit to GitHub via commitToMain(), and Vercel's rebuild
 //    makes them live a minute or two later.
 
-import { promises as fs } from "node:fs";
-import path from "node:path";
-import { commitToMain } from "./github";
-
-const ROOT = process.cwd();
-const PAGES_DIR = path.join(ROOT, "content", "pages");
+import { publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
 const BUNDLED: Record<string, any> = import.meta.glob("../../../content/pages/*.json", { eager: true });
@@ -97,13 +92,8 @@ function bundledPage(slug: string): any | null {
 	return null;
 }
 
-async function fsPageSlugs(): Promise<string[] | null> {
-	try {
-		return (await fs.readdir(PAGES_DIR)).filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, ""));
-	} catch {
-		return null; // no fs access (or dir missing)
-	}
-}
+const bundledSlugs = Object.keys(BUNDLED).map((k) => k.split("/").pop()!.replace(/\.json$/, ""));
+const keyFor = (slug: string) => `studio/pages/${slug}/published.json`;
 
 export type PageListing = {
 	slug: string;
@@ -116,16 +106,16 @@ export type PageListing = {
 	mounted: boolean;
 };
 
-export async function listPages(): Promise<PageListing[]> {
-	const fromFs = await fsPageSlugs();
-	const slugs = new Set<string>(
-		fromFs ?? Object.keys(BUNDLED).map((k) => k.split("/").pop()!.replace(/\.json$/, "")),
-	);
+export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> {
+	// Listing runtime-created pages needs an index. It is updated alongside each
+	// save; committed files remain the seed list on a fresh deployment.
+	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
+	const slugs = new Set<string>(index.value);
 
 	const out: PageListing[] = [];
 	for (const slug of slugs) {
 		if (!validSlug(slug)) continue;
-		const data = await readPage(slug);
+		const data = await readPage(slug, locals);
 		if (data) {
 			out.push({
 				slug,
@@ -140,21 +130,17 @@ export async function listPages(): Promise<PageListing[]> {
 	return out.sort((a, b) => a.order - b.order || a.slug.localeCompare(b.slug));
 }
 
-export async function readPage(slug: string): Promise<PageData | null> {
+export async function readPage(slug: string, locals?: RuntimeLocals): Promise<PageData | null> {
 	if (!validSlug(slug)) return null;
-	try {
-		return sanitizeData(JSON.parse(await fs.readFile(path.join(PAGES_DIR, `${slug}.json`), "utf8")));
-	} catch {
-		const bundled = bundledPage(slug);
-		return bundled ? sanitizeData(bundled) : null;
-	}
+	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	return sanitizeData((await readPublished(keyFor(slug), bundled, locals)).value);
 }
 
 function serialize(data: PageData): string {
 	return JSON.stringify(data, null, "\t") + "\n";
 }
 
-export type SaveResult = { data: PageData; via: "fs" | "git" };
+export type SaveResult = { data: PageData; via: "runtime"; version: string };
 
 /**
  * Write a page. Filesystem when possible; GitHub commit in production.
@@ -166,47 +152,42 @@ export async function writePage(
 	slug: string,
 	data: any,
 	meta?: { status?: PageStatus; order?: number },
+	expectedVersion?: string,
+	locals?: RuntimeLocals,
 ): Promise<SaveResult> {
 	if (!validSlug(slug)) throw new Error("Bad page name — use lowercase letters, numbers, and dashes.");
-	const existing = await readPage(slug);
+	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	const existing = await readPage(slug, locals);
 	const clean = sanitizeData({
 		...data,
 		status: meta?.status ?? existing?.status ?? "draft",
 		order: meta?.order ?? existing?.order ?? (existing ? 0 : Date.now() % 100000),
 	});
-	try {
-		await fs.mkdir(PAGES_DIR, { recursive: true });
-		await fs.writeFile(path.join(PAGES_DIR, `${slug}.json`), serialize(clean), "utf8");
-		return { data: clean, via: "fs" };
-	} catch {
-		await commitToMain(
-			[{ path: `content/pages/${slug}.json`, content: serialize(clean) }],
-			`content: studio save page "${slug}"`,
-		);
-		return { data: clean, via: "git" };
-	}
+	const current = await readPublished(keyFor(slug), bundled, locals);
+	const saved = await publish(keyFor(slug), clean, bundled, expectedVersion ?? current.version, locals);
+	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
+	if (!index.value.includes(slug)) await publish("studio/pages/index.json", [...index.value, slug], bundledSlugs, index.version, locals);
+	return { data: clean, via: "runtime", version: saved.version };
 }
 
 /** Change only status/order without touching content. */
-export async function updatePageMeta(slug: string, meta: { status?: PageStatus; order?: number }): Promise<SaveResult> {
-	const current = await readPage(slug);
+export async function updatePageMeta(slug: string, meta: { status?: PageStatus; order?: number }, expectedVersion?: string, locals?: RuntimeLocals): Promise<SaveResult> {
+	const current = await readPage(slug, locals);
 	if (!current) throw new Error("Page not found.");
-	return writePage(slug, current, meta);
+	return writePage(slug, current, meta, expectedVersion, locals);
 }
 
-export async function deletePage(slug: string): Promise<{ via: "fs" | "git" }> {
+export async function deletePage(slug: string, expectedVersion?: string, locals?: RuntimeLocals): Promise<{ via: "runtime" }> {
 	if (!validSlug(slug)) throw new Error("Bad page name.");
 	if (MOUNTED[slug]) throw new Error("This page is part of the site's structure — it can't be deleted (unpublish it instead).");
-	try {
-		await fs.rm(path.join(PAGES_DIR, `${slug}.json`));
-		return { via: "fs" };
-	} catch {
-		await commitToMain(
-			[{ path: `content/pages/${slug}.json`, remove: true }],
-			`content: studio delete page "${slug}"`,
-		);
-		return { via: "git" };
-	}
+	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	const current = await readPublished(keyFor(slug), bundled, locals);
+	if (expectedVersion && expectedVersion !== current.version) throw new Error("This page changed while you were editing it. Refresh and review it before publishing.");
+	// Deleted runtime pages are removed from the index; their immutable versions
+	// remain available for recovery.
+	const index = await readPublished("studio/pages/index.json", bundledSlugs, locals);
+	await publish("studio/pages/index.json", index.value.filter((entry) => entry !== slug), bundledSlugs, index.version, locals);
+	return { via: "runtime" };
 }
 
 /**
@@ -216,8 +197,8 @@ export async function deletePage(slug: string): Promise<{ via: "fs" | "git" }> {
  * component blanks the body but leaves the status at 200, and a blank 200 is a
  * page a search engine will index. Routes return this before rendering.
  */
-export async function draftGuard(slug: string, staff: boolean): Promise<Response | null> {
-	const data = await readPage(slug);
+export async function draftGuard(slug: string, staff: boolean, locals?: RuntimeLocals): Promise<Response | null> {
+	const data = await readPage(slug, locals);
 	if (data && (data.status === "live" || staff)) return null;
 	return new Response("Not found", { status: 404, headers: { "x-robots-tag": "noindex" } });
 }

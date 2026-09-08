@@ -1,7 +1,11 @@
 ---
 import Site from "../layouts/Site.astro";
-import { church, sermons } from "../data/site";
+import { runtimeSite } from "../data/site";
 import { service, answers, identity } from "../data/sunday";
+
+export const prerender = false;
+
+const { church, sermons } = await runtimeSite(Astro.locals);
 
 // The hero already gives the when and the where, so this list picks up at the
 // next thing a stranger wants to know. Everything else is one tap away.

@@ -4,7 +4,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { readContent } from "../../../lib/studio/store";
+import { contentVersion, readContent } from "../../../lib/studio/store";
 import { editableFields } from "../../../lib/studio/schema";
 import { historyCount } from "../../../lib/studio/store";
 
@@ -15,10 +15,10 @@ function getPath(obj: any, dotPath: string): unknown {
 	return dotPath.split(".").reduce((acc, key) => (acc == null ? acc : acc[key]), obj);
 }
 
-export const GET: APIRoute = async ({ cookies }) => {
+export const GET: APIRoute = async ({ cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 
-	const content = await readContent();
+	const content = await readContent(locals);
 	const fields = editableFields(content).map((f) => ({
 		path: f.path,
 		label: f.label,
@@ -27,5 +27,5 @@ export const GET: APIRoute = async ({ cookies }) => {
 		value: getPath(content, f.path) ?? "",
 	}));
 
-	return json({ fields, canUndo: (await historyCount()) > 0 });
+	return json({ fields, version: await contentVersion(locals), canUndo: (await historyCount(locals)) > 0 });
 };

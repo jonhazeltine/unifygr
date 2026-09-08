@@ -1,7 +1,10 @@
 ---
 import Site from "../layouts/Site.astro";
-import { church } from "../data/site";
+import { runtimeSite } from "../data/site";
 import { service, answers } from "../data/sunday";
+
+export const prerender = false;
+const { church } = await runtimeSite(Astro.locals);
 ---
 
 <Site

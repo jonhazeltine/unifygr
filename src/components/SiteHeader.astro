@@ -10,7 +10,7 @@ interface Props {
 const { brandHref = "/" } = Astro.props;
 
 // The menus are content (content/nav.json), editable in the Page Builder.
-const nav = await readNav();
+const nav = await readNav(Astro.locals);
 ---
 
 <header class="chrome">

@@ -8,10 +8,10 @@ import { undo, historyCount } from "../../../lib/studio/store";
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
-export const POST: APIRoute = async ({ cookies }) => {
+export const POST: APIRoute = async ({ cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 
-	const result = await undo();
+	const result = await undo(locals);
 	if (!result) return json({ ok: false, error: "Nothing to undo." }, 400);
-	return json({ ok: true, restoredFrom: result.restoredFrom, canUndo: (await historyCount()) > 0 });
+	return json({ ok: true, restoredFrom: result.restoredFrom, canUndo: (await historyCount(locals)) > 0 });
 };

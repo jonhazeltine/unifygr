@@ -1,6 +1,10 @@
 ---
 import Interior from "../layouts/Interior.astro";
-import { church } from "../data/site";
+import { runtimeSite } from "../data/site";
+
+export const prerender = false;
+
+const { church } = await runtimeSite(Astro.locals);
 
 // Shared calendar across Grand Rapids churches (thechurches.co).
 // Placeholder events until the live feed is wired in.

@@ -66,8 +66,14 @@ function ImagePickerField({ value, onChange }: { value: string; onChange: (v: st
 				headers: { "content-type": "application/json" },
 				body: JSON.stringify({ name: file.name, dataBase64 }),
 			}).then((x) => x.json());
-			if (r.src) { onChange(r.src); setImages((im) => [r.src, ...im]); }
-			else alert(r.error || "Upload failed");
+			if (r.stageId) {
+				if (!window.confirm("The upload is private until you promote it. Put this image on the public site now?")) return;
+				const promoted = await fetch("/api/studio/media", {
+					method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ promote: r.stageId }),
+				}).then((x) => x.json());
+				if (promoted.src) { onChange(promoted.src); setImages((im) => [promoted.src, ...im]); }
+				else alert(promoted.error || "Promotion failed");
+			} else alert(r.error || "Upload failed");
 		} finally { setBusy(false); }
 	}
 

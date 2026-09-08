@@ -6,6 +6,8 @@
 import Interior from "../../layouts/Interior.astro";
 import { allFamiliesIncludingSpecialised as families, entries, isOffering, isListable, specialisedFamilies, type Entry } from "../../data/ministries";
 
+export const prerender = false;
+
 const shelf = entries.filter((e) => !isOffering(e) && isListable(e));
 
 const grouped = families

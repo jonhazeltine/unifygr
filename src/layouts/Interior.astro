@@ -5,7 +5,7 @@
 import BaseHead from "../components/BaseHead.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import StudioDock from "../components/StudioDock.astro";
-import { church } from "../data/site";
+import { runtimeSite } from "../data/site";
 import { service } from "../data/sunday";
 import "../styles/sunday.css";
 import "../styles/tap.css";
@@ -20,6 +20,7 @@ interface Props {
 
 const { title, description, kicker, heading, lede } = Astro.props;
 const year = new Date().getFullYear();
+const { church } = await runtimeSite(Astro.locals);
 ---
 
 <!doctype html>
