@@ -2,6 +2,7 @@
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
 import { readOrgs, writeOrgs, type OrgChange } from "../../../lib/partners/directory";
+import { ContentConflict } from "../../../lib/studio/runtime-content";
 
 export const prerender = false;
 
@@ -31,6 +32,6 @@ export const PUT: APIRoute = async ({ request, cookies, locals }) => {
 		const saved = await writeOrgs(body.changes as Record<string, OrgChange>, body.version, locals);
 		return json({ ...saved, ...(await readOrgs(locals)) });
 	} catch (err: any) {
-		return json({ error: `Couldn't save: ${err?.message || "no reason given"}` }, 500);
+		return json({ error: `Couldn't save: ${err?.message || "no reason given"}` }, err instanceof ContentConflict ? 409 : 500);
 	}
 };

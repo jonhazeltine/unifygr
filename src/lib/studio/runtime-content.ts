@@ -54,9 +54,12 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 	if (expectedVersion && expectedVersion !== current.version) throw new ContentConflict();
 	if (!current.exists) {
 		// The seed is a real first revision, so the very first publish can undo.
-		await driver.put(`studio/revisions/${key}/seed.json`, JSON.stringify({ value: fallback, version: "seed", publishedAt: "", previousVersion: null }), {
+		try { await driver.put(`studio/revisions/${key}/seed.json`, JSON.stringify({ value: fallback, version: "seed", publishedAt: "", previousVersion: null }), {
 			access: "private", contentType: "application/json", addRandomSuffix: false, token: accessToken,
-		}).catch(() => {});
+		}); } catch (error) {
+			// A concurrent first publish may already have created the immutable seed.
+			if ((error as Error)?.name !== "BlobPreconditionFailedError") throw error;
+		}
 	}
 	const next: Stored<T> = { value, version: version(), publishedAt: new Date().toISOString() };
 	await driver.put(`studio/revisions/${key}/${next.version}.json`, JSON.stringify({ ...next, previousVersion: current.version }), {

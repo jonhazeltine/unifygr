@@ -57,7 +57,9 @@ export async function applyEdits(
 // The previous revision remains immutable. The explicit version route will use
 // this list for rollback; no history is erased by an ordinary publish.
 export async function historyCount(locals?: RuntimeLocals): Promise<number> {
-	return (await revisions(KEY, locals)).length;
+	const current = await readPublished(KEY, seed, locals);
+	const latest = await readRevision<any>(`studio/revisions/${KEY}/${current.version}.json`, locals);
+	return latest?.previousVersion ? 1 : 0;
 }
 
 export async function undo(locals?: RuntimeLocals): Promise<{ content: any; restoredFrom: string; version: string } | null> {
