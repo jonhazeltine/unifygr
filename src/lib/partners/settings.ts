@@ -188,7 +188,7 @@ export async function writeSettingsVersioned(next: Settings, expectedVersion: st
 	const current = await readPublished<Settings>(BLOB_PATH, seedSettings(), locals);
 	if (current.version !== expectedVersion) throw new ContentConflict();
 	const settings = normalise({ ...next, updatedAt: new Date().toISOString() });
-	const saved = await publish(BLOB_PATH, settings, seedSettings(), current.version, locals);
+	const saved = await publish(BLOB_PATH, settings, seedSettings(), expectedVersion, locals);
 	return { settings, version: saved.version };
 }
 
