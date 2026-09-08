@@ -10,7 +10,8 @@ const json = (data: unknown, status = 200) =>
 export const GET: APIRoute = ({ cookies }) => json({ authed: isAuthed(cookies) });
 
 export const POST: APIRoute = async ({ request, cookies }) => {
-	const { passcode } = await request.json().catch(() => ({}));
+	const body: unknown = await request.json().catch(() => null);
+	const passcode = body && typeof body === "object" ? (body as Record<string, unknown>).passcode : undefined;
 	if (!checkPasscode(passcode)) return json({ ok: false, error: "Wrong passcode." }, 401);
 	grant(cookies);
 	return json({ ok: true });
