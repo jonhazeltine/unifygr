@@ -124,6 +124,7 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 	.sig__facts dd { margin: 0; line-height: 1.6; }
 	.sig__go { margin: 0; }
 	.sig__go a { color: var(--gold-soft, #d8bd82); }
+	.sig:has(.sig__face--light) .sig__go a { color: #765a2b; }
 
 	@media (max-width: 34rem) {
 		.sig__facts { grid-template-columns: 1fr; gap: 0.15rem; }
