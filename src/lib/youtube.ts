@@ -9,6 +9,7 @@ export type ChannelVideo = {
 	date: string;
 	tag: string;
 	publishedAt: string;
+	messageStartSeconds: number | null;
 };
 
 const FEED = (channelId: string) =>
@@ -53,6 +54,23 @@ function formatDate(iso: string): string {
 	}).format(d);
 }
 
+function timestampSeconds(value: string): number | null {
+	const parts = value.split(":").map(Number);
+	if (parts.length < 2 || parts.length > 3 || parts.some((part) => !Number.isInteger(part) || part < 0)) return null;
+	const [hours, minutes, seconds] = parts.length === 3 ? parts : [0, parts[0], parts[1]];
+	if (minutes > 59 || seconds > 59) return null;
+	return hours * 3600 + minutes * 60 + seconds;
+}
+
+export function messageStartFromDescription(description: string): number | null {
+	for (const line of description.split(/\r?\n/u)) {
+		const match = line.match(/^\s*(\d{1,2}:\d{2}(?::\d{2})?)\s+.*\bmessage\b/iu);
+		if (!match) continue;
+		return timestampSeconds(match[1]);
+	}
+	return null;
+}
+
 export function parseChannelFeed(xml: string, limit = 8): ChannelVideo[] {
 	const out: ChannelVideo[] = [];
 	const entries = xml.split("<entry>").slice(1);
@@ -60,9 +78,17 @@ export function parseChannelFeed(xml: string, limit = 8): ChannelVideo[] {
 		const id = entry.match(/<yt:videoId>([0-9A-Za-z_-]{11})<\/yt:videoId>/)?.[1];
 		if (!id) continue;
 		const rawTitle = decode(entry.match(/<title>([\s\S]*?)<\/title>/)?.[1] ?? "");
+		const description = decode(entry.match(/<media:description>([\s\S]*?)<\/media:description>/)?.[1] ?? "");
 		const publishedAt = entry.match(/<published>([^<]+)<\/published>/)?.[1] ?? "";
 		const title = cleanTitle(rawTitle) || "Sunday Morning Service";
-		out.push({ id, title, date: formatDate(publishedAt), tag: tagFor(rawTitle), publishedAt });
+		out.push({
+			id,
+			title,
+			date: formatDate(publishedAt),
+			tag: tagFor(rawTitle),
+			publishedAt,
+			messageStartSeconds: messageStartFromDescription(description),
+		});
 		if (out.length >= limit) break;
 	}
 	return out;
