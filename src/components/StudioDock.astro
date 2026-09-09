@@ -30,6 +30,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 			<div class="sd-head__actions">
 				<button id="sd-builder" class="sd-icon" type="button" title="Open the Page Builder" aria-label="Open the Page Builder" hidden>⊞</button>
 				<button id="sd-partners" class="sd-icon" type="button" title="Partner churches — what feeds our calendar" aria-label="Partner churches" hidden>⛪</button>
+				<button id="sd-history" class="sd-icon" type="button" title="New Life History memory review" aria-label="New Life History" hidden>◷</button>
 				<button id="sd-undo" class="sd-icon" type="button" title="Undo last change" aria-label="Undo last change" hidden>↺</button>
 				<button id="sd-signout" class="sd-icon" type="button" title="Sign out" hidden>⎋</button>
 				<button id="sd-close" class="sd-icon" type="button" title="Close" aria-label="Close">×</button>
@@ -187,7 +188,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 
 		function showChat() {
 			$("sd-signin").hidden = true; $("sd-chat").hidden = false;
-			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false; $("sd-partners").hidden = false;
+			$("sd-signout").hidden = false; $("sd-undo").hidden = false; $("sd-builder").hidden = false; $("sd-partners").hidden = false; $("sd-history").hidden = false;
 			sessionStorage.setItem(OPEN_KEY, "1"); // stay open as staff navigate
 			renderLog();
 			api("/api/studio/content").then((r) => { contentVersion = r.version || null; });
@@ -198,7 +199,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 		}
 		function showSignin() {
 			$("sd-signin").hidden = false; $("sd-chat").hidden = true;
-			$("sd-signout").hidden = true; $("sd-undo").hidden = true;
+			$("sd-signout").hidden = true; $("sd-undo").hidden = true; $("sd-builder").hidden = true; $("sd-partners").hidden = true; $("sd-history").hidden = true;
 			setTimeout(() => $("sd-pass")?.focus(), 50);
 		}
 
@@ -268,6 +269,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 		$("sd-undo").addEventListener("click", undoLast);
 		$("sd-builder").addEventListener("click", () => { location.href = "/studio/builder"; });
 		$("sd-partners").addEventListener("click", () => { location.href = "/studio/partners"; });
+		$("sd-history").addEventListener("click", () => { location.href = "/studio/history"; });
 		$("sd-composer").addEventListener("submit", send);
 		$("sd-signout").addEventListener("click", async () => {
 			await api("/api/studio/session", { method: "DELETE" });

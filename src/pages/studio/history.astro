@@ -1,0 +1,86 @@
+---
+// History work stays with the existing New Life Remembers service for now.
+// This is a protected Studio doorway to its established human review flow,
+// not an editor for the separate history application.
+import { isAuthed } from "../../lib/studio/auth";
+import "../../styles/global.css";
+
+export const prerender = false;
+
+Astro.response.headers.set("Cache-Control", "private, no-store");
+
+if (!isAuthed(Astro.cookies)) {
+	return new Response(null, {
+		status: 302,
+		headers: { Location: "/?edit=1", "Cache-Control": "private, no-store" },
+	});
+}
+
+const asanaProject = "https://app.asana.com/1/72179045279617/project/1218197067961219";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex, nofollow" />
+		<title>New Life History | Studio</title>
+	</head>
+	<body class="history-body">
+		<main class="history-shell">
+			<header class="history-head">
+				<p class="eyebrow">New Life Studio</p>
+				<h1>New Life History</h1>
+				<p>
+					Memories people send through New Life Remembers stay in the existing review process. Review them in
+					Asana, then approve only the memories that are ready to appear publicly.
+				</p>
+			</header>
+
+			<section class="history-card" aria-labelledby="review-heading">
+				<h2 id="review-heading">Review memories</h2>
+				<ol>
+					<li>Open the New Life Remembers project in Asana.</li>
+					<li>Read cards in <strong>New — needs review</strong>. The person’s memory is above the horizontal line.</li>
+					<li>Edit that text if needed, then move a ready card to <strong>Approved — publishes to the site</strong>.</li>
+					<li>Approved memories appear on New Life Remembers within about a minute. Move duplicates or unsuitable submissions to <strong>Declined</strong>.</li>
+				</ol>
+				<a class="button button--primary" href={asanaProject} target="_blank" rel="noopener noreferrer">
+					Open memory review in Asana
+				</a>
+				<a class="history-live" href="https://history.newlifegr.com" target="_blank" rel="noopener noreferrer">
+					See published memories on New Life Remembers
+				</a>
+			</section>
+
+			<section class="history-card history-card--quiet" aria-labelledby="timeline-heading">
+				<h2 id="timeline-heading">Timeline changes</h2>
+				<p>
+					Timeline changes are managed separately for now. This Studio page does not edit or publish the New Life
+					Remembers timeline yet.
+				</p>
+			</section>
+
+			<p class="history-back"><a href="/?edit=1">Back to Studio</a></p>
+		</main>
+
+		<style>
+			.history-body { background: var(--bg); color: var(--text); }
+			.history-shell { width: min(44rem, calc(100% - 2rem)); margin: 0 auto; padding: 4rem 0 6rem; }
+			.history-head { margin-bottom: 2.5rem; }
+			.history-head h1 { margin: 0.3rem 0 0.8rem; max-width: none; }
+			.history-head > p:last-child { max-width: 40rem; color: var(--muted); }
+			.history-card { margin: 1.25rem 0; padding: 1.6rem; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+			.history-card h2 { margin-bottom: 0.7rem; font-size: clamp(1.5rem, 3vw, 2.2rem); max-width: none; }
+			.history-card ol { margin: 1rem 0 1.35rem; padding-left: 1.4rem; }
+			.history-card li { margin: 0.55rem 0; color: var(--muted); }
+			.history-card strong { color: var(--text); }
+			.history-live { display: inline-block; margin: 1rem 0 0 1rem; color: var(--gold); text-decoration: underline; text-underline-offset: 0.2em; }
+			@media (max-width: 34rem) { .history-live { display: block; margin-left: 0; } }
+			.history-card--quiet p { color: var(--muted); }
+			.history-back { margin-top: 2rem; }
+			.history-back a { color: var(--gold); text-decoration: underline; text-underline-offset: 0.2em; }
+		</style>
+	</body>
+</html>
