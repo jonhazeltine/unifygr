@@ -169,7 +169,7 @@ export const leadership = [
 	{
 		photo: "/art/staff/staff-elizabeth.png",
 		people: [
-			{ name: "Elizabeth Bish", role: "Connections Lead & Executive Administrator", bio: "Elizabeth helps people find their place in the New Life family and keeps the church running behind the scenes — connecting newcomers, caring for the details, and supporting the team in all they do." },
+			{ name: "Elizabeth Bish", role: "Connections Lead & Executive Administrator", bio: "Elizabeth helps people find their place in the New Life family and keeps our community running behind the scenes — connecting newcomers, caring for the details, and supporting the team in all they do." },
 		],
 	},
 ];

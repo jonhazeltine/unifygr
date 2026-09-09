@@ -86,7 +86,7 @@ export async function proposeEdits(
 async function proposeEditsViaApi(message: string, content: any, context: PageContext): Promise<Proposal> {
 	const fields = editableFields(content);
 	const prompt = [
-		"You edit the New Life Grand Rapids church website's approved text fields.",
+		"You edit the New Life Grand Rapids community website's approved text fields.",
 		"Return only changes to the exact fields listed below. Ask a brief clarifying question and return no edits if the request is unclear.",
 		...fields.map((field) => `- ${field.path}: ${JSON.stringify(String(getPath(content, field.path) ?? ""))}${field.hint ? ` (${field.hint})` : ""}`),
 		`Current page: ${context.page || context.path || "the site"}`,
