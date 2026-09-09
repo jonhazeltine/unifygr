@@ -52,11 +52,6 @@ export const answers = [
 		a: "No. You can sit in the back, not sing, not sign anything, and leave when it ends. Nobody will single you out.",
 		key: true,
 	},
-	{
-		q: "Can I watch first?",
-		a: "Yes. Every Sunday service goes up on our YouTube channel, and you can watch a few before you decide to drive over.",
-		key: false,
-	},
 ];
 
 export function answersForChurch(church: ChurchVisit) {
@@ -71,5 +66,5 @@ export function answersForChurch(church: ChurchVisit) {
 /** Two sentences on who these people are — for someone who will not read an essay. */
 export const identity = {
 	line: "Jesus Christ — crucified, risen, and Lord.",
-	body: "That is the whole foundation, and it is deliberately the only thing we make everyone agree on. People here hold real convictions about baptism, the end times and everything else, and they do not all land in the same place. We would rather talk that through with you across a table than hand you a position paper.",
+	body: "That is the whole foundation. People here hold real convictions about baptism, the end times and everything else, and they do not all land in the same place. We would rather talk that through with you across a table than hand you a position paper.",
 };
