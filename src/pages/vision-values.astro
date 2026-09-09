@@ -65,14 +65,12 @@ const { mission } = await runtimeSite(Astro.locals);
   .vision-grid { grid-template-columns: 1fr; }
   .vision-card--panorama { position: relative; isolation: isolate; overflow: hidden; min-height: 400px; padding: 2rem; justify-content: center; }
   .vision-card__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; }
-  .vision-card--panorama::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(5,10,18,.94), rgba(5,10,18,.78) 40%, rgba(5,10,18,.15) 75%, rgba(5,10,18,.04)); }
-  .vision-card__copy { max-width: 570px; }
+  .vision-card--panorama::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(5,10,18,.70); }
+  .vision-card__copy { max-width: 740px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
   .vision-card__copy > p { color: #eee6d9; margin-top: .6rem; line-height: 1.6; }
   .vision-card__go { display: block; }
-  @media (max-width: 1024px) {
-    .vision-card--panorama { padding: 0; }
-    .vision-card__art { position: relative; height: auto; aspect-ratio: 3 / 1; object-fit: contain; z-index: 0; }
-    .vision-card--panorama::before { display: none; }
-    .vision-card__copy { padding: 1.4rem; max-width: none; background: #080f1a; }
+  @media (max-width: 760px) {
+    .vision-card--panorama { padding: 1.4rem; min-height: 400px; }
+    .vision-card__art { object-position: 60% center; }
   }
 </style>
