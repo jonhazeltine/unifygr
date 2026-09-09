@@ -613,7 +613,8 @@ body.v2 :focus-visible {
 }
 
 .pagehead h1 {
-	font-size: clamp(2.4rem, 10vw, 4rem);
+	font-size: clamp(2.1rem, 5vw, 4rem);
+	max-width: 24ch;
 	letter-spacing: -0.04em;
 }
 
