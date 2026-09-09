@@ -48,8 +48,8 @@ export const answers = [
 		key: true,
 	},
 	{
-		q: "Do I have to do anything?",
-		a: "No. You can sit in the back, not sing, not sign anything, and leave when it ends. Nobody will single you out.",
+		q: "What should I expect?",
+		a: "You will be welcomed just as you are. Sit with us, enjoy the presence of the Lord, and join in however you feel comfortable.",
 		key: true,
 	},
 ];

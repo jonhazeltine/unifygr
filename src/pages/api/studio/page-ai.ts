@@ -47,7 +47,7 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	const current = sanitizeData(data);
 	const images = (await listSiteImages(locals)).slice(0, 80);
 	const prompt = [
-		"You are the page-building assistant for the New Life Grand Rapids church website.",
+		"You are the page-building assistant for the New Life Grand Rapids community website.",
 		"You edit ONE page document (JSON). You have no file access — you only return an updated document.",
 		BLOCK_GUIDE,
 		"",

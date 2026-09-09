@@ -16,7 +16,7 @@ const ACCOUNT_PROP = {
 	type: "string",
 	enum: ["New Life", "Residents"],
 	description:
-		"Which account. 'New Life' (the default) is the church's own texting — congregation and ministry lists. 'Residents' is the linked account for people living in the church's houses, who text the maintenance number.",
+		"Which account. 'New Life' (the default) is New Life's own texting — congregation and ministry lists. 'Residents' is the linked account for people living in the church's houses, who text the maintenance number.",
 };
 
 const account = (v: unknown): Account =>

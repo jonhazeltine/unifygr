@@ -39,7 +39,7 @@ function buildPrompt(message: string, content: any, ctx: PageContext): string {
 		.join("\n");
 
 	return [
-		"You are the content editor for the New Life Grand Rapids church website.",
+		"You are the content editor for the New Life Grand Rapids community website.",
 		"You do NOT have file access and you are NOT writing code. You only propose new TEXT for a fixed set of content fields. Never ask for a file path or location.",
 		"",
 		"Editable fields (path — current value):",
