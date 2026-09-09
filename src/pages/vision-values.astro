@@ -33,7 +33,8 @@ const { mission } = await runtimeSite(Astro.locals);
 					const verbs = mission.filter((m) => m.pillar === slug);
 					return (
 						<a class="vision-card vision-card--panorama reveal is-visible" href={`/${slug}`} style={`--delay:${i * 90}ms`}>
-							<img class="vision-card__art" src={`/art/vision/${slug}.webp`} width="2172" height="724" alt="" loading="lazy" />
+							<img class="vision-card__art vision-card__art--dark" src={`/art/vision/${slug}.webp`} width="2172" height="724" alt="" loading="lazy" />
+							<img class="vision-card__art vision-card__art--light" src={`/art/vision/${slug}-light.webp`} width="2172" height="724" alt="" loading="lazy" />
                             <div class="vision-card__copy">
                             <h3>{v.title}</h3>
 							<p>{v.body}</p>
@@ -74,6 +75,7 @@ const { mission } = await runtimeSite(Astro.locals);
   .vision-grid { grid-template-columns: 1fr; }
   .vision-card--panorama { position: relative; isolation: isolate; overflow: hidden; min-height: 400px; padding: 2rem; justify-content: center; }
   .vision-card__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; }
+  .vision-card__art--light { opacity: 0; }
   .vision-card--panorama::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(5,10,18,.70); }
   .vision-card__copy { max-width: 740px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
 	.vision-card__copy h3 { color: #fffaf1; }
@@ -82,6 +84,15 @@ const { mission } = await runtimeSite(Astro.locals);
 	.vision-card__mission .vision-card__n,
 	.vision-card__go { color: #f2d2a2; }
   .vision-card__go { display: block; }
+	:global(:root[data-theme="light"]) .vision-card__art--dark { opacity: 0; }
+	:global(:root[data-theme="light"]) .vision-card__art--light { opacity: 1; }
+	:global(:root[data-theme="light"]) .vision-card--panorama::before { background: rgba(255, 252, 246, .18); }
+	:global(:root[data-theme="light"]) .vision-card__copy { text-shadow: 0 1px 12px rgba(255,255,255,.8); }
+	:global(:root[data-theme="light"]) .vision-card__copy h3,
+	:global(:root[data-theme="light"]) .vision-card__mission li { color: #172437; }
+	:global(:root[data-theme="light"]) .vision-card__copy > p { color: #22344a; }
+	:global(:root[data-theme="light"]) .vision-card__mission .vision-card__n,
+	:global(:root[data-theme="light"]) .vision-card__go { color: #79551d; }
   @media (max-width: 760px) {
     .vision-card--panorama { padding: 1.4rem; min-height: 400px; }
     .vision-card__art { object-position: 60% center; }
