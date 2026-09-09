@@ -1,5 +1,6 @@
 ---
 import Interior from "../layouts/Interior.astro";
+import ValueCard from "../components/ValueCard.astro";
 import { values, vision } from "../data/site";
 
 export const prerender = false;
@@ -194,10 +195,7 @@ export const prerender = false;
 
 			<div class="value-grid">
 				{values.map((v, i) => (
-					<article class="value-card reveal" style={`--delay:${i * 60}ms`}>
-						<h3>{v.title}</h3>
-						<p>{v.body}</p>
-					</article>
+					<ValueCard title={v.title} body={v.body} index={i} />
 				))}
 			</div>
 
