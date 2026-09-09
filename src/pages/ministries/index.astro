@@ -42,23 +42,20 @@ const curatedOffering = outOfHouse.filter((e) => isOffering(e) && isListable(e))
 const curatedHosts = new Set(curatedOffering.map((e) => e.venue ?? e.org ?? e.name)).size;
 const curatedTowns = new Set(curatedOffering.map((e) => e.city).filter(Boolean)).size;
 
-// Deliberate order, not alphabetical. Sunday is the front door and prayer is the
-// engine under it; then belonging, then the two ways we look after our own; then
-// the three directions we go — overseas, to another church, to our own street;
-// then the city we are trying to be one with.
+// Keep Worship and Prayer visually separated; Ambassador Teams represents
+// our participation with other churches.
 const SIGNATURE_ORDER = [
 	"new-life-worship",
-	"corporate-prayer",
 	"life-groups",
 	"childrens-ministry",
 	"pastoral-care",
+	"corporate-prayer",
 	"mission-of-hope-trips",
 	"ambassador-teams",
 	"outreach",
-	"unify-gr",
 ];
 const signature = inHouse
-	.filter((e) => e.tier === "signature")
+	.filter((e) => e.tier === "signature" && e.slug !== "unify-gr")
 	.sort((a, b) => {
 		const ai = SIGNATURE_ORDER.indexOf(a.slug);
 		const bi = SIGNATURE_ORDER.indexOf(b.slug);
@@ -127,7 +124,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 	lede="One church, meeting in a lot of different rooms. Everything here is open to you."
 >
 	<!-- Our philosophy of ministry -->
-	<section class="section prose-block">
+	<section class="section prose-block ministry-intro">
 		<div class="container">
 			<p class="eyebrow reveal is-visible">How we think about this</p>
 			<h2 class="prose-block__title reveal is-visible">The Lord has provided everything you need.</h2>
@@ -159,7 +156,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				<h2>Our Focus.</h2>
 			</div>
 			<div class="prose-block__body reveal is-visible">
-				<p>Three movements of one life run through all of it.</p>
+				<p>New Life is a place where people will encounter God, be transformed, and change the world.</p>
 			</div>
 			<div class="min-tests reveal is-visible">
 				{pillars.map((pillar) => (
@@ -173,7 +170,7 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				<p>
 					Sunday morning at 10 at 2777 Knapp. Prayer. Life Groups meeting weekly in homes across
 					the city. Our kids, and the people who show up at the hospital. Teams going overseas,
-					to another church in this city, and out onto our own street. Unify GR.
+					to another church in this city, and out onto our own street.
 				</p>
 				<p>
 					These {signature.length} are where our focus goes, and every one of them is open to
@@ -309,3 +306,8 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 		</div>
 	</section>
 </Interior>
+
+<style>
+  .ministry-intro { padding-block: 2rem; }
+  #ours { padding-top: 2rem; }
+</style>
