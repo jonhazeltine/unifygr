@@ -52,15 +52,11 @@ body.v2 {
 	overflow-x: hidden;
 }
 
-/* The old global stylesheet paints ambience onto the body itself. */
-body.v2::before,
-body.v2::after {
-	display: none;
-}
-
-/* Ministry pages are intentionally daylight-bright: clear people, clear next
-   steps, and no dark atmosphere over the directory or its details. */
-body.v2.v2--ministry {
+/* Daylight uses the open, human-facing surface. Evening restores the
+   cinematic surface. The choice is made before the page paints. */
+:root[data-theme="light"] body.v2 {
+	--bg: #f7f2ea;
+	--bg-soft: #f0e9de;
 	--ink: #f7f2ea;
 	--ink-raised: #fffdf9;
 	--ivory: #17202b;
@@ -75,6 +71,12 @@ body.v2.v2--ministry {
 	--gold-soft: rgba(123, 93, 43, 0.22);
 	--gold-strong: #5e461f;
 	--shadow: 0 24px 60px rgba(42, 32, 19, 0.12);
+}
+
+/* The old global stylesheet paints ambience onto the body itself. */
+body.v2::before,
+body.v2::after {
+	display: none;
 }
 
 body.v2 * {
@@ -124,6 +126,11 @@ body.v2 :focus-visible {
 	border-bottom: 1px solid var(--line);
 }
 
+:root[data-theme="light"] .chrome {
+	background: rgba(255, 253, 249, 0.94);
+	color: var(--ivory);
+}
+
 .chrome__bar {
 	max-width: var(--shell);
 	margin: 0 auto;
@@ -165,6 +172,27 @@ body.v2 :focus-visible {
 	font-size: 0.72rem;
 	color: var(--faint);
 }
+
+.theme-control { position: relative; flex: 0 0 auto; }
+.theme-control__trigger {
+	display: inline-flex; align-items: center; gap: 0.35rem;
+	background: none; border: 1px solid var(--line); border-radius: 999px;
+	color: var(--ivory); font: inherit; font-size: 0.75rem; padding: 0.38rem 0.62rem; cursor: pointer;
+}
+.theme-control__icon { font-size: 0.95rem; line-height: 1; }
+.theme-control__menu {
+	position: absolute; right: 0; top: calc(100% + 0.55rem); width: 11.5rem; padding: 0.35rem;
+	background: var(--ink-raised); border: 1px solid var(--line); border-radius: 12px;
+	box-shadow: 0 18px 44px rgba(0, 0, 0, 0.2);
+}
+.theme-control__menu button {
+	width: 100%; display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem;
+	padding: 0.55rem 0.6rem; background: transparent; border: 0; border-radius: 8px;
+	color: var(--ivory); font: inherit; font-size: 0.82rem; text-align: left; cursor: pointer;
+}
+.theme-control__menu button:hover,
+.theme-control__menu button[aria-checked="true"] { background: color-mix(in srgb, var(--gold) 15%, transparent); }
+.theme-control__menu span { color: var(--faint); font-size: 0.67rem; }
 
 .chrome__toggle {
 	display: inline-flex;
@@ -299,6 +327,8 @@ body.v2 :focus-visible {
 	background: rgba(247, 242, 234, 0.06);
 }
 
+:root[data-theme="light"] .btn--quiet:hover { background: rgba(23, 32, 43, 0.06); }
+
 /* --- Hero --------------------------------------------------------------- */
 
 .opener {
@@ -333,6 +363,11 @@ body.v2 :focus-visible {
 		rgba(6, 7, 10, 0.76) 100%
 	);
 }
+
+:root[data-theme="light"] .opener__bg::after {
+	background: linear-gradient(180deg, rgba(255, 253, 249, 0.2) 0%, rgba(255, 253, 249, 0.5) 55%, rgba(247, 242, 234, 0.92) 100%);
+}
+:root[data-theme="light"] .opener__bg img { opacity: 0.92; filter: saturate(1.04) brightness(1.08); }
 
 .opener .shell {
 	position: relative;
@@ -510,6 +545,11 @@ body.v2 :focus-visible {
 	color: var(--ivory);
 	font-size: 1rem;
 	padding-left: 4px;
+}
+
+:root[data-theme="light"] .watch-card__play span {
+	background: rgba(255, 253, 249, 0.78);
+	border-color: rgba(23, 32, 43, 0.35);
 }
 
 .watch-card__meta {
@@ -772,44 +812,42 @@ body.v2 :focus-visible {
 	}
 }
 
-/* The ministry directory and every detail route share this bright reading
-   surface. These selectors replace older dark-page literals that predate the
-   ministry treatment. */
-body.v2--ministry .chrome {
+/* Ministry imagery is bright in daylight and joins the evening treatment at night. */
+:root[data-theme="light"] body.v2--ministry .chrome {
 	background: rgba(255, 253, 249, 0.95);
 	color: #17202b;
 	border-bottom-color: rgba(23, 32, 43, 0.16);
 }
-body.v2--ministry .foot { background: #f0e9de; color: rgba(23, 32, 43, 0.68); }
-body.v2--ministry .foot__grid a { color: rgba(23, 32, 43, 0.76); }
-body.v2--ministry .min-family__n--empty,
-body.v2--ministry .min-family__cats,
-body.v2--ministry .min-family__mix,
-body.v2--ministry .min-area__more,
-body.v2--ministry .min-half__extra,
-body.v2--ministry .min-card__also,
-body.v2--ministry .minmap__tipDist,
-body.v2--ministry .minmap__tipArea,
-body.v2--ministry .minmap__n--plain,
-body.v2--ministry .minmap__d,
-body.v2--ministry .spec-row__where,
-body.v2--ministry .min-ev__area,
-body.v2--ministry .min-bio__where,
-body.v2--ministry .min-bio__label,
-body.v2--ministry .min-bio__runs span,
-body.v2--ministry .min-devlist__why,
-body.v2--ministry .min-bio__nobio {
+:root[data-theme="light"] body.v2--ministry .foot { background: #f0e9de; color: rgba(23, 32, 43, 0.68); }
+:root[data-theme="light"] body.v2--ministry .foot__grid a { color: rgba(23, 32, 43, 0.76); }
+:root[data-theme="light"] body.v2--ministry .min-family__n--empty,
+:root[data-theme="light"] body.v2--ministry .min-family__cats,
+:root[data-theme="light"] body.v2--ministry .min-family__mix,
+:root[data-theme="light"] body.v2--ministry .min-area__more,
+:root[data-theme="light"] body.v2--ministry .min-half__extra,
+:root[data-theme="light"] body.v2--ministry .min-card__also,
+:root[data-theme="light"] body.v2--ministry .minmap__tipDist,
+:root[data-theme="light"] body.v2--ministry .minmap__tipArea,
+:root[data-theme="light"] body.v2--ministry .minmap__n--plain,
+:root[data-theme="light"] body.v2--ministry .minmap__d,
+:root[data-theme="light"] body.v2--ministry .spec-row__where,
+:root[data-theme="light"] body.v2--ministry .min-ev__area,
+:root[data-theme="light"] body.v2--ministry .min-bio__where,
+:root[data-theme="light"] body.v2--ministry .min-bio__label,
+:root[data-theme="light"] body.v2--ministry .min-bio__runs span,
+:root[data-theme="light"] body.v2--ministry .min-devlist__why,
+:root[data-theme="light"] body.v2--ministry .min-bio__nobio {
 	color: rgba(23, 32, 43, 0.62);
 }
-body.v2--ministry .minmap__tip {
+:root[data-theme="light"] body.v2--ministry .minmap__tip {
 	background: #fffdf9;
 	border-color: rgba(23, 32, 43, 0.16);
 	box-shadow: 0 12px 34px rgba(42, 32, 19, 0.18);
 }
-body.v2--ministry .minmap__tip::after { border-top-color: #fffdf9; }
-body.v2--ministry .minmap__hereLabel { text-shadow: 0 1px 4px rgba(255, 253, 249, 0.9); }
-body.v2--ministry .min-gaps,
-body.v2--ministry .min-legend__key { background: rgba(123, 93, 43, 0.06); }
+:root[data-theme="light"] body.v2--ministry .minmap__tip::after { border-top-color: #fffdf9; }
+:root[data-theme="light"] body.v2--ministry .minmap__hereLabel { text-shadow: 0 1px 4px rgba(255, 253, 249, 0.9); }
+:root[data-theme="light"] body.v2--ministry .min-gaps,
+:root[data-theme="light"] body.v2--ministry .min-legend__key { background: rgba(123, 93, 43, 0.06); }
 
 /* This link is a text control, not a translucent border. */
-body.v2--ministry .sig__go a { color: #765a2b; }
+:root[data-theme="light"] body.v2--ministry .sig__go a { color: #765a2b; }
