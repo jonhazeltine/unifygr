@@ -30,7 +30,7 @@
 	"entries": [
 		{
 			"slug": "new-life-worship",
-			"name": "Sunday Worship",
+			"name": "Worship",
 			"org": "New Life Grand Rapids",
 			"house": "in",
 			"tier": "signature",
@@ -38,7 +38,7 @@
 				"corporate-worship",
 				"worship-nights"
 			],
-			"summary": "Sunday morning worship built around hosting the presence of God, with a team that plays to lead you into it.",
+			"summary": "Sunday gatherings and worship nights centered on the presence of God.",
 			"why": "This is the thing we have given 30 years to. If you want to know what New Life is, come on a Sunday.",
 			"bestFor": "Anyone. Start here.",
 			"area": "Knapp's Corner",
@@ -78,12 +78,12 @@
 				"healing-prayer",
 				"prophetic"
 			],
-			"summary": "A praying team that gathers to intercede for the church and the city, prays with anyone who asks on a Sunday, and takes urgent requests out to people the same day.",
+			"summary": "Prayer on Sundays and worship nights, prayer for our city, and support for urgent requests.",
 			"why": "Prayer is not a program here. It is the engine, and it has been running longer than most of our other ministries have existed.",
 			"bestFor": "Anyone who wants to be prayed for, and anyone ready to pray for others.",
 			"area": "Knapp's Corner",
 			"city": "Grand Rapids",
-			"rhythm": "Ongoing, and always on for urgent requests",
+			"rhythm": "Prayer throughout the week",
 			"href": null,
 			"handoff": {
 				"how": "Ask at the Connections desk on a Sunday, or send a request through the connect card and it goes out to the chain the same day.",
