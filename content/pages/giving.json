@@ -49,18 +49,6 @@
 					}
 				]
 			}
-		},
-		{
-			"type": "Callout",
-			"props": {
-				"id": "Callout-giving-impact",
-				"eyebrow": "Impact Fund",
-				"title": "Give beyond the walls.",
-				"body": "",
-				"buttons": [
-					{ "label": "About Unify GR", "href": "/unify-gr", "style": "secondary" }
-				]
-			}
 		}
 	],
 	"zones": {}

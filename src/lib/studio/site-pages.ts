@@ -32,7 +32,6 @@ const TITLES: Record<string, string> = {
 	"spiritual-formation": "Spiritual Formation",
 	"beliefs": "What We Believe",
 	"vision-values": "Vision & Values",
-	"unify-gr": "Unify GR",
 	"watch": "Watch & Sermons",
 };
 

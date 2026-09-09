@@ -295,45 +295,7 @@
 			"city": "Dominican Republic and Haiti",
 			"rhythm": "Every summer"
 		},
-		{
-			"slug": "unify-gr",
-			"name": "Unify GR",
-			"org": "New Life Grand Rapids",
-			"house": "in",
-			"tier": "signature",
-			"categories": [
-				"city-unity",
-				"pastor-care",
-				"church-planting"
-			],
-			"summary": "A growing movement to knit the churches of Grand Rapids together so the city sees one witness.",
-			"why": "This whole page exists because of Unify GR. If the Body is one, then the ministry down the road is already ours, and yours.",
-			"bestFor": "Pastors, church staff, and anyone who is tired of churches competing.",
-			"area": "Knapp's Corner",
-			"city": "Grand Rapids",
-			"rhythm": "Ongoing",
-			"href": "/unify-gr",
-			"handoff": {
-				"how": "Reach out to Jon directly.",
-				"person": "Jon Hazeltine"
-			},
-			"calendar": {
-				"url": "https://thechurches.co",
-				"format": "page",
-				"cadence": "monthly",
-				"sync": "available"
-			},
-			"status": "live",
-			"verified": {
-				"by": "New Life staff",
-				"on": "2026-08-17"
-			},
-			"lat": 42.999923,
-			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
-			"venue": "New Life, Knapp's Corner",
-			"venueUrl": null
-		},
+
 		{
 			"slug": "outreach",
 			"name": "Outreach Teams",
