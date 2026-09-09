@@ -48,7 +48,7 @@ const clipId = `value-painting-${index}`;
     top: 0;
     left: 0;
     width: 100%;
-    height: 270px;
+    height: 100%;
     object-fit: cover;
     object-position: center top;
     z-index: -2;
@@ -57,7 +57,7 @@ const clipId = `value-painting-${index}`;
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 270px;
+    height: 100%;
     z-index: -2;
   }
   .painted-value__copy {
@@ -67,14 +67,15 @@ const clipId = `value-painting-${index}`;
     width: 100%;
     box-sizing: border-box;
     padding: 1rem;
-    background: #080f1a;
+    text-shadow: 0 1px 4px #080f1a, 0 0 12px rgba(8,15,26,.8);
+    background: linear-gradient(to bottom, rgba(8,15,26,.15), rgba(8,15,26,.68) 38%, rgba(8,15,26,.88));
   }
   .painted-value__copy::before {
     content: "";
     position: absolute;
-    inset: -48px 0 auto;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, #080f1a);
+    inset: -90px 0 auto;
+    height: 90px;
+    background: linear-gradient(to bottom, transparent, rgba(8,15,26,.15));
     pointer-events: none;
   }
   .painted-value h3 {
@@ -90,7 +91,6 @@ const clipId = `value-painting-${index}`;
     line-height: 1.45;
   }
   @media (max-width: 520px) {
-    .painted-value__photo, .painted-value__art { height: 280px; }
     .painted-value { min-height: 490px; grid-template-rows: 280px 1fr; }
   }
 </style>
