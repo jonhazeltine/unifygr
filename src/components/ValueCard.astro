@@ -19,10 +19,14 @@ const [x, y, width, height] = paintings[title].split(" ").map(Number);
 const clipId = `value-painting-${index}`;
 ---
 <article class:list={["value-card", "painted-value", "reveal", { "is-visible": visible }]} style={`--delay:${index * 60}ms`}>
+  {title === "Passion for Jesus" ? (
+    <img class="painted-value__photo" src="/art/values/passion-for-jesus-original.jpg" width="482" height="640" alt="" loading="lazy" />
+  ) : (
   <svg class="painted-value__art" viewBox={paintings[title]} preserveAspectRatio="xMidYMin meet" aria-hidden="true" focusable="false">
     <defs><clipPath id={clipId}><rect {x} {y} {width} {height} /></clipPath></defs>
     <image href="/art/values/core-values-paintings-2024.webp" width="715" height="1017" clip-path={`url(#${clipId})`} />
   </svg>
+  )}
   <div class="painted-value__veil" aria-hidden="true"></div>
   <div class="painted-value__copy">
     <h3>{title}</h3>
@@ -39,6 +43,15 @@ const clipId = `value-painting-${index}`;
     padding: 1.35rem;
     background: #101722;
     border-color: rgba(222, 187, 128, .24);
+  }
+  .painted-value__photo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: -2;
+    filter: saturate(.7) brightness(.87);
   }
   .painted-value__art {
     position: absolute;
