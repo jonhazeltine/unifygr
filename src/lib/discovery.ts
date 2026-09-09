@@ -14,7 +14,6 @@ const PUBLIC_ROUTES = [
   "/ministries/specialized",
   "/spiritual-formation",
   "/sunday",
-  "/unify-gr",
   "/vision-values",
   "/watch",
 ] as const;
