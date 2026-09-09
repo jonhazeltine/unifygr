@@ -10,8 +10,10 @@ export const prerender = false;
 const { church, sermons } = await runtimeSite(Astro.locals);
 
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-const watchUrl = (id: string) => `https://www.youtube.com/watch?v=${id}`;
-const embedUrl = (id: string) => `https://www.youtube.com/embed/${id}?rel=0`;
+const watchUrl = (id: string, start: number | null) =>
+	`https://www.youtube.com/watch?v=${id}${start ? `&t=${start}` : ""}`;
+const embedUrl = (id: string, start: number | null) =>
+	`https://www.youtube.com/embed/${id}?rel=0${start ? `&start=${start}` : ""}`;
 
 // The channel feed is the source of truth; the curated list in the Studio is
 // the fallback if YouTube is unreachable, and can override any title/tag.
@@ -22,7 +24,7 @@ const services = feed.length
 			const c = curated.get(v.id);
 			return { ...v, title: c?.title || v.title, tag: c?.tag || v.tag, date: c?.date || v.date };
 		})
-	: sermons;
+	: sermons.map((s) => ({ ...s, messageStartSeconds: null }));
 
 const featured = services[0]; // most recent — default until the live check resolves
 
@@ -62,7 +64,7 @@ Astro.response.headers.set(
 				<div class="watch-live__frame">
 					<iframe
 						id="watch-player"
-						src={embedUrl(featured.id)}
+						src={embedUrl(featured.id, featured.messageStartSeconds ?? null)}
 						title="New Life GR player"
 						loading="lazy"
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -72,7 +74,7 @@ Astro.response.headers.set(
 				<div class="watch-live__aside">
 					<p class="eyebrow" id="player-label">Latest Message</p>
 					<h3 id="player-title">{featured.title}</h3>
-					<p id="player-note">Showing the most recent service. When we go live on Sunday morning, this jumps to the live stream automatically.</p>
+					<p id="player-note">Showing the most recent message. When we go live on Sunday morning, this jumps to the live stream automatically.</p>
 					<a class="button button--secondary" href={church.external.connectCard}>New here? Say hello</a>
 				</div>
 			</div>
@@ -88,7 +90,7 @@ Astro.response.headers.set(
 			</div>
 			<div class="sermon-grid sermon-grid--media">
 				{services.map((s, i) => (
-					<a class="sermon-tile reveal is-visible" href={watchUrl(s.id)} target="_blank" rel="noopener" style={`--delay:${i * 60}ms`}>
+					<a class="sermon-tile reveal is-visible" href={watchUrl(s.id, s.messageStartSeconds ?? null)} target="_blank" rel="noopener" style={`--delay:${i * 60}ms`}>
 						<div class="sermon-tile__thumb" style={`background-image:url(${thumb(s.id)})`}>
 							<span class="sermon-tile__play" aria-hidden="true">▶</span>
 						</div>
