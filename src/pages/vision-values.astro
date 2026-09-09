@@ -76,7 +76,11 @@ const { mission } = await runtimeSite(Astro.locals);
   .vision-card__art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: -2; }
   .vision-card--panorama::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(5,10,18,.70); }
   .vision-card__copy { max-width: 740px; text-shadow: 0 2px 8px rgba(0,0,0,.6); }
+	.vision-card__copy h3 { color: #fffaf1; }
   .vision-card__copy > p { color: #eee6d9; margin-top: .6rem; line-height: 1.6; }
+	.vision-card__mission li { color: #fffaf1; }
+	.vision-card__mission .vision-card__n,
+	.vision-card__go { color: #f2d2a2; }
   .vision-card__go { display: block; }
   @media (max-width: 760px) {
     .vision-card--panorama { padding: 1.4rem; min-height: 400px; }
