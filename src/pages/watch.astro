@@ -43,17 +43,19 @@ Astro.response.headers.set(
 		<div class="watch-hero__bg" style="background-image:url(/art/generated/worship-still.png)"></div>
 		<div class="watch-hero__veil"></div>
 		<div class="container watch-hero__inner">
-			<p class="eyebrow watch-status" id="watch-status" data-state="offline">
-				<span class="watch-status__live"><span class="live-dot"></span> Live Now</span>
-				<span class="watch-status__off">Sunday Mornings · {church.serviceTime}</span>
-			</p>
-			<h1 class="watch-hero__title reveal is-visible">Watch New Life</h1>
-			<p class="watch-hero__lede reveal is-visible">
-				Worship with us in real time on Sunday mornings, or catch up on the latest message any time.
-			</p>
-			<div class="watch-hero__actions reveal is-visible">
-				<a class="button button--primary" id="watch-cta" href={`${church.social.youtube}/live`} target="_blank" rel="noopener">▶ Watch Now</a>
-				<a class="button button--secondary" href={church.social.youtube} target="_blank" rel="noopener">All Videos</a>
+			<div class="watch-hero__copy">
+				<p class="eyebrow watch-status" id="watch-status" data-state="offline">
+					<span class="watch-status__live"><span class="live-dot"></span> Live Now</span>
+					<span class="watch-status__off">Sunday Mornings · {church.serviceTime}</span>
+				</p>
+				<h1 class="watch-hero__title reveal is-visible">Watch New Life</h1>
+				<p class="watch-hero__lede reveal is-visible">
+					Worship with us in real time on Sunday mornings, or catch up on the latest message any time.
+				</p>
+				<div class="watch-hero__actions reveal is-visible">
+					<a class="button button--primary" id="watch-cta" href={`${church.social.youtube}/live`} target="_blank" rel="noopener">▶ Watch Now</a>
+					<a class="button button--secondary" href={church.social.youtube} target="_blank" rel="noopener">All Videos</a>
+				</div>
 			</div>
 		</div>
 	</section>
