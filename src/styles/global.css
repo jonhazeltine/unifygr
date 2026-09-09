@@ -103,15 +103,17 @@ h2 {
 }
 
 h1 {
-	font-size: clamp(4rem, 11vw, 9rem);
-	line-height: 0.88;
-	max-width: 7ch;
+	font-size: clamp(2.25rem, 5vw, 4.5rem);
+	line-height: 1.08;
+	max-width: 24ch;
+	text-wrap: balance;
 }
 
 h2 {
-	font-size: clamp(2.5rem, 6vw, 5.5rem);
-	line-height: 0.9;
-	max-width: 10ch;
+	font-size: clamp(1.75rem, 3.6vw, 3.25rem);
+	line-height: 1.12;
+	max-width: 32ch;
+	text-wrap: balance;
 }
 
 h3 {
@@ -1091,7 +1093,7 @@ strong {
 }
 
 .statement__title {
-	max-width: 11ch;
+	max-width: 28ch;
 }
 
 .statement__copy {
@@ -1762,8 +1764,8 @@ strong {
 	font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
 	font-weight: 600;
 	letter-spacing: -0.05em;
-	font-size: clamp(3rem, 8vw, 6.5rem);
-	line-height: 0.9;
+	font-size: clamp(2.25rem, 5vw, 4.5rem);
+	line-height: 1.08;
 	margin: 0.6rem 0 0;
 }
 .interior-hero__lede {
@@ -1976,7 +1978,7 @@ strong {
 .watch-hero { position: relative; min-height: 62svh; display: grid; align-items: end; padding-top: 8rem; overflow: clip; }
 .watch-hero__bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.05); filter: saturate(1.05); z-index: -2; }
 .watch-hero__veil { position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(5,6,8,.32) 0%, rgba(5,6,8,.22) 35%, rgba(5,6,8,.72) 100%); }
-.watch-hero__title { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(3rem, 9vw, 7rem); letter-spacing: -.05em; line-height: .9; margin: .4rem 0; }
+.watch-hero__title { font-family: "Iowan Old Style",Georgia,serif; font-size: clamp(2.25rem, 5vw, 4.5rem); letter-spacing: -.05em; line-height: 1.08; margin: .4rem 0; }
 .watch-hero__lede { color: var(--muted); max-width: 48ch; font-size: 1.2rem; }
 .watch-hero__actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
 .live-dot { display: inline-block; width: .55rem; height: .55rem; border-radius: 50%; background: #ff4d4d; margin-right: .4rem; box-shadow: 0 0 0 0 rgba(255,77,77,.6); animation: livePulse 1.6s infinite; vertical-align: middle; }
@@ -2355,8 +2357,8 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
 	font-weight: 600;
 	letter-spacing: -0.038em;
 	line-height: 1.05;
-	font-size: clamp(2rem, 4.4vw, 3.2rem);
-	max-width: 20ch;
+	font-size: clamp(1.75rem, 3.6vw, 3.2rem);
+	max-width: 32ch;
 	margin: 0;
 }
 .prose-block__body {
