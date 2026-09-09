@@ -22,7 +22,7 @@ const clipId = `value-painting-${index}`;
   {title === "Passion for Jesus" ? (
     <img class="painted-value__photo" src="/art/values/passion-for-jesus-original.jpg" width="482" height="640" alt="" loading="lazy" />
   ) : (
-  <svg class="painted-value__art" viewBox={paintings[title]} preserveAspectRatio="xMidYMin meet" aria-hidden="true" focusable="false">
+  <svg class="painted-value__art" viewBox={paintings[title]} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
     <defs><clipPath id={clipId}><rect {x} {y} {width} {height} /></clipPath></defs>
     <image href="/art/values/core-values-paintings-2024.webp" width="715" height="1017" clip-path={`url(#${clipId})`} />
   </svg>
@@ -36,9 +36,9 @@ const clipId = `value-painting-${index}`;
   .painted-value {
     isolation: isolate;
     overflow: hidden;
-    min-height: 390px;
-    display: flex;
-    align-items: flex-end;
+    min-height: 480px;
+    display: grid;
+    grid-template-rows: 270px 1fr;
     padding: 0;
     background: #101722;
     border-color: rgba(222, 187, 128, .24);
@@ -48,7 +48,9 @@ const clipId = `value-painting-${index}`;
     top: 0;
     left: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
     z-index: -2;
   }
   .painted-value__art {
@@ -59,24 +61,36 @@ const clipId = `value-painting-${index}`;
     z-index: -2;
   }
   .painted-value__copy {
+    position: relative;
+    grid-row: 2;
+    min-height: 210px;
     width: 100%;
     box-sizing: border-box;
-    padding: 1.35rem;
-    background: #080f1a;
+    padding: 1rem;
+    text-shadow: 0 1px 4px #080f1a, 0 0 12px rgba(8,15,26,.8);
+    background: linear-gradient(to bottom, rgba(8,15,26,.15), rgba(8,15,26,.68) 38%, rgba(8,15,26,.88));
+  }
+  .painted-value__copy::before {
+    content: "";
+    position: absolute;
+    inset: -90px 0 auto;
+    height: 90px;
+    background: linear-gradient(to bottom, transparent, rgba(8,15,26,.15));
+    pointer-events: none;
   }
   .painted-value h3 {
     margin: 0 0 .7rem;
     color: #fff5e4;
-    font-size: clamp(1.4rem, 2.4vw, 1.7rem);
+    font-size: clamp(1.2rem, 2vw, 1.35rem);
     line-height: 1.15;
   }
   .painted-value p {
     margin: 0;
     color: #eee6d9;
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: .95rem;
+    line-height: 1.45;
   }
   @media (max-width: 520px) {
-    .painted-value { min-height: 410px; }
+    .painted-value { min-height: 490px; grid-template-rows: 280px 1fr; }
   }
 </style>
