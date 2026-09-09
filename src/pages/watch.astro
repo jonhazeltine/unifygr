@@ -9,7 +9,7 @@ export const prerender = false;
 
 const { church, sermons } = await runtimeSite(Astro.locals);
 
-const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg?v=20260909`;
 const watchUrl = (id: string, start: number | null) =>
 	`https://www.youtube.com/watch?v=${id}${start ? `&t=${start}` : ""}`;
 const embedUrl = (id: string, start: number | null) =>
