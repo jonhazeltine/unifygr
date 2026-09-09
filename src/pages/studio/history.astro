@@ -10,7 +10,10 @@ export const prerender = false;
 Astro.response.headers.set("Cache-Control", "private, no-store");
 
 if (!isAuthed(Astro.cookies)) {
-	return Astro.redirect("/?edit=1");
+	return new Response(null, {
+		status: 302,
+		headers: { Location: "/?edit=1", "Cache-Control": "private, no-store" },
+	});
 }
 
 const asanaProject = "https://app.asana.com/1/72179045279617/project/1218197067961219";
