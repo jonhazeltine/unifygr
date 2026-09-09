@@ -2,6 +2,8 @@
 // the seed; staff changes stay in Blob so routine curation does not deploy.
 import directoryJson from "../../../content/ministries.json";
 import { ContentConflict, publish, readPublished, type RuntimeLocals } from "../studio/runtime-content";
+import { showing, readSettings, type Partner } from "./settings";
+import { THEME_CATEGORIES } from "./themes";
 
 const KEY = "partners/directory-overrides.json";
 type Entry = Record<string, any>;
@@ -22,9 +24,45 @@ function apply(entries: Entry[], changes: Record<string, OrgChange>): Entry[] {
 	});
 }
 
+// The Church Map contributes these entries from the same church feeds the
+// calendar reads. They must follow the Studio's partner choices too; otherwise
+// switching a church off removes its dates but leaves its groups in the public
+// directory.
+function isChurchMapEntry(entry: Entry): boolean {
+	return entry.house === "out" && entry.calendar?.format === "ics" && entry.calendar?.sync === "available";
+}
+
+function hostKey(value: unknown): string {
+	return String(value || "")
+		.toLowerCase()
+		.replace(/\s*[-–—]\s*[^-–—]*\bcampus\b.*$/i, "")
+		.replace(/[^a-z0-9]+/g, "")
+		.trim();
+}
+
+function partnerFor(entry: Entry, partners: Map<string, Partner>): Partner | undefined {
+	const host = hostKey(entry.venue);
+	if (!host) return undefined;
+	return [...partners.values()].find((partner) => hostKey(partner.name) === host);
+}
+
+function accepts(entry: Entry, partner: Partner): boolean {
+	const categories = new Set(Array.isArray(entry.categories) ? entry.categories.map(String) : []);
+	return partner.themes.some((theme) => (THEME_CATEGORIES[theme] || []).some((category) => categories.has(category)));
+}
+
+async function applyPartnerChoices(entries: Entry[], locals?: RuntimeLocals): Promise<Entry[]> {
+	const partners = showing(await readSettings(locals));
+	return entries.filter((entry) => {
+		if (!isChurchMapEntry(entry)) return true;
+		const partner = partnerFor(entry, partners);
+		return Boolean(partner && accepts(entry, partner));
+	});
+}
+
 export async function runtimeDirectoryEntries(locals?: RuntimeLocals): Promise<Entry[]> {
 	const stored = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
-	return apply(directoryJson.entries, stored.value);
+	return applyPartnerChoices(apply(directoryJson.entries, stored.value), locals);
 }
 
 function orgs(entries: Entry[]): DirectoryOrg[] {
