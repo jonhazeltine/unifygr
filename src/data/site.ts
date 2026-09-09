@@ -42,7 +42,7 @@ return {
 		giveOnline: "https://app.securegive.com/NewLifeGR/new-life/donate/category",
 		textToGive: c.textToGive,
 		churchesCalendar: "https://thechurches.co", // multi-church shared calendar
-		formationWelcome: "https://theformation.app/m/welcome-to-new-life",
+		formationWelcome: "https://theformation.app/?community=0LY0R",
 	},
 };
 }
