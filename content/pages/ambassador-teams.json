@@ -26,7 +26,7 @@
 				"heading": "We go as guests, not as visitors.",
 				"subline": "The fourth Sunday of the month",
 				"body": "Every month one church from thechurchmap.com becomes the church we pray for. Our whole congregation prays for them by name all month long. These are ordinary members praying, not just our staff.\n\nOn the fourth Sunday a team from New Life goes to their service. We sit in their pews and sing their songs. We worship under their pastor. We bring a letter telling them what we prayed for and a gift toward the work they are already doing. We stay in touch after we leave. Their pastor stays in our prayers.",
-				"image": "/uploads/unify-gr-city.jpg",
+				"image": "/art/ministries/ambassador-approved.webp",
 				"video": "",
 				"buttons": [
 					{
@@ -154,10 +154,10 @@
 				"id": "CtaCards-ambassador-teams-siblings",
 				"cards": [
 					{
-						"label": "To our partners overseas",
-						"title": "Missions Teams",
+						"label": "To the world",
+						"title": "Global Missions",
 						"body": "A week in the Caribbean with Mission of Hope — medical care, kids clubs, construction, whatever the team is built to do.",
-						"buttonLabel": "Missions Teams",
+						"buttonLabel": "Global Missions",
 						"buttonHref": "/mission-trips",
 						"featured": false
 					},
