@@ -105,6 +105,15 @@ request time (`src/lib/youtube.ts`), edge-cached 5 minutes, so new services
 appear on their own. The `sermons` list in `content/site.json` is only the
 offline fallback and a place to override a video's title/tag by ID.
 
+## New Life History
+
+`history.newlifegr.com` is a separate application in `/Users/jon/newlife-history`.
+Its timeline is static application content, while submitted memories are reviewed
+in its existing Asana project and publish from its approved section. Studio's
+`/studio/history` page is a protected link to that review workflow only; it does
+not edit or publish the timeline. A future cutover needs an explicit publishing
+connection in the history application before Studio can claim timeline editing.
+
 ## CCB is the CRM. Planning Center is the scheduler.
 
 People enter through the CRM, never through the scheduler. A Connect Card
