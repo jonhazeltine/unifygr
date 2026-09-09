@@ -7,6 +7,8 @@ import "../../styles/global.css";
 
 export const prerender = false;
 
+Astro.response.headers.set("Cache-Control", "private, no-store");
+
 if (!isAuthed(Astro.cookies)) {
 	return Astro.redirect("/?edit=1");
 }
@@ -44,6 +46,9 @@ const asanaProject = "https://app.asana.com/1/72179045279617/project/12181970679
 				<a class="button button--primary" href={asanaProject} target="_blank" rel="noopener noreferrer">
 					Open memory review in Asana
 				</a>
+				<a class="history-live" href="https://history.newlifegr.com" target="_blank" rel="noopener noreferrer">
+					See published memories on New Life Remembers
+				</a>
 			</section>
 
 			<section class="history-card history-card--quiet" aria-labelledby="timeline-heading">
@@ -68,6 +73,8 @@ const asanaProject = "https://app.asana.com/1/72179045279617/project/12181970679
 			.history-card ol { margin: 1rem 0 1.35rem; padding-left: 1.4rem; }
 			.history-card li { margin: 0.55rem 0; color: var(--muted); }
 			.history-card strong { color: var(--text); }
+			.history-live { display: inline-block; margin: 1rem 0 0 1rem; color: var(--gold); text-decoration: underline; text-underline-offset: 0.2em; }
+			@media (max-width: 34rem) { .history-live { display: block; margin-left: 0; } }
 			.history-card--quiet p { color: var(--muted); }
 			.history-back { margin-top: 2rem; }
 			.history-back a { color: var(--gold); text-decoration: underline; text-underline-offset: 0.2em; }

@@ -199,7 +199,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 		}
 		function showSignin() {
 			$("sd-signin").hidden = false; $("sd-chat").hidden = true;
-			$("sd-signout").hidden = true; $("sd-undo").hidden = true;
+			$("sd-signout").hidden = true; $("sd-undo").hidden = true; $("sd-builder").hidden = true; $("sd-partners").hidden = true; $("sd-history").hidden = true;
 			setTimeout(() => $("sd-pass")?.focus(), 50);
 		}
 
