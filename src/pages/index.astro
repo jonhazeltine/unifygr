@@ -90,59 +90,6 @@ const vision = [
 			</div>
 		</div>
 	</section>
-
-	<section class="band band--raised">
-		<div class="shell">
-			<p class="band__label">Before you come</p>
-			<h2 class="band__title">The things people ask us first.</h2>
-
-			<ul class="qa">
-				{upFront.map((item) => (
-					<li class="qa__item">
-						<p class="qa__q">{item.q}</p>
-						<p class="qa__a">{item.a}</p>
-					</li>
-				))}
-			</ul>
-
-			<a class="qa__more" href="/sunday">Everything about a Sunday here →</a>
-		</div>
-	</section>
-
-	<section class="band">
-		<div class="shell">
-			<p class="band__label">What we believe</p>
-			<p class="creed__line">{identity.line}</p>
-			<p class="creed__body">{identity.body}</p>
-			<a class="qa__more" href="/beliefs">Read the long version →</a>
-		</div>
-	</section>
-
-	{latest && (
-		<section class="band band--raised">
-			<div class="shell">
-				<p class="band__label">Have a look first</p>
-				<h2 class="band__title">Watch a service before you drive over.</h2>
-				<a
-					class="watch-card"
-					href={`https://www.youtube.com/watch?v=${latest.id}`}
-					target="_blank"
-					rel="noopener"
-				>
-					<div class="watch-card__still">
-						<img src={`https://i.ytimg.com/vi/${latest.id}/maxresdefault.jpg?v=20260909`} alt="" loading="lazy" />
-						<span class="watch-card__play" aria-hidden="true"><span>▶</span></span>
-					</div>
-					<div class="watch-card__meta">
-						<strong>{latest.title}</strong>
-						<span>{latest.date} · about 90 minutes</span>
-					</div>
-				</a>
-				<a class="qa__more" href="/watch">More services →</a>
-			</div>
-		</section>
-	)}
-
 	<section class="band home-vision">
 		<div class="shell">
 			<p class="band__label">Our Vision</p>
@@ -176,6 +123,79 @@ const vision = [
 		</div>
 	</section>
 
+	<section class="band band--raised start-here">
+		<div class="shell">
+			<p class="band__label">A place to begin</p>
+			<h2 class="band__title">Take your next step.</h2>
+			<div class="start-here__cards">
+				<a href="/sunday">
+					<strong>Visit on Sunday</strong>
+					<span>See what to expect when you arrive.</span>
+				</a>
+				<a href="/ministry/life-groups">
+					<strong>Find a Life Group</strong>
+					<span>Build real relationships and grow together.</span>
+				</a>
+				<a href="/ministries">
+					<strong>Serve with a team</strong>
+					<span>Put the love of Jesus into practice with others.</span>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="band band--raised">
+		<div class="shell">
+			<p class="band__label">Before you come</p>
+			<h2 class="band__title">The things people ask us first.</h2>
+
+			<ul class="qa">
+				{upFront.map((item) => (
+					<li class="qa__item">
+						<p class="qa__q">{item.q}</p>
+						<p class="qa__a">{item.a}</p>
+					</li>
+				))}
+			</ul>
+
+			<a class="qa__more" href="/sunday">Everything about a Sunday here →</a>
+		</div>
+	</section>
+
+	{latest && (
+		<section class="band band--raised">
+			<div class="shell">
+				<p class="band__label">Have a look first</p>
+				<h2 class="band__title">Watch a service before you drive over.</h2>
+				<a
+					class="watch-card"
+					href={`https://www.youtube.com/watch?v=${latest.id}`}
+					target="_blank"
+					rel="noopener"
+				>
+					<div class="watch-card__still">
+						<img src={`https://i.ytimg.com/vi/${latest.id}/maxresdefault.jpg?v=20260909`} alt="" loading="lazy" />
+						<span class="watch-card__play" aria-hidden="true"><span>▶</span></span>
+					</div>
+					<div class="watch-card__meta">
+						<strong>{latest.title}</strong>
+						<span>{latest.date} · about 90 minutes</span>
+					</div>
+				</a>
+				<a class="qa__more" href="/watch">More services →</a>
+			</div>
+		</section>
+	)}
+
+	<section class="band">
+		<div class="shell">
+			<p class="band__label">What we believe</p>
+			<p class="creed__line">{identity.line}</p>
+			<p class="creed__body">{identity.body}</p>
+			<a class="qa__more" href="/beliefs">Read the long version →</a>
+		</div>
+	</section>
+
 	<section class="band band--raised">
 		<div class="shell">
 			<p class="band__label">Still deciding</p>
@@ -191,6 +211,11 @@ const vision = [
 </Site>
 
 <style>
+	.start-here__cards { display: grid; gap: .8rem; }
+	.start-here__cards a { display: grid; gap: .35rem; padding: 1.3rem; color: inherit; text-decoration: none; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--ink) 74%, transparent); transition: transform .18s ease, border-color .18s ease; }
+	.start-here__cards a:hover { transform: translateY(-.2rem); border-color: var(--gold); }
+	.start-here__cards strong { font-family: var(--display); font-size: 1.45rem; letter-spacing: -.02em; }
+	.start-here__cards span { color: var(--muted); line-height: 1.45; }
 	.home-vision { overflow: clip; }
 	.home-vision__title { max-width: 22ch; margin-bottom: .75rem; }
 	.home-vision__lede { color: var(--muted); max-width: 42rem; margin-bottom: 3rem; }
@@ -211,6 +236,7 @@ const vision = [
 	:global(:root[data-theme="light"]) .home-vision__art-dark { opacity: 0; }
 	:global(:root[data-theme="light"]) .home-vision__art-light { opacity: 1; }
 	@media (min-width: 760px) {
+		.start-here__cards { grid-template-columns: repeat(3, 1fr); }
 		.home-vision__steps { gap: 7rem; }
 		.home-vision__step { grid-template-columns: minmax(15rem, .9fr) minmax(23rem, 1.1fr); gap: clamp(2rem, 7vw, 7rem); min-height: 68vh; padding-top: 3rem; }
 		.home-vision__pillar { position: sticky; top: 7.5rem; align-self: start; }
