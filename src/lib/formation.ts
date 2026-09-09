@@ -8,14 +8,14 @@
 // Read with the app's ANON key, which is the same key its own web client ships
 // to every browser — the rows we ask for are the ones its public community page
 // already serves to the world. Nothing here can see anything a visitor to
-// theformation.app/c/unifygr could not.
+// the public Unify GR community page could not.
 //
 // Needs env: FORMATION_SUPABASE_URL, FORMATION_SUPABASE_ANON_KEY.
 
 export const FORMATION_APP = "https://theformation.app";
 /** New Life's community. The link a person follows to join it. */
 export const COMMUNITY_SLUG = "unifygr";
-export const COMMUNITY_URL = `${FORMATION_APP}/c/${COMMUNITY_SLUG}`;
+export const COMMUNITY_URL = "https://theformation.app/?community=0LY0R";
 
 export type FormationModule = {
 	title: string;
