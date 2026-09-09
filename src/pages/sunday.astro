@@ -13,13 +13,18 @@ const answers = answersForChurch(church);
 	title={`A Sunday at ${church.shortName || church.name} — ${church.serviceTime}, ${church.address.street}`}
 	description="When we meet, where to find us, what to wear, what happens with your kids, and what actually happens in the service."
 >
-	<section class="pagehead">
-		<div class="shell">
-			<h1>A Sunday here</h1>
-			<p>
-				Everything you would want to know before walking in, written for someone who has
-				never been.
-			</p>
+	<section class="pagehead pagehead--visual">
+		<div class="shell pagehead__grid">
+			<div>
+				<h1>A Sunday here</h1>
+				<p>
+					Everything you would want to know before walking in, written for someone who has
+					never been.
+				</p>
+			</div>
+			<figure class="sunday-image sunday-image--worship">
+				<img src="/art/ministries/worship-approved.webp" alt="People gathered in worship" />
+			</figure>
 		</div>
 	</section>
 
@@ -58,15 +63,20 @@ const answers = answersForChurch(church);
 	</section>
 
 	<section class="band band--raised">
-		<div class="shell">
-			<p class="band__label">Bringing kids</p>
-			<h2 class="band__title">They get their own room and their own teaching.</h2>
-			<p class="creed__body" style="margin-bottom:1.4rem">
-				Nursery through 5th grade run at the same time as the service, led by a director who has
-				been building this for years. Check in at the kids desk when you arrive — someone will
-				walk you through it, and you will get them back at the end.
-			</p>
-			<a class="btn btn--quiet" href="/ministry/childrens-ministry">More about kids here</a>
+		<div class="shell sunday-kids">
+			<div>
+				<p class="band__label">Bringing kids</p>
+				<h2 class="band__title">They get their own room and their own teaching.</h2>
+				<p class="creed__body" style="margin-bottom:1.4rem">
+					Nursery through 5th grade run at the same time as the service, led by a director who has
+					been building this for years. Check in at the kids desk when you arrive — someone will
+					walk you through it, and you will get them back at the end.
+				</p>
+				<a class="btn btn--quiet" href="/ministry/childrens-ministry">More about kids here</a>
+			</div>
+			<figure class="sunday-image sunday-image--kids">
+				<img src="/art/ministries/kids.webp" alt="Children learning together" loading="lazy" />
+			</figure>
 		</div>
 	</section>
 
