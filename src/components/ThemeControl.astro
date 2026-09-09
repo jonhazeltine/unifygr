@@ -1,0 +1,52 @@
+<div class="theme-control" data-theme-control>
+	<button class="theme-control__trigger" type="button" aria-expanded="false" aria-haspopup="true">
+		<span class="theme-control__icon" aria-hidden="true">◐</span>
+		<span data-theme-label>Auto</span>
+	</button>
+	<div class="theme-control__menu" role="menu" hidden>
+		<button type="button" role="menuitemradio" aria-checked="true" data-theme-choice="auto">Auto <span>Follows daylight</span></button>
+		<button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="light">Light <span>Warm and open</span></button>
+		<button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="dark">Dark <span>Evening atmosphere</span></button>
+	</div>
+</div>
+
+<script>
+	const controls = document.querySelectorAll<HTMLElement>("[data-theme-control]");
+	const stored = () => localStorage.getItem("newlife-theme") || "auto";
+	const resolvedTheme = (choice: string) => choice === "auto"
+		? (new Date().getHours() >= 7 && new Date().getHours() < 19 ? "light" : "dark")
+		: choice;
+
+	const apply = (choice: string) => {
+		document.documentElement.dataset.theme = resolvedTheme(choice);
+		document.documentElement.dataset.themeChoice = choice;
+		controls.forEach((control) => {
+			control.querySelector<HTMLElement>("[data-theme-label]")!.textContent = choice[0].toUpperCase() + choice.slice(1);
+			control.querySelectorAll<HTMLButtonElement>("[data-theme-choice]").forEach((button) => {
+				button.setAttribute("aria-checked", String(button.dataset.themeChoice === choice));
+			});
+		});
+	};
+
+	apply(stored());
+	controls.forEach((control) => {
+		const trigger = control.querySelector<HTMLButtonElement>(".theme-control__trigger")!;
+		const menu = control.querySelector<HTMLElement>(".theme-control__menu")!;
+		const close = () => { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); };
+		trigger.addEventListener("click", () => {
+			const open = menu.hidden;
+			menu.hidden = !open;
+			trigger.setAttribute("aria-expanded", String(open));
+		});
+		control.querySelectorAll<HTMLButtonElement>("[data-theme-choice]").forEach((button) => {
+			button.addEventListener("click", () => {
+				const choice = button.dataset.themeChoice!;
+				localStorage.setItem("newlife-theme", choice);
+				apply(choice);
+				close();
+			});
+		});
+		document.addEventListener("click", (event) => { if (!control.contains(event.target as Node)) close(); });
+		document.addEventListener("keydown", (event) => { if (event.key === "Escape") close(); });
+	});
+</script>

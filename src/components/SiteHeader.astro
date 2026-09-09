@@ -2,6 +2,7 @@
 import { readNav } from "../lib/studio/nav";
 import { runtimeSite } from "../data/site";
 import { serviceForChurch } from "../data/sunday";
+import ThemeControl from "./ThemeControl.astro";
 
 interface Props {
 	/** Where the wordmark points. */
@@ -26,6 +27,7 @@ const service = serviceForChurch(church);
 			<span class="chrome__when-time">{service.shortWhen}</span>
 			<span class="chrome__when-place">{service.street}</span>
 		</a>
+		<ThemeControl />
 
 		<button
 			class="chrome__toggle"
