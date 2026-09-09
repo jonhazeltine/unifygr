@@ -23,6 +23,8 @@ const vision = [
 		title: "Encounter God",
 		line: "Make room to meet with Him.",
 		href: "/encounter-god",
+		art: "/art/vision/encounter-god.webp",
+		lightArt: "/art/vision/encounter-god-light.webp",
 		offerings: [
 			{ title: "Sunday Worship Experience", href: "/sunday", detail: "Gather with us every Sunday morning." },
 			{ title: "Healing Prayer", href: "/ministries/worship-and-prayer/healing-prayer", detail: "Bring your need before the Lord with others." },
@@ -33,6 +35,8 @@ const vision = [
 		title: "Be Transformed",
 		line: "Let the life of Jesus take root in you.",
 		href: "/be-transformed",
+		art: "/art/vision/be-transformed.webp",
+		lightArt: "/art/vision/be-transformed-light.webp",
 		offerings: [
 			{ title: "Life Groups", href: "/ministry/life-groups", detail: "Find people who know you and walk with you." },
 			{ title: "Spiritual Formation", href: "/spiritual-formation", detail: "Build a clear, personal rhythm of growth." },
@@ -44,11 +48,13 @@ const vision = [
 		title: "Change the World",
 		line: "Carry the love of Jesus into the city and the world.",
 		href: "/change-the-world",
+		art: "/art/vision/change-the-world.webp",
+		lightArt: "/art/vision/change-the-world-light.webp",
 		offerings: [
 			{ title: "Ambassador Teams", href: "/ambassador-teams", detail: "Strengthen other churches across Grand Rapids." },
 			{ title: "Outreach Teams", href: "/outreach-teams", detail: "Show up where our neighbors need us." },
 			{ title: "Global Missions", href: "/mission-trips", detail: "Go with New Life into the world." },
-			{ title: "Impact Prayer", href: "/ministries/worship-and-prayer/prayer-meetings", detail: "Pray for the city and the work God is doing through His people." },
+			{ title: "Impact Prayer & Worship", href: "/ministries/worship-and-prayer/worship-nights", detail: "Pray for the city and worship in the presence of God together." },
 		],
 	},
 ];
@@ -145,6 +151,10 @@ const vision = [
 			<div class="home-vision__steps">
 				{vision.map((v) => (
 					<article class="home-vision__step">
+						<div class="home-vision__art" aria-hidden="true">
+							<img class="home-vision__art-dark" src={v.art} alt="" loading="lazy" />
+							<img class="home-vision__art-light" src={v.lightArt} alt="" loading="lazy" />
+						</div>
 						<div class="home-vision__pillar">
 							<p class="band__label">{v.title}</p>
 							<h3>{v.title}</h3>
@@ -185,7 +195,10 @@ const vision = [
 	.home-vision__title { max-width: 22ch; margin-bottom: .75rem; }
 	.home-vision__lede { color: var(--muted); max-width: 42rem; margin-bottom: 3rem; }
 	.home-vision__steps { display: grid; gap: 3.5rem; }
-	.home-vision__step { display: grid; gap: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+	.home-vision__step { position: relative; isolation: isolate; display: grid; gap: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+	.home-vision__art { position: absolute; inset: 0 -8vw -1rem; z-index: -1; overflow: hidden; pointer-events: none; opacity: .16; mask-image: linear-gradient(90deg, transparent 0%, #000 24%, #000 82%, transparent 100%); }
+	.home-vision__art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% center; }
+	.home-vision__art-light { opacity: 0; }
 	.home-vision__pillar h3 { font-family: var(--display); font-size: clamp(2.3rem, 7vw, 4.6rem); letter-spacing: -.05em; line-height: .96; margin: .25rem 0 .85rem; }
 	.home-vision__pillar > p:not(.band__label) { color: var(--muted); font-size: 1.08rem; max-width: 25rem; }
 	.home-vision__offerings { display: grid; gap: .7rem; }
@@ -194,6 +207,9 @@ const vision = [
 	.home-vision__offering > span { grid-row: span 2; color: var(--gold); font-size: .75rem; letter-spacing: .12em; padding-top: .2rem; }
 	.home-vision__offering strong { font-family: var(--display); font-size: 1.3rem; letter-spacing: -.02em; }
 	.home-vision__offering p { color: var(--muted); font-size: .92rem; line-height: 1.45; }
+	:global(:root[data-theme="light"]) .home-vision__art { opacity: .30; }
+	:global(:root[data-theme="light"]) .home-vision__art-dark { opacity: 0; }
+	:global(:root[data-theme="light"]) .home-vision__art-light { opacity: 1; }
 	@media (min-width: 760px) {
 		.home-vision__steps { gap: 7rem; }
 		.home-vision__step { grid-template-columns: minmax(15rem, .9fr) minmax(23rem, 1.1fr); gap: clamp(2rem, 7vw, 7rem); min-height: 68vh; padding-top: 3rem; }
