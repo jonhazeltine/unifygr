@@ -118,7 +118,7 @@ export const pillars: Pillar[] = [
 			{ label: "Ambassador Teams", href: "/ambassador-teams", blurb: "Strengthen other churches across Grand Rapids." },
 			{ label: "Outreach Teams", href: "/outreach-teams", blurb: "Show up where our neighbors need us." },
 			{ label: "Global Missions", href: "/mission-trips", blurb: "Go with New Life into the world." },
-			{ label: "Impact Prayer", href: "/ministries/worship-and-prayer/prayer-meetings", blurb: "Pray for the city and the work God is doing through His people." },
+			{ label: "Impact Prayer & Worship", href: "/ministries/worship-and-prayer/worship-nights", blurb: "Pray for the city and worship in the presence of God together." },
 		],
 	},
 ];
