@@ -686,7 +686,11 @@ body.v2 :focus-visible {
 }
 
 .sunday-image--worship {
-	min-height: 15rem;
+	/* The worship artwork is deliberately panoramic. Keep the frame in its
+	   native ratio so the grid never creates a blank lower half. */
+	aspect-ratio: 760 / 286;
+	min-height: 0;
+	align-self: center;
 }
 
 .sunday-image--kids {
@@ -739,7 +743,7 @@ body.v2 :focus-visible {
 	.where { grid-template-columns: 1fr 1fr; align-items: start; gap: 2.5rem; }
 	.pagehead__grid { grid-template-columns: minmax(0, 0.9fr) minmax(22rem, 1.1fr); align-items: end; gap: 3rem; }
 	.pagehead--visual { padding-bottom: 2rem; }
-	.sunday-image--worship { min-height: 21rem; }
+	.sunday-image--worship { min-height: 0; }
 	.sunday-kids { grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.8fr); align-items: center; gap: 3rem; }
 	.sunday-image--kids { min-height: 20rem; }
 }
