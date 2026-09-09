@@ -86,9 +86,9 @@ export const pillars: Pillar[] = [
 		video: "/art/generated/worship-ambient-v5.mp4",
 		poster: "/art/generated/worship-ambient-v5-thumb.webp",
 		items: [
-			{ label: "Plan a Visit", href: "/visit", blurb: "What to expect on a Sunday, and how to find us." },
-			{ label: "Watch & Sermons", href: "/watch", blurb: "Join live Sunday mornings or catch up on past messages." },
-			{ label: "When & Where", href: "/visit#when-where", blurb: "Sundays at 10am · 2777 Knapp St NE." },
+			{ label: "Sunday Worship Experience", href: "/sunday", blurb: "Gather with us every Sunday morning." },
+			{ label: "Healing Prayer", href: "/ministries/worship-and-prayer/healing-prayer", blurb: "Bring your need before the Lord with others." },
+			{ label: "Friday Night Encounter: Prayer & Worship", href: "/ministries/worship-and-prayer/worship-nights", blurb: "A night set apart to seek His presence together." },
 		],
 	},
 	{
@@ -100,11 +100,10 @@ export const pillars: Pillar[] = [
 		video: "/art/generated/voice-ambient-v2.mp4",
 		poster: "/art/generated/voice-ambient-v2-thumb.webp",
 		items: [
-			{ label: "What We Believe", href: "/beliefs", blurb: "The core convictions that anchor our church." },
-			{ label: "Vision & Values", href: "/vision-values", blurb: "Where we're headed and what we hold dear." },
+			{ label: "Life Groups", href: "/ministry/life-groups", blurb: "Find people who know you and walk with you." },
 			{ label: "Spiritual Formation", href: "/spiritual-formation", blurb: "Growing deeper in Christ, day by day." },
-			{ label: "Membership", href: "/membership", blurb: "Make New Life your home and family." },
-			{ label: "Our Staff", href: "/staff", blurb: "Meet the team that leads and cares for our church." },
+			{ label: "Serving Teams", href: "/ministries", blurb: "Serve alongside people who are putting love into practice." },
+			{ label: "Pastoral Care", href: "/ministry/pastoral-care", blurb: "Receive personal care for the places that need healing." },
 		],
 	},
 	{
@@ -116,9 +115,10 @@ export const pillars: Pillar[] = [
 		video: "/art/generated/mission-ambient-v2.mp4",
 		poster: "/art/generated/mission-ambient-v2-thumb.webp",
 		items: [
-			{ label: "Missions Teams", href: "/mission-trips", blurb: "Go and serve the Caribbean with Mission of Hope." },
-			{ label: "Giving", href: "/giving", blurb: "Fuel the mission online, by text, or by mail." },
-			{ label: "Connect Card", href: church.external.connectCard, blurb: "Take a first step and let us know you're here." },
+			{ label: "Ambassador Teams", href: "/ambassador-teams", blurb: "Strengthen other churches across Grand Rapids." },
+			{ label: "Outreach Teams", href: "/outreach-teams", blurb: "Show up where our neighbors need us." },
+			{ label: "Global Missions", href: "/mission-trips", blurb: "Go with New Life into the world." },
+			{ label: "Impact Prayer", href: "/ministries/worship-and-prayer/prayer-meetings", blurb: "Pray for the city and the work God is doing through His people." },
 		],
 	},
 ];
