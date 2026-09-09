@@ -16,13 +16,41 @@ const upFront = answers.filter((a) => !["When is it?", "Where is it?"].includes(
 
 const latest = sermons[0];
 
-// The three things this church says it exists to do. Kept — but as a quiet
-// strip near the end, not as the thing standing between a stranger and the
-// service time.
+// The three pillars stay fixed while the practical expressions of each one
+// move past them. This is the vision visitors can actually step into.
 const vision = [
-	{ title: "Encounter God", line: "We build our gatherings around God's presence.", href: "/encounter-god" },
-	{ title: "Be Transformed", line: "We expect people to actually change.", href: "/be-transformed" },
-	{ title: "Change the World", line: "We work with the whole church across this city.", href: "/change-the-world" },
+	{
+		title: "Encounter God",
+		line: "Make room to meet with Him.",
+		href: "/encounter-god",
+		offerings: [
+			{ title: "Sunday Worship Experience", href: "/sunday", detail: "Gather with us every Sunday morning." },
+			{ title: "Healing Prayer", href: "/ministries/worship-and-prayer/healing-prayer", detail: "Bring your need before the Lord with others." },
+			{ title: "Friday Night Encounter: Prayer & Worship", href: "/ministries/worship-and-prayer/worship-nights", detail: "A night set apart to seek His presence together." },
+		],
+	},
+	{
+		title: "Be Transformed",
+		line: "Let the life of Jesus take root in you.",
+		href: "/be-transformed",
+		offerings: [
+			{ title: "Life Groups", href: "/ministry/life-groups", detail: "Find people who know you and walk with you." },
+			{ title: "Spiritual Formation", href: "/spiritual-formation", detail: "Build a clear, personal rhythm of growth." },
+			{ title: "Serving Teams", href: "/ministries", detail: "Serve alongside people who are putting love into practice." },
+			{ title: "Pastoral Care", href: "/ministry/pastoral-care", detail: "Receive personal care for the places that need healing." },
+		],
+	},
+	{
+		title: "Change the World",
+		line: "Carry the love of Jesus into the city and the world.",
+		href: "/change-the-world",
+		offerings: [
+			{ title: "Ambassador Teams", href: "/ambassador-teams", detail: "Strengthen other churches across Grand Rapids." },
+			{ title: "Outreach Teams", href: "/outreach-teams", detail: "Show up where our neighbors need us." },
+			{ title: "Global Missions", href: "/mission-trips", detail: "Go with New Life into the world." },
+			{ title: "Impact Prayer", href: "/ministries/worship-and-prayer/prayer-meetings", detail: "Pray for the city and the work God is doing through His people." },
+		],
+	},
 ];
 ---
 
@@ -109,15 +137,30 @@ const vision = [
 		</section>
 	)}
 
-	<section class="band">
+	<section class="band home-vision">
 		<div class="shell">
-			<p class="band__label">Why we do it this way</p>
-			<div class="vision">
+			<p class="band__label">Our Vision</p>
+			<h2 class="band__title home-vision__title">Encounter God. Be Transformed. Change the World.</h2>
+			<p class="home-vision__lede">This is the life we are building together. Keep scrolling to see the ways you can step into it.</p>
+			<div class="home-vision__steps">
 				{vision.map((v) => (
-					<a class="vision__item" href={v.href}>
-						<strong>{v.title}</strong>
-						<span>{v.line}</span>
-					</a>
+					<article class="home-vision__step">
+						<div class="home-vision__pillar">
+							<p class="band__label">{v.title}</p>
+							<h3>{v.title}</h3>
+							<p>{v.line}</p>
+							<a class="qa__more" href={v.href}>Explore {v.title} →</a>
+						</div>
+						<div class="home-vision__offerings">
+							{v.offerings.map((offering, index) => (
+								<a class="home-vision__offering" href={offering.href}>
+									<span>{String(index + 1).padStart(2, "0")}</span>
+									<strong>{offering.title}</strong>
+									<p>{offering.detail}</p>
+								</a>
+							))}
+						</div>
+					</article>
 				))}
 			</div>
 		</div>
@@ -136,3 +179,25 @@ const vision = [
 		</div>
 	</section>
 </Site>
+
+<style>
+	.home-vision { overflow: clip; }
+	.home-vision__title { max-width: 22ch; margin-bottom: .75rem; }
+	.home-vision__lede { color: var(--muted); max-width: 42rem; margin-bottom: 3rem; }
+	.home-vision__steps { display: grid; gap: 3.5rem; }
+	.home-vision__step { display: grid; gap: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+	.home-vision__pillar h3 { font-family: var(--display); font-size: clamp(2.3rem, 7vw, 4.6rem); letter-spacing: -.05em; line-height: .96; margin: .25rem 0 .85rem; }
+	.home-vision__pillar > p:not(.band__label) { color: var(--muted); font-size: 1.08rem; max-width: 25rem; }
+	.home-vision__offerings { display: grid; gap: .7rem; }
+	.home-vision__offering { display: grid; grid-template-columns: 2.6rem 1fr; gap: .1rem .8rem; padding: 1.15rem; text-decoration: none; border: 1px solid var(--line); border-radius: 14px; background: color-mix(in srgb, var(--ink-raised) 72%, transparent); transition: transform .18s ease, border-color .18s ease; }
+	.home-vision__offering:hover { transform: translateX(.3rem); border-color: var(--gold); }
+	.home-vision__offering > span { grid-row: span 2; color: var(--gold); font-size: .75rem; letter-spacing: .12em; padding-top: .2rem; }
+	.home-vision__offering strong { font-family: var(--display); font-size: 1.3rem; letter-spacing: -.02em; }
+	.home-vision__offering p { color: var(--muted); font-size: .92rem; line-height: 1.45; }
+	@media (min-width: 760px) {
+		.home-vision__steps { gap: 7rem; }
+		.home-vision__step { grid-template-columns: minmax(15rem, .9fr) minmax(23rem, 1.1fr); gap: clamp(2rem, 7vw, 7rem); min-height: 68vh; padding-top: 3rem; }
+		.home-vision__pillar { position: sticky; top: 7.5rem; align-self: start; }
+		.home-vision__offerings { align-content: center; }
+	}
+</style>

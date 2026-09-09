@@ -3,7 +3,7 @@
 	"order": 5,
 	"root": {
 		"props": {
-			"title": "Missions Teams",
+			"title": "Global Missions",
 			"kicker": "Change the World",
 			"description": "Go and serve the Caribbean with New Life Grand Rapids and Mission of Hope."
 		}
@@ -14,7 +14,7 @@
 			"props": {
 				"id": "Hero-trips",
 				"kicker": "Change the World",
-				"heading": "Missions Teams",
+				"heading": "Global Missions",
 				"lede": "Going with our partners overseas. A week in the Caribbean with Mission of Hope, and a team shaped around the people who go."
 			}
 		},
