@@ -146,7 +146,7 @@ export const values = [
 // Grouped to match the real photos (couples share a portrait, as on the live site).
 export const leadership = [
 	{
-		photo: "/art/staff/staff-1.jpg",
+		photo: "/art/staff/jon-stacy-2026.jpg",
 		people: [
 			{ name: "Jon Hazeltine", role: "Senior Leader", bio: "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the community. Jon is a visionary and strategic thinker and the primary driver behind the direction of the community." },
 			{ name: "Stacy Hazeltine", role: "Director of Missions, Community Leadership & Oversight", bio: "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family." },
