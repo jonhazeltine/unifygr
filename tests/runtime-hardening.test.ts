@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { __setRuntimeContentDriverForTests, ContentConflict, publish, readPublished } from "../src/lib/studio/runtime-content.ts";
-import { readSettings, readSettingsState, writeSettingsVersioned } from "../src/lib/partners/settings.ts";
+import { externalMinistriesEnabled, normalise, readSettings, readSettingsState, writeSettingsVersioned } from "../src/lib/partners/settings.ts";
 import { applyEdits, undo } from "../src/lib/studio/store.ts";
 
 type Entry = { body: string; etag: string };
@@ -23,6 +23,11 @@ test("seed revision failure prevents first pointer publish", async () => {
 	const d = memory(true); __setRuntimeContentDriverForTests(d as any);
 	await assert.rejects(() => publish("test/seed", { x: 1 }, { x: 0 }, "seed", locals));
 	assert.equal(d.entries.has("test/seed"), false);
+});
+
+test("external ministry visibility defaults on and respects the Studio switch", () => {
+	assert.equal(externalMinistriesEnabled(normalise({ globals: {}, partners: [], declined: [] })), true);
+	assert.equal(externalMinistriesEnabled(normalise({ globals: { showExternalMinistries: false }, partners: [], declined: [] })), false);
 });
 
 test("legacy settings are read as seed then CAS-wrapped once", async () => {

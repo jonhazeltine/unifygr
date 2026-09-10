@@ -18,8 +18,10 @@ import {
 import { approvedFamilyArt } from "../../data/ministry-art-approvals";
 import { pillars } from "../../data/site";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
 
 const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
 const { families } = classifyFamilies(runtimeEntries);
 const inHouse = runtimeEntries.filter((entry) => entry.house === "in");
 const outOfHouse = runtimeEntries.filter((entry) => entry.house === "out");
@@ -189,7 +191,9 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 		</div>
 	</section>
 
-	<!-- Everything else we carry for you -->
+	{showExternalMinistries && (
+		<>
+			<!-- Everything else we carry for you -->
 	<section class="section" id="ministries">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
@@ -303,7 +307,10 @@ const curatedByFamily = allFamiliesIncludingSpecialised
 				</a>
 			</div>
 		</div>
-	</section>
+			</section>
+		</>
+	)}
+
 </Interior>
 
 <style>

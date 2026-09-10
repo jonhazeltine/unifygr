@@ -4,6 +4,9 @@
 // wanting to know whether we really know these people, and Jon wanting to see
 // who he has not yet spoken to.
 export const prerender = false;
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+if (!showExternalMinistries) return Astro.redirect("/ministries");
 import Interior from "../../layouts/Interior.astro";
 import {
 	isOffering,

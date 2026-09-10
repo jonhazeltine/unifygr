@@ -97,7 +97,7 @@ export const prerender = false;
 			<div class="pc-savebar" id="savebar" hidden>
 				<span class="pc-savebar__state" id="savestate">All changes saved</span>
 				<div class="pc-savebar__actions">
-					<a class="button button--secondary" href="/ministries/calendar" target="_blank"
+					<a class="button button--secondary" href="/ministries/calendar" target="_blank" id="calendar-link"
 						>See the calendar</a
 					>
 					<button class="button button--secondary" type="button" id="signout">Sign out</button>
@@ -704,7 +704,13 @@ export const prerender = false;
 						<input type="checkbox" data-global="${key}" ${g[key] ? "checked" : ""} />
 						<span><b>${title}</b><small>${note}</small></span>
 					</label>`;
+				$("calendar-link").toggleAttribute("hidden", !g.showExternalMinistries);
 				$("globals").innerHTML =
+					box(
+						"showExternalMinistries",
+						"Show curated partnerships and specialised ministries",
+						"Turn this off to remove the external directory, curated calendar, specialised-ministry page, and every public link into them. New Life's signature ministries remain available.",
+					) +
 					box(
 						"hideHousekeeping",
 						"Leave out building housekeeping",

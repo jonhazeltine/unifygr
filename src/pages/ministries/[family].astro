@@ -16,10 +16,13 @@ import {
 	type Entry,
 } from "../../data/ministries";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
 
 const family = families.find((candidate) => candidate.slug === Astro.params.family);
 if (!family) return new Response("Not found", { status: 404 });
-const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+const allRuntimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const runtimeEntries = showExternalMinistries ? allRuntimeEntries : allRuntimeEntries.filter((entry) => entry.house === "in");
 const entriesInFamily = (slug: string) => {
 	const target = families.find((candidate) => candidate.slug === slug);
 	const categories = new Set(target ? target.categories.map((category) => category.slug) : []);
@@ -27,6 +30,7 @@ const entriesInFamily = (slug: string) => {
 };
 const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
 
+if (!showExternalMinistries && entriesInFamily(family.slug).length === 0) return Astro.redirect("/ministries");
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));
 
 // A ministry can sit in several categories of the same family, and printing it
@@ -73,6 +77,9 @@ const areas = [...areaCounts.entries()]
 	.map(([name, n]) => ({ name, n }))
 	.sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
 const showAreas = areas.length >= 2;
+const browsableFamilies = showExternalMinistries
+	? families
+	: families.filter((candidate) => entriesInFamily(candidate.slug).length > 0);
 
 const oursCount = offering.filter((e) => e.house === "in").length;
 const calendarCount = offering.filter((e) => isOffering(e) && e.house === "out").length;
@@ -101,7 +108,7 @@ const AREAS_SHOWN = 3;
 				)}
 			</p>
 
-			{curationNote(family.slug) && (
+			{showExternalMinistries && curationNote(family.slug) && (
 				<div class="min-curation reveal is-visible">
 					<p class="eyebrow">Why we send you here</p>
 					<p>{curationNote(family.slug)}</p>
@@ -191,7 +198,7 @@ const AREAS_SHOWN = 3;
 	<section class="section">
 		<div class="container">
 			<div class="min-next reveal is-visible">
-				{families
+				{browsableFamilies
 					.filter((f) => f.slug !== family.slug)
 					.slice(0, 4)
 					.map((f) => (

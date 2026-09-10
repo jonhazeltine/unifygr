@@ -3,7 +3,8 @@
 	"globals": {
 		"hideHousekeeping": true,
 		"hideOtherSundayMornings": true,
-		"daysAhead": 60
+		"daysAhead": 60,
+		"showExternalMinistries": true
 	},
 	"partners": [
 		{
