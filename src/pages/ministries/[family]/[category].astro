@@ -29,7 +29,17 @@ const runtimeEntries = showExternalMinistries ? allRuntimeEntries : allRuntimeEn
 const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
 
 const list = sortEntries(entriesInCategory(category.slug));
-if (!showExternalMinistries && list.length === 0) return Astro.redirect("/ministries");
+// When curated partnerships are off, a category can be only another tag on one
+// of our signature ministries. Keep that taxonomy for the directory and
+// calendar, but send visitors to the one card rather than a duplicate category
+// page with the same ministry repeated under several labels.
+if (!showExternalMinistries) {
+	const signatureEntry = list.find((entry) => entry.house === "in");
+	const primaryCategory = signatureEntry?.categories.find((slug) =>
+		family.categories.some((candidate) => candidate.slug === slug),
+	);
+	return Astro.redirect(`/ministries/${family.slug}${primaryCategory ? `#${primaryCategory}` : ""}`);
+}
 const { offering, specialized } = splitOffering(list);
 // Signature: ours. We lead them and our volunteers run them.
 // Curated: led by other ministries. We selected them and made them available.
