@@ -149,7 +149,7 @@ export const leadership = [
 		photo: "/art/staff/jon-stacy-2026.jpg",
 		people: [
 			{ name: "Jon Hazeltine", role: "Senior Leader", bio: "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the community. Jon is a visionary and strategic thinker and the primary driver behind the direction of the community." },
-			{ name: "Stacy Hazeltine", role: "Director of Missions, Community Leadership & Oversight", bio: "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family." },
+			{ name: "Stacy Hazeltine", role: "Director of Missions, Children's Ministry Director, Community Leadership & Oversight", bio: "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family." },
 		],
 	},
 	{
@@ -161,7 +161,7 @@ export const leadership = [
 	{
 		photo: "/art/staff/staff-3.jpg",
 		people: [
-			{ name: "Allie Seif", role: "Children's Ministry Director, Community Leadership & Oversight", bio: "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the community. She loves to minister to children and to lead the community in corporate ministry, and her creativity has inspired countless projects." },
+			{ name: "Allie Seif", role: "Community Leadership & Oversight", bio: "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the community. She loves to minister to children and to lead the community in corporate ministry, and her creativity has inspired countless projects." },
 			{ name: "Tory Seif", role: "Community Leadership & Oversight", bio: "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the community. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the community." },
 		],
 	},
