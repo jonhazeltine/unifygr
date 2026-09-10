@@ -21,6 +21,11 @@
 			"items": []
 		},
 		{
+			"label": "Give",
+			"href": "/giving",
+			"items": []
+		},
+		{
 			"label": "About us",
 			"href": "/about",
 			"items": [
@@ -40,11 +45,6 @@
 					"blurb": "Where we are headed and what we hold to."
 				}
 			]
-		},
-		{
-			"label": "Give",
-			"href": "/giving",
-			"items": []
 		}
 	],
 	"cta": {
