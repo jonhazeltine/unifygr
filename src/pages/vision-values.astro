@@ -32,7 +32,7 @@ const { mission } = await runtimeSite(Astro.locals);
 					const slug = pillars[i].slug;
 					const verbs = mission.filter((m) => m.pillar === slug);
 					return (
-						<a class="vision-card vision-card--panorama reveal is-visible" href={`/${slug}`} style={`--delay:${i * 90}ms`}>
+						<a class={`vision-card vision-card--panorama${slug === "be-transformed" ? " vision-card--transformed" : ""} reveal is-visible`} href={`/${slug}`} style={`--delay:${i * 90}ms`}>
 							<img class="vision-card__art vision-card__art--dark" src={`/art/vision/${slug}.webp`} width="2172" height="724" alt="" loading="lazy" />
 							<img class="vision-card__art vision-card__art--light" src={`/art/vision/${slug}-light.webp`} width="2172" height="724" alt="" loading="lazy" />
                             <div class="vision-card__copy">
@@ -87,6 +87,9 @@ const { mission } = await runtimeSite(Astro.locals);
 	:global(:root[data-theme="light"]) .vision-card__art--dark { opacity: 0; }
 	:global(:root[data-theme="light"]) .vision-card__art--light { opacity: 1; }
 	:global(:root[data-theme="light"]) .vision-card--panorama::before { background: rgba(255, 252, 246, .18); }
+	:global(:root[data-theme="light"]) .vision-card--transformed::before {
+		background: linear-gradient(90deg, rgba(255, 252, 246, .68) 0%, rgba(255, 252, 246, .48) 43%, rgba(255, 252, 246, .16) 74%);
+	}
 	:global(:root[data-theme="light"]) .vision-card__copy { text-shadow: 0 1px 12px rgba(255,255,255,.8); }
 	:global(:root[data-theme="light"]) .vision-card__copy h3,
 	:global(:root[data-theme="light"]) .vision-card__mission li { color: #172437; }
