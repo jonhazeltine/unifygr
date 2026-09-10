@@ -11,10 +11,10 @@
 		"recovery": "/art/ministries/recovery.webp",
 		"mental-health": "/art/ministries/mental-health.webp",
 		"practical-care": "/art/ministries/practical-care.webp",
-		"health": "/art/ministries/health.jpg",
+		"health": "/art/ministries/health.jpg?v=20260910",
 		"justice": "/art/ministries/justice-approved.webp",
 		"mission": "/art/ministries/mission-approved.webp",
-		"church-leaders": "/art/ministries/church-leaders.jpg",
+		"church-leaders": "/art/ministries/church-leaders.jpg?v=20260910",
 		"creative": "/art/ministries/creative.jpg",
 		"seniors": "/art/ministries/seniors.webp"
 	}
