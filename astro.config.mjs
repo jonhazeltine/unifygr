@@ -7,7 +7,7 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-	site: process.env.PUBLIC_SITE_URL ?? "https://unifygr.com",
+	site: process.env.PUBLIC_SITE_URL ?? "https://newlifegr.com",
 	integrations: [mdx(), react()],
 	adapter: cloudflare({
 		// Expose Worker bindings at Astro.locals.runtime during local development,

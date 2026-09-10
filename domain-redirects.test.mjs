@@ -37,13 +37,20 @@ test("preserves query strings", () => {
 	);
 });
 
-test("maps old paths on the current host before final activation", () => {
-	assert.equal(finalDomainActive("https://unifygr.com"), false);
+test("uses New Life as the default public host and keeps explicitly staged previews local", () => {
+	assert.equal(finalDomainActive(), true);
+	assert.equal(
+		redirectForRequest(new Request("https://unifygr.com/about-us/our-staff?x=1")),
+		"https://newlifegr.com/staff?x=1",
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://unifygr.com/unknown?x=1")),
+		"https://newlifegr.com/unknown?x=1",
+	);
 	assert.equal(
 		redirectForRequest(new Request("https://unifygr.com/about-us/our-staff?x=1"), "https://unifygr.com"),
 		"https://unifygr.com/staff?x=1",
 	);
-	assert.equal(redirectForRequest(new Request("https://unifygr.com/unknown?x=1"), "https://unifygr.com"), null);
 });
 
 test("redirects old paths to the final host only when PUBLIC_SITE_URL is final", () => {

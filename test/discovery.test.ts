@@ -62,8 +62,8 @@ test("site origin is normalized and invalid configuration fails safely", () => {
     publicSiteUrl("https://newlifegr.com/path/"),
     "https://newlifegr.com",
   );
-  assert.equal(publicSiteUrl("javascript:alert(1)"), "https://unifygr.com");
-  assert.equal(publicSiteUrl("not a URL"), "https://unifygr.com");
+  assert.equal(publicSiteUrl("javascript:alert(1)"), "https://newlifegr.com");
+  assert.equal(publicSiteUrl("not a URL"), "https://newlifegr.com");
 });
 
 test("sitemap uses the configured origin and escapes XML", () => {

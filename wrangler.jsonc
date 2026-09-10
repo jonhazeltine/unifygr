@@ -8,6 +8,8 @@
   "workers_dev": true,
   "preview_urls": true,
   "routes": [
+    { "pattern": "newlifegr.com", "custom_domain": true },
+    { "pattern": "www.newlifegr.com", "custom_domain": true },
     { "pattern": "unifygr.com", "custom_domain": true },
     { "pattern": "www.unifygr.com", "custom_domain": true }
   ],

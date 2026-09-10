@@ -8,7 +8,7 @@
 
 export const LEGACY_HOSTS = new Set(["unifygr.com", "www.unifygr.com"]);
 export const FINAL_HOST = "newlifegr.com";
-export const DEFAULT_SITE_URL = "https://unifygr.com";
+export const DEFAULT_SITE_URL = "https://newlifegr.com";
 
 /**
  * Old public paths mapped to their current equivalents.
