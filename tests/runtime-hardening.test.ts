@@ -10,7 +10,7 @@ function memory(failSeed = false, failRead = false) {
 	return {
 		entries,
 		get: async (key: string) => { if (failRead) throw new Error("outage"); const e = entries.get(key); return e ? { statusCode: 200 as const, stream: new Response(e.body).body!, blob: { etag: e.etag } } : null; },
-		put: async (key: string, body: any, opts: any) => { if (failSeed && key.endsWith("/seed.json")) throw new Error("outage"); const old = entries.get(key); if ((old && opts.ifMatch !== old.etag) || (!old && opts.ifMatch) || (old && !opts.ifMatch && !opts.allowOverwrite)) throw Object.assign(new Error("precondition"), { name: "BlobPreconditionFailedError" }); entries.set(key, { body: await new Response(body).text(), etag: `e${++n}` }); return {}; },
+		put: async (key: string, body: any, opts: any) => { if (failSeed && key.endsWith("/seed.json")) throw new Error("outage"); const old = entries.get(key); if ((old && opts.ifMatch && opts.ifMatch !== old.etag) || (!old && opts.ifMatch) || (old && !opts.ifMatch && !opts.allowOverwrite)) throw Object.assign(new Error("precondition"), { name: "BlobPreconditionFailedError" }); entries.set(key, { body: await new Response(body).text(), etag: `e${++n}` }); return {}; },
 		list: async () => ({ blobs: [] }),
 	};
 }
@@ -28,6 +28,20 @@ test("seed revision failure prevents first pointer publish", async () => {
 test("external ministry visibility defaults on and respects the Studio switch", () => {
 	assert.equal(externalMinistriesEnabled(normalise({ globals: {}, partners: [], declined: [] })), true);
 	assert.equal(externalMinistriesEnabled(normalise({ globals: { showExternalMinistries: false }, partners: [], declined: [] })), false);
+});
+
+test("retries a provider that rejects a valid conditional pointer update", async () => {
+	const d = memory();
+	const put = d.put;
+	d.put = async (key: string, body: any, opts: any) => {
+		if (key === "retry/settings.json" && opts.ifMatch) throw new Error("conditional header rejected");
+		return put(key, body, opts);
+	};
+	__setRuntimeContentDriverForTests(d as any);
+	const first = await publish("retry/settings.json", { value: 1 }, { value: 0 }, "seed", locals);
+	const saved = await publish("retry/settings.json", { value: 2 }, { value: 0 }, first.version, locals);
+	assert.equal((await readPublished<any>("retry/settings.json", {}, locals)).value.value, 2);
+	assert.notEqual(saved.version, first.version);
 });
 
 test("legacy settings are read as seed then CAS-wrapped once", async () => {

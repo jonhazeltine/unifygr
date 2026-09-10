@@ -79,8 +79,20 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 			...(current.exists ? { ifMatch: current.etag! } : { allowOverwrite: false }), token: accessToken,
 		});
 	} catch (error) {
-		if ((error as Error)?.name === "BlobPreconditionFailedError" || current.exists) throw new ContentConflict();
-		throw error;
+		if ((error as Error)?.name === "BlobPreconditionFailedError") throw new ContentConflict();
+		// The live Blob API can reject a conditional header without labelling it a
+		// precondition failure. Re-read before retrying so a genuine competing save
+		// still loses safely; then use its explicit overwrite path.
+		const latest = await read(key, fallback, locals);
+		if (latest.version !== current.version) throw new ContentConflict();
+		try {
+			await driver.put(key, JSON.stringify(next), {
+				access: "private", contentType: "application/json", addRandomSuffix: false, allowOverwrite: true, token: accessToken,
+			});
+		} catch (retryError) {
+			if ((retryError as Error)?.name === "BlobPreconditionFailedError") throw new ContentConflict();
+			throw retryError;
+		}
 	}
 	return next;
 }
