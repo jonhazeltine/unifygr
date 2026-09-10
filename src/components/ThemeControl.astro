@@ -1,10 +1,10 @@
 <div class="theme-control" data-theme-control>
-	<button class="theme-control__trigger" type="button" aria-expanded="false" aria-haspopup="true">
+	<button class="theme-control__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Choose site appearance">
 		<span class="theme-control__icon" aria-hidden="true">◐</span>
 		<span data-theme-label>Auto</span>
 	</button>
 	<div class="theme-control__menu" role="menu" hidden>
-		<button type="button" role="menuitemradio" aria-checked="true" data-theme-choice="auto">Auto <span>Follows daylight</span></button>
+		<button type="button" role="menuitemradio" aria-checked="true" data-theme-choice="auto">Auto <span>Follows your device</span></button>
 		<button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="light">Light <span>Warm and open</span></button>
 		<button type="button" role="menuitemradio" aria-checked="false" data-theme-choice="dark">Dark <span>Evening atmosphere</span></button>
 	</div>
@@ -13,9 +13,8 @@
 <script>
 	const controls = document.querySelectorAll<HTMLElement>("[data-theme-control]");
 	const stored = () => localStorage.getItem("newlife-theme") || "auto";
-	const resolvedTheme = (choice: string) => choice === "auto"
-		? (new Date().getHours() >= 7 && new Date().getHours() < 19 ? "light" : "dark")
-		: choice;
+	const systemTheme = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+	const resolvedTheme = (choice: string) => choice === "auto" ? systemTheme() : choice;
 
 	const apply = (choice: string) => {
 		document.documentElement.dataset.theme = resolvedTheme(choice);
@@ -29,6 +28,9 @@
 	};
 
 	apply(stored());
+	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+		if (stored() === "auto") apply("auto");
+	});
 	controls.forEach((control) => {
 		const trigger = control.querySelector<HTMLButtonElement>(".theme-control__trigger")!;
 		const menu = control.querySelector<HTMLElement>(".theme-control__menu")!;
