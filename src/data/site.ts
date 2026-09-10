@@ -176,11 +176,11 @@ export const leadership = [
 export const teams = {
 	pastoralCare: {
 		blurb: "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our community. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
-		members: ["Tory & Allie Seif", "Tom & Sarah Rhein", "Bill & Sue Meyer", "Elizabeth Bish", "Tim & Diane Cosby", "Rebecca Taylor", "Jon Hazeltine"],
+		members: ["Tom & Sarah Rhein", "Bill & Sue Meyer", "Elizabeth Bish", "Tim & Diane Cosby", "Rebecca Taylor", "Jon Hazeltine"],
 	},
 	businessFinance: {
 		blurb: "Wisdom, expertise and oversight for the management of community assets and finances — making sure provision is in place to do all that God has called us to do.",
-		members: ["Jon Hazeltine", "Tom Rhein", "Rebecca Taylor", "Anne Gruber", "Tory Seif"],
+		members: ["Jon Hazeltine", "Tom Rhein", "Anne Gruber", "Tory Seif", "Michelle Plichta"],
 	},
 };
 
