@@ -345,6 +345,9 @@ export const prerender = false;
 			// What each church looked like when we last loaded or saved, so a row can
 			// say that it has been touched and the save bar can say how many.
 			let baseline = new Map<string, string>();
+			// Global choices live above the church list, but they still belong in the
+			// same save. Keep their own baseline so the save bar cannot dismiss them.
+			let globalsBaseline = "";
 
 			type DirectoryOrg = {
 				slug: string; name: string; summary: string; city: string | null; area: string | null;
@@ -389,7 +392,7 @@ export const prerender = false;
 				if (state === false && orgEdits.size) state = true;
 				dirty = state;
 				const label = $("savestate");
-				const n = state ? changedChurches().length + orgEdits.size : 0;
+				const n = state ? changedChurches().length + changedGlobals() + orgEdits.size : 0;
 				label.textContent = state
 					? `${n} ${n === 1 ? "change" : "changes"} — not saved yet`
 					: "All changes saved";
@@ -770,7 +773,17 @@ export const prerender = false;
 				return `${p.approved ? "a" : "-"}${p.on ? "s" : "-"}:${[...p.themes].sort().join(",")}`;
 			}
 
+			function globalsSignature(): string {
+				const g = settings.globals;
+				return `${g.showExternalMinistries}:${g.hideHousekeeping}:${g.hideOtherSundayMornings}:${g.daysAhead}`;
+			}
+
+			function changedGlobals(): number {
+				return globalsSignature() === globalsBaseline ? 0 : 1;
+			}
+
 			function rebaseline() {
+				globalsBaseline = globalsSignature();
 				baseline = new Map();
 				const ids = new Set<string>([
 					...roster.map((r) => r.churchId),
