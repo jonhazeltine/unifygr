@@ -152,7 +152,7 @@ export const blocksConfig: Config = {
 			},
 			defaultProps: { eyebrow: "", title: "Section title", body: "Write something here.", tinted: false },
 			render: ({ eyebrow, title, body, tinted }) => (
-				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}`}>
+				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}${!eyebrow && !title ? " prose-block--body-only" : ""}`}>
 					<div className="container">
 						{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
 						{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
@@ -344,7 +344,7 @@ export const blocksConfig: Config = {
 			},
 			defaultProps: { items: [] },
 			render: ({ items }) => (
-				<section className="section">
+				<section className="section profiles-block">
 					<div className="container">
 						<div className="staff-grid">
 							{(items || []).map((p: any, i: number) => (

@@ -2366,6 +2366,8 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
    ministry pages. Beliefs keeps its own scoped copy at hero scale.
    ------------------------------------------------------------------ */
 .prose-block { padding: 6rem 0; }
+.prose-block--body-only { padding-top: 2.25rem; }
+.profiles-block { padding-top: 2.25rem; }
 .prose-block--tinted {
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
 	border-top: 1px solid var(--line);
