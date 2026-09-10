@@ -21,8 +21,8 @@ const { title, description, image = '/og.png' } = Astro.props;
 	(() => {
 		try {
 			const choice = localStorage.getItem("newlife-theme") || "auto";
-			const hour = new Date().getHours();
-			document.documentElement.dataset.theme = choice === "auto" ? (hour >= 7 && hour < 19 ? "light" : "dark") : choice;
+			const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+			document.documentElement.dataset.theme = choice === "auto" ? systemTheme : choice;
 			document.documentElement.dataset.themeChoice = choice;
 		} catch { document.documentElement.dataset.theme = "dark"; }
 	})();

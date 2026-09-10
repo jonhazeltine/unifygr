@@ -193,6 +193,10 @@ body.v2 :focus-visible {
 .theme-control__menu button:hover,
 .theme-control__menu button[aria-checked="true"] { background: color-mix(in srgb, var(--gold) 15%, transparent); }
 .theme-control__menu span { color: var(--faint); font-size: 0.67rem; }
+@media (max-width: 760px) {
+	.theme-control__trigger { width: 2.45rem; height: 2.45rem; justify-content: center; padding: 0; }
+	.theme-control__trigger [data-theme-label] { display: none; }
+}
 
 .chrome__toggle {
 	display: inline-flex;
