@@ -11,8 +11,8 @@
 			"items": []
 		},
 		{
-			"label": "What we believe",
-			"href": "/beliefs",
+			"label": "Growth Track",
+			"href": "/spiritual-formation",
 			"items": []
 		},
 		{
@@ -30,14 +30,14 @@
 					"blurb": "The people who lead and care for this community."
 				},
 				{
+					"label": "What we believe",
+					"href": "/beliefs",
+					"blurb": "What we believe about Jesus, Scripture, and life with God."
+				},
+				{
 					"label": "Vision and values",
 					"href": "/vision-values",
 					"blurb": "Where we are headed and what we hold to."
-				},
-				{
-					"label": "Growth Track",
-					"href": "/spiritual-formation",
-					"blurb": "A clear, personal path for growing in Christ."
 				}
 			]
 		},
