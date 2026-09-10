@@ -14,6 +14,7 @@ import {
 	type Entry,
 } from "../../../data/ministries";
 import { runtimeDirectoryEntries } from "../../../lib/partners/directory";
+import { externalMinistriesEnabled, readSettings } from "../../../lib/partners/settings";
 
 // Rendered per request so this page's calendar is the live one, same as
 // /ministries/calendar. The directory itself still comes from the repo.
@@ -22,10 +23,13 @@ export const prerender = false;
 const family = families.find((f) => f.slug === Astro.params.family);
 const category = family?.categories.find((c) => c.slug === Astro.params.category);
 if (!family || !category) return new Response(null, { status: 404 });
-const runtimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+const allRuntimeEntries = await runtimeDirectoryEntries(Astro.locals);
+const runtimeEntries = showExternalMinistries ? allRuntimeEntries : allRuntimeEntries.filter((entry) => entry.house === "in");
 const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
 
 const list = sortEntries(entriesInCategory(category.slug));
+if (!showExternalMinistries && list.length === 0) return Astro.redirect("/ministries");
 const { offering, specialized } = splitOffering(list);
 // Signature: ours. We lead them and our volunteers run them.
 // Curated: led by other ministries. We selected them and made them available.
@@ -33,7 +37,7 @@ const signature = offering.filter((e) => e.house === "in");
 const curated = offering.filter((e) => e.house === "out");
 
 // Only this category's gatherings belong on this page's calendar.
-const { events: allEvents } = await calendar(Astro.locals);
+const { events: allEvents } = showExternalMinistries ? await calendar(Astro.locals) : { events: [] };
 const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).slice(0, 12);
 // Fresh within a few minutes, but served from cache like a static page. A
 // switch flipped in the partners panel shows here within five minutes.
@@ -45,7 +49,7 @@ const districts = [
 	...new Set(offering.filter((e) => e.house === "out").map((e) => e.area).filter(Boolean)),
 ].sort();
 
-const siblings = family.categories.filter((c) => c.slug !== category.slug);
+const siblings = family.categories.filter((c) => c.slug !== category.slug && (showExternalMinistries || entriesInCategory(c.slug).some((entry) => entry.house === "in")));
 
 // A family choosing a youth group is really choosing around a school run, so
 // this is the one place the district is worth spelling out.

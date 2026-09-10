@@ -1,6 +1,6 @@
 type Slugged = { slug: string };
 type Family = Slugged & { categories: Slugged[] };
-type MinistryEntry = Slugged & { listed?: boolean };
+type MinistryEntry = Slugged & { listed?: boolean; house?: "in" | "out"; categories?: string[] };
 type BuilderPage = { path: string; status: "draft" | "live" };
 
 const PUBLIC_ROUTES = [
@@ -9,9 +9,6 @@ const PUBLIC_ROUTES = [
   "/beliefs",
   "/connect",
   "/ministries",
-  "/ministries/calendar",
-  "/ministries/partnerships",
-  "/ministries/specialized",
   "/spiritual-formation",
   "/sunday",
   "/vision-values",
@@ -23,16 +20,30 @@ export function publicPaths(input: {
   families: Family[];
   entries: MinistryEntry[];
   pages: BuilderPage[];
+  externalMinistriesEnabled?: boolean;
 }): string[] {
+  const showExternalMinistries = input.externalMinistriesEnabled !== false;
   const paths = new Set<string>(PUBLIC_ROUTES);
+  if (showExternalMinistries) {
+    paths.add("/ministries/calendar");
+    paths.add("/ministries/partnerships");
+    paths.add("/ministries/specialized");
+  }
   for (const pillar of input.pillars) paths.add(`/${pillar.slug}`);
   for (const family of input.families) {
+    const visibleCategories = family.categories.filter((category) =>
+      showExternalMinistries || input.entries.some((entry) =>
+        entry.house === "in" && entry.listed !== false && entry.categories?.includes(category.slug),
+      ),
+    );
+    if (!showExternalMinistries && visibleCategories.length === 0) continue;
     paths.add(`/ministries/${family.slug}`);
-    for (const category of family.categories)
-      paths.add(`/ministries/${family.slug}/${category.slug}`);
+    for (const category of visibleCategories) paths.add(`/ministries/${family.slug}/${category.slug}`);
   }
   for (const entry of input.entries) {
-    if (entry.listed !== false) paths.add(`/ministry/${entry.slug}`);
+    if (entry.listed !== false && (showExternalMinistries || entry.house === "in")) {
+      paths.add(`/ministry/${entry.slug}`);
+    }
   }
   for (const page of input.pages) {
     if (page.status === "live") paths.add(page.path);

@@ -45,6 +45,8 @@ export type Globals = {
 	hideOtherSundayMornings: boolean;
 	/** How many days ahead the calendar looks. */
 	daysAhead: number;
+	/** Whether public visitors can browse ministries outside New Life. */
+	showExternalMinistries: boolean;
 };
 
 /** A church we have looked at and said no to. It stops being offered. */
@@ -77,6 +79,7 @@ const DEFAULT_GLOBALS: Globals = {
 	hideHousekeeping: true,
 	hideOtherSundayMornings: true,
 	daysAhead: 60,
+	showExternalMinistries: true,
 };
 
 /** Fill in anything a stored or hand-edited file left out. */
@@ -119,6 +122,11 @@ export function normalise(raw: any): Settings {
 		declined,
 		updatedAt: raw?.updatedAt,
 	};
+}
+
+/** One public switch for the curated-partnership and specialised-ministry experience. */
+export function externalMinistriesEnabled(settings: Settings): boolean {
+	return settings.globals.showExternalMinistries !== false;
 }
 
 export function seedSettings(): Settings {

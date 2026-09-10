@@ -8,6 +8,9 @@ import { runtimeSite } from "../../data/site";
 // we take from each, both set at /studio/partners. A church that posts a new
 // date is on this page the same day, with nothing to rebuild.
 export const prerender = false;
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+if (!showExternalMinistries) return Astro.redirect("/ministries");
 
 const { church } = await runtimeSite(Astro.locals);
 

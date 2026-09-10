@@ -8,6 +8,9 @@ import { allFamiliesIncludingSpecialised as families, classifyFamilies, isOfferi
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
 
 export const prerender = false;
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+if (!showExternalMinistries) return Astro.redirect("/ministries");
 const entries = await runtimeDirectoryEntries(Astro.locals);
 const { specialisedFamilies } = classifyFamilies(entries);
 

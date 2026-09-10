@@ -31,6 +31,32 @@ test("public paths include live runtime pages and exclude drafts and private rou
   );
 });
 
+test("external-ministry routes leave the sitemap when the Studio switch is off", () => {
+  const paths = publicPaths({
+    pillars: [],
+    families: [
+      { slug: "kids", categories: [{ slug: "childrens-ministry" }] },
+      { slug: "health", categories: [{ slug: "free-clinic" }] },
+    ],
+    entries: [
+      { slug: "childrens-ministry", house: "in", categories: ["childrens-ministry"] },
+      { slug: "free-clinic", house: "out", categories: ["free-clinic"] },
+    ],
+    pages: [],
+    externalMinistriesEnabled: false,
+  });
+
+  assert(paths.includes("/ministries/kids"));
+  assert(paths.includes("/ministries/kids/childrens-ministry"));
+  assert(paths.includes("/ministry/childrens-ministry"));
+  assert(!paths.includes("/ministries/calendar"));
+  assert(!paths.includes("/ministries/partnerships"));
+  assert(!paths.includes("/ministries/specialized"));
+  assert(!paths.includes("/ministries/health"));
+  assert(!paths.includes("/ministries/health/free-clinic"));
+  assert(!paths.includes("/ministry/free-clinic"));
+});
+
 test("site origin is normalized and invalid configuration fails safely", () => {
   assert.equal(
     publicSiteUrl("https://newlifegr.com/path/"),

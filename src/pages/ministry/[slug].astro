@@ -16,11 +16,15 @@ import {
 	type Entry,
 } from "../../data/ministries";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
+import { externalMinistriesEnabled, readSettings } from "../../lib/partners/settings";
 
-const entries = await runtimeDirectoryEntries(Astro.locals);
+const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
+const allEntries = await runtimeDirectoryEntries(Astro.locals);
 
-const entry = entries.find((candidate) => candidate.slug === Astro.params.slug);
+const entry = allEntries.find((candidate) => candidate.slug === Astro.params.slug);
 if (!entry || !isListable(entry as Entry)) return new Response("Not found", { status: 404 });
+if (!showExternalMinistries && entry.house !== "in") return Astro.redirect("/ministries");
+const entries = showExternalMinistries ? allEntries : allEntries.filter((candidate) => candidate.house === "in");
 
 const inHouse = entry.house === "in";
 const unverified = entry.status !== "live";
