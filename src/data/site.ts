@@ -140,7 +140,7 @@ export const values = [
 	{ title: "Transparent Relationships", body: "Intentionally and openly connecting with God and others." },
 	{ title: "Supernatural Life", body: "Accepting all of God's gifts and allowing the Holy Spirit to minister powerfully and miraculously through us." },
 	{ title: "Godly Character", body: "A firm commitment to choose what is right in all that we do." },
-	{ title: "Passion for People", body: "Joyfully pouring out the Father's love and blessing in our church, in our community, and around the world." },
+	{ title: "Passion for People", body: "Joyfully pouring out the Father's love and blessing in our community, our city, and around the world." },
 ];
 
 // Grouped to match the real photos (couples share a portrait, as on the live site).
@@ -148,8 +148,8 @@ export const leadership = [
 	{
 		photo: "/art/staff/staff-1.jpg",
 		people: [
-			{ name: "Jon Hazeltine", role: "Senior Leader", bio: "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the church. Jon is a visionary and strategic thinker and the primary driver behind the direction of the church." },
-			{ name: "Stacy Hazeltine", role: "Director of Missions, Church Leadership & Oversight", bio: "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family." },
+			{ name: "Jon Hazeltine", role: "Senior Leader", bio: "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the community. Jon is a visionary and strategic thinker and the primary driver behind the direction of the community." },
+			{ name: "Stacy Hazeltine", role: "Director of Missions, Community Leadership & Oversight", bio: "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family." },
 		],
 	},
 	{
@@ -161,8 +161,8 @@ export const leadership = [
 	{
 		photo: "/art/staff/staff-3.jpg",
 		people: [
-			{ name: "Allie Seif", role: "Children's Ministry Director, Church Leadership & Oversight", bio: "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the church. She loves to minister to children and to lead the church in corporate ministry, and her creativity has inspired countless projects." },
-			{ name: "Tory Seif", role: "Church Leadership & Oversight", bio: "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the church. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the church." },
+			{ name: "Allie Seif", role: "Children's Ministry Director, Community Leadership & Oversight", bio: "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the community. She loves to minister to children and to lead the community in corporate ministry, and her creativity has inspired countless projects." },
+			{ name: "Tory Seif", role: "Community Leadership & Oversight", bio: "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the community. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the community." },
 		],
 	},
 	{
@@ -175,11 +175,11 @@ export const leadership = [
 
 export const teams = {
 	pastoralCare: {
-		blurb: "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our church family. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
+		blurb: "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our community. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
 		members: ["Tory & Allie Seif", "Tom & Sarah Rhein", "Bill & Sue Meyer", "Elizabeth Bish", "Tim & Diane Cosby", "Rebecca Taylor", "Jon Hazeltine"],
 	},
 	businessFinance: {
-		blurb: "Wisdom, expertise and oversight for the management of church assets and finances — making sure provision is in place to do all that God has called us to do.",
+		blurb: "Wisdom, expertise and oversight for the management of community assets and finances — making sure provision is in place to do all that God has called us to do.",
 		members: ["Jon Hazeltine", "Tom Rhein", "Rebecca Taylor", "Anne Gruber", "Tory Seif"],
 	},
 };

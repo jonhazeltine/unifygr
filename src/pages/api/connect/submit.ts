@@ -60,7 +60,7 @@ export const POST: APIRoute = async ({ request }) => {
 	} catch (err) {
 		// Nothing is recorded, so tell the truth rather than pretending it landed.
 		console.error("connect: could not record submission", err);
-		return json({ ok: false, error: "Something went wrong on our end. Please try again, or call the church office." }, 500);
+		return json({ ok: false, error: "Something went wrong on our end. Please try again, or contact our team." }, 500);
 	}
 
 	// Record everything instantly; commit nothing automatically. CCB gets the

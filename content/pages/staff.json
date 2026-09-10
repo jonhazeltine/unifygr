@@ -15,7 +15,7 @@
 				"id": "Hero-staff",
 				"kicker": "About New Life",
 				"heading": "Our Leadership",
-				"lede": "A team that prays, seeks God's direction, and cares for our church family."
+				"lede": "A team that prays, seeks God's direction, and cares for our community."
 			}
 		},
 		{
@@ -24,7 +24,7 @@
 				"id": "Prose-staff-lead",
 				"eyebrow": "",
 				"title": "",
-				"body": "Our Leadership Team carries the vision, direction, and oversight of the church at a strategic level. They meet consistently to pray and seek the Lord, and each member is personally involved across the church as their gifts dictate. This diversity has blessed New Life with a balanced and humble team.",
+				"body": "Our Leadership Team carries the vision, direction, and oversight of the community at a strategic level. They meet consistently to pray and seek the Lord, and each member is personally involved across the community as their gifts dictate. This diversity has blessed New Life with a balanced and humble team.",
 				"tinted": false
 			}
 		},
@@ -37,9 +37,9 @@
 						"photo": "/art/staff/staff-1.jpg",
 						"name": "Jon Hazeltine",
 						"role": "Senior Leader",
-						"bio": "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the church. Jon is a visionary and strategic thinker and the primary driver behind the direction of the church.",
+						"bio": "Jon has served at New Life since 2002 — first as a worship leader, then youth pastor, then Senior Associate Pastor until 2014 when he accepted the responsibility of leading the community. Jon is a visionary and strategic thinker and the primary driver behind the direction of the community.",
 						"name2": "Stacy Hazeltine",
-						"role2": "Director of Missions, Church Leadership & Oversight",
+						"role2": "Director of Missions, Community Leadership & Oversight",
 						"bio2": "Stacy has been part of New Life since 1997, beginning in the youth group. Since then she has served in a myriad of roles and impacted every facet of our community. Her sensitivity to the Holy Spirit and her gift of discernment are invaluable to the New Life family."
 					},
 					{
@@ -54,11 +54,11 @@
 					{
 						"photo": "/art/staff/staff-3.jpg",
 						"name": "Allie Seif",
-						"role": "Children's Ministry Director, Church Leadership & Oversight",
-						"bio": "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the church. She loves to minister to children and to lead the church in corporate ministry, and her creativity has inspired countless projects.",
+						"role": "Children's Ministry Director, Community Leadership & Oversight",
+						"bio": "Allie brings passion to everything she does. Her sensitivity to the Spirit and joyful love of the Lord make her perspective invaluable to the life of the community. She loves to minister to children and to lead the community in corporate ministry, and her creativity has inspired countless projects.",
 						"name2": "Tory Seif",
-						"role2": "Church Leadership & Oversight",
-						"bio2": "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the church. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the church."
+						"role2": "Community Leadership & Oversight",
+						"bio2": "Tory has been part of New Life for over a decade and brings a wealth of wisdom to the overall direction of the community. As a Ph.D. counselor he guides our pastoral care ministries, preaches on occasion, and brings excitement and stability to the forward momentum of the community."
 					},
 					{
 						"photo": "/art/staff/staff-elizabeth.png",
@@ -79,12 +79,12 @@
 				"cards": [
 					{
 						"title": "Pastoral Care Team",
-						"blurb": "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our church family. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
+						"blurb": "Trusted ministers of the compassion and wisdom of Christ, responsible for the spiritual well-being of our community. If you'd like someone to pray with you, visit you when you're sick, or simply encourage you, these are the people to call.",
 						"items": "Tory & Allie Seif\nTom & Sarah Rhein\nBill & Sue Meyer\nElizabeth Bish\nTim & Diane Cosby\nRebecca Taylor\nJon Hazeltine"
 					},
 					{
 						"title": "Business & Finance Team",
-						"blurb": "Wisdom, expertise and oversight for the management of church assets and finances — making sure provision is in place to do all that God has called us to do.",
+						"blurb": "Wisdom, expertise and oversight for the management of community assets and finances — making sure provision is in place to do all that God has called us to do.",
 						"items": "Jon Hazeltine\nTom Rhein\nRebecca Taylor\nAnne Gruber\nTory Seif"
 					}
 				]
