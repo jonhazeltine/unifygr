@@ -322,9 +322,9 @@ export const prerender = false;
 			// anything: it can only be a tick away if we already trust the church.
 			const FILTERS = [
 				{ key: "all", label: "All" },
-				{ key: "showing", label: "Showing" },
 				{ key: "approved", label: "Approved" },
-				{ key: "new", label: "Not looked at" },
+				{ key: "showing", label: "Showing" },
+				{ key: "new", label: "Not reviewed" },
 				{ key: "declined", label: "Ruled out" },
 			] as const;
 			let settings: { globals: any; partners: Partner[]; declined: Declined[] } = {
