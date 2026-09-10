@@ -44,7 +44,6 @@ export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Sp
 // page JSON). These can't be deleted from the builder — the nav links to them.
 export const MOUNTED: Record<string, string> = {
 	"mission-trips": "/mission-trips",
-	"membership": "/membership",
 	"staff": "/staff",
 	"giving": "/giving",
 	"tap": "/tap",

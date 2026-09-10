@@ -101,7 +101,7 @@ export const pillars: Pillar[] = [
 		poster: "/art/generated/voice-ambient-v2-thumb.webp",
 		items: [
 			{ label: "Life Groups", href: "/ministry/life-groups", blurb: "Find people who know you and walk with you." },
-			{ label: "Spiritual Formation", href: "/spiritual-formation", blurb: "Growing deeper in Christ, day by day." },
+			{ label: "Growth Track", href: "/spiritual-formation", blurb: "A clear, personal path for growing in Christ." },
 			{ label: "Serving Teams", href: "/ministries", blurb: "Serve alongside people who are putting love into practice." },
 			{ label: "Pastoral Care", href: "/ministry/pastoral-care", blurb: "Receive personal care for the places that need healing." },
 		],

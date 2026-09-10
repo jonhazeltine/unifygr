@@ -5,7 +5,7 @@
 		"props": {
 			"title": "Next steps",
 			"kicker": "New Life Grand Rapids",
-			"description": "Your next step at New Life: join a life group, take the membership class, or sign up for an Ambassador Team."
+			"description": "Your next step at New Life: join a life group, start Growth Track, or sign up for an Ambassador Team."
 		}
 	},
 	"content": [
@@ -24,9 +24,9 @@
 						"feature": "yes"
 					},
 					{
-						"label": "Take the Membership Class",
-						"blurb": "Welcome to New Life — what we believe and how to belong.",
-						"href": "/membership",
+						"label": "Start Growth Track",
+						"blurb": "A clear, personal path for growing in Christ.",
+						"href": "/spiritual-formation",
 						"feature": "no"
 					},
 					{
