@@ -18,18 +18,33 @@ export const prerender = false;
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="noindex, nofollow" />
-		<title>Partner Churches | New Life</title>
+		<script is:inline>
+			(() => {
+				try {
+					const choice = localStorage.getItem("newlife-theme") || "auto";
+					const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+					document.documentElement.dataset.theme = choice === "auto" ? system : choice;
+					document.documentElement.dataset.themeChoice = choice;
+				} catch { document.documentElement.dataset.theme = "dark"; }
+			})();
+		</script>
+		<title>Studio Partners | New Life</title>
 	</head>
 	<body class="admin-body">
 		<main class="admin-shell admin-shell--wide">
 			<header class="admin-head">
-				<p class="eyebrow">New Life</p>
-				<h1>Partner Churches</h1>
-				<p class="admin-sub">
-					Our calendar is built from the calendars these churches publish themselves. Turn a church
-					on, tick the kinds of gathering you want from it, and those dates appear on our calendar
-					— and keep appearing as the church adds more. Nothing else decides what shows up.
-				</p>
+				<div class="admin-head__top">
+					<div><p class="eyebrow">New Life Studio</p><h1>Partners</h1></div>
+					<div class="studio-appearance" data-appearance>
+						<button class="studio-appearance__trigger" type="button" aria-expanded="false" aria-haspopup="true" aria-label="Choose appearance">◐ <span data-appearance-label>Auto</span></button>
+						<div class="studio-appearance__menu" role="menu" hidden>
+							<button type="button" role="menuitemradio" data-appearance-choice="auto">Auto <span>Follows your device</span></button>
+							<button type="button" role="menuitemradio" data-appearance-choice="light">Light <span>Warm and open</span></button>
+							<button type="button" role="menuitemradio" data-appearance-choice="dark">Dark <span>Evening atmosphere</span></button>
+						</div>
+					</div>
+				</div>
+				<p class="admin-sub">Choose what people can find: calendar sources, trusted local resources, and the few rules that shape both.</p>
 			</header>
 
 			<form class="admin-gate" id="gate">
@@ -44,53 +59,42 @@ export const prerender = false;
 			<div id="panel" hidden>
 				<p class="admin-error" id="error" role="alert" hidden></p>
 
-				<section class="pc-summary" id="summary"></section>
+				<nav class="pc-workspaces" aria-label="Partner workspaces">
+					<button type="button" data-workspace="calendar" class="is-active">Calendar <span>Sources and coverage</span></button>
+					<button type="button" data-workspace="directory">Directory <span>Curated partnerships</span></button>
+					<button type="button" data-workspace="rules">Publishing rules <span>Site-wide settings</span></button>
+				</nav>
 
-				<section class="pc-block">
-					<h2>Where our calendar stands</h2>
-					<p class="pc-block__note">
-						Every kind of gathering churches around us are publishing: what we show, what the
-						churches we've switched on are already offering us, and what exists across every
-						church we can read. <strong>Open a row</strong> to see which churches those are and
-						where they sit, and to tick them on or off from there — ticking a church we have not
-						approved yet approves it and shows it.
-					</p>
-					<div id="coverage"></div>
+				<section class="pc-workspace" id="workspace-calendar">
+					<section class="pc-summary" id="summary"></section>
+					<section class="pc-block pc-coverage">
+						<div class="pc-block__head"><div><p class="eyebrow">Calendar coverage</p><h2>What is live and what is available</h2></div><button type="button" class="pc-link" id="coverage-toggle" aria-expanded="false">Show details</button></div>
+						<p class="pc-block__note">Open a gathering type only when you want to explore its available sources and map.</p>
+						<div id="coverage" hidden></div>
+					</section>
+					<div id="inventory-host-calendar"></div>
 				</section>
 
-				<section class="pc-block">
-					<h2>Across every church</h2>
-					<p class="pc-block__note">
-						Three judgements that apply to everything, whichever church it came from.
-					</p>
+				<section class="pc-workspace" id="workspace-directory" hidden>
+					<div id="inventory-host-directory"></div>
+				</section>
+
+				<section class="pc-workspace pc-workspace--rules" id="workspace-rules" hidden>
+					<p class="eyebrow">Publishing rules</p>
+					<h2>Set the boundaries once</h2>
+					<p class="pc-block__note">These rules affect every calendar source and every partnership across the public site.</p>
 					<div class="pc-globals" id="globals"></div>
 				</section>
 
-				<section class="pc-block">
-					<div class="pc-block__head">
-						<h2>Churches and ministries</h2>
-					</div>
-					<p class="pc-block__note">
-						<strong>Churches</strong> feed the calendar. Star one to approve it — we would put our
-						name next to this — and it joins what counts as available above; tick it to show its
-						dates, then open it to choose which kinds. <strong>Ministries</strong> are the
-						organisations we point people to, like Mel Trotter and Guiding Light. They carry no
-						dates, so there is nothing to approve by kind: tick one to list it on the ministry
-						pages, untick it to take it down. Directory changes appear immediately after saving.
-					</p>
+				<section class="pc-block pc-inventory" id="inventory">
+					<div class="pc-block__head"><div><p class="eyebrow" id="inventory-eyebrow">Calendar sources</p><h2 id="inventory-title">Churches showing on the calendar</h2></div></div>
+					<p class="pc-block__note" id="inventory-note">Turn a church on to publish its dates. Open it to choose which kinds of gathering to include.</p>
 					<div class="pc-filters">
-						<label class="field pc-search">
-							<span>Search</span>
-							<input id="search" type="search" placeholder="Name, city or what they do" autocomplete="off" />
-						</label>
-						<div class="pc-chips" id="kinds"></div>
-						<div class="pc-chips" id="filters"></div>
+						<label class="field pc-search"><span>Search</span><input id="search" type="search" placeholder="Name, city or what they do" autocomplete="off" /></label>
+						<div class="pc-chips" id="kinds"></div><div class="pc-chips" id="filters"></div>
 					</div>
 					<div class="pc-bulk" id="bulk" hidden></div>
-					<div id="churches"></div>
-					<p class="pc-empty" id="churches-empty" hidden>No church matches that.</p>
-					<p class="pc-empty" id="churches-loading">Reading what churches are publishing…</p>
-					<div id="declined"></div>
+					<div id="churches"></div><p class="pc-empty" id="churches-empty" hidden>No partner matches that.</p><p class="pc-empty" id="churches-loading">Reading published sources…</p><div id="declined"></div>
 				</section>
 			</div>
 
@@ -114,8 +118,27 @@ export const prerender = false;
 			/* Several blocks below set display, which would otherwise win over the
 			   hidden attribute and show the panel before sign-in. */
 			[hidden] { display: none !important; }
+			:root[data-theme="light"] { --bg: #f5f0e8; --bg-soft: #ebe4d8; --panel: rgba(255, 253, 249, 0.84); --panel-strong: #fffdf9; --text: #17202b; --muted: rgba(23, 32, 43, .64); --line: rgba(23, 32, 43, .16); --gold: #7b5d2b; --gold-soft: rgba(123, 93, 43, .16); --gold-strong: #5e4214; --blue: #315b80; --rose: #9a4137; --shadow: 0 22px 60px rgba(52, 39, 22, .12); }
 			.admin-body { background: var(--bg); color: var(--text); }
+			:root[data-theme="light"] .admin-body { background: linear-gradient(180deg, #fffdf9 0%, #f5f0e8 100%); }
 			.admin-shell { max-width: 60rem; margin: 0 auto; padding: 3rem 1.5rem 6rem; }
+			.admin-head__top { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; }
+			.studio-appearance { position:relative; }
+			.studio-appearance__trigger { display:inline-flex; gap:.45rem; align-items:center; padding:.55rem .8rem; border:1px solid var(--line); border-radius:999px; background:var(--panel); color:var(--text); font:inherit; cursor:pointer; }
+			.studio-appearance__menu { position:absolute; z-index:5; right:0; top:calc(100% + .5rem); width:13.5rem; padding:.35rem; border:1px solid var(--line); border-radius:12px; background:var(--panel-strong); box-shadow:var(--shadow); }
+			.studio-appearance__menu button { display:grid; width:100%; gap:.15rem; padding:.65rem .7rem; border:0; border-radius:8px; text-align:left; background:transparent; color:var(--text); font:inherit; cursor:pointer; }
+			.studio-appearance__menu button:hover { background:var(--gold-soft); }
+			.studio-appearance__menu span { color:var(--muted); font-size:.8rem; }
+			.pc-workspaces { display:grid; grid-template-columns:repeat(3, 1fr); gap:.7rem; margin:0 0 2rem; padding:.4rem; border:1px solid var(--line); border-radius:16px; background:var(--panel); }
+			.pc-workspaces button { display:grid; gap:.15rem; padding:.9rem 1rem; border:0; border-radius:11px; text-align:left; background:transparent; color:var(--muted); font:inherit; cursor:pointer; }
+			.pc-workspaces button span { font-size:.78rem; }
+			.pc-workspaces button.is-active { background:var(--panel-strong); color:var(--text); box-shadow:0 1px 5px rgba(0,0,0,.08); }
+			.pc-workspaces button:hover { color:var(--text); }
+			.pc-workspace--rules { max-width:52rem; }
+			.pc-workspace--rules h2 { margin:.25rem 0 .5rem; }
+			.pc-coverage { padding:1.25rem 1.35rem; border:1px solid var(--line); border-radius:16px; background:var(--panel); }
+			.pc-coverage #coverage { margin-top:1.1rem; }
+			@media (max-width: 40rem) { .admin-head__top { align-items:center; } .pc-workspaces { grid-template-columns:1fr; } .pc-workspaces button { grid-template-columns:auto 1fr; align-items:baseline; gap:.6rem; } }
 			.admin-shell--wide { max-width: 68rem; padding-bottom: 9rem; }
 			.admin-head h1 { margin: 0.3rem 0 0.5rem; }
 			.admin-sub { color: var(--muted); margin: 0 0 2.5rem; max-width: 44rem; line-height: 1.6; }
@@ -333,7 +356,7 @@ export const prerender = false;
 			};
 			let settingsVersion = "seed";
 			let showDeclined = false;
-			let filter: "all" | "showing" | "approved" | "new" | "declined" = "all";
+			let filter: "all" | "showing" | "approved" | "new" | "declined" = "showing";
 			// The list sorts and filters by a church's state, so changing that state
 			// mid-edit would move the row out from under the pointer — or out of the
 			// list entirely. While there are unsaved changes the running order is held
@@ -361,7 +384,8 @@ export const prerender = false;
 			let orgEdits = new Map<string, OrgEdit>();
 			// Churches and organisations answer different questions, so the list can be
 			// held to one or the other.
-			let kind: "all" | "churches" | "orgs" = "all";
+			let kind: "all" | "churches" | "orgs" = "churches";
+			let workspace: "calendar" | "directory" | "rules" = "calendar";
 			let roster: ChurchRow[] = [];
 			let rows: Row[] = [];
 			// churchId → theme → how many gatherings would actually show under
@@ -877,12 +901,10 @@ export const prerender = false;
 			}
 
 			function renderKinds() {
-				const shownOrgs = orgs.filter(orgListed).length;
-				const rows = [
-					{ key: "all", label: "Everything", n: allChurches().filter((c) => c.state !== "declined").length + orgs.length },
-					{ key: "churches", label: "Churches", n: allChurches().filter((c) => c.state !== "declined").length },
-					{ key: "orgs", label: "Ministries", n: orgs.length },
-				];
+				const churches = allChurches().filter((c) => c.state !== "declined").length;
+				const rows = workspace === "calendar"
+					? [{ key: "churches", label: "Churches", n: churches }]
+					: [{ key: "orgs", label: "Partnerships", n: orgs.length }];
 				$("kinds").innerHTML = rows
 					.map(
 						(r) =>
@@ -1078,6 +1100,7 @@ export const prerender = false;
 			}
 
 			function renderDeclined() {
+				if (workspace !== "calendar") { $("declined").innerHTML = ""; return; }
 				const list = settings.declined || [];
 				if (!list.length) {
 					$("declined").innerHTML = "";
@@ -1107,11 +1130,41 @@ export const prerender = false;
 				);
 			}
 
+			function renderWorkspace() {
+				const inventory = $("inventory");
+				$("workspace-calendar").hidden = workspace !== "calendar";
+				$("workspace-directory").hidden = workspace !== "directory";
+				$("workspace-rules").hidden = workspace !== "rules";
+				$("coverage-toggle").textContent = $("coverage").hidden ? "Show details" : "Hide details";
+				$("coverage-toggle").setAttribute("aria-expanded", String(!$("coverage").hidden));
+				for (const button of panel.querySelectorAll<HTMLButtonElement>("[data-workspace]")) button.classList.toggle("is-active", button.dataset.workspace === workspace);
+				if (workspace === "calendar") {
+					$("inventory-host-calendar").append(inventory);
+					$("inventory-eyebrow").textContent = "Calendar sources";
+					$("inventory-title").textContent = "Churches showing on the calendar";
+					$("inventory-note").textContent = "Turn a church on to publish its dates. Open it to choose which kinds of gathering to include.";
+				} else if (workspace === "directory") {
+					$("inventory-host-directory").append(inventory);
+					$("inventory-eyebrow").textContent = "Curated partnerships";
+					$("inventory-title").textContent = "Resources people can find";
+					$("inventory-note").textContent = "List trusted local resources here. The star records that someone at New Life has confirmed the relationship.";
+				}
+			}
+
+			function chooseWorkspace(next: typeof workspace) {
+				workspace = next;
+				if (next === "calendar") { kind = "churches"; filter = "showing"; }
+				if (next === "directory") kind = "orgs";
+				renderWorkspace();
+				if (next !== "rules") renderChurches();
+			}
+
 			function renderAll() {
 				recount();
 				renderSummary();
 				renderCoverage();
-				renderChurches();
+				renderWorkspace();
+				if (workspace !== "rules") renderChurches();
 				renderDeclined();
 			}
 
@@ -1216,6 +1269,15 @@ export const prerender = false;
 			panel.addEventListener("click", (e) => {
 				const btn = (e.target as HTMLElement).closest("button");
 				if (!btn) return;
+				if (btn.dataset.workspace) {
+					chooseWorkspace(btn.dataset.workspace as typeof workspace);
+					return;
+				}
+				if (btn.id === "coverage-toggle") {
+					$("coverage").hidden = !$("coverage").hidden;
+					renderWorkspace();
+					return;
+				}
 				if (btn.dataset.bulk) {
 					applyBulk(btn.dataset.bulk === "on");
 					return;
@@ -1411,6 +1473,24 @@ export const prerender = false;
 			api("/api/partners/session")
 				.then((s) => s.authed && load())
 				.catch(() => {});
+
+			const appearance = document.querySelector<HTMLElement>("[data-appearance]");
+			if (appearance) {
+				const trigger = appearance.querySelector<HTMLButtonElement>(".studio-appearance__trigger")!;
+				const menu = appearance.querySelector<HTMLElement>(".studio-appearance__menu")!;
+				const system = () => window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+				const applyAppearance = (choice: string) => {
+					document.documentElement.dataset.theme = choice === "auto" ? system() : choice;
+					document.documentElement.dataset.themeChoice = choice;
+					appearance.querySelector<HTMLElement>("[data-appearance-label]")!.textContent = choice[0].toUpperCase() + choice.slice(1);
+					appearance.querySelectorAll<HTMLButtonElement>("[data-appearance-choice]").forEach((button) => button.setAttribute("aria-checked", String(button.dataset.appearanceChoice === choice)));
+				};
+				applyAppearance(localStorage.getItem("newlife-theme") || "auto");
+				trigger.addEventListener("click", () => { menu.hidden = !menu.hidden; trigger.setAttribute("aria-expanded", String(!menu.hidden)); });
+				appearance.querySelectorAll<HTMLButtonElement>("[data-appearance-choice]").forEach((button) => button.addEventListener("click", () => { const choice = button.dataset.appearanceChoice!; localStorage.setItem("newlife-theme", choice); applyAppearance(choice); menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); }));
+				document.addEventListener("click", (event) => { if (!appearance.contains(event.target as Node)) { menu.hidden = true; trigger.setAttribute("aria-expanded", "false"); } });
+				window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { if ((localStorage.getItem("newlife-theme") || "auto") === "auto") applyAppearance("auto"); });
+			}
 		</script>
 	</body>
 </html>
