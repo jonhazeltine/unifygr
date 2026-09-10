@@ -9,6 +9,7 @@ import BuilderApp from "../../components/builder/BuilderApp";
 // page's styles) renders blocks exactly as they'll look on the site.
 import "../../styles/global.css";
 import "../../styles/tap.css";
+import "../../styles/studio-builder.css";
 
 if (!isAuthed(Astro.cookies)) {
 	return Astro.redirect("/?edit=1");
@@ -21,12 +22,19 @@ if (!isAuthed(Astro.cookies)) {
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="robots" content="noindex, nofollow" />
+		<script is:inline>
+			(() => {
+				try {
+					const choice = localStorage.getItem("newlife-theme") || "auto";
+					const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+					document.documentElement.dataset.theme = choice === "auto" ? system : choice;
+					document.documentElement.dataset.themeChoice = choice;
+				} catch { document.documentElement.dataset.theme = "dark"; }
+			})();
+		</script>
 		<title>Page Builder · New Life</title>
-		<style>
-			body { margin: 0; background: #0d0f14; }
-		</style>
 	</head>
-	<body>
+	<body class="builder-body">
 		<BuilderApp client:only="react" />
 	</body>
 </html>
