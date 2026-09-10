@@ -32,7 +32,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 
 <Interior
 	title="Spiritual Formation | New Life Grand Rapids"
-	description="A clear, personal journey of spiritual growth, supported by Life Groups, serving teams, and the Formation App."
+	description="A clear, personal journey of spiritual growth, supported by Life Groups, serving teams, and Growth Track."
 	kicker="Be Transformed"
 	heading="Spiritual Formation"
 	lede="Hear His voice. Obey His assignments. Grow deeper in Christ, together."
@@ -47,7 +47,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 				<p>
 					You can begin wherever you are: learning to open Scripture, finding a rhythm of prayer,
 						restoring rest, or learning to serve and share your faith. Come back whenever God draws
-						your attention to another area. Life Groups, serving teams, and the Formation App are
+						your attention to another area. Life Groups, serving teams, and Growth Track are
 						simple ways to find Scripture, encouragement, and people to practice with. The journey is
 						the point.
 				</p>
@@ -64,7 +64,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 				</div>
 				<div class="fm-journey__acts">
 					<a class="button button--primary" href={COMMUNITY_URL} target="_blank" rel="noopener">
-						Explore the Formation journey
+						Start Growth Track
 					</a>
 					<a class="button button--secondary" href="/ministries#ours">Find a Life Group</a>
 				</div>
@@ -80,7 +80,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 			</div>
 			<div class="prose-block__body reveal is-visible">
 				<p>
-					Our Formation journey gives attention to these nine areas. You can enter through any one
+					Growth Track gives attention to these nine areas. You can enter through any one
 					of them, return to them over time, and grow in the places God is working in you now.
 				</p>
 			</div>
@@ -102,13 +102,21 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 				<p class="eyebrow">What growth can look like</p>
 				<h2>Small steps become a changed life.</h2>
 			</div>
-			<div class="fm-shifts reveal is-visible">
-				{growthExamples.map(([area, from, to]) => (
-					<article class="fm-shift">
-						<p class="eyebrow">{area}</p>
-						<p class="fm-shift__from">{from}</p>
-						<p class="fm-shift__arrow" aria-hidden="true">→</p>
-						<p class="fm-shift__to">{to}</p>
+			<div class="fm-transforms reveal is-visible">
+				{growthExamples.map(([area, from, to], index) => (
+					<article class="fm-transform" style={`--delay:${index * 180}ms`}>
+						<div class="fm-transform__path" aria-hidden="true">
+							<span class="fm-transform__origin"><i></i></span>
+							<span class="fm-transform__line"><i></i></span>
+							<span class="fm-transform__arrival"><i></i></span>
+						</div>
+						<div class="fm-transform__copy">
+							<p class="eyebrow">{area}</p>
+							<div class="fm-transform__states">
+								<p class="fm-transform__from"><span>Beginning</span>{from}</p>
+								<p class="fm-transform__to"><span>Growing into</span>{to}</p>
+							</div>
+						</div>
 					</article>
 				))}
 			</div>
@@ -118,13 +126,13 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 	<section class="section">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">Available now</p>
-				<h2>{modules.length === 1 ? "Begin with the Welcome Path." : "Choose your next guide."}</h2>
+				<p class="eyebrow">Growth Track</p>
+				<h2>{modules.length === 1 ? "Growth Track starts with Welcome." : "Choose your next Growth Track session."}</h2>
 			</div>
 			<div class="prose-block__body reveal is-visible">
 				<p>
-					The Formation App holds practical guides for the journey. Start with what is open now;
-						as new guides become available, you can choose the one that fits your next step.
+					Growth Track is a flexible path for your spiritual growth. Welcome is the first session;
+						as more sessions open, choose the one that fits the next step God is inviting you to take.
 				</p>
 			</div>
 
@@ -137,7 +145,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 							{m.description && <p class="fm-mod__desc">{m.description}</p>}
 							<p class="fm-mod__meta">{`${m.lessons} ${m.lessons === 1 ? "lesson" : "lessons"}${m.openLessons > 0 ? ` · ${m.openLessons} open to anyone` : ""}`}</p>
 							<a class="fm-mod__go" href={m.href} target="_blank" rel="noopener">
-								Explore {m.title} →
+								Start with {m.title} →
 							</a>
 						</div>
 					</article>
@@ -156,7 +164,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 		<div class="container">
 			<div class="fm-path reveal is-visible">
 				<p class="eyebrow">One step is enough</p>
-				<h2>The journey is yours. You do not have to walk it alone.</h2>
+				<h2>Growth Track is yours. You do not have to walk it alone.</h2>
 				<p>
 					Choose the area where you need to grow, make space to practice, and let people who know
 					you encourage you along the way. That is how a personal yes to Jesus becomes a lasting
@@ -164,7 +172,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 				</p>
 				<div class="fm-path__acts">
 					<a class="button button--primary" href={COMMUNITY_URL} target="_blank" rel="noopener">
-						Explore the Formation journey →
+						Continue Growth Track →
 					</a>
 					<a class="button button--secondary" href="/membership">What membership means</a>
 				</div>
@@ -190,12 +198,27 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 	.fm-practice h3 { margin: 0.45rem 0 0.35rem; font-size: 1.18rem; }
 	.fm-practice p:last-child { margin: 0; color: var(--muted); line-height: 1.55; }
 
-	.fm-shifts { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-	.fm-shift { min-height: 100%; border-left: 2px solid var(--gold-soft, #d8bd82); border-radius: 0 14px 14px 0; background: var(--panel); padding: 1.4rem 1.5rem; }
-	.fm-shift .eyebrow { margin: 0 0 1.25rem; }
-	.fm-shift__from { margin: 0; color: var(--muted); line-height: 1.55; }
-	.fm-shift__arrow { margin: 0.45rem 0; color: var(--gold-soft, #d8bd82); font-size: 1.2rem; }
-	.fm-shift__to { margin: 0; color: var(--text); font-family: var(--font-display); font-size: 1.2rem; line-height: 1.35; }
+	.fm-transforms { display: grid; gap: 1rem; }
+	.fm-transform { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr); gap: 1.6rem; min-height: 10rem; padding: 1.5rem; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); overflow: hidden; }
+	.fm-transform__path { display: grid; grid-template-columns: 1.8rem 1fr 1.8rem; align-items: center; gap: 0.5rem; }
+	.fm-transform__origin, .fm-transform__arrival { position: relative; display: grid; place-items: center; width: 1.8rem; height: 1.8rem; border: 1px solid var(--gold-soft, #d8bd82); border-radius: 50%; }
+	.fm-transform__origin i { width: .48rem; height: .48rem; border-radius: 50%; background: var(--muted); opacity: .7; }
+	.fm-transform__arrival { border-color: var(--gold); box-shadow: 0 0 0 .45rem rgba(242, 210, 162, .07); }
+	.fm-transform__arrival i { width: .62rem; height: .62rem; border-radius: 50%; background: var(--gold); animation: growth-arrival 2.8s ease-in-out infinite var(--delay); }
+	.fm-transform__line { position: relative; height: 1px; background: linear-gradient(90deg, var(--line), var(--gold-soft, #d8bd82)); overflow: visible; }
+	.fm-transform__line::after { content: ""; position: absolute; top: 50%; left: 0; width: .52rem; height: .52rem; border-radius: 50%; background: var(--gold); transform: translateY(-50%); box-shadow: 0 0 0 .25rem rgba(242, 210, 162, .12); animation: growth-travel 2.8s cubic-bezier(.46,.03,.21,.97) infinite var(--delay); }
+	.fm-transform__copy { display: grid; align-content: center; gap: 1rem; }
+	.fm-transform__copy .eyebrow { margin: 0; }
+	.fm-transform__states { display: grid; grid-template-columns: minmax(0, 1fr) 2.8rem minmax(0, 1fr); gap: 1rem; align-items: center; }
+	.fm-transform__states::before { content: "→"; grid-column: 2; grid-row: 1; color: var(--gold); text-align: center; font-size: 1.35rem; animation: growth-arrow 2.8s ease-in-out infinite var(--delay); }
+	.fm-transform__from, .fm-transform__to { display: grid; gap: .35rem; margin: 0; line-height: 1.45; }
+	.fm-transform__from { grid-column: 1; grid-row: 1; color: var(--muted); }
+	.fm-transform__to { grid-column: 3; grid-row: 1; color: var(--text); font-family: var(--font-display); font-size: 1.2rem; }
+	.fm-transform__from span, .fm-transform__to span { font-family: var(--font-body); color: var(--gold-soft, #d8bd82); font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+	@keyframes growth-travel { 0%, 12% { left: 0; opacity: 0; } 20% { opacity: 1; } 72% { left: calc(100% - .52rem); opacity: 1; } 90%, 100% { left: calc(100% - .52rem); opacity: 0; } }
+	@keyframes growth-arrival { 0%, 68%, 100% { transform: scale(1); opacity: .8; } 78% { transform: scale(1.75); opacity: 1; } }
+	@keyframes growth-arrow { 0%, 58%, 100% { transform: translateX(-.2rem); opacity: .35; } 72% { transform: translateX(.2rem); opacity: 1; } }
+
 
 	.fm-grid { display: grid; gap: 1rem; margin-top: 1.6rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); }
 	.fm-mod { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); display: flex; flex-direction: column; }
@@ -214,6 +237,12 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 
 	@media (max-width: 46rem) {
 		.fm-journey { grid-template-columns: 1fr; padding: 1.4rem 1.5rem; }
-		.fm-practices, .fm-shifts { grid-template-columns: 1fr; }
+		.fm-practices { grid-template-columns: 1fr; }
+		.fm-transform { grid-template-columns: 1fr; gap: 1rem; }
+		.fm-transform__path { grid-template-columns: 1.8rem 1fr 1.8rem; }
+		.fm-transform__states { grid-template-columns: 1fr; gap: .8rem; }
+		.fm-transform__states::before { display: none; }
+		.fm-transform__from, .fm-transform__to { grid-column: auto; grid-row: auto; }
+		.fm-transform__to { padding-top: .8rem; border-top: 1px solid var(--line); }
 	}
 </style>
