@@ -1,4 +1,4 @@
-const FALLBACK_SITE_URL = "https://unifygr.com";
+const FALLBACK_SITE_URL = "https://newlifegr.com";
 
 /** Return the one canonical site origin used by redirects, metadata, and discovery files. */
 export function publicSiteUrl(value = process.env.PUBLIC_SITE_URL): string {

@@ -29,7 +29,7 @@ export function summarize(s: Submission): string {
 		s.message ? `\nWhat they wrote:\n${s.message}` : "",
 		s.source ? `\nHow they heard about us: ${s.source}` : "",
 		"",
-		`Submitted ${new Date(s.receivedAt).toLocaleString("en-US", { timeZone: "America/Detroit" })} via the Connect Card on unifygr.com.`,
+		`Submitted ${new Date(s.receivedAt).toLocaleString("en-US", { timeZone: "America/Detroit" })} via the Connect Card on newlifegr.com.`,
 	];
 	return lines.filter((l) => l !== "").join("\n");
 }
