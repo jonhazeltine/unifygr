@@ -1,11 +1,6 @@
 {
 	"groups": [
 		{
-			"label": "Sunday",
-			"href": "/sunday",
-			"items": []
-		},
-		{
 			"label": "Watch",
 			"href": "/watch",
 			"items": []
