@@ -32,7 +32,7 @@ const { mission } = await runtimeSite(Astro.locals);
 					const slug = pillars[i].slug;
 					const verbs = mission.filter((m) => m.pillar === slug);
 					return (
-						<a class={`vision-card vision-card--panorama${slug === "be-transformed" ? " vision-card--transformed" : ""} reveal is-visible`} href={`/${slug}`} style={`--delay:${i * 90}ms`}>
+						<a class={`vision-card vision-card--panorama${slug === "encounter-god" ? " vision-card--encounter" : ""}${slug === "be-transformed" ? " vision-card--transformed" : ""} reveal is-visible`} href={`/${slug}`} style={`--delay:${i * 90}ms`}>
 							<img class="vision-card__art vision-card__art--dark" src={`/art/vision/${slug}.webp`} width="2172" height="724" alt="" loading="lazy" />
 							<img class="vision-card__art vision-card__art--light" src={`/art/vision/${slug}-light.webp`} width="2172" height="724" alt="" loading="lazy" />
                             <div class="vision-card__copy">
@@ -99,5 +99,9 @@ const { mission } = await runtimeSite(Astro.locals);
   @media (max-width: 760px) {
     .vision-card--panorama { padding: 1.4rem; min-height: 400px; }
     .vision-card__art { object-position: 60% center; }
+    /* These two panoramas place their focal point at the far right. A tall phone card
+       can show only a narrow slice, so each gets its own mobile framing. */
+    .vision-card--encounter .vision-card__art,
+    .vision-card--transformed .vision-card__art { object-position: right center; }
   }
 </style>
