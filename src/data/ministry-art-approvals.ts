@@ -23,4 +23,6 @@ export const approvedFamilyArt: Partial<Record<string, ApprovedFamilyArt>> = {
 	"practical-care": { aspectRatio: "746 / 424" },
 	justice: { aspectRatio: "756 / 288" },
 	mission: { aspectRatio: "756 / 288" },
+	health: { aspectRatio: "900 / 600" },
+	"church-leaders": { aspectRatio: "900 / 600" },
 };
