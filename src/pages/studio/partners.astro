@@ -1305,15 +1305,16 @@ export const prerender = false;
 					settings = savedSettings.settings;
 					settingsVersion = savedSettings.version;
 					if (orgEdits.size) {
+						const orgChangeCount = orgEdits.size;
 						const res = await api("/api/partners/orgs", {
 							method: "PUT",
-						body: JSON.stringify({ changes: Object.fromEntries(orgEdits), version: orgVersion }),
-					});
-					orgs = res.orgs;
-					orgVersion = res.version || orgVersion;
+							body: JSON.stringify({ changes: Object.fromEntries(orgEdits), version: orgVersion }),
+						});
+						orgs = res.orgs;
+						orgVersion = res.version || orgVersion;
 						orgEdits = new Map();
 						show(
-							"Church changes are live now.",
+							`${orgChangeCount} organization${orgChangeCount === 1 ? "" : "s"} updated and live now.`,
 						);
 					} else {
 						show("");
