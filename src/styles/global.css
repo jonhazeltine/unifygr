@@ -136,7 +136,17 @@ strong {
 
 .section {
 	position: relative;
-	padding: 5rem 0;
+	padding: 4rem 0;
+}
+
+/* Content sections should feel connected; the shared gap belongs to both edges. */
+main .section + .section {
+	padding-top: 3.25rem;
+}
+
+.landing-shell > .pagehead + .section,
+main .interior-hero + .section {
+	padding-top: 2.75rem;
 }
 
 .site-chrome {
@@ -1129,7 +1139,7 @@ strong {
 
 .section-heading {
 	max-width: 42rem;
-	margin-bottom: 2rem;
+	margin-bottom: 1.5rem;
 }
 
 .section-heading--center {
@@ -1560,8 +1570,20 @@ strong {
 
 @media (min-width: 720px) {
 	.section {
-		padding: 7rem 0;
+		padding: 5.5rem 0;
 	}
+
+	/* Consecutive content sections share the visual pause between them. */
+	main .section + .section {
+		padding-top: 4.5rem;
+	}
+
+	.landing-shell > .pagehead + .section,
+	main .interior-hero + .section {
+		padding-top: 3.5rem;
+	}
+
+	.prose-block { padding-block: 5rem; }
 
 	.hero {
 		padding-bottom: 4rem;
@@ -2365,9 +2387,9 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
    Prose blocks — used by the Page Builder's Prose block and the
    ministry pages. Beliefs keeps its own scoped copy at hero scale.
    ------------------------------------------------------------------ */
-.prose-block { padding: 6rem 0; }
-.prose-block--body-only { padding-top: 2.25rem; }
-.profiles-block { padding-top: 2.25rem; }
+.prose-block { padding: 4.5rem 0; }
+.prose-block--body-only { padding-top: 1.75rem; }
+.profiles-block { padding-top: 1.75rem; }
 .prose-block--tinted {
 	background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent);
 	border-top: 1px solid var(--line);
