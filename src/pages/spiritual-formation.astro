@@ -72,30 +72,6 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 		</div>
 	</section>
 
-	<section class="section fm-practices-section">
-		<div class="container">
-			<div class="section-heading reveal is-visible">
-				<p class="eyebrow">A whole life with Jesus</p>
-				<h2>Nine practices for growth.</h2>
-			</div>
-			<div class="prose-block__body reveal is-visible">
-				<p>
-					Growth Track gives attention to these nine areas. You can enter through any one
-					of them, return to them over time, and grow in the places God is working in you now.
-				</p>
-			</div>
-			<div class="fm-practices reveal is-visible">
-				{practices.map(([number, title, detail]) => (
-					<article class="fm-practice">
-						<p class="fm-practice__number">{number}</p>
-						<h3>{title}</h3>
-						<p>{detail}</p>
-					</article>
-				))}
-			</div>
-		</div>
-	</section>
-
 	<section class="section growth-track-section">
 		<div class="container">
 			<div class="section-heading reveal is-visible">
@@ -123,6 +99,31 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 					</div>
 				</section>
 			))}
+		</div>
+	</section>
+
+
+	<section class="section fm-practices-section">
+		<div class="container">
+			<div class="section-heading reveal is-visible">
+				<p class="eyebrow">A whole life with Jesus</p>
+				<h2>Nine practices for growth.</h2>
+			</div>
+			<div class="prose-block__body reveal is-visible">
+				<p>
+					Growth Track gives attention to these nine areas. You can enter through any one
+					of them, return to them over time, and grow in the places God is working in you now.
+				</p>
+			</div>
+			<div class="fm-practices reveal is-visible">
+				{practices.map(([number, title, detail]) => (
+					<article class="fm-practice">
+						<p class="fm-practice__number">{number}</p>
+						<h3>{title}</h3>
+						<p>{detail}</p>
+					</article>
+				))}
+			</div>
 		</div>
 	</section>
 
