@@ -25,7 +25,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 		api("/api/studio/nav").then((r) => { setNav(r.nav || null); setVersion(r.version || null); });
 	}, []);
 
-	if (!nav) return <div style={{ padding: 24, color: "#9aa3b2" }}>Loading the menu…</div>;
+	if (!nav) return <div style={{ padding: 24, color: "var(--studio-muted)" }}>Loading the menu…</div>;
 
 	const up = (fn: (n: Nav) => void) => setNav((prev) => { const n = structuredClone(prev!); fn(n); return n; });
 
@@ -52,7 +52,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 					{saving ? "Saving…" : "Save menu"}
 				</button>
 			</div>
-			<p style={{ color: "#9aa3b2", fontSize: 13, margin: "0 0 18px" }}>
+			<p style={{ color: "var(--studio-muted)", fontSize: 13, margin: "0 0 18px" }}>
 				Drag to reorder. A menu entry with dropdown links shows them on hover; one without is a plain link.
 			</p>
 
@@ -70,7 +70,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 					style={S.group}
 				>
 					<div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-						<span style={{ color: "#4a5262", cursor: "grab", userSelect: "none" }}>⠿</span>
+					<span style={{ color: "var(--studio-muted)", cursor: "grab", userSelect: "none" }}>⠿</span>
 						<input style={{ ...S.input, flex: 1 }} value={g.label} placeholder="Menu label"
 							onChange={(e) => up((n) => { n.groups[i].label = e.target.value; })} />
 						<input style={{ ...S.input, flex: 1.4 }} value={g.href} list="me-paths" placeholder="/link"
@@ -78,7 +78,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 						<button style={S.small} onClick={() => up((n) => { (n.groups[i] as any)._open = !(n.groups[i] as any)._open; })}>
 							{g.items.length} dropdown {g.items.length === 1 ? "link" : "links"} {(g as any)._open ? "▴" : "▾"}
 						</button>
-						<button style={{ ...S.small, color: "#eec7b7" }} title="Remove this menu entry"
+						<button style={{ ...S.small, color: "var(--studio-danger)" }} title="Remove this menu entry"
 							onClick={() => { if (window.confirm(`Remove "${g.label}" from the menu?`)) up((n) => { n.groups.splice(i, 1); }); }}>✕</button>
 					</div>
 
@@ -90,7 +90,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 										onChange={(e) => up((n) => { n.groups[i].items[j].label = e.target.value; })} />
 									<input style={S.input} value={it.href} list="me-paths" placeholder="/link"
 										onChange={(e) => up((n) => { n.groups[i].items[j].href = e.target.value; })} />
-									<button style={{ ...S.small, color: "#eec7b7" }} title="Remove link"
+									<button style={{ ...S.small, color: "var(--studio-danger)" }} title="Remove link"
 										onClick={() => up((n) => { n.groups[i].items.splice(j, 1); })}>✕</button>
 									<input style={{ ...S.input, gridColumn: "1 / 3", fontSize: 12 }} value={it.blurb || ""} placeholder="One-line description shown under the link (optional)"
 										onChange={(e) => up((n) => { n.groups[i].items[j].blurb = e.target.value; })} />
@@ -122,8 +122,8 @@ export default function MenuEditor({ paths, onBack, say }: {
 }
 
 const S: Record<string, React.CSSProperties> = {
-	group: { border: "1px solid #2a3040", background: "#151922", borderRadius: 12, padding: "10px 12px", marginBottom: 8 },
-	input: { font: "inherit", fontSize: 14, padding: "8px 10px", borderRadius: 8, border: "1px solid #2a3040", background: "#1c2130", color: "#eef1f6" },
-	small: { font: "inherit", fontSize: 13, background: "transparent", color: "#9aa3b2", border: "1px solid #2a3040", borderRadius: 8, padding: "6px 10px", cursor: "pointer" },
-	btn: { font: "inherit", fontWeight: 600, border: 0, borderRadius: 10, padding: "9px 16px", background: "linear-gradient(135deg,#ffe7bf,#f2d2a2)", color: "#12100c", cursor: "pointer" },
+	group: { border: "1px solid var(--studio-line)", background: "var(--studio-panel)", borderRadius: 12, padding: "10px 12px", marginBottom: 8 },
+	input: { font: "inherit", fontSize: 14, padding: "8px 10px", borderRadius: 8, border: "1px solid var(--studio-line)", background: "var(--studio-panel-raised)", color: "var(--studio-text)" },
+	small: { font: "inherit", fontSize: 13, background: "transparent", color: "var(--studio-muted)", border: "1px solid var(--studio-line)", borderRadius: 8, padding: "6px 10px", cursor: "pointer" },
+	btn: { font: "inherit", fontWeight: 600, border: 0, borderRadius: 10, padding: "9px 16px", background: "linear-gradient(135deg,#ffe7bf,var(--studio-accent))", color: "var(--studio-accent-ink)", cursor: "pointer" },
 };

@@ -61,6 +61,30 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 
 <style>
 	.sd-root { position: fixed; right: 20px; bottom: 20px; z-index: 2147483000; font-family: inherit; }
+	.sd-root {
+		--sd-panel: rgba(10, 13, 18, 0.90);
+		--sd-text: #f6f0e7;
+		--sd-muted: rgba(246, 240, 231, .72);
+		--sd-line: rgba(255,255,255,.14);
+		--sd-bubble: rgba(255,255,255,.07);
+		--sd-input: rgba(255,255,255,.05);
+		--sd-hover: rgba(255,255,255,.09);
+		--sd-proposal: rgba(242,210,162,.08);
+		--sd-old: #eec7b7;
+		--sd-new: #ffe7bf;
+	}
+	:global(:root[data-theme="light"]) .sd-root {
+		--sd-panel: rgba(255, 253, 249, .94);
+		--sd-text: #17202b;
+		--sd-muted: rgba(23, 32, 43, .70);
+		--sd-line: rgba(23, 32, 43, .18);
+		--sd-bubble: rgba(23,32,43,.055);
+		--sd-input: rgba(255,255,255,.78);
+		--sd-hover: rgba(123,93,43,.11);
+		--sd-proposal: rgba(123,93,43,.08);
+		--sd-old: #9a4137;
+		--sd-new: #5e4214;
+	}
 	.sd-root[data-state="hidden"] { display: none; }
 	/* [hidden] must win over the display rules below (UA rule loses on specificity). */
 	.sd-panel [hidden] { display: none !important; }
@@ -83,26 +107,26 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 		display: none; flex-direction: column;
 		width: min(390px, calc(100vw - 32px)); height: min(560px, calc(100vh - 40px));
 		border-radius: 18px; overflow: hidden;
-		background: rgba(10, 13, 18, 0.86);
+		background: var(--sd-panel);
 		-webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
-		border: 1px solid var(--line, rgba(255,255,255,.14));
+		border: 1px solid var(--sd-line);
 		box-shadow: 0 40px 120px rgba(0,0,0,.6);
-		color: var(--text, #f6f0e7);
+		color: var(--sd-text);
 	}
 	.sd-root[data-state="open"] .sd-panel,
 	.sd-root[data-state="signin"] .sd-panel { display: flex; animation: sd-rise .22s ease; }
 	@keyframes sd-rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-	.sd-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; border-bottom: 1px solid var(--line, rgba(255,255,255,.12)); }
+	.sd-head { display: flex; align-items: center; justify-content: space-between; padding: 13px 14px; border-bottom: 1px solid var(--sd-line); }
 	.sd-head__title { display: flex; align-items: center; gap: 9px; }
 	.sd-head__title strong { display: block; font-size: 14px; letter-spacing: .02em; }
-	.sd-page { display: block; font-size: 11px; color: var(--muted, rgba(246,240,231,.7)); text-transform: capitalize; }
+	.sd-page { display: block; font-size: 11px; color: var(--sd-muted); text-transform: capitalize; }
 	.sd-head__actions { display: flex; gap: 4px; }
-	.sd-icon { background: transparent; border: 0; color: var(--muted, rgba(246,240,231,.7)); font-size: 18px; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; line-height: 1; }
-	.sd-icon:hover { background: rgba(255,255,255,.08); color: var(--text, #f6f0e7); }
+	.sd-icon { background: transparent; border: 0; color: var(--sd-muted); font-size: 18px; width: 30px; height: 30px; border-radius: 8px; cursor: pointer; line-height: 1; }
+	.sd-icon:hover { background: var(--sd-hover); color: var(--sd-text); }
 
 	.sd-signin { padding: 22px 16px; }
-	.sd-signin p { margin: 0 0 14px; font-size: 13px; color: var(--muted, rgba(246,240,231,.72)); line-height: 1.5; }
+	.sd-signin p { margin: 0 0 14px; font-size: 13px; color: var(--sd-muted); line-height: 1.5; }
 	.sd-signin form { display: flex; gap: 8px; }
 	.sd-signin input { flex: 1; }
 
@@ -110,30 +134,30 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 	.sd-log { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
 	.sd-bubble { max-width: 86%; padding: 9px 12px; border-radius: 13px; font-size: 13.5px; line-height: 1.45; white-space: pre-wrap; }
 	.sd-bubble.you { align-self: flex-end; background: linear-gradient(135deg,#ffe7bf,#f2d2a2); color: #12100c; }
-	.sd-bubble.ai { align-self: flex-start; background: rgba(255,255,255,.06); border: 1px solid var(--line, rgba(255,255,255,.12)); }
-	.sd-thinking { color: var(--muted, rgba(246,240,231,.6)); animation: sd-pulse 1.2s ease-in-out infinite; }
+	.sd-bubble.ai { align-self: flex-start; background: var(--sd-bubble); border: 1px solid var(--sd-line); }
+	.sd-thinking { color: var(--sd-muted); animation: sd-pulse 1.2s ease-in-out infinite; }
 	@keyframes sd-pulse { 0%,100% { opacity: .45; } 50% { opacity: .9; } }
 
-	.sd-proposal { margin: 0 14px; border: 1px solid var(--gold-soft, rgba(242,210,162,.3)); border-radius: 13px; padding: 11px; background: rgba(242,210,162,.06); }
+	.sd-proposal { margin: 0 14px; border: 1px solid var(--gold-soft, rgba(242,210,162,.3)); border-radius: 13px; padding: 11px; background: var(--sd-proposal); }
 	.sd-proposal h4 { margin: 0 0 8px; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--gold, #f2d2a2); }
-	.sd-proposal .sd-field { font-size: 10.5px; color: var(--muted, rgba(246,240,231,.6)); margin-bottom: 2px; }
-	.sd-proposal .sd-old { font-size: 13px; color: var(--rose, #eec7b7); text-decoration: line-through; opacity: .75; }
-	.sd-proposal .sd-new { font-size: 13px; color: var(--gold-strong, #ffe7bf); }
+	.sd-proposal .sd-field { font-size: 10.5px; color: var(--sd-muted); margin-bottom: 2px; }
+	.sd-proposal .sd-old { font-size: 13px; color: var(--sd-old); text-decoration: line-through; opacity: .75; }
+	.sd-proposal .sd-new { font-size: 13px; color: var(--sd-new); }
 	.sd-proposal .sd-acts { display: flex; gap: 7px; margin-top: 11px; }
 
-	.sd-composer { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line, rgba(255,255,255,.12)); }
+	.sd-composer { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--sd-line); }
 	.sd-composer input { flex: 1; }
 
 	.sd-root input[type=text], .sd-root input[type=password] {
 		padding: 10px 12px; border-radius: 10px; font: inherit; font-size: 14px;
-		background: rgba(255,255,255,.05); border: 1px solid var(--line, rgba(255,255,255,.16)); color: var(--text, #f6f0e7);
+		background: var(--sd-input); border: 1px solid var(--sd-line); color: var(--sd-text);
 	}
-	.sd-root input::placeholder { color: rgba(246,240,231,.4); }
+	.sd-root input::placeholder { color: var(--sd-muted); opacity: .72; }
 	.sd-root button:not(.sd-icon):not(.sd-launch) {
 		font: 600 14px/1 inherit; border: 0; border-radius: 10px; padding: 10px 14px; cursor: pointer;
 		background: linear-gradient(135deg,#ffe7bf,#f2d2a2); color: #12100c;
 	}
-	.sd-root button.sd-ghost { background: transparent; border: 1px solid var(--line, rgba(255,255,255,.18)); color: var(--muted, rgba(246,240,231,.75)); }
+	.sd-root button.sd-ghost { background: transparent; border: 1px solid var(--sd-line); color: var(--sd-muted); }
 	.sd-root button:disabled { opacity: .5; cursor: default; }
 	.sd-err { color: var(--rose, #eec7b7); font-size: 12px; min-height: 16px; margin: 8px 0 0; }
 

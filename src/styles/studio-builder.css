@@ -1,0 +1,69 @@
+/* The Page Builder is a work surface, but it follows the same appearance
+ * selection as the public site and the Studio dock. Keep these tokens local
+ * so public-page palettes are never changed by editor-only controls. */
+.builder-body {
+	--studio-bg: #0d0f14;
+	--studio-panel: #151922;
+	--studio-panel-raised: #1c2130;
+	--studio-text: #eef1f6;
+	--studio-muted: #9aa3b2;
+	--studio-line: #2a3040;
+	--studio-accent: #f2d2a2;
+	--studio-accent-ink: #12100c;
+	--studio-danger: #eec7b7;
+	margin: 0;
+	background: var(--studio-bg);
+	color: var(--studio-text);
+	color-scheme: dark;
+}
+
+:root[data-theme="light"] .builder-body {
+	--studio-bg: #f5f0e8;
+	--studio-panel: #fffdf9;
+	--studio-panel-raised: #f0e9de;
+	--studio-text: #17202b;
+	--studio-muted: #5f6875;
+	--studio-line: rgba(23, 32, 43, .18);
+	--studio-accent: #8a6425;
+	--studio-accent-ink: #fffdf9;
+	--studio-danger: #9a4137;
+	color-scheme: light;
+}
+
+.builder-app { min-height: 100vh; background: var(--studio-bg); color: var(--studio-text); }
+.builder-appearance { position: relative; margin-left: auto; }
+.builder-appearance__trigger { display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .68rem; border: 1px solid var(--studio-line); border-radius: 999px; background: var(--studio-panel); color: var(--studio-text); font: inherit; font-size: 13px; cursor: pointer; }
+.builder-appearance__menu { position: absolute; z-index: 20; right: 0; top: calc(100% + .45rem); min-width: 12.5rem; padding: .35rem; border: 1px solid var(--studio-line); border-radius: 12px; background: var(--studio-panel); box-shadow: 0 18px 44px rgba(0,0,0,.18); }
+.builder-appearance__menu button { display: grid; width: 100%; gap: .1rem; padding: .62rem .7rem; border: 0; border-radius: 8px; background: transparent; color: var(--studio-text); font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+.builder-appearance__menu button:hover, .builder-appearance__menu button[aria-checked="true"] { background: color-mix(in srgb, var(--studio-accent) 15%, transparent); }
+.builder-appearance__menu span { color: var(--studio-muted); font-size: 11px; }
+
+/* Puck uses a token palette. Re-map its neutral controls in light mode so the
+ * editor chrome, inputs, and side panels do not remain dark or washed out. */
+:root[data-theme="light"] .builder-body {
+	--puck-color-grey-01: #17202b;
+	--puck-color-grey-02: #273241;
+	--puck-color-grey-03: #45515f;
+	--puck-color-grey-04: #5f6875;
+	--puck-color-grey-05: #78808b;
+	--puck-color-grey-06: #9299a1;
+	--puck-color-grey-07: #aeb3b8;
+	--puck-color-grey-08: #c9cccf;
+	--puck-color-grey-09: #dededc;
+	--puck-color-grey-10: #ece9e4;
+	--puck-color-grey-11: #f5f0e8;
+	--puck-color-grey-12: #fffdf9;
+	--puck-color-white: #fffdf9;
+	--puck-color-black: #17202b;
+	--puck-color-azure-04: #6b4c16;
+	--puck-color-azure-05: #8a6425;
+	--puck-color-azure-09: #ead9b7;
+	--puck-color-azure-10: #f4ead5;
+	--puck-color-azure-11: #faf4e8;
+	--puck-color-azure-12: #fffaf1;
+}
+
+@media (max-width: 620px) {
+	.builder-appearance__trigger span { display: none; }
+	.builder-appearance__trigger { padding: .48rem .6rem; }
+}
