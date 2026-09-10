@@ -76,7 +76,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 		<div class="container">
 			<div class="section-heading reveal is-visible">
 				<p class="eyebrow">Growth Track</p>
-				<h2>Scroll through the change.</h2>
+				<h2>Be Transformed.</h2>
 				<p class="growth-track__intro">Every next step starts somewhere. Keep moving and watch what Growth Track is built to help make possible.</p>
 			</div>
 		</div>
@@ -117,11 +117,18 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 			</div>
 			<div class="fm-practices reveal is-visible">
 				{practices.map(([number, title, detail]) => (
-					<article class="fm-practice">
+					<a
+						class="fm-practice"
+						href={COMMUNITY_URL}
+						target="_blank"
+						rel="noopener"
+						aria-label={`Explore ${title} in The Formation App`}
+					>
 						<p class="fm-practice__number">{number}</p>
 						<h3>{title}</h3>
 						<p>{detail}</p>
-					</article>
+						<span class="fm-practice__app">Open in The Formation App <span aria-hidden="true">→</span></span>
+					</a>
 				))}
 			</div>
 		</div>
@@ -218,10 +225,15 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 	.fm-journey__acts { display: grid; gap: 0.7rem; justify-items: stretch; }
 
 	.fm-practices { display: grid; gap: 1rem; margin-top: 1.6rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-	.fm-practice { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.3rem 1.4rem; }
+	.fm-practice { display: flex; min-height: 12.5rem; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.3rem 1.4rem; color: inherit; text-decoration: none; transition: background .22s ease, border-color .22s ease, box-shadow .22s ease, transform .22s ease; }
 	.fm-practice__number { margin: 0; color: var(--gold-soft, #d8bd82); font-size: 0.74rem; letter-spacing: 0.14em; }
 	.fm-practice h3 { margin: 0.45rem 0 0.35rem; font-size: 1.18rem; }
 	.fm-practice p:last-child { margin: 0; color: var(--muted); line-height: 1.55; }
+	.fm-practice__app { margin-top: auto; padding-top: 1rem; color: var(--gold-soft, #d8bd82); font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: 0; transform: translateY(.35rem); transition: opacity .2s ease, transform .2s ease; }
+	@media (hover: hover) and (pointer: fine) {
+		.fm-practice:hover, .fm-practice:focus-visible { background: linear-gradient(135deg, rgba(242,210,162,.2), var(--panel)); border-color: var(--gold-soft, #d8bd82); box-shadow: 0 16px 30px rgba(5, 6, 8, .1); transform: translateY(-.2rem); }
+		.fm-practice:hover .fm-practice__app, .fm-practice:focus-visible .fm-practice__app { opacity: 1; transform: translateY(0); }
+	}
 
 	.growth-track-section { overflow: clip; }
 	.growth-track__intro { margin: 1rem 0 0; max-width: 48ch; color: var(--muted); }
