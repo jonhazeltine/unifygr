@@ -1,14 +1,5 @@
 ---
-// Blockified: this page's content lives in content/pages/membership.json and
-// is edited in the Page Builder (/studio/builder).
+// Membership has been folded into Growth Track. Keep existing links and bookmarks working.
 export const prerender = false;
-import MountedPage from "../components/builder/MountedPage.astro";
-import { draftGuard } from "../lib/studio/pages";
-import { isAuthed } from "../lib/studio/auth";
-
-// A draft is staff-only, and answers a real 404 to everyone else.
-const notFound = await draftGuard("membership", isAuthed(Astro.cookies), Astro.locals);
-if (notFound) return notFound;
+return Astro.redirect("/spiritual-formation", 301);
 ---
-
-<MountedPage slug="membership" />
