@@ -31,8 +31,14 @@
 					},
 					{
 						"label": "Join a GO Team",
-						"blurb": "The Great Commission calls us to go — join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
+						"blurb": "The Great Commission calls us to go \u2014 join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
 						"href": "/connect?from=next+steps+page#teams",
+						"feature": "no"
+					},
+					{
+						"label": "Pray for The Church",
+						"blurb": "Join this month\u2019s prayer for the Church across Grand Rapids.",
+						"href": "https://thechurchmap.com/grandrapids/community/bd4d6a50-3555-4d04-8ef0-da32313b470d",
 						"feature": "no"
 					}
 				],
