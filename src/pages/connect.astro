@@ -8,7 +8,7 @@ export const prerender = false;
 // the first choice, so a stale link can never land on nothing.
 const wanted = interestById(Astro.url.searchParams.get("interest") ?? "")?.id;
 const from = Astro.url.searchParams.get("from")?.slice(0, 40) ?? "";
-const picked = wanted ?? INTERESTS[0].id;
+const picked = wanted;
 
 // Eleven flat radios was a wall on a phone, and four of them were one intent
 // said four ways. Same eleven answers, shown as five headings — with the ways
@@ -59,31 +59,28 @@ const groups = INTERESTS.reduce<{ name: string; items: typeof INTERESTS; sub: ty
 				</label>
 
 				<fieldset class="field field--choices">
-					<legend>What would you like from us?</legend>
+					<legend>What would you like from us? <span class="choice-help">Choose all that apply.</span></legend>
 					{groups.map((group) => (
 						<div class="choice-group">
 							<p class="choice-group__head">{group.name}</p>
 							{group.items.map((interest) => (
 								<label class="choice">
-									<input type="radio" name="interest" value={interest.id} checked={interest.id === picked} />
+									<input type="checkbox" name="interests" value={interest.id} checked={interest.id === picked} />
 									<span>{interest.label}</span>
 								</label>
 							))}
 
-							{/* The four ways to serve are one intent, so they wait behind it.
-							    CSS :has() reveals them the moment "serve" is chosen — no
-							    script, and they are still real radios either way. */}
+							{/* Team choices are optional details, separate from a general serve request. */}
 							{group.sub.length > 0 && (
-								<div class="choice-sub">
-									<p class="choice-sub__head">Which one?</p>
+								<details class="choice-sub">
+									<summary>Choose a team</summary>
 									{group.sub.map((interest) => (
 										<label class="choice">
-											<input type="radio" name="interest" value={interest.id} checked={interest.id === picked} />
+											<input type="checkbox" name="interests" value={interest.id} checked={interest.id === picked} />
 											<span>{interest.label}</span>
 										</label>
 									))}
-									<p class="field-note">Not sure yet? Leave it on the first one and we'll talk it through.</p>
-								</div>
+								</details>
 							)}
 						</div>
 					))}
@@ -143,6 +140,7 @@ const groups = INTERESTS.reduce<{ name: string; items: typeof INTERESTS; sub: ty
 
 	.field--choices { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
 	.field--choices legend { padding: 0 0.5rem; }
+	.choice-help { font-size: 0.78rem; letter-spacing: 0; text-transform: none; }
 
 	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
 	.choice-group__head {
@@ -153,12 +151,9 @@ const groups = INTERESTS.reduce<{ name: string; items: typeof INTERESTS; sub: ty
 		color: var(--gold);
 	}
 
-	/* Held back until someone says they want to serve. */
-	.choice-sub { display: none; margin: 0.5rem 0 0 1.6rem; padding-left: 0.9rem; border-left: 2px solid var(--gold-soft); }
-	.choice-group:has(input[value="serve"]:checked) .choice-sub,
-	.choice-group:has(.choice-sub input:checked) .choice-sub { display: block; }
-	.choice-sub__head { margin: 0 0 0.2rem; font-size: 0.82rem; color: var(--muted); }
-	.choice-sub .field-note { margin-top: 0.35rem; }
+	.choice-sub { margin: 0.5rem 0 0 1.6rem; padding-left: 0.9rem; border-left: 2px solid var(--gold-soft); }
+	.choice-sub summary { color: var(--gold); cursor: pointer; font-size: 0.9rem; }
+	.choice-sub[open] summary { margin-bottom: 0.2rem; }
 
 	.choice { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.42rem 0; cursor: pointer; }
 	.choice input { margin-top: 0.28rem; accent-color: var(--gold); }
@@ -188,7 +183,9 @@ const groups = INTERESTS.reduce<{ name: string; items: typeof INTERESTS; sub: ty
 		submit.disabled = true;
 		submit.textContent = "Sending…";
 
-		const payload = Object.fromEntries(new FormData(form).entries());
+		const formData = new FormData(form);
+		const payload = Object.fromEntries(formData.entries());
+		payload.interests = formData.getAll("interests");
 
 		try {
 			const res = await fetch("/api/connect/submit", {
