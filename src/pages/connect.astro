@@ -59,8 +59,12 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 					<input name="city" type="text" autocomplete="address-level2" />
 				</label>
 
-				<fieldset class="field field--choices">
-					<legend>What would you like from us? <span class="choice-help">Choose all that apply.</span></legend>
+				<section class="field field--choices" aria-labelledby="interest-heading">
+					<div class="choice-intro">
+						<h2 id="interest-heading">How can we help?</h2>
+						<p>Choose all that apply.</p>
+					</div>
+					<div class="choice-panel">
 					{groups.map((group) => (
 						<div class="choice-group" id={group.name === "Serving and going" ? "teams" : undefined}>
 							<p class="choice-group__head">{group.name}</p>
@@ -73,7 +77,8 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 
 						</div>
 					))}
-				</fieldset>
+					</div>
+				</section>
 
 				<label class="field">
 					<span>Anything you'd like us to know</span>
@@ -127,9 +132,10 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 	}
 	.field-note { margin: -0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
 
-	.field--choices { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
-	.field--choices legend { padding: 0 0.5rem; }
-	.choice-help { font-size: 0.78rem; letter-spacing: 0; text-transform: none; }
+	.field--choices { gap: 0.8rem; }
+	.choice-intro h2 { margin: 0; font-size: 1.15rem; }
+	.choice-intro p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; }
+	.choice-panel { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
 
 	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
 	#teams { scroll-margin-top: 7rem; }
