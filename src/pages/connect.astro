@@ -62,7 +62,7 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 				<fieldset class="field field--choices">
 					<legend>What would you like from us? <span class="choice-help">Choose all that apply.</span></legend>
 					{groups.map((group) => (
-						<div class="choice-group">
+						<div class="choice-group" id={group.name === "Serving and going" ? "teams" : undefined}>
 							<p class="choice-group__head">{group.name}</p>
 							{group.items.map((interest) => (
 								<label class="choice">
@@ -132,6 +132,7 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 	.choice-help { font-size: 0.78rem; letter-spacing: 0; text-transform: none; }
 
 	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
+	#teams { scroll-margin-top: 7rem; }
 	.choice-group__head {
 		margin: 0 0 0.35rem;
 		font-size: 0.72rem;

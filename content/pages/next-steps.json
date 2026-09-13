@@ -5,7 +5,7 @@
 		"props": {
 			"title": "Next steps",
 			"kicker": "New Life Grand Rapids",
-			"description": "Your next step at New Life: join a life group, start Growth Track, or sign up for an Ambassador Team."
+			"description": "Your next step at New Life: join a life group, start Growth Track, or join a GO Team."
 		}
 	},
 	"content": [
@@ -30,9 +30,9 @@
 						"feature": "no"
 					},
 					{
-						"label": "Go with an Ambassador Team",
+						"label": "Join a GO Team",
 						"blurb": "One Sunday a month, we go and pray for another church in our city.",
-						"href": "/connect?interest=ambassador&from=next+steps+page",
+						"href": "/connect?from=next+steps+page#teams",
 						"feature": "no"
 					}
 				],
