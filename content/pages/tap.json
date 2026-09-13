@@ -18,7 +18,7 @@
 				"lede": "Three steps you can take from this screen.",
 				"links": [
 					{
-						"label": "Pray for someone",
+						"label": "Pray for a Person",
 						"blurb": "A real request from a real neighbor, one at a time.",
 						"href": "https://thechurchmap.com/pray",
 						"feature": "yes"
@@ -33,6 +33,12 @@
 						"label": "Go with an Ambassador Team",
 						"blurb": "One Sunday a month, we go and pray for another church in our city.",
 						"href": "/connect?interest=ambassador&from=tap+page",
+						"feature": "no"
+					},
+					{
+						"label": "Pray for The Church",
+						"blurb": "Join this month\u2019s prayer for the Church across Grand Rapids.",
+						"href": "https://thechurchmap.com/grandrapids/community/bd4d6a50-3555-4d04-8ef0-da32313b470d",
 						"feature": "no"
 					}
 				],
