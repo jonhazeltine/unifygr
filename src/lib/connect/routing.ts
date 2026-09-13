@@ -28,12 +28,8 @@ export type Interest = {
 	 * a phone, and four of them said the same thing four ways.
 	 */
 	group: string;
-	/**
-	 * A second-level choice, shown only once someone has said they want to
-	 * serve. Routing is unchanged — these are still their own interests, with
-	 * their own Asana titles — they just stop shouting from the top level.
-	 */
-	underServe?: true;
+	/** Retained for existing cards and links, but no longer offered as a vague form choice. */
+	formHidden?: true;
 	/** CCB process this queue belongs to (for the admin display) */
 	process: string;
 	/**
@@ -114,6 +110,7 @@ export const INTERESTS: Interest[] = [
 		id: "serve",
 		group: "Serving and going",
 		serving: true,
+		formHidden: true,
 		label: "I want to serve or go with a team",
 		process: "Connections – Direct and Connect",
 		// No queueId: CCB's "Interested in Serving" is dead — one untouched test entry (checked 2026-09-01).
@@ -121,10 +118,9 @@ export const INTERESTS: Interest[] = [
 		dueInDays: 5,
 	},
 	{
-		// The three ways we go. Each carries its own Asana task title so staff can
-		// tell a church visit from a mission trip from a serve day at a glance.
+		// The three ways we go each appear directly on the form and carry their own
+		// Asana task title so staff can act on every selected step.
 		id: "ambassador",
-		underServe: true,
 		group: "Serving and going",
 		serving: true,
 		label: "An Ambassador Team — visiting another church",
@@ -136,7 +132,6 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "missions",
-		underServe: true,
 		group: "Serving and going",
 		serving: true,
 		label: "A Missions Team — overseas",
@@ -148,7 +143,6 @@ export const INTERESTS: Interest[] = [
 	},
 	{
 		id: "outreach",
-		underServe: true,
 		group: "Serving and going",
 		serving: true,
 		label: "An Outreach Team — serving our city",
