@@ -29,6 +29,7 @@ export const POST: APIRoute = async ({ request, cookies }) => {
 
 	if (target === "ccb" || target === "both") submission.ccb = await deliverToCcb(submission);
 	if (target === "asana" || target === "both" || !target) submission.asana = await deliverToAsana(submission);
+	if (target?.startsWith("asana:")) submission.asana = await deliverToAsana(submission, target.slice("asana:".length));
 
 	await save(submission);
 	return json({ ok: true, submission });

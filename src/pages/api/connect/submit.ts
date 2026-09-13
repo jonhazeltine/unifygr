@@ -7,7 +7,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { deliverToAsana, deliverToCcb } from "../../../lib/connect/deliver";
-import { DEFAULT_INTEREST, interestById } from "../../../lib/connect/routing";
+import { interestById } from "../../../lib/connect/routing";
 import { newId, save, type Submission } from "../../../lib/connect/store";
 
 const json = (data: unknown, status = 200) =>
@@ -35,7 +35,13 @@ export const POST: APIRoute = async ({ request }) => {
 	if (!email && !phone) return json({ ok: false, error: "Please give an email or a phone number so we can reach you." }, 400);
 	if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json({ ok: false, error: "That email doesn't look right." }, 400);
 
-	const interest = interestById(String(raw.interest ?? "")) ?? DEFAULT_INTEREST;
+	const requested = Array.isArray(raw.interests) ? raw.interests : [raw.interest];
+	const interests = [...new Map(requested
+		.map((id) => interestById(String(id ?? "")))
+		.filter((interest): interest is NonNullable<typeof interest> => Boolean(interest))
+		.map((interest) => [interest.id, interest]))].map(([, interest]) => interest);
+	if (!interests.length) return json({ ok: false, error: "Choose at least one way we can help." }, 400);
+	const firstInterest = interests[0];
 
 	const submission: Submission = {
 		id: newId(),
@@ -45,8 +51,11 @@ export const POST: APIRoute = async ({ request }) => {
 		email,
 		phone,
 		city: clean(raw.city, 80),
-		interest: interest.id,
-		interestLabel: interest.label,
+		interest: firstInterest.id,
+		interestLabel: firstInterest.label,
+		interests: interests.map((interest) => interest.id),
+		interestLabels: interests.map((interest) => interest.label),
+		routes: interests.map((interest) => ({ interest: interest.id, interestLabel: interest.label, asana: { status: "pending" } })),
 		message: clean(raw.message, 4000),
 		source: clean(raw.source, 200),
 		ccb: { status: "pending" },

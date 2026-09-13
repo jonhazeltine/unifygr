@@ -21,6 +21,14 @@ export type Delivery = {
 	at?: string;
 };
 
+export type InterestRoute = {
+	/** The individual choice within a multi-select Connect Card. */
+	interest: string;
+	interestLabel: string;
+	/** One Asana task per choice, so staff can act on each request independently. */
+	asana: Delivery;
+};
+
 export type Submission = {
 	id: string;
 	receivedAt: string;
@@ -29,8 +37,16 @@ export type Submission = {
 	email?: string;
 	phone?: string;
 	city?: string;
+	/** First selected choice, retained so existing records and integrations stay readable. */
 	interest: string;
 	interestLabel: string;
+	/** All selected choices. Older saved cards simply omit these fields. */
+	interests?: string[];
+	interestLabels?: string[];
+	/** Per-choice follow-up state for multi-select cards. */
+	routes?: InterestRoute[];
+	/** Delivery state for each distinct live CCB queue on a multi-select card. */
+	ccbQueues?: Record<string, Delivery>;
 	message?: string;
 	/** how they heard about us / anything else the form collects */
 	source?: string;

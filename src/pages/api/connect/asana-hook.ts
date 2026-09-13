@@ -50,10 +50,15 @@ async function sectionOf(taskGid: string): Promise<{ gid: string; name: string }
 	return section ? { gid: String(section.gid), name: String(section.name ?? "") } : null;
 }
 
-/** The submission behind a card. deliverToAsana stored the task gid on it. */
-async function submissionFor(taskGid: string): Promise<Submission | null> {
+/** The submission and selected interest behind an Asana card. */
+async function submissionFor(taskGid: string): Promise<{ submission: Submission; interestId: string } | null> {
 	const all = await recent(200);
-	return all.find((s) => s.asana?.ref === taskGid) ?? null;
+	for (const submission of all) {
+		const route = submission.routes?.find((candidate) => candidate.asana?.ref === taskGid);
+		if (route) return { submission, interestId: route.interest };
+		if (submission.asana?.ref === taskGid) return { submission, interestId: submission.interest };
+	}
+	return null;
 }
 
 async function comment(taskGid: string, text: string): Promise<void> {
@@ -84,13 +89,14 @@ async function handleCard(taskGid: string): Promise<void> {
 	const section = await sectionOf(taskGid);
 	if (section?.name !== "Ready to serve") return;
 
-	const submission = await submissionFor(taskGid);
-	if (!submission) return;
+	const found = await submissionFor(taskGid);
+	if (!found) return;
+	const { submission, interestId } = found;
 
-	// Dragging a card out and back must not make a second person.
+	// Dragging any serving card out and back must not make a second person.
 	if (submission.planningCenter?.status === "ok") return;
 
-	const interest = interestById(submission.interest);
+	const interest = interestById(interestId);
 	if (!interest?.serving) {
 		await comment(taskGid, "Nothing to do here — this isn't a serving sign-up, so there's no Planning Center card to open.");
 		return;
