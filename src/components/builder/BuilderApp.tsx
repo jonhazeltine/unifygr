@@ -98,8 +98,9 @@ export default function BuilderApp() {
 	useEffect(() => { refresh(); }, [refresh]);
 
 	async function openPage(s: string) {
-		const res = await api(`/api/studio/pages?slug=${encodeURIComponent(s)}`);
-		if (res.data) { setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote(""); }
+		const res = await api(`/api/studio/pages?slug=${encodeURIComponent(s)}`).catch(() => null);
+		if (res?.data) { setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote(""); }
+		else say(res?.error === "Unauthorized" ? "Your session expired — reload the page and sign in again." : (res?.error || "Couldn't load that page — reload and try again."));
 	}
 
 	function newPage() {
