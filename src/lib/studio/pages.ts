@@ -135,6 +135,7 @@ async function updatePageIndex(
 export type PageListing = {
 	slug: string;
 	title: string;
+	description: string;
 	status: PageStatus;
 	order: number;
 	/** where the page is served (a mounted real route, or /p/<slug>) */
@@ -163,6 +164,7 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 			out.push({
 				slug,
 				title: String(data.root.props.title || slug),
+				description: String(data.root.props.description || data.root.props.kicker || ""),
 				status: data.status,
 				order: data.order,
 				path: MOUNTED[slug] || `/p/${slug}`,
