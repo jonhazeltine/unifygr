@@ -14,9 +14,12 @@ test("public paths include live runtime pages and exclude drafts and private rou
       { path: "/p/live-page", status: "live" },
       { path: "/p/draft-page", status: "draft" },
     ],
+    sitePages: ["/membership", "/unify-gr"],
   });
 
   assert(paths.includes("/p/live-page"));
+  assert(paths.includes("/membership"));
+  assert(paths.includes("/unify-gr"));
   assert(paths.includes("/ministries/care/recovery"));
   assert(paths.includes("/ministry/visible"));
   assert(!paths.includes("/p/draft-page"));
@@ -43,6 +46,7 @@ test("external-ministry routes leave the sitemap when the Studio switch is off",
       { slug: "free-clinic", house: "out", categories: ["free-clinic"] },
     ],
     pages: [],
+    sitePages: ["/membership", "/ministries/calendar", "/ministries/partnerships", "/ministries/specialized"],
     externalMinistriesEnabled: false,
   });
 
@@ -55,6 +59,7 @@ test("external-ministry routes leave the sitemap when the Studio switch is off",
   assert(!paths.includes("/ministries/health"));
   assert(!paths.includes("/ministries/health/free-clinic"));
   assert(!paths.includes("/ministry/free-clinic"));
+  assert(paths.includes("/membership"));
 });
 
 test("site origin is normalized and invalid configuration fails safely", () => {

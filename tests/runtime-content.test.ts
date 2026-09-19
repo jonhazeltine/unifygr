@@ -12,11 +12,14 @@ import {
 	deletePage,
 	listPages,
 	readPage,
+	updatePageMeta,
 	writePage,
 } from "../src/lib/studio/pages.ts";
 import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
 import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
+import { readSitePageStatuses, setSitePageStatus, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
+import { isPagePublished, withPageVisibilityHeaders } from "../src/lib/studio/page-visibility.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -51,12 +54,12 @@ async function authedCookies() {
 	return { get: () => ({ value }) } as any;
 }
 
-async function studioPost(path: string, payload: unknown, cookies: any) {
+async function studioPost(path: string, payload: unknown, cookies: any, requestLocals: any = locals) {
 	const module = await import(path);
 	const response = await module.POST({
 		request: new Request(`https://example.test${path}`, { method: "POST", body: JSON.stringify(payload) }),
 		cookies,
-		locals,
+		locals: requestLocals,
 	} as any);
 	return { status: response.status, body: await response.json() };
 }
@@ -188,6 +191,86 @@ test("page API returns a fresh version for content and metadata saves", async ()
 	assert.equal(meta.body.data.status, "live");
 	const stale = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "draft", version: first.body.version }, cookies);
 	assert.equal(stale.status, 409);
+});
+
+test("a stale builder metadata save cannot change public visibility", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/giving.json": page("live", "Giving") });
+	const first = await writePage("giving", page("live", "Giving"), undefined, "seed", locals);
+	const second = await writePage("giving", page("live", "Giving updated"), undefined, first.version, locals);
+	await assert.rejects(() => updatePageMeta("giving", { status: "draft" }, first.version, locals), ContentConflict);
+	assert.equal((await readPage("giving", locals))?.status, "live");
+	assert.equal(sitePageStatus("/giving", (await readSitePageStatuses(locals)).value), "live");
+	assert.notEqual(second.version, first.version);
+});
+
+test("hand-built pages default published and retain a versioned draft state", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	const initial = await readSitePageStatuses(pageLocals);
+	assert.equal(sitePageStatus("/about", initial.value), "live");
+	const saved = await updateSitePageStatus("/about", "draft", initial.version, pageLocals);
+	const current = await readSitePageStatuses(pageLocals);
+	assert.equal(sitePageStatus("/about", current.value), "draft");
+	assert.equal(sitePageStatus("/%61bout", current.value), "draft");
+	assert.equal(current.version, saved.version);
+	await assert.rejects(() => updateSitePageStatus("/about", "live", initial.version, pageLocals), ContentConflict);
+});
+
+test("shared navigation visibility follows builder drafts and tolerates malformed external links", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/giving.json": page("draft", "Giving"), "/content/pages/welcome.json": page("draft", "Welcome") });
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	await setSitePageStatus("/giving", "draft", pageLocals);
+	await setSitePageStatus("/p/welcome", "draft", pageLocals);
+	assert.equal(await isPagePublished("/giving", pageLocals), false);
+	assert.equal(await isPagePublished("/p/welcome", pageLocals), false);
+	assert.equal(await isPagePublished("https://%", pageLocals), true);
+});
+
+test("production draft guard fails closed when status storage is not configured", async () => {
+	const previousNodeEnv = process.env.NODE_ENV;
+	const previousToken = process.env.BLOB_READ_WRITE_TOKEN;
+	process.env.NODE_ENV = "production";
+	Reflect.deleteProperty(process.env, "BLOB_READ_WRITE_TOKEN");
+	try {
+		const response = await sitePageDraftGuard("/about", false);
+		assert.equal(response?.status, 503);
+		assert.equal(response?.headers.get("cache-control"), "no-store");
+	} finally {
+		if (previousNodeEnv === undefined) Reflect.deleteProperty(process.env, "NODE_ENV"); else process.env.NODE_ENV = previousNodeEnv;
+		if (previousToken === undefined) Reflect.deleteProperty(process.env, "BLOB_READ_WRITE_TOKEN"); else process.env.BLOB_READ_WRITE_TOKEN = previousToken;
+	}
+});
+
+test("page API publishes and unpublishes a hand-built page with CAS protection", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const cookies = await authedCookies();
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	const first = await studioPost("../src/pages/api/studio/pages.ts", { sitePath: "/about", status: "draft", sitePagesVersion: "seed" }, cookies, pageLocals);
+	assert.equal(first.status, 200);
+	assert.equal(first.body.status, "draft");
+	const stale = await studioPost("../src/pages/api/studio/pages.ts", { sitePath: "/about", status: "live", sitePagesVersion: "seed" }, cookies, pageLocals);
+	assert.equal(stale.status, 409);
+});
+
+test("public middleware returns a real 404 for a hand-built draft while staff can preview it", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	await updateSitePageStatus("/about", "draft", "seed", pageLocals);
+	const publicResponse = await sitePageDraftGuard("/about", false, pageLocals);
+	assert.equal(publicResponse?.status, 404);
+	assert.equal(publicResponse?.headers.get("x-robots-tag"), "noindex");
+	assert.equal(await sitePageDraftGuard("/about", true, pageLocals), null);
+});
+
+test("Studio-governed page responses never enter a shared cache", () => {
+	const published = withPageVisibilityHeaders(new Response("page", { headers: { "cache-control": "public, s-maxage=86400" } }));
+	assert.equal(published.headers.get("cache-control"), "private, no-store");
+	assert.equal(published.headers.get("x-robots-tag"), null);
+	const preview = withPageVisibilityHeaders(new Response("draft"), true);
+	assert.equal(preview.headers.get("cache-control"), "private, no-store");
+	assert.equal(preview.headers.get("x-robots-tag"), "noindex");
 });
 
 test("media accepts only bytes that match its fixed response image type", () => {

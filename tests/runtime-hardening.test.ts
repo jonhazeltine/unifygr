@@ -30,7 +30,7 @@ test("external ministry visibility defaults on and respects the Studio switch", 
 	assert.equal(externalMinistriesEnabled(normalise({ globals: { showExternalMinistries: false }, partners: [], declined: [] })), false);
 });
 
-test("retries a provider that rejects a valid conditional pointer update", async () => {
+test("never falls back to an unconditional overwrite when a conditional update is rejected", async () => {
 	const d = memory();
 	const put = d.put;
 	d.put = async (key: string, body: any, opts: any) => {
@@ -39,9 +39,8 @@ test("retries a provider that rejects a valid conditional pointer update", async
 	};
 	__setRuntimeContentDriverForTests(d as any);
 	const first = await publish("retry/settings.json", { value: 1 }, { value: 0 }, "seed", locals);
-	const saved = await publish("retry/settings.json", { value: 2 }, { value: 0 }, first.version, locals);
-	assert.equal((await readPublished<any>("retry/settings.json", {}, locals)).value.value, 2);
-	assert.notEqual(saved.version, first.version);
+	await assert.rejects(() => publish("retry/settings.json", { value: 2 }, { value: 0 }, first.version, locals));
+	assert.equal((await readPublished<any>("retry/settings.json", {}, locals)).value.value, 1);
 });
 
 test("legacy settings are read as seed then CAS-wrapped once", async () => {

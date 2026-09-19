@@ -10,6 +10,7 @@ import { blocksConfig } from "./blocks";
 import MenuEditor from "./MenuEditor";
 
 type PageMeta = { slug: string; title: string; description: string; previewImage: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
+type SitePageMeta = { path: string; title: string; previewImage: string; status: "draft" | "live" };
 type PageFilter = "all" | "live" | "draft";
 type NavItem = { label: string; href: string; blurb?: string };
 type NavGroup = { label: string; href: string; items: NavItem[] };
@@ -80,7 +81,8 @@ function StudioAppearance() {
 
 export default function BuilderApp() {
 	const [pages, setPages] = useState<PageMeta[]>([]);
-	const [sitePages, setSitePages] = useState<Array<{ path: string; title: string }>>([]);
+	const [sitePages, setSitePages] = useState<SitePageMeta[]>([]);
+	const [sitePagesVersion, setSitePagesVersion] = useState("seed");
 	const [nav, setNav] = useState<Nav | null>(null);
 	const [menuMode, setMenuMode] = useState(false);
 	const [query, setQuery] = useState("");
@@ -101,7 +103,7 @@ export default function BuilderApp() {
 	const visibleSitePages = sitePages.filter((page) => {
 		const needle = query.trim().toLowerCase();
 		const hasBuilder = pages.some((builderPage) => builderPage.path === page.path);
-		return !hasBuilder && filter !== "draft" && (!needle || `${page.title} ${page.path}`.toLowerCase().includes(needle));
+		return !hasBuilder && (filter === "all" || page.status === filter) && (!needle || `${page.title} ${page.path}`.toLowerCase().includes(needle));
 	});
 	const navGroups = nav?.groups || [];
 	const headerPathOwners = new Map<string, number>();
@@ -129,6 +131,7 @@ export default function BuilderApp() {
 		setPages(res.pages || []);
 		setVersions(Object.fromEntries((res.pages || []).map((page: any) => [page.slug, page.version])));
 		setSitePages(res.sitePages || []);
+		setSitePagesVersion(res.sitePagesVersion || "seed");
 		setNav(navRes.nav || null);
 	}, []);
 	useEffect(() => { refresh(); }, [refresh]);
@@ -165,12 +168,24 @@ export default function BuilderApp() {
 		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status, version: versions[s] }) });
 		if (res.ok) {
 			say(status === "live"
-				? (res.via === "git" ? "Going live in a minute or two" : "Live ✓")
+				? (res.via === "git" ? "Publishing in a minute or two" : "Published ✓")
 				: "Back to draft");
 			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
 			setVersions((v) => ({ ...v, [s]: res.version }));
 			refresh();
 		} else { say(res.error || "Couldn't update"); }
+	}
+
+	async function setSiteStatus(path: string, status: "draft" | "live") {
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ sitePath: path, status, sitePagesVersion }) });
+		if (res.ok) {
+			setSitePagesVersion(res.version);
+			setSitePages((current) => current.map((page) => page.path === path ? { ...page, status } : page));
+			say(status === "live" ? "Published ✓" : "Saved as draft");
+		} else {
+			say(res.error || "Couldn't update");
+			refresh();
+		}
 	}
 
 	async function removePage(s: string, title: string) {
@@ -242,7 +257,7 @@ export default function BuilderApp() {
 					<div className="builder-directory__tools">
 						<label className="builder-search"><span className="sr-only">Search pages</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search pages…" /></label>
 						<div className="builder-filters" aria-label="Filter pages">
-							{(["all", "live", "draft"] as PageFilter[]).map((option) => <button key={option} type="button" aria-pressed={filter === option} onClick={() => setFilter(option)}>{option === "all" ? "All" : option === "live" ? "Live" : "Drafts"}</button>)}
+							{(["all", "live", "draft"] as PageFilter[]).map((option) => <button key={option} type="button" aria-pressed={filter === option} onClick={() => setFilter(option)}>{option === "all" ? "All" : option === "live" ? "Published" : "Drafts"}</button>)}
 						</div>
 					</div>
 
@@ -260,12 +275,19 @@ export default function BuilderApp() {
 								<button className="builder-page-row__open" type="button" onClick={() => openPage(p.slug)}>
 									<strong>{p.title}</strong><small>{p.path}</small><span>{p.description || "Open this page to see its sections."}</span>
 								</button>
-								<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
-									<span>{p.status === "live" ? "Live" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to go live"}</small>
+								<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+									<span>{p.status === "live" ? "Published" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to publish"}</small>
 								</button>
 								{!p.mounted && <details className="builder-page-row__actions"><summary aria-label={`More actions for ${p.title}`}>•••</summary><div><button className="builder-danger" onClick={() => removePage(p.slug, p.title)}>Delete page</button></div></details>}
 							</article>)}
-								{group.sitePages.map((p) => <a className="builder-site-page-row" key={p.path} href={p.path} target="_blank" rel="noreferrer"><span><strong>{p.title}</strong><small>{p.path}</small></span><span>On-page editor ↗</span></a>)}
+								{group.sitePages.map((p) => <article key={p.path} className="builder-page-row">
+									<a className="builder-page-row__preview" href={p.path} target="_blank" rel="noreferrer" aria-label={`View ${p.title}`}><img src={p.previewImage} alt="" loading="lazy" /></a>
+									<a className="builder-page-row__open" href={p.path} target="_blank" rel="noreferrer"><strong>{p.title}</strong><small>{p.path}</small><span>Open the page to edit its words and images.</span></a>
+									<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setSiteStatus(p.path, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+										<span>{p.status === "live" ? "Published" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to publish"}</small>
+									</button>
+									<a className="builder-page-row__view" href={p.path} target="_blank" rel="noreferrer" aria-label={`View ${p.title}`}>↗</a>
+								</article>)}
 								{group.pages.length + group.sitePages.length === 0 && <p className="builder-page-group__empty">No pages under this header.</p>}
 								</div>
 							</section>
@@ -290,7 +312,7 @@ export default function BuilderApp() {
 					title="Click to flip between draft and live"
 					onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
 				>
-					{data?.status === "live" ? "LIVE" : "DRAFT"}
+					{data?.status === "live" ? "PUBLISHED" : "DRAFT"}
 				</button>
 				<a className="builder-button builder-button--secondary" href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<StudioAppearance />

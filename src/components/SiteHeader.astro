@@ -3,6 +3,7 @@ import { readNav } from "../lib/studio/nav";
 import { runtimeSite } from "../data/site";
 import { serviceForChurch } from "../data/sunday";
 import ThemeControl from "./ThemeControl.astro";
+import { isPagePublished } from "../lib/studio/page-visibility";
 
 interface Props {
 	/** Where the wordmark points. */
@@ -14,19 +15,24 @@ const { brandHref = "/", church: suppliedChurch } = Astro.props;
 
 // The menus are content (content/nav.json), editable in the Page Builder.
 const nav = await readNav(Astro.locals);
+const hrefs = [...new Set(["/", "/sunday", nav.cta.href, ...nav.groups.flatMap((group) => [group.href, ...group.items.map((item) => item.href)])])];
+const visibility = new Map(await Promise.all(hrefs.map(async (href) => [href, await isPagePublished(href, Astro.locals)] as const)));
+const visibleGroups = nav.groups.map((group) => ({ ...group, rootVisible: visibility.get(group.href) !== false, items: group.items.filter((item) => visibility.get(item.href) !== false) })).filter((group) => group.rootVisible || group.items.length > 0);
+const homeVisible = visibility.get("/") !== false;
+const sundayVisible = visibility.get("/sunday") !== false;
 const church = suppliedChurch ?? (await runtimeSite(Astro.locals)).church;
 const service = serviceForChurch(church);
 ---
 
 <header class="chrome">
 	<div class="chrome__bar">
-		<a class="chrome__brand" href={brandHref}>New Life</a>
+		{homeVisible ? <a class="chrome__brand" href={brandHref}>New Life</a> : <span class="chrome__brand">New Life</span>}
 
 		<!-- The answer, on every page, without a tap. -->
-		<a class="chrome__when" href="/sunday">
+		{sundayVisible && <a class="chrome__when" href="/sunday">
 			<span class="chrome__when-time">{service.shortWhen}</span>
 			<span class="chrome__when-place">{service.street}</span>
-		</a>
+		</a>}
 		<ThemeControl />
 
 		<button
@@ -43,9 +49,9 @@ const service = serviceForChurch(church);
 
 	<nav class="chrome__nav" id="site-nav" aria-label="Primary" hidden>
 		<ul class="navlist">
-			{nav.groups.map((g) => (
+			{visibleGroups.map((g) => (
 				<li class="navlist__item">
-					<a class="navlist__link" href={g.href}>{g.label}</a>
+					{g.rootVisible ? <a class="navlist__link" href={g.href}>{g.label}</a> : <span class="navlist__link">{g.label}</span>}
 					{g.items.length > 0 && (
 						<ul class="navlist__sub">
 							{g.items.map((it) => (
@@ -56,7 +62,7 @@ const service = serviceForChurch(church);
 				</li>
 			))}
 		</ul>
-		<a class="navlist__cta" href={nav.cta.href} target="_blank" rel="noopener">{nav.cta.label}</a>
+		{visibility.get(nav.cta.href) !== false && <a class="navlist__cta" href={nav.cta.href} target="_blank" rel="noopener">{nav.cta.label}</a>}
 	</nav>
 </header>
 
