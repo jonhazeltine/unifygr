@@ -9,7 +9,7 @@ import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 import MenuEditor from "./MenuEditor";
 
-type PageMeta = { slug: string; title: string; description: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
+type PageMeta = { slug: string; title: string; description: string; previewImage: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
 type PageFilter = "all" | "live" | "draft";
 
 const EMPTY = (title: string) => ({
@@ -225,20 +225,22 @@ export default function BuilderApp() {
 						</div>
 					</div>
 
-					<div className="builder-directory__section-heading"><div><h2>Pages you can build</h2><p>Open a page to edit it<span className="builder-reorder-hint"> · drag cards to reorder</span>.</p></div><span>{visiblePages.length} {visiblePages.length === 1 ? "page" : "pages"}</span></div>
-					<div className="builder-page-grid">
+					<div className="builder-directory__section-heading"><div><h2>Pages you can build</h2><p>Visuals come from each page<span className="builder-reorder-hint"> · drag rows to reorder</span>.</p></div><span>{visiblePages.length} {visiblePages.length === 1 ? "page" : "pages"}</span></div>
+					<div className="builder-page-list">
 						{visiblePages.map((p) => {
 							const pageIndex = pages.findIndex((page) => page.slug === p.slug);
-							return <article key={p.slug} className="builder-page-card" draggable={!query && filter === "all"} onDragStart={() => { dragFrom.current = pageIndex; }} onDragOver={(event) => event.preventDefault()} onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, pageIndex); dragFrom.current = null; }}>
-								<button className={`builder-page-card__preview builder-page-card__preview--${pageIndex % 4}`} onClick={() => openPage(p.slug)}>
-									<span className="builder-page-card__kicker">{p.status === "live" ? "On the site" : "Staff preview"}</span>
-									<strong>{p.title}</strong>
-									<span>{p.description || "Open this page to see its sections."}</span>
-								</button>
-								<div className="builder-page-card__details">
-									<button className="builder-page-card__open" onClick={() => openPage(p.slug)}><span><strong>{p.title}</strong><small>{p.path}</small></span><span>Open →</span></button>
-									<div className="builder-page-card__meta"><span className={`builder-status builder-status--${p.status}`}>{p.status === "live" ? "Live" : "Draft"}</span><details><summary aria-label={`Actions for ${p.title}`}>•••</summary><div><button onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")}>{p.status === "live" ? "Unpublish" : "Go live"}</button>{!p.mounted && <button className="builder-danger" onClick={() => removePage(p.slug, p.title)}>Delete page</button>}</div></details></div>
+							return <article key={p.slug} className="builder-page-row" draggable={!query && filter === "all"} onDragStart={() => { dragFrom.current = pageIndex; }} onDragOver={(event) => event.preventDefault()} onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, pageIndex); dragFrom.current = null; }}>
+								<div className={`builder-page-row__preview${p.previewImage ? "" : " builder-page-row__preview--empty"}`}>
+									{p.previewImage ? <img src={p.previewImage} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title.slice(0, 1)}</span>}
+									<button type="button" aria-label={`Edit ${p.title}`} onClick={() => openPage(p.slug)} />
 								</div>
+								<button className="builder-page-row__open" type="button" onClick={() => openPage(p.slug)}>
+									<strong>{p.title}</strong><small>{p.path}</small><span>{p.description || "Open this page to see its sections."}</span>
+								</button>
+								<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+									<span>{p.status === "live" ? "Live" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to go live"}</small>
+								</button>
+								{!p.mounted && <details className="builder-page-row__actions"><summary aria-label={`More actions for ${p.title}`}>•••</summary><div><button className="builder-danger" onClick={() => removePage(p.slug, p.title)}>Delete page</button></div></details>}
 							</article>;
 						})}
 						{pages.length === 0 && <div className="builder-empty"><strong>No pages yet</strong><p>Create the first page to begin.</p><button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button></div>}

@@ -136,6 +136,7 @@ export type PageListing = {
 	slug: string;
 	title: string;
 	description: string;
+	previewImage: string;
 	status: PageStatus;
 	order: number;
 	/** where the page is served (a mounted real route, or /p/<slug>) */
@@ -143,6 +144,14 @@ export type PageListing = {
 	/** mounted pages are part of the site structure and can't be deleted */
 	mounted: boolean;
 	version: string;
+};
+
+const STUDIO_THUMBNAILS: Record<string, string> = {
+	"ambassador-teams": "/art/studio-thumbs/ambassador.webp",
+	"meals-of-hope": "/art/studio-thumbs/meals-of-hope.webp",
+	"mission-trips": "/art/studio-thumbs/mission-trips.webp",
+	staff: "/art/studio-thumbs/staff.webp",
+	welcome: "/art/studio-thumbs/welcome.webp",
 };
 
 export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> {
@@ -165,6 +174,7 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 				slug,
 				title: String(data.root.props.title || slug),
 				description: String(data.root.props.description || data.root.props.kicker || ""),
+				previewImage: STUDIO_THUMBNAILS[slug] || "",
 				status: data.status,
 				order: data.order,
 				path: MOUNTED[slug] || `/p/${slug}`,
