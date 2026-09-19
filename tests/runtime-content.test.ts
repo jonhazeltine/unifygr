@@ -17,7 +17,7 @@ import {
 import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
 import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
-import { readSitePageStatuses, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
+import { readSitePageStatuses, setSitePageStatus, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
 import { isPagePublished } from "../src/lib/studio/page-visibility.ts";
 
 type Entry = { body: string; etag: string };
@@ -209,6 +209,8 @@ test("shared navigation visibility follows builder drafts and tolerates malforme
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
 	__setBundledPagesForTests({ "/content/pages/giving.json": page("draft", "Giving"), "/content/pages/welcome.json": page("draft", "Welcome") });
 	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	await setSitePageStatus("/giving", "draft", pageLocals);
+	await setSitePageStatus("/p/welcome", "draft", pageLocals);
 	assert.equal(await isPagePublished("/giving", pageLocals), false);
 	assert.equal(await isPagePublished("/p/welcome", pageLocals), false);
 	assert.equal(await isPagePublished("https://%", pageLocals), true);

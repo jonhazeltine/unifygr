@@ -1,9 +1,21 @@
 import { ContentConflict, publish, readPublished, runtimeToken, type RuntimeLocals } from "./runtime-content";
+import { pagePath } from "./page-routes";
 
 export type SitePageStatus = "draft" | "live";
 export type SitePageStatuses = Record<string, SitePageStatus>;
 
 const KEY = "studio/site-pages/statuses.json";
+let BUNDLED: Record<string, any> = {};
+try { BUNDLED = import.meta.glob("../../../content/pages/*.json", { eager: true }); } catch { BUNDLED = {}; }
+
+function seedStatuses(): SitePageStatuses {
+	return Object.fromEntries(Object.entries(BUNDLED).map(([file, mod]) => {
+		const slug = file.split("/").pop()!.replace(/\.json$/, "");
+		const data = (mod as any).default ?? mod;
+		return [pagePath(slug), data?.status === "live" ? "live" : "draft"];
+	}));
+}
+
 const EMPTY: SitePageStatuses = {};
 const requestReads = new WeakMap<object, Promise<{ value: SitePageStatuses; version: string }>>();
 
@@ -17,7 +29,8 @@ function cleanPath(value: unknown): string | null {
 export async function readSitePageStatuses(locals?: RuntimeLocals) {
 	const load = async () => {
 		const stored = await readPublished<SitePageStatuses>(KEY, EMPTY, locals);
-		const value = Object.fromEntries(Object.entries(stored.value || {}).filter(([path, status]) => cleanPath(path) && (status === "draft" || status === "live")));
+		const saved = Object.fromEntries(Object.entries(stored.value || {}).filter(([path, status]) => cleanPath(path) && (status === "draft" || status === "live")));
+		const value = { ...seedStatuses(), ...saved } as SitePageStatuses;
 		return { value, version: stored.version };
 	};
 	if (!locals || typeof locals !== "object") return load();
@@ -28,8 +41,8 @@ export async function readSitePageStatuses(locals?: RuntimeLocals) {
 	return pending;
 }
 
-export function sitePageStatus(path: string, statuses: SitePageStatuses): SitePageStatus {
-	return statuses[cleanPath(path) || path] === "draft" ? "draft" : "live";
+export function sitePageStatus(path: string, statuses: SitePageStatuses, fallback: SitePageStatus = "live"): SitePageStatus {
+	return statuses[cleanPath(path) || path] ?? fallback;
 }
 
 export async function sitePageDraftGuard(path: string, staff: boolean, locals?: RuntimeLocals): Promise<Response | null> {
@@ -39,7 +52,7 @@ export async function sitePageDraftGuard(path: string, staff: boolean, locals?: 
 	}
 	const statuses = await readSitePageStatuses(locals);
 	return sitePageStatus(path, statuses.value) === "draft"
-		? new Response("Not found", { status: 404, headers: { "x-robots-tag": "noindex" } })
+		? new Response("Not found", { status: 404, headers: { "cache-control": "no-store", "x-robots-tag": "noindex" } })
 		: null;
 }
 
@@ -59,4 +72,18 @@ export async function updateSitePageStatus(pathValue: unknown, status: unknown, 
 	const saved = await publish(KEY, next, EMPTY, current.version, locals);
 	if (locals && typeof locals === "object") requestReads.set(locals, Promise.resolve({ value: next, version: saved.version }));
 	return { status, version: saved.version };
+}
+
+export async function setSitePageStatus(path: string, status: SitePageStatus, locals?: RuntimeLocals): Promise<void> {
+	for (let attempt = 0; attempt < 5; attempt++) {
+		const current = await readSitePageStatuses(locals);
+		if (current.value[cleanPath(path) || path] === status) return;
+		try {
+			await updateSitePageStatus(path, status, current.version, locals);
+			return;
+		} catch (error) {
+			if (!(error instanceof ContentConflict) || attempt === 4) throw error;
+			if (locals && typeof locals === "object") requestReads.delete(locals);
+		}
+	}
 }

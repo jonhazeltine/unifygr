@@ -1,8 +1,6 @@
-import { MOUNTED, readPage, validSlug } from "./pages";
 import { readSitePageStatuses, sitePageStatus } from "./site-page-state";
 import type { RuntimeLocals } from "./runtime-content";
 
-const mountedByPath = new Map(Object.entries(MOUNTED).map(([slug, path]) => [path, slug]));
 const requestChecks = new WeakMap<object, Map<string, Promise<boolean>>>();
 
 function internalPath(href: string): string | null {
@@ -18,9 +16,6 @@ export async function isPagePublished(href: string, locals?: RuntimeLocals): Pro
 	const path = internalPath(href);
 	if (!path) return true;
 	const load = async () => {
-		const customSlug = path.startsWith("/p/") ? path.slice(3) : "";
-		const slug = mountedByPath.get(path) || (validSlug(customSlug) ? customSlug : undefined);
-		if (slug) return (await readPage(slug, locals))?.status === "live";
 		const statuses = await readSitePageStatuses(locals);
 		return sitePageStatus(path, statuses.value) === "live";
 	};

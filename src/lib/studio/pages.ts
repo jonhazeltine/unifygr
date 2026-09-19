@@ -16,6 +16,10 @@
 
 import { ContentConflict, publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
 import { previewPath } from "./site-pages";
+import { BARE, MOUNTED, pagePath } from "./page-routes";
+import { readSitePageStatuses, setSitePageStatus, sitePageStatus } from "./site-page-state";
+
+export { BARE, MOUNTED } from "./page-routes";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
 // Keep the glob call direct so Vite replaces it with the production manifest.
@@ -43,22 +47,6 @@ export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Sp
 
 // Builder pages mounted at REAL site routes (their .astro files render the
 // page JSON). These can't be deleted from the builder — the nav links to them.
-export const MOUNTED: Record<string, string> = {
-	"mission-trips": "/mission-trips",
-	"staff": "/staff",
-	"giving": "/giving",
-	"tap": "/tap",
-	"next-steps": "/next-steps",
-	"meals-of-hope": "/meals-of-hope",
-	"ambassador-teams": "/ambassador-teams",
-	"outreach-teams": "/outreach-teams",
-	"go": "/go",
-};
-
-// Pages that render with no header, footer or menu — a single screen of big
-// buttons. Their .astro route passes `bare` to MountedPage.
-export const BARE = new Set(["tap", "next-steps"]);
-
 export type PageStatus = "draft" | "live";
 
 export type PageData = {
@@ -151,6 +139,7 @@ const STUDIO_THUMBNAILS: Record<string, string> = {
 	"ambassador-teams": "/art/studio-thumbs/ambassador.webp",
 	"meals-of-hope": "/art/studio-thumbs/meals-of-hope.webp",
 	"mission-trips": "/art/studio-thumbs/mission-trips.webp",
+	staff: "/art/studio-thumbs/staff.webp",
 	welcome: "/art/studio-thumbs/welcome.webp",
 };
 
@@ -197,7 +186,10 @@ export async function readPageState(slug: string, locals?: RuntimeLocals): Promi
 	// A tombstone wins over the repository seed so deleting a Builder page never
 	// leaves it publicly reachable after the index changes.
 	if (stored.value === null) return null;
-	return { data: sanitizeData(stored.value), version: stored.version };
+	const data = sanitizeData(stored.value);
+	const statuses = await readSitePageStatuses(locals);
+	data.status = sitePageStatus(pagePath(slug), statuses.value, data.status);
+	return { data, version: stored.version };
 }
 
 function serialize(data: PageData): string {
@@ -230,6 +222,7 @@ export async function writePage(
 	const current = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
 	const saved = await publish(keyFor(slug), clean, bundled, expectedVersion ?? current.version, locals);
 	await updatePageIndex((slugs) => slugs.includes(slug) ? slugs : [...slugs, slug], locals);
+	await setSitePageStatus(pagePath(slug), clean.status, locals);
 	return { data: clean, via: "runtime", version: saved.version };
 }
 
@@ -237,6 +230,7 @@ export async function writePage(
 export async function updatePageMeta(slug: string, meta: { status?: PageStatus; order?: number }, expectedVersion?: string, locals?: RuntimeLocals): Promise<SaveResult> {
 	const current = await readPage(slug, locals);
 	if (!current) throw new Error("Page not found.");
+	if (meta.status) await setSitePageStatus(pagePath(slug), meta.status, locals);
 	return writePage(slug, current, meta, expectedVersion, locals);
 }
 
@@ -250,6 +244,7 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
 	await updatePageIndex((entries) => entries.filter((entry) => entry !== slug), locals);
+	await setSitePageStatus(pagePath(slug), "draft", locals);
 	return { via: "runtime" };
 }
 
