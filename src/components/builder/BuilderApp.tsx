@@ -11,6 +11,9 @@ import MenuEditor from "./MenuEditor";
 
 type PageMeta = { slug: string; title: string; description: string; previewImage: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
 type PageFilter = "all" | "live" | "draft";
+type NavItem = { label: string; href: string; blurb?: string };
+type NavGroup = { label: string; href: string; items: NavItem[] };
+type Nav = { groups: NavGroup[]; cta: { label: string; href: string } };
 
 const EMPTY = (title: string) => ({
 	status: "draft" as const,
@@ -78,6 +81,7 @@ function StudioAppearance() {
 export default function BuilderApp() {
 	const [pages, setPages] = useState<PageMeta[]>([]);
 	const [sitePages, setSitePages] = useState<Array<{ path: string; title: string }>>([]);
+	const [nav, setNav] = useState<Nav | null>(null);
 	const [menuMode, setMenuMode] = useState(false);
 	const [query, setQuery] = useState("");
 	const [filter, setFilter] = useState<PageFilter>("all");
@@ -94,14 +98,38 @@ export default function BuilderApp() {
 		const matchesQuery = !needle || `${page.title} ${page.path} ${page.description}`.toLowerCase().includes(needle);
 		return matchesQuery && (filter === "all" || page.status === filter);
 	});
+	const visibleSitePages = sitePages.filter((page) => {
+		const needle = query.trim().toLowerCase();
+		const hasBuilder = pages.some((builderPage) => builderPage.path === page.path);
+		return !hasBuilder && filter !== "draft" && (!needle || `${page.title} ${page.path}`.toLowerCase().includes(needle));
+	});
+	const navGroups = nav?.groups || [];
+	const headerPathOwners = new Map<string, number>();
+	navGroups.forEach((group, groupIndex) => {
+		[group.href, ...group.items.map((item) => item.href)].forEach((path) => {
+			if (!headerPathOwners.has(path)) headerPathOwners.set(path, groupIndex);
+		});
+	});
+	const groupedDirectory = navGroups.map((group, groupIndex) => {
+		return {
+			...group,
+			pages: visiblePages.filter((page) => headerPathOwners.get(page.path) === groupIndex),
+			sitePages: visibleSitePages.filter((page) => headerPathOwners.get(page.path) === groupIndex),
+		};
+	});
+	const headerPaths = new Set(headerPathOwners.keys());
+	const ungroupedPages = visiblePages.filter((page) => !headerPaths.has(page.path));
+	const ungroupedSitePages = visibleSitePages.filter((page) => !headerPaths.has(page.path));
+	const directoryGroups = groupedDirectory.filter((group) => (!query.trim() && filter === "all") || group.pages.length + group.sitePages.length > 0);
 
 	const say = (m: string) => { setToast(m); setTimeout(() => setToast(""), 2200); };
 
 	const refresh = useCallback(async () => {
-		const res = await api("/api/studio/pages");
+		const [res, navRes] = await Promise.all([api("/api/studio/pages"), api("/api/studio/nav")]);
 		setPages(res.pages || []);
 		setVersions(Object.fromEntries((res.pages || []).map((page: any) => [page.slug, page.version])));
 		setSitePages(res.sitePages || []);
+		setNav(navRes.nav || null);
 	}, []);
 	useEffect(() => { refresh(); }, [refresh]);
 
@@ -152,20 +180,6 @@ export default function BuilderApp() {
 		else { say(res.error || "Couldn't delete"); }
 	}
 
-	// Drag-to-reorder the page list (native HTML5 drag on the rows).
-	const dragFrom = useRef<number | null>(null);
-	async function reorder(from: number, to: number) {
-		if (from === to) return;
-		const next = [...pages];
-		const [moved] = next.splice(from, 1);
-		next.splice(to, 0, moved);
-		setPages(next);
-		await Promise.all(next.map((p, i) =>
-			api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: p.slug, order: i, version: versions[p.slug] }) }),
-		));
-		refresh();
-	}
-
 	async function askAI(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 		const input = (e.currentTarget.elements.namedItem("ai") as HTMLInputElement);
@@ -198,6 +212,7 @@ export default function BuilderApp() {
 					paths={[...pages.map((p) => ({ path: p.path, title: p.title })), ...sitePages]}
 					onBack={() => setMenuMode(false)}
 					say={say}
+					onSaved={refresh}
 				/>
 				{toast && <div style={S.toast}>{toast}</div>}
 			</div>
@@ -211,13 +226,19 @@ export default function BuilderApp() {
 				<header className="builder-directory__header">
 					<div><p className="builder-directory__eyebrow">✦ Studio</p><h1>Site pages</h1><p>Choose a page, then edit its sections in the builder.</p></div>
 					<div className="builder-directory__header-actions">
-						<button className="builder-button builder-button--secondary" onClick={() => setMenuMode(true)}>☰ Edit menu</button>
 						<button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button>
 						<StudioAppearance />
 					</div>
 				</header>
 
 				<main className="builder-directory__main">
+					<section className="builder-header-map" aria-labelledby="builder-header-map-title">
+						<div><p className="builder-header-map__eyebrow">Top-level organization</p><h2 id="builder-header-map-title">Site header</h2><p>This is the structure visitors use to find everything.</p></div>
+						<div className="builder-header-map__groups">
+							{navGroups.map((group) => <span key={`${group.label}-${group.href}`}><strong>{group.label}</strong><small>{1 + group.items.length} {group.items.length === 0 ? "page" : "pages"}</small></span>)}
+						</div>
+						<button className="builder-button builder-button--secondary" type="button" onClick={() => setMenuMode(true)}>Organize header →</button>
+					</section>
 					<div className="builder-directory__tools">
 						<label className="builder-search"><span className="sr-only">Search pages</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search pages…" /></label>
 						<div className="builder-filters" aria-label="Filter pages">
@@ -225,11 +246,13 @@ export default function BuilderApp() {
 						</div>
 					</div>
 
-					<div className="builder-directory__section-heading"><div><h2>Pages you can build</h2><p>Visuals come from each page<span className="builder-reorder-hint"> · drag rows to reorder</span>.</p></div><span>{visiblePages.length} {visiblePages.length === 1 ? "page" : "pages"}</span></div>
-					<div className="builder-page-list">
-						{visiblePages.map((p) => {
-							const pageIndex = pages.findIndex((page) => page.slug === p.slug);
-							return <article key={p.slug} className="builder-page-row" draggable={!query && filter === "all"} onDragStart={() => { dragFrom.current = pageIndex; }} onDragOver={(event) => event.preventDefault()} onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, pageIndex); dragFrom.current = null; }}>
+					<div className="builder-directory__section-heading"><div><h2>Pages by header section</h2><p>The same organization visitors see on the site.</p></div><span>{visiblePages.length + visibleSitePages.length} {visiblePages.length + visibleSitePages.length === 1 ? "page" : "pages"}</span></div>
+					<div className="builder-page-groups">
+						{[...directoryGroups, ...(ungroupedPages.length || ungroupedSitePages.length ? [{ label: "Not in the header", href: "", items: [], pages: ungroupedPages, sitePages: ungroupedSitePages }] : [])].map((group) => (
+							<section className="builder-page-group" key={`${group.label}-${group.href}`}>
+								<header><div><h3>{group.label}</h3><p>{group.href || "Pages visitors reach another way"}</p></div><span>{group.pages.length + group.sitePages.length}</span></header>
+								<div className="builder-page-list">
+								{group.pages.map((p) => <article key={p.slug} className="builder-page-row">
 								<div className={`builder-page-row__preview${p.previewImage ? "" : " builder-page-row__preview--empty"}`}>
 									{p.previewImage ? <img src={p.previewImage} alt="" loading="lazy" /> : <span aria-hidden="true">{p.title.slice(0, 1)}</span>}
 									<button type="button" aria-label={`Edit ${p.title}`} onClick={() => openPage(p.slug)} />
@@ -241,13 +264,15 @@ export default function BuilderApp() {
 									<span>{p.status === "live" ? "Live" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to go live"}</small>
 								</button>
 								{!p.mounted && <details className="builder-page-row__actions"><summary aria-label={`More actions for ${p.title}`}>•••</summary><div><button className="builder-danger" onClick={() => removePage(p.slug, p.title)}>Delete page</button></div></details>}
-							</article>;
-						})}
-						{pages.length === 0 && <div className="builder-empty"><strong>No pages yet</strong><p>Create the first page to begin.</p><button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button></div>}
-						{pages.length > 0 && visiblePages.length === 0 && <div className="builder-empty"><strong>No matching pages</strong><p>Try another search or filter.</p></div>}
+							</article>)}
+								{group.sitePages.map((p) => <a className="builder-site-page-row" key={p.path} href={p.path} target="_blank" rel="noreferrer"><span><strong>{p.title}</strong><small>{p.path}</small></span><span>On-page editor ↗</span></a>)}
+								{group.pages.length + group.sitePages.length === 0 && <p className="builder-page-group__empty">No pages under this header.</p>}
+								</div>
+							</section>
+						))}
+						{pages.length + sitePages.length === 0 && <div className="builder-empty"><strong>No pages yet</strong><p>Create the first page to begin.</p><button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button></div>}
+						{pages.length + sitePages.length > 0 && visiblePages.length + visibleSitePages.length === 0 && <div className="builder-empty"><strong>No matching pages</strong><p>Try another search or filter.</p></div>}
 					</div>
-
-					<details className="builder-site-pages"><summary><span><strong>Other site pages</strong><small>These pages use the on-page Studio editor.</small></span><span>{sitePages.length} pages⌄</span></summary><div>{sitePages.map((p) => <a key={p.path} href={p.path} target="_blank" rel="noreferrer"><span><strong>{p.title}</strong><small>{p.path}</small></span><span>View ↗</span></a>)}</div></details>
 					<a className="builder-directory__back" href="/">← Back to the site</a>
 				</main>
 			</div>

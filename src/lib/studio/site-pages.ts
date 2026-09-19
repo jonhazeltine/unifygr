@@ -10,7 +10,7 @@
 // import.meta.glob calls; plain Node reaches the catch in unit tests.
 let PAGE_FILES: string[] = [];
 try {
-	PAGE_FILES = Object.keys(import.meta.glob("../../pages/*.astro"));
+	PAGE_FILES = Object.keys(import.meta.glob("../../pages/**/*.astro"));
 } catch {
 	PAGE_FILES = [];
 }
@@ -24,7 +24,7 @@ const EXCLUDE = new Set([
 	"[pillar]", // expanded below
 	"land-sale-update-b7f2", // password-gated private page
 	"happy-church", // local experiment, not a nav page
-	"mission-trips", "membership", "staff", "giving", // blockified
+	"mission-trips", "staff", "giving", // blockified
 ]);
 
 const TITLES: Record<string, string> = {
@@ -52,11 +52,12 @@ export function listHandBuiltPages(): SitePage[] {
 	);
 
 	const slugs = PAGE_FILES
-		.map((f) => f.split("/").pop()!.replace(/\.astro$/, ""))
-		.filter((s) => !EXCLUDE.has(s))
+		.map((file) => file.split("/pages/").pop()!.replace(/\.astro$/, "").replace(/\/index$/, ""))
+		.filter((slug) => !slug.includes("[") && !["admin", "studio", "p", "ministry"].includes(slug.split("/")[0]))
+		.filter((slug) => !EXCLUDE.has(slug))
 		.sort();
 	for (const slug of slugs) {
-		out.push({ path: `/${slug}`, title: TITLES[slug] || prettify(slug) });
+		out.push({ path: `/${slug}`, title: TITLES[slug] || prettify(slug.split("/").pop()!) });
 	}
 	return out;
 }

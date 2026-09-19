@@ -11,10 +11,11 @@ type Nav = { groups: NavGroup[]; cta: { label: string; href: string } };
 const api = (path: string, opts?: RequestInit) =>
 	fetch(path, { headers: { "content-type": "application/json" }, ...opts }).then((r) => r.json());
 
-export default function MenuEditor({ paths, onBack, say }: {
+export default function MenuEditor({ paths, onBack, say, onSaved }: {
 	paths: Array<{ path: string; title: string }>;
 	onBack: () => void;
 	say: (m: string) => void;
+	onSaved: () => void;
 }) {
 	const [nav, setNav] = useState<Nav | null>(null);
 	const [version, setVersion] = useState<string | null>(null);
@@ -26,6 +27,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 	}, []);
 
 	if (!nav) return <div style={{ padding: 24, color: "var(--studio-muted)" }}>Loading the menu…</div>;
+	const uniquePaths = Array.from(new Map(paths.map((path) => [path.path, path])).values());
 
 	const up = (fn: (n: Nav) => void) => setNav((prev) => { const n = structuredClone(prev!); fn(n); return n; });
 
@@ -33,7 +35,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 		setSaving(true);
 		try {
 			const res = await api("/api/studio/nav", { method: "POST", body: JSON.stringify({ nav, version }) });
-			if (res.ok) { setNav(res.nav); setVersion(res.version); say("Menu saved ✓"); }
+			if (res.ok) { setNav(res.nav); setVersion(res.version); say("Header saved ✓"); onSaved(); }
 			else say(res.error || "Couldn't save the menu");
 		} finally { setSaving(false); }
 	}
@@ -41,19 +43,19 @@ export default function MenuEditor({ paths, onBack, say }: {
 	return (
 		<div style={{ maxWidth: 660, margin: "0 auto", padding: "20px 16px 60px" }}>
 			<datalist id="me-paths">
-				{paths.map((p) => <option value={p.path} key={p.path}>{p.title}</option>)}
+				{uniquePaths.map((p) => <option value={p.path} key={p.path}>{p.title}</option>)}
 			</datalist>
 
 			<div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 6 }}>
 				<button style={S.small} onClick={onBack}>‹ Pages</button>
-				<h1 style={{ margin: 0, fontSize: 20 }}>☰ Site menu</h1>
+				<h1 style={{ margin: 0, fontSize: 20 }}>☰ Organize site header</h1>
 				<div style={{ flex: 1 }} />
 				<button style={{ ...S.btn, opacity: saving ? 0.5 : 1 }} disabled={saving} onClick={save}>
-					{saving ? "Saving…" : "Save menu"}
+					{saving ? "Saving…" : "Save header"}
 				</button>
 			</div>
 			<p style={{ color: "var(--studio-muted)", fontSize: 13, margin: "0 0 18px" }}>
-				Drag to reorder. A menu entry with dropdown links shows them on hover; one without is a plain link.
+				These sections organize both the public header and the Studio page directory. Drag sections to reorder; open one to arrange its dropdown pages.
 			</p>
 
 			{nav.groups.map((g, i) => (
@@ -69,14 +71,14 @@ export default function MenuEditor({ paths, onBack, say }: {
 					}}
 					style={S.group}
 				>
-					<div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+					<div className="menu-editor__group-row" style={{ display: "flex", gap: 8, alignItems: "center" }}>
 					<span style={{ color: "var(--studio-muted)", cursor: "grab", userSelect: "none" }}>⠿</span>
-						<input style={{ ...S.input, flex: 1 }} value={g.label} placeholder="Menu label"
+						<input className="menu-editor__main-input" style={{ ...S.input, flex: 1 }} value={g.label} placeholder="Menu label"
 							onChange={(e) => up((n) => { n.groups[i].label = e.target.value; })} />
-						<input style={{ ...S.input, flex: 1.4 }} value={g.href} list="me-paths" placeholder="/link"
+						<input className="menu-editor__main-input" style={{ ...S.input, flex: 1.4 }} value={g.href} list="me-paths" placeholder="/link"
 							onChange={(e) => up((n) => { n.groups[i].href = e.target.value; })} />
 						<button style={S.small} onClick={() => up((n) => { (n.groups[i] as any)._open = !(n.groups[i] as any)._open; })}>
-							{g.items.length} dropdown {g.items.length === 1 ? "link" : "links"} {(g as any)._open ? "▴" : "▾"}
+							{g.items.length} dropdown {g.items.length === 1 ? "page" : "pages"} {(g as any)._open ? "▴" : "▾"}
 						</button>
 						<button style={{ ...S.small, color: "var(--studio-danger)" }} title="Remove this menu entry"
 							onClick={() => { if (window.confirm(`Remove "${g.label}" from the menu?`)) up((n) => { n.groups.splice(i, 1); }); }}>✕</button>
@@ -85,14 +87,14 @@ export default function MenuEditor({ paths, onBack, say }: {
 					{(g as any)._open && (
 						<div style={{ marginTop: 10, display: "grid", gap: 8, paddingLeft: 22 }}>
 							{g.items.map((it, j) => (
-								<div key={j} style={{ display: "grid", gap: 6, gridTemplateColumns: "1fr 1fr auto", alignItems: "start" }}>
+								<div className="menu-editor__item" key={j} style={{ display: "grid", gap: 6, gridTemplateColumns: "1fr 1fr auto", alignItems: "start" }}>
 									<input style={S.input} value={it.label} placeholder="Link label"
 										onChange={(e) => up((n) => { n.groups[i].items[j].label = e.target.value; })} />
 									<input style={S.input} value={it.href} list="me-paths" placeholder="/link"
 										onChange={(e) => up((n) => { n.groups[i].items[j].href = e.target.value; })} />
 									<button style={{ ...S.small, color: "var(--studio-danger)" }} title="Remove link"
 										onClick={() => up((n) => { n.groups[i].items.splice(j, 1); })}>✕</button>
-									<input style={{ ...S.input, gridColumn: "1 / 3", fontSize: 12 }} value={it.blurb || ""} placeholder="One-line description shown under the link (optional)"
+									<input className="menu-editor__blurb" style={{ ...S.input, gridColumn: "1 / 3", fontSize: 12 }} value={it.blurb || ""} placeholder="One-line description shown under the link (optional)"
 										onChange={(e) => up((n) => { n.groups[i].items[j].blurb = e.target.value; })} />
 								</div>
 							))}
@@ -107,7 +109,7 @@ export default function MenuEditor({ paths, onBack, say }: {
 
 			<button style={{ ...S.small, marginTop: 4 }}
 				onClick={() => up((n) => { n.groups.push({ label: "New entry", href: "/", items: [] }); })}>
-				+ Add menu entry
+				+ Add header section
 			</button>
 
 			<h2 style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "#9aa3b2", margin: "26px 0 8px" }}>Highlighted button</h2>
