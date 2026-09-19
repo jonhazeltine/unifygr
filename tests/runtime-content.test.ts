@@ -19,7 +19,7 @@ import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/pa
 import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
 import { readSitePageStatuses, setSitePageStatus, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
-import { isPagePublished } from "../src/lib/studio/page-visibility.ts";
+import { isPagePublished, withPageVisibilityHeaders } from "../src/lib/studio/page-visibility.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -262,6 +262,15 @@ test("public middleware returns a real 404 for a hand-built draft while staff ca
 	assert.equal(publicResponse?.status, 404);
 	assert.equal(publicResponse?.headers.get("x-robots-tag"), "noindex");
 	assert.equal(await sitePageDraftGuard("/about", true, pageLocals), null);
+});
+
+test("Studio-governed page responses never enter a shared cache", () => {
+	const published = withPageVisibilityHeaders(new Response("page", { headers: { "cache-control": "public, s-maxage=86400" } }));
+	assert.equal(published.headers.get("cache-control"), "private, no-store");
+	assert.equal(published.headers.get("x-robots-tag"), null);
+	const preview = withPageVisibilityHeaders(new Response("draft"), true);
+	assert.equal(preview.headers.get("cache-control"), "private, no-store");
+	assert.equal(preview.headers.get("x-robots-tag"), "noindex");
 });
 
 test("media accepts only bytes that match its fixed response image type", () => {

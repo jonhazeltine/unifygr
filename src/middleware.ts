@@ -2,7 +2,7 @@ import { defineMiddleware } from "astro:middleware";
 import { redirectForRequest } from "../domain-redirects.mjs";
 import { isAuthed } from "./lib/studio/auth";
 import { sitePageDraftGuard } from "./lib/studio/site-page-state";
-import { isPagePublished } from "./lib/studio/page-visibility";
+import { isPagePublished, withPageVisibilityHeaders } from "./lib/studio/page-visibility";
 
 export const onRequest = defineMiddleware(async ({ request, redirect, cookies, locals }, next) => {
 	const target = redirectForRequest(request, process.env.PUBLIC_SITE_URL);
@@ -13,13 +13,11 @@ export const onRequest = defineMiddleware(async ({ request, redirect, cookies, l
 		const blocked = await sitePageDraftGuard(pathname, staff, locals);
 		if (blocked) return blocked;
 		const response = await next();
-		if (staff && !(await isPagePublished(pathname, locals))) {
-			const headers = new Headers(response.headers);
-			headers.set("cache-control", "private, no-store");
-			headers.set("x-robots-tag", "noindex");
-			return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
-		}
-		return response;
+		// Every public page can now be unpublished from Studio. Never place these
+		// responses in a shared cache, or a previously published page could remain
+		// visible after its switch is changed to Draft.
+		const draftPreview = staff && !(await isPagePublished(pathname, locals));
+		return withPageVisibilityHeaders(response, draftPreview);
 	}
 	return next();
 });

@@ -28,3 +28,10 @@ export async function isPagePublished(href: string, locals?: RuntimeLocals): Pro
 	checks.set(path, pending);
 	return pending;
 }
+
+export function withPageVisibilityHeaders(response: Response, draftPreview = false): Response {
+	const headers = new Headers(response.headers);
+	headers.set("cache-control", "private, no-store");
+	if (draftPreview) headers.set("x-robots-tag", "noindex");
+	return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
+}
