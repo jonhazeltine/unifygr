@@ -20,10 +20,12 @@ export function publicPaths(input: {
   families: Family[];
   entries: MinistryEntry[];
   pages: BuilderPage[];
+  sitePages?: string[];
   externalMinistriesEnabled?: boolean;
 }): string[] {
   const showExternalMinistries = input.externalMinistriesEnabled !== false;
   const paths = new Set<string>(PUBLIC_ROUTES);
+  for (const path of input.sitePages ?? []) paths.add(path);
   if (showExternalMinistries) {
     paths.add("/ministries/calendar");
     paths.add("/ministries/partnerships");

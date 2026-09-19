@@ -14,9 +14,12 @@ test("public paths include live runtime pages and exclude drafts and private rou
       { path: "/p/live-page", status: "live" },
       { path: "/p/draft-page", status: "draft" },
     ],
+    sitePages: ["/membership", "/unify-gr"],
   });
 
   assert(paths.includes("/p/live-page"));
+  assert(paths.includes("/membership"));
+  assert(paths.includes("/unify-gr"));
   assert(paths.includes("/ministries/care/recovery"));
   assert(paths.includes("/ministry/visible"));
   assert(!paths.includes("/p/draft-page"));

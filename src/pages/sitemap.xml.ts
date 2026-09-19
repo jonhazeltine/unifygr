@@ -11,6 +11,7 @@ import { publicPaths, sitemapXml } from "../lib/discovery";
 import { publicSiteUrl } from "../lib/public-site";
 import { listPages } from "../lib/studio/pages";
 import { readSitePageStatuses, sitePageStatus } from "../lib/studio/site-page-state";
+import { listHandBuiltPages } from "../lib/studio/site-pages";
 import { runtimeToken } from "../lib/studio/runtime-content";
 
 export const prerender = false;
@@ -27,7 +28,7 @@ export const GET: APIRoute = async ({ locals }) => {
     .map((entry) => ({ slug: String(entry.slug), house: entry.house, categories: entry.categories }));
   const body = sitemapXml(
     publicSiteUrl(),
-    publicPaths({ pillars, families, entries, pages, externalMinistriesEnabled: showExternalMinistries })
+    publicPaths({ pillars, families, entries, pages, sitePages: listHandBuiltPages().map((page) => page.path), externalMinistriesEnabled: showExternalMinistries })
       .filter((path) => sitePageStatus(path, siteStatuses) === "live"),
   );
 
