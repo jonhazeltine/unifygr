@@ -32,6 +32,13 @@ async function call(path: string, body: unknown): Promise<any> {
 
 export type AsanaTask = { gid: string; url: string };
 
+export function connectCardFollowerIds(): string[] {
+	return String(process.env.ASANA_FOLLOWER_IDS ?? "")
+		.split(",")
+		.map((id) => id.trim())
+		.filter(Boolean);
+}
+
 export async function createFollowUpTask(input: {
 	name: string;
 	notes: string;
@@ -49,11 +56,13 @@ export async function createFollowUpTask(input: {
 	// its own project names its own column.
 	const sectionId = input.projectId ? input.sectionId : process.env.ASANA_SECTION_ID;
 
+	const followers = input.projectId ? [] : connectCardFollowerIds();
 	const task = await call("/tasks", {
 		name: input.name,
 		notes: input.notes,
 		due_on: input.dueOn,
 		projects: [projectId],
+		...(followers.length ? { followers } : {}),
 	});
 
 	// Placing the task in the "New" column is a nicety — a task that lands in
