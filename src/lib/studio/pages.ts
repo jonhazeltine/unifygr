@@ -151,7 +151,6 @@ const STUDIO_THUMBNAILS: Record<string, string> = {
 	"ambassador-teams": "/art/studio-thumbs/ambassador.webp",
 	"meals-of-hope": "/art/studio-thumbs/meals-of-hope.webp",
 	"mission-trips": "/art/studio-thumbs/mission-trips.webp",
-	staff: "/art/studio-thumbs/staff.webp",
 	welcome: "/art/studio-thumbs/welcome.webp",
 };
 

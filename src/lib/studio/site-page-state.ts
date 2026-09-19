@@ -1,4 +1,4 @@
-import { ContentConflict, publish, readPublished, type RuntimeLocals } from "./runtime-content";
+import { ContentConflict, publish, readPublished, runtimeToken, type RuntimeLocals } from "./runtime-content";
 
 export type SitePageStatus = "draft" | "live";
 export type SitePageStatuses = Record<string, SitePageStatus>;
@@ -9,7 +9,9 @@ const requestReads = new WeakMap<object, Promise<{ value: SitePageStatuses; vers
 
 function cleanPath(value: unknown): string | null {
 	if (typeof value !== "string" || !value.startsWith("/") || value.includes("?") || value.includes("#")) return null;
-	return value === "/" ? value : value.replace(/\/+$/, "");
+	let decoded: string;
+	try { decoded = decodeURIComponent(value); } catch { return null; }
+	return decoded === "/" ? decoded : decoded.replace(/\/+$/, "");
 }
 
 export async function readSitePageStatuses(locals?: RuntimeLocals) {
@@ -32,10 +34,18 @@ export function sitePageStatus(path: string, statuses: SitePageStatuses): SitePa
 
 export async function sitePageDraftGuard(path: string, staff: boolean, locals?: RuntimeLocals): Promise<Response | null> {
 	if (staff) return null;
+	if (!runtimeToken(locals) && process.env.NODE_ENV === "production") {
+		return new Response("Service unavailable", { status: 503, headers: { "cache-control": "no-store", "x-robots-tag": "noindex" } });
+	}
 	const statuses = await readSitePageStatuses(locals);
 	return sitePageStatus(path, statuses.value) === "draft"
 		? new Response("Not found", { status: 404, headers: { "x-robots-tag": "noindex" } })
 		: null;
+}
+
+export async function isSitePageDraft(path: string, locals?: RuntimeLocals): Promise<boolean> {
+	const statuses = await readSitePageStatuses(locals);
+	return sitePageStatus(path, statuses.value) === "draft";
 }
 
 export async function updateSitePageStatus(pathValue: unknown, status: unknown, expectedVersion: unknown, locals?: RuntimeLocals) {

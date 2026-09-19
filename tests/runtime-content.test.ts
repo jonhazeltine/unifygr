@@ -18,6 +18,7 @@ import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/pa
 import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
 import { readSitePageStatuses, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
+import { isPagePublished } from "../src/lib/studio/page-visibility.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -199,8 +200,32 @@ test("hand-built pages default published and retain a versioned draft state", as
 	const saved = await updateSitePageStatus("/about", "draft", initial.version, pageLocals);
 	const current = await readSitePageStatuses(pageLocals);
 	assert.equal(sitePageStatus("/about", current.value), "draft");
+	assert.equal(sitePageStatus("/%61bout", current.value), "draft");
 	assert.equal(current.version, saved.version);
 	await assert.rejects(() => updateSitePageStatus("/about", "live", initial.version, pageLocals), ContentConflict);
+});
+
+test("shared navigation visibility follows builder drafts and tolerates malformed external links", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/giving.json": page("draft", "Giving") });
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	assert.equal(await isPagePublished("/giving", pageLocals), false);
+	assert.equal(await isPagePublished("https://%", pageLocals), true);
+});
+
+test("production draft guard fails closed when status storage is not configured", async () => {
+	const previousNodeEnv = process.env.NODE_ENV;
+	const previousToken = process.env.BLOB_READ_WRITE_TOKEN;
+	process.env.NODE_ENV = "production";
+	Reflect.deleteProperty(process.env, "BLOB_READ_WRITE_TOKEN");
+	try {
+		const response = await sitePageDraftGuard("/about", false);
+		assert.equal(response?.status, 503);
+		assert.equal(response?.headers.get("cache-control"), "no-store");
+	} finally {
+		if (previousNodeEnv === undefined) Reflect.deleteProperty(process.env, "NODE_ENV"); else process.env.NODE_ENV = previousNodeEnv;
+		if (previousToken === undefined) Reflect.deleteProperty(process.env, "BLOB_READ_WRITE_TOKEN"); else process.env.BLOB_READ_WRITE_TOKEN = previousToken;
+	}
 });
 
 test("page API publishes and unpublishes a hand-built page with CAS protection", async () => {

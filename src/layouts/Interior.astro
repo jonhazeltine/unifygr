@@ -4,6 +4,7 @@
 // visitor lands.
 import BaseHead from "../components/BaseHead.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import { isPagePublished } from "../lib/studio/page-visibility";
 import StudioDock from "../components/StudioDock.astro";
 import { runtimeSite } from "../data/site";
 import { serviceForChurch } from "../data/sunday";
@@ -20,6 +21,9 @@ interface Props {
 
 const { title, description, kicker, heading, lede } = Astro.props;
 const year = new Date().getFullYear();
+const footerLinks = (await Promise.all([
+	["/sunday", "Plan your visit"], ["/watch", "Watch a service"], ["/beliefs", "What we believe"], ["/ministries", "Ministries"], ["/giving", "Give"],
+].map(async ([href, label]) => ({ href, label, published: await isPagePublished(href, Astro.locals) })))).filter((link) => link.published);
 const { church } = await runtimeSite(Astro.locals);
 const service = serviceForChurch(church);
 const isMinistry = Astro.url.pathname === "/ministries"
@@ -58,11 +62,7 @@ const isMinistry = Astro.url.pathname === "/ministries"
 					<p style="margin-top:.6rem">{service.shortWhen}</p>
 				</div>
 				<nav aria-label="Footer">
-					<a href="/sunday">Plan your visit</a>
-					<a href="/watch">Watch a service</a>
-					<a href="/beliefs">What we believe</a>
-					<a href="/ministries">Ministries</a>
-					<a href="/giving">Give</a>
+					{footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
 				</nav>
 				<div>
 					<a href={church.mapUrl} target="_blank" rel="noopener">Directions</a>

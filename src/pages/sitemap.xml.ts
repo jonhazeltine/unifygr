@@ -29,7 +29,7 @@ export const GET: APIRoute = async ({ locals }) => {
 
   return new Response(body, {
     headers: {
-      "cache-control": "public, s-maxage=300, stale-while-revalidate=3600",
+      "cache-control": "no-store",
       "content-type": "application/xml; charset=utf-8",
     },
   });
