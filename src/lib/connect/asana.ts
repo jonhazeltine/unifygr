@@ -39,6 +39,21 @@ export function connectCardFollowerIds(): string[] {
 		.filter(Boolean);
 }
 
+function escapeHtml(value: string): string {
+	return value
+		.replaceAll("&", "&amp;")
+		.replaceAll("<", "&lt;")
+		.replaceAll(">", "&gt;")
+		.replaceAll('"', "&quot;")
+		.replaceAll("'", "&#39;");
+}
+
+export function connectCardHtmlNotes(notes: string, followerIds = connectCardFollowerIds()): string | undefined {
+	if (!followerIds.length) return undefined;
+	const mentions = followerIds.map((id) => `<a data-asana-gid="${escapeHtml(id)}"></a>`).join(" ");
+	return `<body><strong>Follow-up team:</strong> ${mentions}<br><br>${escapeHtml(notes).replaceAll("\n", "<br>")}</body>`;
+}
+
 export async function createFollowUpTask(input: {
 	name: string;
 	notes: string;
@@ -57,9 +72,10 @@ export async function createFollowUpTask(input: {
 	const sectionId = input.projectId ? input.sectionId : process.env.ASANA_SECTION_ID;
 
 	const followers = input.projectId ? [] : connectCardFollowerIds();
+	const htmlNotes = input.projectId ? undefined : connectCardHtmlNotes(input.notes, followers);
 	const task = await call("/tasks", {
 		name: input.name,
-		notes: input.notes,
+		...(htmlNotes ? { html_notes: htmlNotes } : { notes: input.notes }),
 		due_on: input.dueOn,
 		projects: [projectId],
 		...(followers.length ? { followers } : {}),
