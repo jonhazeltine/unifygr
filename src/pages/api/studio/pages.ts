@@ -14,6 +14,7 @@ import { isAuthed } from "../../../lib/studio/auth";
 import { listPages, readPageState, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
 import { listHandBuiltPages } from "../../../lib/studio/site-pages";
 import { ContentConflict } from "../../../lib/studio/runtime-content";
+import { readSitePageStatuses, sitePageStatus, updateSitePageStatus } from "../../../lib/studio/site-page-state";
 
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
@@ -25,13 +26,22 @@ export const GET: APIRoute = async ({ url, cookies, locals }) => {
 		const page = await readPageState(slug, locals);
 		return page ? json(page) : json({ error: "Not found" }, 404);
 	}
-	return json({ pages: await listPages(locals), sitePages: listHandBuiltPages() });
+	const siteState = await readSitePageStatuses(locals);
+	return json({
+		pages: await listPages(locals),
+		sitePages: listHandBuiltPages().map((page) => ({ ...page, status: sitePageStatus(page.path, siteState.value) })),
+		sitePagesVersion: siteState.version,
+	});
 };
 
 export const POST: APIRoute = async ({ request, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const body = await request.json().catch(() => ({}));
 	try {
+		if (body?.sitePath) {
+			const result = await updateSitePageStatus(body.sitePath, body.status, body.sitePagesVersion, locals);
+			return json({ ok: true, ...result });
+		}
 		if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before publishing your edits." }, 409);
 		if (body?.create && (await listPages(locals)).some((page) => page.slug === body.slug)) {
 			return json({ ok: false, error: "That page already exists. Open the latest copy before saving." }, 409);

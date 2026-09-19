@@ -39,16 +39,21 @@ function prettify(slug: string): string {
 	return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
-export type SitePage = { path: string; title: string };
+export type SitePage = { path: string; title: string; previewImage: string };
+
+export function previewPath(path: string): string {
+	const file = path === "/" ? "home" : path.slice(1).replace(/\//g, "--");
+	return `/art/studio-page-previews/${file}.webp`;
+}
 
 export function listHandBuiltPages(): SitePage[] {
-	const out: SitePage[] = [{ path: "/", title: "Homepage" }];
+	const out: SitePage[] = [{ path: "/", title: "Homepage", previewImage: previewPath("/") }];
 
 	// The three pillar pages come from the dynamic [pillar] route.
 	out.push(
-		{ path: "/encounter-god", title: "Encounter God" },
-		{ path: "/be-transformed", title: "Be Transformed" },
-		{ path: "/change-the-world", title: "Change the World" },
+		{ path: "/encounter-god", title: "Encounter God", previewImage: previewPath("/encounter-god") },
+		{ path: "/be-transformed", title: "Be Transformed", previewImage: previewPath("/be-transformed") },
+		{ path: "/change-the-world", title: "Change the World", previewImage: previewPath("/change-the-world") },
 	);
 
 	const slugs = PAGE_FILES
@@ -57,7 +62,8 @@ export function listHandBuiltPages(): SitePage[] {
 		.filter((slug) => !EXCLUDE.has(slug))
 		.sort();
 	for (const slug of slugs) {
-		out.push({ path: `/${slug}`, title: TITLES[slug] || prettify(slug.split("/").pop()!) });
+		const path = `/${slug}`;
+		out.push({ path, title: TITLES[slug] || prettify(slug.split("/").pop()!), previewImage: previewPath(path) });
 	}
 	return out;
 }

@@ -17,6 +17,7 @@ import {
 import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
 import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
+import { readSitePageStatuses, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -51,12 +52,12 @@ async function authedCookies() {
 	return { get: () => ({ value }) } as any;
 }
 
-async function studioPost(path: string, payload: unknown, cookies: any) {
+async function studioPost(path: string, payload: unknown, cookies: any, requestLocals: any = locals) {
 	const module = await import(path);
 	const response = await module.POST({
 		request: new Request(`https://example.test${path}`, { method: "POST", body: JSON.stringify(payload) }),
 		cookies,
-		locals,
+		locals: requestLocals,
 	} as any);
 	return { status: response.status, body: await response.json() };
 }
@@ -188,6 +189,39 @@ test("page API returns a fresh version for content and metadata saves", async ()
 	assert.equal(meta.body.data.status, "live");
 	const stale = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "draft", version: first.body.version }, cookies);
 	assert.equal(stale.status, 409);
+});
+
+test("hand-built pages default published and retain a versioned draft state", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	const initial = await readSitePageStatuses(pageLocals);
+	assert.equal(sitePageStatus("/about", initial.value), "live");
+	const saved = await updateSitePageStatus("/about", "draft", initial.version, pageLocals);
+	const current = await readSitePageStatuses(pageLocals);
+	assert.equal(sitePageStatus("/about", current.value), "draft");
+	assert.equal(current.version, saved.version);
+	await assert.rejects(() => updateSitePageStatus("/about", "live", initial.version, pageLocals), ContentConflict);
+});
+
+test("page API publishes and unpublishes a hand-built page with CAS protection", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const cookies = await authedCookies();
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	const first = await studioPost("../src/pages/api/studio/pages.ts", { sitePath: "/about", status: "draft", sitePagesVersion: "seed" }, cookies, pageLocals);
+	assert.equal(first.status, 200);
+	assert.equal(first.body.status, "draft");
+	const stale = await studioPost("../src/pages/api/studio/pages.ts", { sitePath: "/about", status: "live", sitePagesVersion: "seed" }, cookies, pageLocals);
+	assert.equal(stale.status, 409);
+});
+
+test("public middleware returns a real 404 for a hand-built draft while staff can preview it", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
+	await updateSitePageStatus("/about", "draft", "seed", pageLocals);
+	const publicResponse = await sitePageDraftGuard("/about", false, pageLocals);
+	assert.equal(publicResponse?.status, 404);
+	assert.equal(publicResponse?.headers.get("x-robots-tag"), "noindex");
+	assert.equal(await sitePageDraftGuard("/about", true, pageLocals), null);
 });
 
 test("media accepts only bytes that match its fixed response image type", () => {

@@ -15,6 +15,7 @@
 //    makes them live a minute or two later.
 
 import { ContentConflict, publish, readPublished, revisions, type RuntimeLocals } from "./runtime-content";
+import { previewPath } from "./site-pages";
 
 // Build-time snapshot of all pages — the read fallback where there's no fs.
 // Keep the glob call direct so Vite replaces it with the production manifest.
@@ -174,7 +175,7 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 				slug,
 				title: String(data.root.props.title || slug),
 				description: String(data.root.props.description || data.root.props.kicker || ""),
-				previewImage: STUDIO_THUMBNAILS[slug] || "",
+				previewImage: STUDIO_THUMBNAILS[slug] || previewPath(MOUNTED[slug] || `/p/${slug}`),
 				status: data.status,
 				order: data.order,
 				path: MOUNTED[slug] || `/p/${slug}`,
