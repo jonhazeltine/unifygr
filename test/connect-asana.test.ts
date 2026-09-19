@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { connectCardFollowerIds } from "../src/lib/connect/asana";
+import { connectCardFollowerIds, connectCardHtmlNotes } from "../src/lib/connect/asana";
 
 test("Connect Card follower ids come from the configured comma-separated list", () => {
 	const before = process.env.ASANA_FOLLOWER_IDS;
@@ -19,4 +19,11 @@ test("Connect Card follower ids are optional", () => {
 	assert.deepEqual(connectCardFollowerIds(), []);
 
 	if (before !== undefined) process.env.ASANA_FOLLOWER_IDS = before;
+});
+
+test("Connect Card notes include real Asana mentions for every follower", () => {
+	assert.equal(
+		connectCardHtmlNotes("Prayer request\nPlease call <today>", ["jon-id", "elizabeth-id", "stacy-id"]),
+		'<body><strong>Follow-up team:</strong> <a data-asana-gid="jon-id"></a> <a data-asana-gid="elizabeth-id"></a> <a data-asana-gid="stacy-id"></a><br><br>Prayer request<br>Please call &lt;today&gt;</body>',
+	);
 });
