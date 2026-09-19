@@ -12,6 +12,7 @@ import {
 	deletePage,
 	listPages,
 	readPage,
+	updatePageMeta,
 	writePage,
 } from "../src/lib/studio/pages.ts";
 import { publicBuilderDetailLink, publicBuilderLink } from "../src/lib/studio/page-links.ts";
@@ -190,6 +191,17 @@ test("page API returns a fresh version for content and metadata saves", async ()
 	assert.equal(meta.body.data.status, "live");
 	const stale = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "draft", version: first.body.version }, cookies);
 	assert.equal(stale.status, 409);
+});
+
+test("a stale builder metadata save cannot change public visibility", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/giving.json": page("live", "Giving") });
+	const first = await writePage("giving", page("live", "Giving"), undefined, "seed", locals);
+	const second = await writePage("giving", page("live", "Giving updated"), undefined, first.version, locals);
+	await assert.rejects(() => updatePageMeta("giving", { status: "draft" }, first.version, locals), ContentConflict);
+	assert.equal((await readPage("giving", locals))?.status, "live");
+	assert.equal(sitePageStatus("/giving", (await readSitePageStatuses(locals)).value), "live");
+	assert.notEqual(second.version, first.version);
 });
 
 test("hand-built pages default published and retain a versioned draft state", async () => {

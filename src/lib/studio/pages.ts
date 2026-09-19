@@ -230,7 +230,6 @@ export async function writePage(
 export async function updatePageMeta(slug: string, meta: { status?: PageStatus; order?: number }, expectedVersion?: string, locals?: RuntimeLocals): Promise<SaveResult> {
 	const current = await readPage(slug, locals);
 	if (!current) throw new Error("Page not found.");
-	if (meta.status) await setSitePageStatus(pagePath(slug), meta.status, locals);
 	return writePage(slug, current, meta, expectedVersion, locals);
 }
 
