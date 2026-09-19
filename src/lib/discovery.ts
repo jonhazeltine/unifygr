@@ -14,6 +14,7 @@ const PUBLIC_ROUTES = [
   "/vision-values",
   "/watch",
 ] as const;
+const EXTERNAL_MINISTRY_ROUTES = new Set(["/ministries/calendar", "/ministries/partnerships", "/ministries/specialized"]);
 
 export function publicPaths(input: {
   pillars: Slugged[];
@@ -25,7 +26,9 @@ export function publicPaths(input: {
 }): string[] {
   const showExternalMinistries = input.externalMinistriesEnabled !== false;
   const paths = new Set<string>(PUBLIC_ROUTES);
-  for (const path of input.sitePages ?? []) paths.add(path);
+  for (const path of input.sitePages ?? []) {
+    if (showExternalMinistries || !EXTERNAL_MINISTRY_ROUTES.has(path)) paths.add(path);
+  }
   if (showExternalMinistries) {
     paths.add("/ministries/calendar");
     paths.add("/ministries/partnerships");

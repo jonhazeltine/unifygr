@@ -46,6 +46,7 @@ test("external-ministry routes leave the sitemap when the Studio switch is off",
       { slug: "free-clinic", house: "out", categories: ["free-clinic"] },
     ],
     pages: [],
+    sitePages: ["/membership", "/ministries/calendar", "/ministries/partnerships", "/ministries/specialized"],
     externalMinistriesEnabled: false,
   });
 
@@ -58,6 +59,7 @@ test("external-ministry routes leave the sitemap when the Studio switch is off",
   assert(!paths.includes("/ministries/health"));
   assert(!paths.includes("/ministries/health/free-clinic"));
   assert(!paths.includes("/ministry/free-clinic"));
+  assert(paths.includes("/membership"));
 });
 
 test("site origin is normalized and invalid configuration fails safely", () => {
