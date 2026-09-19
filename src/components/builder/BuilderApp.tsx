@@ -9,7 +9,8 @@ import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 import MenuEditor from "./MenuEditor";
 
-type PageMeta = { slug: string; title: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
+type PageMeta = { slug: string; title: string; description: string; status: "draft" | "live"; order: number; path: string; mounted: boolean };
+type PageFilter = "all" | "live" | "draft";
 
 const EMPTY = (title: string) => ({
 	status: "draft" as const,
@@ -78,6 +79,8 @@ export default function BuilderApp() {
 	const [pages, setPages] = useState<PageMeta[]>([]);
 	const [sitePages, setSitePages] = useState<Array<{ path: string; title: string }>>([]);
 	const [menuMode, setMenuMode] = useState(false);
+	const [query, setQuery] = useState("");
+	const [filter, setFilter] = useState<PageFilter>("all");
 	const [slug, setSlug] = useState<string | null>(null);
 	const [data, setData] = useState<any>(null);
 	const [versions, setVersions] = useState<Record<string, string>>({});
@@ -86,6 +89,11 @@ export default function BuilderApp() {
 	const [aiNote, setAiNote] = useState<string>("");
 	const [toast, setToast] = useState<string>("");
 	const live = useRef<any>(null); // latest editor data (from onChange)
+	const visiblePages = pages.filter((page) => {
+		const needle = query.trim().toLowerCase();
+		const matchesQuery = !needle || `${page.title} ${page.path} ${page.description}`.toLowerCase().includes(needle);
+		return matchesQuery && (filter === "all" || page.status === filter);
+	});
 
 	const say = (m: string) => { setToast(m); setTimeout(() => setToast(""), 2200); };
 
@@ -99,7 +107,10 @@ export default function BuilderApp() {
 
 	async function openPage(s: string) {
 		const res = await api(`/api/studio/pages?slug=${encodeURIComponent(s)}`).catch(() => null);
-		if (res?.data) { setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote(""); }
+		if (res?.data) {
+			setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote("");
+			requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+		}
 		else say(res?.error === "Unauthorized" ? "Your session expired — reload the page and sign in again." : (res?.error || "Couldn't load that page — reload and try again."));
 	}
 
@@ -109,6 +120,7 @@ export default function BuilderApp() {
 		const s = slugify(title);
 		if (!s) return;
 		setSlug(s); setVersions((v) => ({ ...v, [s]: "seed" })); const d = EMPTY(title); setData(d); live.current = d; setRev((r) => r + 1); setAiNote("");
+		requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 	}
 
 	async function save(d: any) {
@@ -195,62 +207,47 @@ export default function BuilderApp() {
 	// ---- page picker screen ----
 	if (!slug || !data) {
 		return (
-			<div className="builder-app" style={S.shell}>
-				<div style={S.picker}>
-					<div style={{ display: "flex", alignItems: "center", gap: 12 }}><h1 style={{ margin: 0, fontSize: 22 }}>✦ Page Builder</h1><StudioAppearance /></div>
-					<p style={{ color: "var(--studio-muted)", fontSize: 14, margin: "6px 0 20px" }}>
-						Build pages by dragging blocks and talking to the AI. Pages publish at <code>/p/…</code> on the site.
-					</p>
-					<div style={{ display: "flex", gap: 8 }}>
-						<button style={S.btn} onClick={newPage}>+ New page</button>
-						<button style={{ ...S.btn, background: "transparent", color: "var(--studio-accent)", border: "1px solid color-mix(in srgb, var(--studio-accent) 45%, transparent)" }} onClick={() => setMenuMode(true)}>☰ Edit site menu</button>
+			<div className="builder-app builder-directory">
+				<header className="builder-directory__header">
+					<div><p className="builder-directory__eyebrow">✦ Studio</p><h1>Site pages</h1><p>Choose a page, then edit its sections in the builder.</p></div>
+					<div className="builder-directory__header-actions">
+						<button className="builder-button builder-button--secondary" onClick={() => setMenuMode(true)}>☰ Edit menu</button>
+						<button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button>
+						<StudioAppearance />
 					</div>
-					<p style={{ color: "var(--studio-muted)", fontSize: 12, margin: "14px 0 6px" }}>Drag to reorder · new pages start as drafts only staff can see.</p>
-					<div style={{ display: "grid", gap: 8 }}>
-						{pages.map((p, i) => (
-							<div
-								key={p.slug}
-								draggable
-								onDragStart={() => { dragFrom.current = i; }}
-								onDragOver={(e) => e.preventDefault()}
-								onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, i); dragFrom.current = null; }}
-								style={{ ...S.row, cursor: "grab", alignItems: "center" }}
-							>
-								<span style={{ color: "var(--studio-muted)", fontSize: 15, userSelect: "none" }}>⠿</span>
-								<button onClick={() => openPage(p.slug)} style={{ font: "inherit", flex: 1, textAlign: "left", background: "none", border: 0, color: "var(--studio-text)", cursor: "pointer", padding: 0, display: "grid", gap: 2 }}>
-									<strong>{p.title}</strong>
-									<span style={{ color: "var(--studio-muted)", fontSize: 12 }}>{p.path}</span>
-								</button>
-								<span style={p.status === "live" ? S.badgeLive : S.badgeDraft}>{p.status === "live" ? "LIVE" : "DRAFT"}</span>
-								<button style={S.small} onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")}>
-									{p.status === "live" ? "Unpublish" : "Go live"}
-								</button>
-								{!p.mounted && (
-									<button style={{ ...S.small, color: "#eec7b7" }} title="Delete page" onClick={() => removePage(p.slug, p.title)}>✕</button>
-								)}
-							</div>
-						))}
-						{pages.length === 0 && <p style={{ color: "var(--studio-muted)", fontSize: 13 }}>No pages yet — make the first one.</p>}
+				</header>
+
+				<main className="builder-directory__main">
+					<div className="builder-directory__tools">
+						<label className="builder-search"><span className="sr-only">Search pages</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search pages…" /></label>
+						<div className="builder-filters" aria-label="Filter pages">
+							{(["all", "live", "draft"] as PageFilter[]).map((option) => <button key={option} type="button" aria-pressed={filter === option} onClick={() => setFilter(option)}>{option === "all" ? "All" : option === "live" ? "Live" : "Drafts"}</button>)}
+						</div>
 					</div>
 
-					<h2 style={{ fontSize: 13, letterSpacing: ".08em", textTransform: "uppercase", color: "var(--studio-muted)", margin: "26px 0 6px" }}>The rest of the site</h2>
-					<p style={{ color: "var(--studio-muted)", fontSize: 12, margin: "0 0 10px" }}>
-						Hand-built pages. To change their words, open one and use the ✦ chat in the corner.
-					</p>
-					<div style={{ display: "grid", gap: 6 }}>
-						{sitePages.map((p) => (
-							<a key={p.path} href={p.path} target="_blank" rel="noreferrer" style={{ ...S.row, textDecoration: "none", padding: "9px 14px", alignItems: "center" }}>
-								<span style={{ flex: 1, display: "grid", gap: 1 }}>
-									<strong style={{ fontSize: 14 }}>{p.title}</strong>
-									<span style={{ color: "var(--studio-muted)", fontSize: 12 }}>{p.path}</span>
-								</span>
-								<span style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "var(--studio-panel-raised)", color: "var(--studio-accent)" }}>HAND-BUILT</span>
-								<span style={{ color: "var(--studio-muted)" }}>↗</span>
-							</a>
-						))}
+					<div className="builder-directory__section-heading"><div><h2>Pages you can build</h2><p>Open a page to edit it<span className="builder-reorder-hint"> · drag cards to reorder</span>.</p></div><span>{visiblePages.length} {visiblePages.length === 1 ? "page" : "pages"}</span></div>
+					<div className="builder-page-grid">
+						{visiblePages.map((p) => {
+							const pageIndex = pages.findIndex((page) => page.slug === p.slug);
+							return <article key={p.slug} className="builder-page-card" draggable={!query && filter === "all"} onDragStart={() => { dragFrom.current = pageIndex; }} onDragOver={(event) => event.preventDefault()} onDrop={() => { if (dragFrom.current != null) reorder(dragFrom.current, pageIndex); dragFrom.current = null; }}>
+								<button className={`builder-page-card__preview builder-page-card__preview--${pageIndex % 4}`} onClick={() => openPage(p.slug)}>
+									<span className="builder-page-card__kicker">{p.status === "live" ? "On the site" : "Staff preview"}</span>
+									<strong>{p.title}</strong>
+									<span>{p.description || "Open this page to see its sections."}</span>
+								</button>
+								<div className="builder-page-card__details">
+									<button className="builder-page-card__open" onClick={() => openPage(p.slug)}><span><strong>{p.title}</strong><small>{p.path}</small></span><span>Open →</span></button>
+									<div className="builder-page-card__meta"><span className={`builder-status builder-status--${p.status}`}>{p.status === "live" ? "Live" : "Draft"}</span><details><summary aria-label={`Actions for ${p.title}`}>•••</summary><div><button onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")}>{p.status === "live" ? "Unpublish" : "Go live"}</button>{!p.mounted && <button className="builder-danger" onClick={() => removePage(p.slug, p.title)}>Delete page</button>}</div></details></div>
+								</div>
+							</article>;
+						})}
+						{pages.length === 0 && <div className="builder-empty"><strong>No pages yet</strong><p>Create the first page to begin.</p><button className="builder-button builder-button--primary" onClick={newPage}>+ New page</button></div>}
+						{pages.length > 0 && visiblePages.length === 0 && <div className="builder-empty"><strong>No matching pages</strong><p>Try another search or filter.</p></div>}
 					</div>
-					<p style={{ marginTop: 24 }}><a href="/" style={{ color: "var(--studio-muted)" }}>← Back to the site</a></p>
-				</div>
+
+					<details className="builder-site-pages"><summary><span><strong>Other site pages</strong><small>These pages use the on-page Studio editor.</small></span><span>{sitePages.length} pages⌄</span></summary><div>{sitePages.map((p) => <a key={p.path} href={p.path} target="_blank" rel="noreferrer"><span><strong>{p.title}</strong><small>{p.path}</small></span><span>View ↗</span></a>)}</div></details>
+					<a className="builder-directory__back" href="/">← Back to the site</a>
+				</main>
 			</div>
 		);
 	}
@@ -258,17 +255,17 @@ export default function BuilderApp() {
 	// ---- editor screen ----
 	return (
 		<div className="builder-app" style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-			<div style={S.bar}>
-				<button style={S.small} onClick={() => { setSlug(null); setData(null); refresh(); }}>‹ Pages</button>
-				<strong style={{ fontSize: 14 }}>{data?.root?.props?.title || slug}</strong>
+			<div className="builder-editor-bar">
+				<button className="builder-button builder-button--secondary" onClick={() => { setSlug(null); setData(null); refresh(); }}>‹ Site pages</button>
+				<span className="builder-editor-bar__title"><small>Editing</small><strong>{data?.root?.props?.title || slug}</strong></span>
 				<button
-					style={data?.status === "live" ? { ...S.small, ...S.badgeLive, border: 0 } : { ...S.small, ...S.badgeDraft, border: 0 }}
+					className={`builder-status builder-status--${data?.status === "live" ? "live" : "draft"}`}
 					title="Click to flip between draft and live"
 					onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
 				>
 					{data?.status === "live" ? "LIVE" : "DRAFT"}
 				</button>
-				<a style={{ ...S.small, textDecoration: "none" }} href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
+				<a className="builder-button builder-button--secondary" href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<StudioAppearance />
 				<form onSubmit={askAI} style={{ display: "flex", gap: 8, flex: 1, minWidth: 260 }}>
 					<input name="ai" placeholder='Ask AI — e.g. "build this out for a fall retreat with 3 cards and a signup button"' style={S.aiInput} disabled={aiBusy} />
@@ -292,14 +289,8 @@ export default function BuilderApp() {
 
 const S: Record<string, React.CSSProperties> = {
 	shell: { minHeight: "100vh", background: "var(--studio-bg)", color: "var(--studio-text)", display: "flex", alignItems: "flex-start", justifyContent: "center", paddingTop: "12vh", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
-	picker: { width: "min(460px, 92vw)", background: "var(--studio-panel)", border: "1px solid var(--studio-line)", borderRadius: 16, padding: 24 },
 	btn: { font: "inherit", fontWeight: 600, border: 0, borderRadius: 10, padding: "10px 16px", background: "linear-gradient(135deg,#ffe7bf,var(--studio-accent))", color: "var(--studio-accent-ink)", cursor: "pointer" },
-	row: { font: "inherit", textAlign: "left" as const, display: "flex", justifyContent: "space-between", gap: 12, padding: "12px 14px", borderRadius: 10, border: "1px solid var(--studio-line)", background: "var(--studio-panel-raised)", color: "var(--studio-text)", cursor: "pointer" },
-	bar: { display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", background: "var(--studio-bg)", color: "var(--studio-text)", borderBottom: "1px solid var(--studio-line)", flexWrap: "wrap" as const, fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
-	small: { font: "inherit", fontSize: 13, background: "transparent", color: "var(--studio-muted)", border: "1px solid var(--studio-line)", borderRadius: 8, padding: "6px 10px", cursor: "pointer" },
 	aiInput: { flex: 1, font: "inherit", fontSize: 14, padding: "9px 12px", borderRadius: 10, border: "1px solid var(--studio-line)", background: "var(--studio-panel-raised)", color: "var(--studio-text)" },
 	note: { padding: "8px 14px", fontSize: 13, background: "color-mix(in srgb, var(--studio-accent) 10%, transparent)", color: "var(--studio-accent)", borderBottom: "1px solid var(--studio-line)", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" },
 	toast: { position: "fixed", left: "50%", bottom: 24, transform: "translateX(-50%)", background: "linear-gradient(135deg,#ffe7bf,var(--studio-accent))", color: "var(--studio-accent-ink)", fontWeight: 600, padding: "10px 16px", borderRadius: 999, zIndex: 1000 },
-	badgeLive: { fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "#5cd6a8", color: "#08130d", cursor: "pointer" },
-	badgeDraft: { fontSize: 10, fontWeight: 700, letterSpacing: ".08em", padding: "4px 8px", borderRadius: 999, background: "var(--studio-panel-raised)", color: "var(--studio-muted)", cursor: "pointer" },
 };
