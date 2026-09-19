@@ -207,9 +207,10 @@ test("hand-built pages default published and retain a versioned draft state", as
 
 test("shared navigation visibility follows builder drafts and tolerates malformed external links", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
-	__setBundledPagesForTests({ "/content/pages/giving.json": page("draft", "Giving") });
+	__setBundledPagesForTests({ "/content/pages/giving.json": page("draft", "Giving"), "/content/pages/welcome.json": page("draft", "Welcome") });
 	const pageLocals = { runtime: { env: { BLOB_READ_WRITE_TOKEN: "test" } } };
 	assert.equal(await isPagePublished("/giving", pageLocals), false);
+	assert.equal(await isPagePublished("/p/welcome", pageLocals), false);
 	assert.equal(await isPagePublished("https://%", pageLocals), true);
 });
 
