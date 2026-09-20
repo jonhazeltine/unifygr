@@ -2,7 +2,8 @@
 // Spiritual Formation is a lifelong, personal journey. The Formation App and
 // Life Groups give people clear tools and companions for taking the next step.
 import Interior from "../layouts/Interior.astro";
-import { formation, COMMUNITY_URL } from "../lib/formation";
+import { formation } from "../lib/formation";
+import { FORMATION_SMART_LINK } from "../lib/formation-links";
 
 export const prerender = false;
 
@@ -63,7 +64,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 					</p>
 				</div>
 				<div class="fm-journey__acts">
-					<a class="button button--primary" href={COMMUNITY_URL} target="_blank" rel="noopener">
+					<a class="button button--primary" href={FORMATION_SMART_LINK} target="_blank" rel="noopener">
 						Start Growth Track
 					</a>
 					<a class="button button--secondary" href="/ministries#ours">Find a Life Group</a>
@@ -119,7 +120,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 				{practices.map(([number, title, detail]) => (
 					<a
 						class="fm-practice"
-						href={COMMUNITY_URL}
+						href={FORMATION_SMART_LINK}
 						target="_blank"
 						rel="noopener"
 						aria-label={`Explore ${title} in The Formation App`}
@@ -182,7 +183,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 					way of life.
 				</p>
 				<div class="fm-path__acts">
-					<a class="button button--primary" href={COMMUNITY_URL} target="_blank" rel="noopener">
+					<a class="button button--primary" href={FORMATION_SMART_LINK} target="_blank" rel="noopener">
 						Continue Growth Track →
 					</a>
 				</div>

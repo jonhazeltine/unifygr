@@ -1,0 +1,12 @@
+---
+// The one Formation link every CTA on the site should point to. Sends an
+// iPhone/iPad to the App Store, an Android phone to Play, and everyone else
+// (desktop, an unrecognized device) to New Life's own Formation community —
+// see src/lib/formation-links.ts for the actual device check.
+export const prerender = false;
+
+import { pickFormationDestination } from "../lib/formation-links";
+
+const userAgent = Astro.request.headers.get("user-agent");
+return Astro.redirect(pickFormationDestination(userAgent), 302);
+---
