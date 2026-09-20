@@ -12,6 +12,8 @@
 //
 // Needs env: FORMATION_SUPABASE_URL, FORMATION_SUPABASE_ANON_KEY.
 
+import { FORMATION_SMART_LINK } from "./formation-links";
+
 export const FORMATION_APP = "https://theformation.app";
 /** New Life's community. The link a person follows to join it. */
 export const COMMUNITY_SLUG = "unifygr";
@@ -99,7 +101,7 @@ async function fetchModules(): Promise<Formation> {
 			image: a.background_image_url ?? null,
 			lessons: levels.filter((l) => l.public_visibility !== "hidden").length,
 			openLessons: levels.filter((l) => l.public_visibility === "visible").length,
-			href: a.public_slug ? `${FORMATION_APP}/m/${a.public_slug}` : COMMUNITY_URL,
+			href: a.public_slug ? `${FORMATION_APP}/m/${a.public_slug}` : FORMATION_SMART_LINK,
 		};
 	});
 
