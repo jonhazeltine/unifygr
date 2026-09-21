@@ -40,6 +40,21 @@ function version(): string {
 
 type ReadStored<T> = Stored<T> & { etag?: string; exists: boolean };
 
+/**
+ * Vercel Blob's `get()` reports a weak ETag ("W/\"...\""), but `put()`'s
+ * `ifMatch` conditional-write check does not accept that prefix back — it
+ * always reports a precondition failure, unconditionally, for every single
+ * write, real conflict or not. Confirmed directly against the live store
+ * (2026-09-21): the exact same request succeeds the instant the leading
+ * "W/" is stripped and fails every time it isn't, with nothing else
+ * different between the two calls. Strip it once, here, at the one place an
+ * etag enters this module, so every caller that later uses it for `ifMatch`
+ * (the pointer-write below, and restorePublished's undo write) just works.
+ */
+function usableEtag(rawEtag: string | undefined): string | undefined {
+	return rawEtag?.replace(/^W\//, "");
+}
+
 async function read<T>(key: string, fallback: T, locals?: RuntimeLocals): Promise<ReadStored<T>> {
 	const accessToken = runtimeToken(locals);
 	if (!accessToken) return { value: fallback, version: "seed", publishedAt: "", exists: false };
@@ -47,12 +62,13 @@ async function read<T>(key: string, fallback: T, locals?: RuntimeLocals): Promis
 	if (!found) return { value: fallback, version: "seed", publishedAt: "", exists: false };
 	if (found.statusCode !== 200 || !found.stream) throw new Error("Content storage returned an incomplete response.");
 	const parsed = JSON.parse(await new Response(found.stream).text());
+	const etag = usableEtag(found.blob.etag);
 	// Older private Blob documents (notably partner settings) predate the
 	// version envelope. Treat them as the seed revision and CAS-wrap them on
 	// their first runtime save, preserving their value without a live migration.
 	if (!parsed || typeof parsed !== "object" || !("value" in parsed) || !("version" in parsed))
-		return { value: parsed as T, version: "seed", publishedAt: "", etag: found.blob.etag, exists: true };
-	return { ...(parsed as Stored<T>), etag: found.blob.etag, exists: true };
+		return { value: parsed as T, version: "seed", publishedAt: "", etag, exists: true };
+	return { ...(parsed as Stored<T>), etag, exists: true };
 }
 
 async function write<T>(key: string, value: T, expectedVersion: string | undefined, fallback: T, locals?: RuntimeLocals): Promise<Stored<T>> {
