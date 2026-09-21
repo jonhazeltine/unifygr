@@ -43,7 +43,7 @@ function bundledPages(): Record<string, any> {
 }
 
 // Block types the renderer knows. Must match src/components/builder/blocks.tsx.
-export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards", "TapButtons", "Gallery", "PackSignupForm"] as const;
+export const ALLOWED_BLOCKS = ["Hero", "Prose", "Cards", "Quote", "Buttons", "Spacer", "Image", "Video", "FAQ", "Callout", "Profiles", "ListCards", "Feature", "CtaCards", "TapButtons", "Gallery", "PackSignupForm", "GivingEmbed"] as const;
 
 // Builder pages mounted at REAL site routes (their .astro files render the
 // page JSON). These can't be deleted from the builder — the nav links to them.
