@@ -84,6 +84,45 @@
 .builder-editor-bar { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--studio-line); background: var(--studio-panel); color: var(--studio-text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; flex-wrap: wrap; }
 .builder-editor-bar__title { display: grid; min-width: 130px; line-height: 1.1; }.builder-editor-bar__title small { color: var(--studio-muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }.builder-editor-bar__title strong { font-size: 14px; }
 
+/* Puck's live preview canvas is a genuinely separate iframe document (see
+ * node_modules/@measured/puck/dist/index.js — a real <iframe
+ * class="_PuckPreview-frame..."> when iframe mode is on, which it is here),
+ * and it syncs this outer document's <body class="builder-body"> straight
+ * onto the iframe's own <body> for visual parity with the Studio chrome —
+ * including data-theme, since the real site's own theme-init script also
+ * runs inside that iframe and reads the same localStorage key the Studio's
+ * OWN appearance toggle uses. So flipping the Studio to light mode also set
+ * data-theme="light" on the iframe's copy of the real page — and global.css
+ * has NO light-theme override for --text/--muted anywhere (only a few
+ * specific pages, like /sunday, do): they stay their near-white default.
+ * Meanwhile Puck's own canvas painted light in light mode. Near-white text on
+ * a light canvas is invisible — correctly typed, silently unreadable.
+ *
+ * `body.builder-body` is the actual element carrying this bug in the iframe
+ * copy, so give it the site's real, always-dark background directly — the
+ * real site has no working light theme for ordinary content in the first
+ * place, so "always dark" is also just correct. This same rule also matches
+ * body.builder-body in THIS outer document, but .builder-app (a full-height
+ * child of body) already paints its own background over the entirety of it,
+ * so nothing here is ever visible outside the iframe.
+ *
+ * An earlier version of this fix used Puck's `overrides.preview` to wrap the
+ * canvas in an extra div instead, which looked identical in principle but
+ * broke Puck's own frame-size measurement (it measures a specific element via
+ * a ref, and the extra wrapper displaced it) and silently stopped the canvas
+ * from rendering any page content at all. Plain CSS against Puck's own
+ * element has no such risk.
+ *
+ * Same base gradient as global.css's real `body` rule (the decorative
+ * pointer-tracked highlights are dropped; --pointer-x/-y fall back to their
+ * :root defaults so this still matches closely without live mouse tracking). */
+body.builder-body {
+	background:
+		radial-gradient(circle at 18% 16%, rgba(132, 185, 255, 0.11), transparent 18%),
+		radial-gradient(circle at 80% 22%, rgba(238, 199, 183, 0.08), transparent 20%),
+		linear-gradient(180deg, #050608 0%, #090d14 40%, #050608 100%);
+}
+
 /* Puck uses a token palette. Re-map its neutral controls in light mode so the
  * editor chrome, inputs, and side panels do not remain dark or washed out. */
 :root[data-theme="light"] .builder-body {
