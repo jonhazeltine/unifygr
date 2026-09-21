@@ -36,14 +36,24 @@ function memoryBlob() {
 	return {
 		get: async (key: string) => {
 			const entry = entries.get(key);
-			return entry ? { statusCode: 200 as const, stream: new Response(entry.body).body!, blob: { etag: entry.etag } } : null;
+			// Real Vercel Blob reports a WEAK etag from get() ("W/\"...\""), which
+			// its own put({ifMatch}) does not accept back verbatim — confirmed
+			// directly against the live store 2026-09-21 (see usableEtag() in
+			// runtime-content.ts): the identical request succeeds the instant the
+			// leading "W/" is stripped and fails, unconditionally, every time it
+			// isn't. entries store the STRIPPED form (what a correct `ifMatch` must
+			// send); get() re-adds the "W/" so this mock actually exercises that
+			// gap — an unprefixed mock etag would silently validate the bug instead
+			// of catching it, the same way the earlier `.name`-vs-instanceof mock
+			// silently validated a different bug in this same function.
+			return entry ? { statusCode: 200 as const, stream: new Response(entry.body).body!, blob: { etag: `W/${entry.etag}` } } : null;
 		},
 		put: async (key: string, body: any, options: any) => {
 			const text = await new Response(body).text();
 			const existing = entries.get(key);
 			if ((existing && options.ifMatch !== existing.etag) || (!existing && options.ifMatch)) throw conflict();
 			if (existing && !options.ifMatch && !options.allowOverwrite) throw conflict();
-			entries.set(key, { body: text, etag: `e${++sequence}` });
+			entries.set(key, { body: text, etag: `"e${++sequence}"` });
 			return {};
 		},
 		list: async ({ prefix }: { prefix: string }) => ({ blobs: [...entries.keys()].filter((pathname) => pathname.startsWith(prefix)).map((pathname) => ({ pathname })) }),
