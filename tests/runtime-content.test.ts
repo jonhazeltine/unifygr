@@ -232,6 +232,28 @@ test("page API returns a fresh version for content and metadata saves", async ()
 	assert.equal(stale.status, 409);
 });
 
+test("a draft/live flip succeeds with no version at all — the real regression", async () => {
+	// This is the actual client behavior for the site-pages list's "Draft /
+	// Click to publish" button and the in-editor status pill in the one real
+	// case that matters: a status flip sent with no version present in the
+	// request body at all (not merely a stale one — genuinely absent, as
+	// `JSON.stringify` drops a key whose value is `undefined`). The route
+	// used to reject every such request outright with 409, before this
+	// endpoint ever reached updatePageMeta — so the button could never
+	// succeed, for any page, ever. updatePageMeta still does a real
+	// conditional write underneath (see the stale-version case in the test
+	// above, which must keep failing), so dropping the blanket pre-check
+	// doesn't remove real protection — it only removes a check that this
+	// exact, common, legitimate request could never have passed.
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({ "/content/pages/meals-of-hope.json": page("draft", "Meals of Hope") });
+	const cookies = await authedCookies();
+	const res = await studioPost("../src/pages/api/studio/pages.ts", { slug: "meals-of-hope", status: "live" }, cookies);
+	assert.equal(res.status, 200);
+	assert.equal(res.body.ok, true);
+	assert.equal(res.body.data.status, "live");
+});
+
 test("a stale builder metadata save cannot change public visibility", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
 	__setBundledPagesForTests({ "/content/pages/giving.json": page("live", "Giving") });
