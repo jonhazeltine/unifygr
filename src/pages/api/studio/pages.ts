@@ -42,19 +42,31 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 			const result = await updateSitePageStatus(body.sitePath, body.status, body.sitePagesVersion, locals);
 			return json({ ok: true, ...result });
 		}
-		if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before publishing your edits." }, 409);
 		if (body?.create && (await listPages(locals)).some((page) => page.slug === body.slug)) {
 			return json({ ok: false, error: "That page already exists. Open the latest copy before saving." }, 409);
 		}
 		if (body?.delete) {
-			const res = await deletePage(body.slug, body?.version, locals);
+			// Deleting is permanent, so this one genuinely needs a version to guard
+			// against removing a copy newer than the one the staff member is looking at.
+			if (typeof body?.version !== "string") return json({ ok: false, error: "This page changed. Refresh before deleting it." }, 409);
+			const res = await deletePage(body.slug, body.version, locals);
 			return json({ ok: true, via: res.via });
 		}
 		if (body?.data) {
+			// Content saves genuinely need a version too, to guard against one save
+			// silently clobbering a newer edit made elsewhere in the meantime.
+			if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before publishing your edits." }, 409);
 			const res = await writePage(body.slug, body.data, undefined, body?.version, locals);
 			return json({ ok: true, data: res.data, via: res.via, version: res.version });
 		}
 		if (body?.status || body?.order != null) {
+			// A draft/live flip or a reorder is not a content edit — nothing here can
+			// silently overwrite someone else's newer prose. The client never actually
+			// sends a version for this (it doesn't track one after the initial page
+			// list load), so requiring one made every flip fail outright, every time.
+			// updatePageMeta below still reads the current record fresh and writes with
+			// a real conditional (CAS) request, so a genuine conflict is still caught —
+			// this only drops the redundant, and here always-failing, pre-check.
 			const res = await updatePageMeta(body.slug, { status: body.status, order: body.order }, body?.version, locals);
 			return json({ ok: true, data: res.data, via: res.via, version: res.version });
 		}
