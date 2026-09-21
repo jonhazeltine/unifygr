@@ -5,7 +5,7 @@
 		"props": {
 			"title": "Meals of Hope 2026",
 			"kicker": "Change the World",
-			"description": "Pack meals for children in Haiti with New Life Grand Rapids — Saturday, November 14, 2026."
+			"description": "Pack meals for children in Haiti with New Life Grand Rapids \u2014 Saturday, November 14, 2026."
 		}
 	},
 	"content": [
@@ -24,19 +24,19 @@
 				"id": "Feature-moh",
 				"eyebrow": "About the event",
 				"heading": "Pack meals for children in Haiti",
-				"subline": "Saturday, November 14 · 4:00 pm",
+				"subline": "Saturday, November 14 \u00b7 4:00 pm",
 				"body": "This is a tangible way to feed children in Haiti who may not otherwise eat that day. Help us pack as many meals as we can. You can join in by sponsoring meals alongside other local businesses, by bringing a team to pack, or both.\n\nGot a team you want to bring? Sign up below and we'll save you a table.",
 				"image": "/uploads/meals-of-hope-child.jpg",
 				"video": "",
 				"buttons": [
 					{
 						"label": "Give meals",
-						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"href": "#give-meals",
 						"style": "primary"
 					},
 					{
 						"label": "Volunteer to pack",
-						"href": "https://newlife.ccbchurch.com/goto/forms/310/responses/new",
+						"href": "#volunteer-to-pack",
 						"style": "secondary"
 					}
 				],
@@ -51,7 +51,7 @@
 					},
 					{
 						"label": "Who can come",
-						"value": "Kids as young as 5 through adults — every age has a job"
+						"value": "Kids as young as 5 through adults \u2014 every age has a job"
 					},
 					{
 						"label": "Where the meals go",
@@ -112,10 +112,20 @@
 				"buttons": [
 					{
 						"label": "Give meals",
-						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"href": "#give-meals",
 						"style": "primary"
 					}
 				]
+			}
+		},
+		{
+			"type": "GivingEmbed",
+			"props": {
+				"id": "GivingEmbed-moh",
+				"eyebrow": "Give online",
+				"title": "Give toward Meals of Hope",
+				"src": "https://app.securegive.com/NewLifeGR/global-impact-and-city-transformation/static/widget/donate?cats=47923&amts=false",
+				"height": "772"
 			}
 		},
 		{
@@ -153,7 +163,7 @@
 				"photos": [
 					{
 						"src": "/uploads/meals-of-hope-hero.jpg",
-						"alt": "Children in Haiti eating a packed meal — feed a child, change a future"
+						"alt": "Children in Haiti eating a packed meal \u2014 feed a child, change a future"
 					},
 					{
 						"src": "/uploads/meals-of-hope-01.jpg",
@@ -208,15 +218,25 @@
 				"buttons": [
 					{
 						"label": "Volunteer to pack",
-						"href": "https://newlife.ccbchurch.com/goto/forms/310/responses/new",
+						"href": "#volunteer-to-pack",
 						"style": "primary"
 					},
 					{
 						"label": "Give meals instead",
-						"href": "https://app.securegive.com/NewLifeGR/goals/meals-of-hope-2025",
+						"href": "#give-meals",
 						"style": "secondary"
 					}
 				]
+			}
+		},
+		{
+			"type": "PackSignupForm",
+			"props": {
+				"id": "PackSignupForm-moh",
+				"eyebrow": "Bring a team",
+				"title": "Save us a table",
+				"body": "Tell us who's coming and we'll have a table ready for you on November 14th.",
+				"submitLabel": "Save our table"
 			}
 		}
 	],

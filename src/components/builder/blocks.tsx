@@ -985,16 +985,18 @@ export const blocksConfig: Config = {
 				height: "772",
 			},
 			render: ({ eyebrow, title, src, height }) => (
-				<section className="section" id="give-meals">
-					<div className="container" style={{ maxWidth: "640px" }}>
+				<section className="section giving-embed" id="give-meals">
+					<div className="container" style={{ maxWidth: "640px", textAlign: "center" }}>
 						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 						{title ? <h2>{title}</h2> : null}
 						{src ? (
-							<iframe
-								src={src}
-								title={title || "Give online"}
-								style={{ width: "100%", height: `${parseInt(height, 10) || 772}px`, border: 0, marginTop: "1.4rem" }}
-							/>
+							<div className="giving-embed__frame">
+								<iframe
+									src={src}
+									title={title || "Give online"}
+									style={{ width: "100%", height: `${parseInt(height, 10) || 772}px`, border: 0, display: "block" }}
+								/>
+							</div>
 						) : (
 							<p style={{ opacity: 0.5, textAlign: "center", padding: "40px 0", border: "1px dashed rgba(128,128,128,.4)", borderRadius: "18px" }}>
 								Paste the SecureGive widget link →
