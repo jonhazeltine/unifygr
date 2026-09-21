@@ -326,7 +326,7 @@ export default function BuilderApp() {
 					title="Click to flip between draft and live"
 					onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
 				>
-					{data?.status === "live" ? "PUBLISHED" : "DRAFT"}
+					{data?.status === "live" ? "PUBLISHED · Click to unpublish" : "DRAFT · Click to publish"}
 				</button>
 				<a className="builder-button builder-button--secondary" href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<StudioAppearance />
