@@ -17,6 +17,90 @@ function paras(text: string) {
 		.filter(Boolean);
 }
 
+function escapeHtml(text: string): string {
+	return String(text || "")
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;");
+}
+
+/**
+ * The small **bold** / *italic* markup the toolbar below writes, turned into
+ * real <strong>/<em> tags. Everything is HTML-escaped FIRST — the only tags
+ * that can ever come out the other end are the two these two patterns
+ * produce, so this can't be used to inject arbitrary HTML through a text
+ * field. **bold** is matched before *italic* so a bold run's own asterisks
+ * are consumed first and never misread as a stray italic marker.
+ */
+export function inlineFormatting(text: string): string {
+	return escapeHtml(text)
+		.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+		.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+}
+
+/** One or more formatted paragraphs, split the same way `paras` splits plain text. */
+function RichParagraphs({ text, className }: { text: string; className?: string }) {
+	return (
+		<>
+			{paras(text).map((p, i) => (
+				<p className={className} key={i} dangerouslySetInnerHTML={{ __html: inlineFormatting(p) }} />
+			))}
+		</>
+	);
+}
+
+/**
+ * A textarea with Bold/Italic buttons — select text, click, done (no markup
+ * to remember or type). Wraps the current selection in ** or * and puts the
+ * cursor back where a person would expect it; with nothing selected it just
+ * drops in an empty pair with the cursor in the middle, ready to type into.
+ * Used as a Puck `type: "custom"` field wherever body copy should support
+ * bold/italic — see inlineFormatting/RichParagraphs above for the other half
+ * (turning what's typed here into real tags when the page renders).
+ */
+function RichTextField({ value, onChange, placeholder }: { value: string; onChange: (v: string) => void; placeholder?: string }) {
+	const ref = useRef<HTMLTextAreaElement>(null);
+
+	function wrap(marker: string) {
+		const el = ref.current;
+		if (!el) return;
+		const start = el.selectionStart ?? 0;
+		const end = el.selectionEnd ?? 0;
+		const text = value || "";
+		const selected = text.slice(start, end);
+		onChange(text.slice(0, start) + marker + selected + marker + text.slice(end));
+		requestAnimationFrame(() => {
+			if (!ref.current) return;
+			const newStart = start + marker.length;
+			ref.current.focus();
+			ref.current.setSelectionRange(newStart, newStart + selected.length);
+		});
+	}
+
+	return (
+		<div style={{ display: "grid", gap: 4 }}>
+			<div style={{ display: "flex", gap: 4 }}>
+				<button type="button" onClick={() => wrap("**")} title="Bold" aria-label="Bold" style={{ width: 28, height: 28, fontWeight: 700, cursor: "pointer" }}>B</button>
+				<button type="button" onClick={() => wrap("*")} title="Italic" aria-label="Italic" style={{ width: 28, height: 28, fontStyle: "italic", cursor: "pointer" }}>i</button>
+			</div>
+			<textarea
+				ref={ref}
+				value={value || ""}
+				onChange={(e) => onChange(e.target.value)}
+				placeholder={placeholder}
+				rows={6}
+				style={{ width: "100%", boxSizing: "border-box", font: "inherit", padding: "8px", resize: "vertical" }}
+			/>
+		</div>
+	);
+}
+
+const richTextField = (label: string) => ({
+	type: "custom" as const,
+	label,
+	render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <RichTextField value={value} onChange={onChange} />,
+});
+
 // Pull a Vimeo id out of a pasted link (or accept a bare id). Meals of Hope's
 // two films live on Vimeo, not YouTube.
 function vimeoId(input: string): string | null {
@@ -140,7 +224,7 @@ export const blocksConfig: Config = {
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
 				title: { type: "text", label: "Section title" },
-				body: { type: "textarea", label: "Body (blank line = new paragraph)" },
+				body: richTextField("Body (blank line = new paragraph)"),
 				tinted: {
 					type: "radio",
 					label: "Background",
@@ -157,9 +241,7 @@ export const blocksConfig: Config = {
 						{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
 						{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
 						<div className="prose-block__body">
-							{paras(body).map((p, i) => (
-								<p className="reveal is-visible" key={i}>{p}</p>
-							))}
+							<RichParagraphs text={body} className="reveal is-visible" />
 						</div>
 					</div>
 				</section>
@@ -184,7 +266,7 @@ export const blocksConfig: Config = {
 					label: "Cards",
 					arrayFields: {
 						title: { type: "text", label: "Card title" },
-						text: { type: "textarea", label: "Card text" },
+						text: richTextField("Card text"),
 					},
 					defaultItemProps: { title: "Card", text: "" },
 					getItemSummary: (item: any) => item?.title || "Card",
@@ -213,7 +295,7 @@ export const blocksConfig: Config = {
 								{(cards || []).map((c: any, i: number) => (
 									<article className="value-card reveal is-visible" key={i}>
 										<h3>{c.title}</h3>
-										<p>{c.text}</p>
+										<RichParagraphs text={c.text} />
 									</article>
 								))}
 							</div>
@@ -223,7 +305,7 @@ export const blocksConfig: Config = {
 									<div className="command-card reveal is-visible" key={i}>
 										<span className="command-card__n">{String(i + 1).padStart(2, "0")}</span>
 										<h3>{c.title}</h3>
-										<p>{c.text}</p>
+										<RichParagraphs text={c.text} />
 									</div>
 								))}
 							</div>
@@ -243,7 +325,7 @@ export const blocksConfig: Config = {
 					label: "Questions",
 					arrayFields: {
 						q: { type: "text", label: "Question" },
-						a: { type: "textarea", label: "Answer" },
+						a: richTextField("Answer"),
 					},
 					defaultItemProps: { q: "A question?", a: "" },
 					getItemSummary: (item: any) => item?.q || "Question",
@@ -264,7 +346,7 @@ export const blocksConfig: Config = {
 							{(items || []).map((it: any, i: number) => (
 								<details className="faq-item reveal is-visible" key={i}>
 									<summary>{it.q}</summary>
-									<p>{it.a}</p>
+									<RichParagraphs text={it.a} />
 								</details>
 							))}
 						</div>
@@ -278,7 +360,7 @@ export const blocksConfig: Config = {
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
 				title: { type: "text", label: "Panel title" },
-				body: { type: "textarea", label: "Body" },
+				body: richTextField("Body"),
 				buttons: {
 					type: "array",
 					label: "Buttons",
@@ -305,7 +387,7 @@ export const blocksConfig: Config = {
 						<div className="formation-cta reveal is-visible">
 							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 							{title ? <h3>{title}</h3> : null}
-							{paras(body).map((p, i) => <p key={i}>{p}</p>)}
+							<RichParagraphs text={body} />
 							{(buttons || []).length ? (
 								<div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "6px" }}>
 									{(buttons || []).map((b: any, i: number) => (
@@ -333,10 +415,10 @@ export const blocksConfig: Config = {
 						},
 						name: { type: "text", label: "Name" },
 						role: { type: "text", label: "Role" },
-						bio: { type: "textarea", label: "Bio" },
+						bio: richTextField("Bio"),
 						name2: { type: "text", label: "Second person's name (optional)" },
 						role2: { type: "text", label: "Second person's role" },
-						bio2: { type: "textarea", label: "Second person's bio" },
+						bio2: richTextField("Second person's bio"),
 					},
 					defaultItemProps: { photo: "", name: "Name", role: "Role", bio: "", name2: "", role2: "", bio2: "" },
 					getItemSummary: (item: any) => item?.name || "Person",
@@ -357,13 +439,13 @@ export const blocksConfig: Config = {
 									<div className="staff-card__person">
 										<h3>{p.name}</h3>
 										{p.role ? <p className="staff-card__role">{p.role}</p> : null}
-										{p.bio ? <p>{p.bio}</p> : null}
+										{p.bio ? <RichParagraphs text={p.bio} /> : null}
 									</div>
 									{p.name2 ? (
 										<div className="staff-card__person">
 											<h3>{p.name2}</h3>
 											{p.role2 ? <p className="staff-card__role">{p.role2}</p> : null}
-											{p.bio2 ? <p>{p.bio2}</p> : null}
+											{p.bio2 ? <RichParagraphs text={p.bio2} /> : null}
 										</div>
 									) : null}
 								</article>
@@ -382,7 +464,7 @@ export const blocksConfig: Config = {
 					label: "Cards",
 					arrayFields: {
 						title: { type: "text", label: "Card title" },
-						blurb: { type: "textarea", label: "Blurb" },
+						blurb: richTextField("Blurb"),
 						items: { type: "textarea", label: "List (one item per line)" },
 					},
 					defaultItemProps: { title: "Team", blurb: "", items: "" },
@@ -397,7 +479,7 @@ export const blocksConfig: Config = {
 						{(cards || []).map((c: any, i: number) => (
 							<article className="team-card reveal is-visible" key={i}>
 								<h3>{c.title}</h3>
-								{c.blurb ? <p>{c.blurb}</p> : null}
+								{c.blurb ? <RichParagraphs text={c.blurb} /> : null}
 								<ul className="team-card__members">
 									{String(c.items || "").split("\n").map((s: string) => s.trim()).filter(Boolean).map((m: string, j: number) => (
 										<li key={j}>{m}</li>
@@ -416,7 +498,7 @@ export const blocksConfig: Config = {
 				eyebrow: { type: "text", label: "Small label above" },
 				heading: { type: "text", label: "Heading" },
 				subline: { type: "text", label: "Highlighted line (e.g. dates)" },
-				body: { type: "textarea", label: "Body" },
+				body: richTextField("Body"),
 				image: {
 					type: "custom",
 					label: "Photo (also used as the video's poster)",
@@ -471,7 +553,7 @@ export const blocksConfig: Config = {
 							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 							{heading ? <h2>{heading}</h2> : null}
 							{subline ? <p className="trip-hero__dates">{subline}</p> : null}
-							{paras(body).map((p, i) => <p key={i}>{p}</p>)}
+							<RichParagraphs text={body} />
 							{(buttons || []).length ? (
 								<div className="trip-hero__actions">
 									{(buttons || []).map((b: any, i: number) => (
@@ -501,7 +583,7 @@ export const blocksConfig: Config = {
 					arrayFields: {
 						label: { type: "text", label: "Small label" },
 						title: { type: "text", label: "Card title" },
-						body: { type: "textarea", label: "Card text" },
+						body: richTextField("Card text"),
 						buttonLabel: { type: "text", label: "Button label (optional)" },
 						buttonHref: { type: "text", label: "Button link" },
 						featured: {
@@ -525,7 +607,7 @@ export const blocksConfig: Config = {
 							<article className={`give-card${c.featured ? " give-card--primary" : ""} reveal is-visible`} key={i}>
 								{c.label ? <p className="eyebrow">{c.label}</p> : null}
 								<h3>{c.title}</h3>
-								{paras(c.body).map((p, j) => <p key={j}>{p}</p>)}
+								<RichParagraphs text={c.body} />
 								{c.buttonLabel ? (
 									<a className="button button--primary" href={c.buttonHref} target={/^https?:/.test(c.buttonHref || "") ? "_blank" : undefined} rel="noopener">{c.buttonLabel}</a>
 								) : null}
