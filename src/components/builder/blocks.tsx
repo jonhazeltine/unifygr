@@ -892,6 +892,84 @@ export const blocksConfig: Config = {
 			},
 		},
 
+		PackSignupForm: {
+			label: "Team sign-up form (Meals of Hope)",
+			fields: {
+				eyebrow: { type: "text", label: "Small label above" },
+				title: { type: "text", label: "Title" },
+				body: richTextField("Intro copy"),
+				submitLabel: { type: "text", label: "Button label" },
+			},
+			defaultProps: {
+				eyebrow: "Bring a team",
+				title: "Save us a table",
+				body: "Tell us who's coming and we'll have a table ready for you on November 14th.",
+				submitLabel: "Save our table",
+			},
+			// Static, server-rendered markup — the same pattern as every other
+			// block. A small vanilla-JS enhancer (in MountedPage.astro, scoped to
+			// [data-pack-signup-form]) wires the fetch/submit behavior, the same
+			// way /connect.astro's own form works with no client-side React.
+			render: ({ eyebrow, title, body, submitLabel }) => (
+				<section className="section pack-signup" id="volunteer-to-pack">
+					<div className="container pack-signup__wrap">
+						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+						{title ? <h2>{title}</h2> : null}
+						{body ? <RichParagraphs text={body} /> : null}
+
+						<form className="pack-signup-form" data-pack-signup-form noValidate>
+							<div className="pack-signup-row">
+								<label className="pack-signup-field">
+									<span>First name</span>
+									<input name="firstName" type="text" autoComplete="given-name" required />
+								</label>
+								<label className="pack-signup-field">
+									<span>Last name</span>
+									<input name="lastName" type="text" autoComplete="family-name" required />
+								</label>
+							</div>
+							<div className="pack-signup-row">
+								<label className="pack-signup-field">
+									<span>Email</span>
+									<input name="email" type="email" autoComplete="email" inputMode="email" />
+								</label>
+								<label className="pack-signup-field">
+									<span>Mobile phone</span>
+									<input name="phone" type="tel" autoComplete="tel" inputMode="tel" />
+								</label>
+							</div>
+							<p className="pack-signup-note">Either one is fine — we just need a way to reach you.</p>
+
+							<label className="pack-signup-field">
+								<span>How many people should we expect, including yourself?</span>
+								<input name="headcount" type="number" min="1" step="1" required />
+							</label>
+
+							{/* Not shown to people — only bots fill this in. */}
+							<div className="pack-signup-hp" aria-hidden="true">
+								<label>
+									Website
+									<input name="website" type="text" tabIndex={-1} autoComplete="off" />
+								</label>
+							</div>
+
+							<p className="pack-signup-error" data-pack-signup-error role="alert" hidden></p>
+
+							<button className="button button--primary" type="submit" data-pack-signup-submit>
+								{submitLabel || "Save our table"}
+							</button>
+						</form>
+
+						<div className="pack-signup-done" data-pack-signup-done hidden>
+							<p className="eyebrow">Thank you</p>
+							<h3>We've saved your table.</h3>
+							<p>We'll be in touch with the details before November 14th.</p>
+						</div>
+					</div>
+				</section>
+			),
+		},
+
 		Spacer: {
 			label: "Space",
 			fields: {

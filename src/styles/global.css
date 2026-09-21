@@ -2774,3 +2774,37 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
 .min-bio__links { display: flex; flex-wrap: wrap; gap: 0.9rem; margin: 0.5rem 0 0; }
 .min-bio__links a { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--gold); }
 .min-bio__nobio { margin: 0; color: rgba(246, 240, 231, 0.38); font-size: 0.86rem; line-height: 1.6; font-style: italic; }
+
+/* Meals of Hope — "Volunteer to pack" team sign-up form (PackSignupForm block). */
+.pack-signup__wrap { max-width: 44rem; }
+.pack-signup__wrap > h2 { margin: 0.4rem 0 0.6rem; }
+.pack-signup-form { display: grid; gap: 1.4rem; margin-top: 1.6rem; }
+.pack-signup-row { display: grid; gap: 1.4rem; grid-template-columns: 1fr 1fr; }
+@media (max-width: 620px) { .pack-signup-row { grid-template-columns: 1fr; } }
+
+.pack-signup-field { display: grid; gap: 0.5rem; }
+.pack-signup-field > span { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.pack-signup-field input {
+	width: 100%;
+	padding: 0.85rem 1rem;
+	border: 1px solid var(--line);
+	border-radius: 12px;
+	background: var(--panel);
+	color: var(--text);
+	font: inherit;
+}
+.pack-signup-field input:focus-visible {
+	outline: none;
+	border-color: var(--gold);
+	box-shadow: 0 0 0 3px var(--gold-soft);
+}
+.pack-signup-note { margin: -0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
+
+.pack-signup-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.pack-signup-error { margin: 0; color: var(--rose); }
+
+.pack-signup-done { margin-top: 1.6rem; border: 1px solid var(--gold-soft); border-radius: 20px; padding: 2.5rem; background: var(--panel); }
+.pack-signup-done h3 { margin: 0.4rem 0 0.8rem; }
+.pack-signup-done p { color: var(--muted); }
+
+[data-pack-signup-submit][disabled] { opacity: 0.6; cursor: progress; }
