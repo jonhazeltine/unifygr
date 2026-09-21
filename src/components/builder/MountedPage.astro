@@ -57,3 +57,46 @@ const Layout = bare ? Bare : Interior;
 	</>
 	)}
 </Layout>
+
+<script>
+	// Progressive enhancement for every PackSignupForm block on the page (see
+	// blocks.tsx) — plain fetch + vanilla JS, the same pattern as /connect.astro,
+	// since Puck's server-rendered blocks carry no client-side React.
+	for (const form of document.querySelectorAll<HTMLFormElement>("[data-pack-signup-form]")) {
+		const wrap = form.closest(".pack-signup__wrap") ?? form.parentElement;
+		const done = wrap?.querySelector<HTMLElement>("[data-pack-signup-done]");
+		const error = form.querySelector<HTMLParagraphElement>("[data-pack-signup-error]");
+		const submit = form.querySelector<HTMLButtonElement>("[data-pack-signup-submit]");
+		const defaultLabel = submit?.textContent ?? "Save our table";
+
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			if (!error || !submit || !done) return;
+
+			error.hidden = true;
+			submit.disabled = true;
+			submit.textContent = "Sending…";
+
+			const formData = new FormData(form);
+			const payload = Object.fromEntries(formData.entries());
+
+			try {
+				const res = await fetch("/api/meals-of-hope/pack-signup", {
+					method: "POST",
+					headers: { "content-type": "application/json" },
+					body: JSON.stringify(payload),
+				});
+				const data = await res.json().catch(() => ({}));
+				if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+				form.hidden = true;
+				done.hidden = false;
+				done.scrollIntoView({ behavior: "smooth", block: "center" });
+			} catch (err) {
+				error.textContent = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+				error.hidden = false;
+				submit.disabled = false;
+				submit.textContent = defaultLabel;
+			}
+		});
+	}
+</script>
