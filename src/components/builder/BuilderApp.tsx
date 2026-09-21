@@ -94,6 +94,7 @@ export default function BuilderApp() {
 	const [aiBusy, setAiBusy] = useState(false);
 	const [aiNote, setAiNote] = useState<string>("");
 	const [toast, setToast] = useState<string>("");
+	const [dirty, setDirty] = useState(false); // true once the open page has unsaved edits
 	const live = useRef<any>(null); // latest editor data (from onChange)
 	const visiblePages = pages.filter((page) => {
 		const needle = query.trim().toLowerCase();
@@ -148,6 +149,7 @@ export default function BuilderApp() {
 		const res = await api(`/api/studio/pages?slug=${encodeURIComponent(s)}`).catch(() => null);
 		if (res?.data) {
 			setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote("");
+			setDirty(false);
 			requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 		}
 		else say(res?.error === "Unauthorized" ? "Your session expired — reload the page and sign in again." : (res?.error || "Couldn't load that page — reload and try again."));
@@ -159,6 +161,7 @@ export default function BuilderApp() {
 		const s = slugify(title);
 		if (!s) return;
 		setSlug(s); setVersions((v) => ({ ...v, [s]: "seed" })); const d = EMPTY(title); setData(d); live.current = d; setRev((r) => r + 1); setAiNote("");
+		setDirty(false);
 		requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 	}
 
@@ -168,6 +171,7 @@ export default function BuilderApp() {
 		if (res.ok) {
 			if (res.data) { setData(res.data); live.current = res.data; }
 			setVersions((v) => ({ ...v, [slug]: res.version })); say("Saved ✓");
+			setDirty(false);
 			refresh();
 		} else { say(res.error || "Couldn't save"); }
 	}
@@ -178,7 +182,7 @@ export default function BuilderApp() {
 			say(status === "live"
 				? (res.via === "git" ? "Publishing in a minute or two" : "Published ✓")
 				: "Back to draft");
-			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
+			if (slug === s && res.data) { setData(res.data); live.current = res.data; setDirty(false); }
 			setVersions((v) => ({ ...v, [s]: res.version }));
 			refresh();
 		} else { say(res.error || "Couldn't update"); }
@@ -215,7 +219,7 @@ export default function BuilderApp() {
 				body: JSON.stringify({ message, data: live.current ?? data, title: slug }),
 			});
 			if (res.data) {
-				setData(res.data); live.current = res.data; setRev((r) => r + 1);
+				setData(res.data); live.current = res.data; setRev((r) => r + 1); setDirty(true);
 				setAiNote(res.reply || "Done — review the change, then Publish.");
 				input.value = "";
 			} else {
@@ -321,13 +325,6 @@ export default function BuilderApp() {
 			<div className="builder-editor-bar">
 				<button className="builder-button builder-button--secondary" onClick={() => { setSlug(null); setData(null); refresh(); }}>‹ Site pages</button>
 				<span className="builder-editor-bar__title"><small>Editing</small><strong>{data?.root?.props?.title || slug}</strong></span>
-				<button
-					className={`builder-status builder-status--${data?.status === "live" ? "live" : "draft"}`}
-					title="Click to flip between draft and live"
-					onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
-				>
-					{data?.status === "live" ? "PUBLISHED · Click to unpublish" : "DRAFT · Click to publish"}
-				</button>
 				<a className="builder-button builder-button--secondary" href={pages.find((x) => x.slug === slug)?.path || `/p/${slug}`} target="_blank" rel="noreferrer">View ↗</a>
 				<StudioAppearance />
 				<form onSubmit={askAI} style={{ display: "flex", gap: 8, flex: 1, minWidth: 260 }}>
@@ -341,20 +338,29 @@ export default function BuilderApp() {
 					key={rev}
 					config={blocksConfig}
 					data={data}
-					onChange={(d: any) => { live.current = d; }}
+					onChange={(d: any) => { live.current = d; setDirty(true); }}
 					onPublish={save}
 					overrides={{
 						// Puck's own built-in button always says "Publish" — but it's
 						// wired to `save`, which only writes the content and never
-						// touches the page's draft/live status (that's the separate
-						// DRAFT/PUBLISHED pill above). Labeling it "Publish" reads as
-						// "this goes live", when it's actually the safe, ordinary save.
-						// The real publish control is unchanged; this only replaces
-						// the confusing label on the save button.
+						// touches the page's draft/live status. The real draft/live
+						// toggle lives right next to it (moved here from the top bar
+						// so both controls are together), and the save button itself
+						// reflects whether there's anything new to save.
 						headerActions: () => (
-							<Button onClick={() => save(live.current)} icon={<span aria-hidden="true">✓</span>}>
-								Save
-							</Button>
+							<>
+								<button
+									type="button"
+									className={`builder-status builder-status--${data?.status === "live" ? "live" : "draft"}`}
+									title="Click to flip between draft and live"
+									onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
+								>
+									{data?.status === "live" ? "PUBLISHED · Click to unpublish" : "DRAFT · Click to publish"}
+								</button>
+								<Button onClick={() => save(live.current)} disabled={!dirty} icon={<span aria-hidden="true">✓</span>}>
+									{dirty ? "Save" : "Saved"}
+								</Button>
+							</>
 						),
 					}}
 				/>
