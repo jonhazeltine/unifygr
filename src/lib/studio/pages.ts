@@ -143,6 +143,28 @@ const STUDIO_THUMBNAILS: Record<string, string> = {
 	welcome: "/art/studio-thumbs/welcome.webp",
 };
 
+// Real content pages the studio-page-previews convention has no art for yet
+// (checked directly against production 2026-09-21) — "/app" is a redirect
+// stub, not a page anyone lands on, so it falls back to the generic /og.png
+// rather than pointing a share card at a picture that 404s.
+const NO_OG_IMAGE = new Set(["/app"]);
+
+/**
+ * The share-card image (og:image / twitter:image) for whatever page is at
+ * this path — the same picture already used as its thumbnail in the Studio
+ * page picker, so a link to any page carries its own image when it lands in
+ * Messenger, iMessage, or anywhere else that renders a link preview, instead
+ * of every page sharing the one generic /og.png. Called from the layouts
+ * (Interior.astro, Bare.astro) as the default `image`, so a page needs no
+ * changes of its own to get this — only an explicit override opts out.
+ */
+export function pageOgImage(pathname: string): string | undefined {
+	if (NO_OG_IMAGE.has(pathname)) return undefined;
+	const slug = Object.keys(MOUNTED).find((s) => MOUNTED[s] === pathname) ?? (pathname.startsWith("/p/") ? pathname.slice(3) : undefined);
+	if (slug && STUDIO_THUMBNAILS[slug]) return STUDIO_THUMBNAILS[slug];
+	return previewPath(pathname);
+}
+
 export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> {
 	// Listing runtime-created pages needs an index. It is updated alongside each
 	// save; committed files remain the seed list on a fresh deployment.
