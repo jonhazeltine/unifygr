@@ -4,7 +4,7 @@
 // it can move from Vercel Blob to R2 without changing the Studio or public
 // readers.
 
-import { get, list, put } from "@vercel/blob";
+import { BlobPreconditionFailedError, get, list, put } from "@vercel/blob";
 
 export type RuntimeLocals = Record<string, any> | undefined;
 
@@ -66,7 +66,11 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 			access: "private", contentType: "application/json", addRandomSuffix: false, token: accessToken,
 		}); } catch (error) {
 			// A concurrent first publish may already have created the immutable seed.
-			if ((error as Error)?.name !== "BlobPreconditionFailedError") throw error;
+			// @vercel/blob's error classes never set `.name` to their own class name
+			// (it's inherited from Error, so it's always "Error"), so this has to be
+			// an `instanceof` check — a `.name` comparison here always fails and
+			// always rethrows, even for this expected, harmless race.
+			if (!(error instanceof BlobPreconditionFailedError)) throw error;
 		}
 	}
 	const next: Stored<T> = { value, version: version(), publishedAt: new Date().toISOString() };
@@ -79,7 +83,11 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 			...(current.exists ? { ifMatch: current.etag! } : { allowOverwrite: false }), token: accessToken,
 		});
 	} catch (error) {
-		if ((error as Error)?.name === "BlobPreconditionFailedError") throw new ContentConflict();
+		// Same instanceof note as above — a `.name` check here never actually
+		// matched, so every real conflict leaked to the caller as the raw Vercel
+		// Blob SDK error ("Vercel Blob: Precondition failed: ETag mismatch.")
+		// instead of the friendly, catchable ContentConflict.
+		if (error instanceof BlobPreconditionFailedError) throw new ContentConflict();
 		// Never turn a rejected conditional write into an unconditional overwrite.
 		// Availability can be retried; silently losing a newer publish cannot.
 		throw error;

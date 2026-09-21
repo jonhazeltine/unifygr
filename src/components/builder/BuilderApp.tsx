@@ -4,7 +4,7 @@
 // page document and the change appears in the editor for review. Publish saves.
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Puck } from "@measured/puck";
+import { Button, Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 import MenuEditor from "./MenuEditor";
@@ -343,6 +343,20 @@ export default function BuilderApp() {
 					data={data}
 					onChange={(d: any) => { live.current = d; }}
 					onPublish={save}
+					overrides={{
+						// Puck's own built-in button always says "Publish" — but it's
+						// wired to `save`, which only writes the content and never
+						// touches the page's draft/live status (that's the separate
+						// DRAFT/PUBLISHED pill above). Labeling it "Publish" reads as
+						// "this goes live", when it's actually the safe, ordinary save.
+						// The real publish control is unchanged; this only replaces
+						// the confusing label on the save button.
+						headerActions: () => (
+							<Button onClick={() => save(live.current)} icon={<span aria-hidden="true">✓</span>}>
+								Save
+							</Button>
+						),
+					}}
 				/>
 			</div>
 			{toast && <div style={S.toast}>{toast}</div>}

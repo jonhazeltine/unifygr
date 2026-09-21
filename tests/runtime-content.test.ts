@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { BlobPreconditionFailedError } from "@vercel/blob";
 import {
 	__setRuntimeContentDriverForTests,
 	ContentConflict,
@@ -26,7 +27,12 @@ type Entry = { body: string; etag: string };
 function memoryBlob() {
 	const entries = new Map<string, Entry>();
 	let sequence = 0;
-	const conflict = () => Object.assign(new Error("precondition failed"), { name: "BlobPreconditionFailedError" });
+	// A real BlobPreconditionFailedError, not a plain Error with a matching
+	// `.name` — the SDK's own error classes never set `.name` to their class
+	// name (it's inherited from Error, always "Error"), so a mock built that
+	// way would validate the exact `.name`-comparison bug this suite exists
+	// to catch, rather than the real SDK's actual shape.
+	const conflict = () => new BlobPreconditionFailedError();
 	return {
 		get: async (key: string) => {
 			const entry = entries.get(key);
@@ -63,6 +69,39 @@ async function studioPost(path: string, payload: unknown, cookies: any, requestL
 	} as any);
 	return { status: response.status, body: await response.json() };
 }
+
+test("a brand-new key's first publish succeeds even when another request already wrote its seed record", async () => {
+	// Reproduces the real bug: two requests race to publish a key for the very
+	// first time. Both find `current.exists === false` and both try to write
+	// the immutable seed.json record; the loser's write correctly conflicts,
+	// and that conflict is supposed to be swallowed as an expected, harmless
+	// race (the comment right above the check in runtime-content.ts says so) —
+	// not crash the whole publish with a raw Vercel Blob error.
+	const blob = memoryBlob() as any;
+	__setRuntimeContentDriverForTests(blob);
+	const key = "test/first-publish-race/published.json";
+	// Simulate "another request already created the immutable seed" by writing
+	// it directly, out of band, before this publish ever runs.
+	await blob.put(`studio/revisions/${key}/seed.json`, JSON.stringify({ value: { value: 0 }, version: "seed", publishedAt: "", previousVersion: null }), {
+		access: "private", contentType: "application/json", addRandomSuffix: false,
+	});
+	// This is the actual regression: before the fix, this threw the raw
+	// "Vercel Blob: Precondition failed: ETag mismatch." error instead of
+	// completing the publish.
+	const result = await publish(key, { value: 1 }, { value: 0 }, undefined, locals);
+	assert.equal(result.value.value, 1);
+});
+
+test("a genuine version conflict on an existing key still raises the friendly ContentConflict, not a raw SDK error", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const key = "test/stale-write/published.json";
+	const first = await publish(key, { value: 0 }, { value: 0 }, undefined, locals);
+	await publish(key, { value: 1 }, { value: 0 }, first.version, locals);
+	await assert.rejects(
+		() => publish(key, { value: 2 }, { value: 0 }, first.version, locals),
+		ContentConflict,
+	);
+});
 
 test("concurrent publishes from one version allow exactly one pointer update", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
