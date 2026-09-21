@@ -977,15 +977,17 @@ export const blocksConfig: Config = {
 				title: { type: "text", label: "Title" },
 				src: { type: "text", label: "SecureGive widget link (from SecureGive's embed code)" },
 				height: { type: "text", label: "Height (px)" },
+				anchorId: { type: "text", label: "Link anchor (for a button elsewhere on this page to jump here, e.g. give-online)" },
 			},
 			defaultProps: {
 				eyebrow: "Give online",
 				title: "Give toward Meals of Hope",
 				src: "https://app.securegive.com/NewLifeGR/global-impact-and-city-transformation/static/widget/donate?cats=47923&amts=false",
 				height: "772",
+				anchorId: "give-meals",
 			},
-			render: ({ eyebrow, title, src, height }) => (
-				<section className="section giving-embed" id="give-meals">
+			render: ({ eyebrow, title, src, height, anchorId }) => (
+				<section className="section giving-embed" id={anchorId || "give-online"}>
 					<div className="container" style={{ maxWidth: "640px", textAlign: "center" }}>
 						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 						{title ? <h2>{title}</h2> : null}
