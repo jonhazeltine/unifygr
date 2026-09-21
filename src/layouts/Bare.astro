@@ -8,21 +8,23 @@
 // staff can still get to the editor from here.
 import BaseHead from "../components/BaseHead.astro";
 import StudioDock from "../components/StudioDock.astro";
+import { pageOgImage } from "../lib/studio/pages";
 import "../styles/sunday.css";
 import "../styles/tap.css";
 
 interface Props {
 	title: string;
 	description: string;
+	image?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={title} description={description} image={image ?? pageOgImage(Astro.url.pathname)} />
 		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
 	</head>
 	<body class="v2">
