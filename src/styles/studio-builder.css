@@ -106,6 +106,21 @@
  * child of body) already paints its own background over the entirety of it,
  * so nothing here is ever visible outside the iframe.
  *
+ * The FIRST version of this fix only set `background`, and missed a second
+ * copy of the exact same leak: the base .builder-body rule just above also
+ * sets `color: var(--studio-text)` directly on body — a class selector, so
+ * it beats global.css's plain `body { color: var(--text) }` (an element
+ * selector) on specificity alone, regardless of source order. Any element
+ * with no color rule of its own (headings, secondary buttons — anything that
+ * just inherits body's color rather than setting --text/--muted explicitly)
+ * inherited the Studio's OWN light/dark text color instead of the site's
+ * real one. Result: correct dark background (from the first fix) plus
+ * inherited dark-navy light-mode text on top of it — worse than before,
+ * because now it's dark-on-dark instead of light-on-light. `color: var(--text)`
+ * below closes that the same way `background` already does: unconditionally,
+ * matching the site's one real appearance regardless of the Studio's own
+ * light/dark choice.
+ *
  * An earlier version of this fix used Puck's `overrides.preview` to wrap the
  * canvas in an extra div instead, which looked identical in principle but
  * broke Puck's own frame-size measurement (it measures a specific element via
@@ -121,6 +136,7 @@ body.builder-body {
 		radial-gradient(circle at 18% 16%, rgba(132, 185, 255, 0.11), transparent 18%),
 		radial-gradient(circle at 80% 22%, rgba(238, 199, 183, 0.08), transparent 20%),
 		linear-gradient(180deg, #050608 0%, #090d14 40%, #050608 100%);
+	color: var(--text);
 }
 
 /* Puck uses a token palette. Re-map its neutral controls in light mode so the
