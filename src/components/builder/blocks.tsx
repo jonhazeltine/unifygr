@@ -970,6 +970,41 @@ export const blocksConfig: Config = {
 			),
 		},
 
+		GivingEmbed: {
+			label: "Giving form (embedded)",
+			fields: {
+				eyebrow: { type: "text", label: "Small label above" },
+				title: { type: "text", label: "Title" },
+				src: { type: "text", label: "SecureGive widget link (from SecureGive's embed code)" },
+				height: { type: "text", label: "Height (px)" },
+			},
+			defaultProps: {
+				eyebrow: "Give online",
+				title: "Give toward Meals of Hope",
+				src: "https://app.securegive.com/NewLifeGR/global-impact-and-city-transformation/static/widget/donate?cats=47923&amts=false",
+				height: "772",
+			},
+			render: ({ eyebrow, title, src, height }) => (
+				<section className="section" id="give-meals">
+					<div className="container" style={{ maxWidth: "640px" }}>
+						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+						{title ? <h2>{title}</h2> : null}
+						{src ? (
+							<iframe
+								src={src}
+								title={title || "Give online"}
+								style={{ width: "100%", height: `${parseInt(height, 10) || 772}px`, border: 0, marginTop: "1.4rem" }}
+							/>
+						) : (
+							<p style={{ opacity: 0.5, textAlign: "center", padding: "40px 0", border: "1px dashed rgba(128,128,128,.4)", borderRadius: "18px" }}>
+								Paste the SecureGive widget link →
+							</p>
+						)}
+					</div>
+				</section>
+			),
+		},
+
 		Spacer: {
 			label: "Space",
 			fields: {
