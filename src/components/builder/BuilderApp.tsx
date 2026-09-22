@@ -94,7 +94,8 @@ export default function BuilderApp() {
 	const [aiBusy, setAiBusy] = useState(false);
 	const [aiNote, setAiNote] = useState<string>("");
 	const [toast, setToast] = useState<string>("");
-	const [dirty, setDirty] = useState(false); // true once the open page has unsaved edits
+	const [dirty, setDirty] = useState(false); // true once the open page has edits not yet saved to its draft
+	const [pendingPublish, setPendingPublish] = useState(false); // true once the draft has changes not yet published
 	const live = useRef<any>(null); // latest editor data (from onChange)
 	const visiblePages = pages.filter((page) => {
 		const needle = query.trim().toLowerCase();
@@ -150,6 +151,11 @@ export default function BuilderApp() {
 		if (res?.data) {
 			setSlug(s); setData(res.data); setVersions((v) => ({ ...v, [s]: res.version })); live.current = res.data; setRev((r) => r + 1); setAiNote("");
 			setDirty(false);
+			// A page can arrive with a draft already ahead of what's published
+			// (someone saved last session and never published) — reflect that
+			// honestly instead of always starting the pill as if there's nothing
+			// pending.
+			setPendingPublish(Boolean(res.dirty));
 			requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 		}
 		else say(res?.error === "Unauthorized" ? "Your session expired — reload the page and sign in again." : (res?.error || "Couldn't load that page — reload and try again."));
@@ -162,9 +168,12 @@ export default function BuilderApp() {
 		if (!s) return;
 		setSlug(s); setVersions((v) => ({ ...v, [s]: "seed" })); const d = EMPTY(title); setData(d); live.current = d; setRev((r) => r + 1); setAiNote("");
 		setDirty(false);
+		setPendingPublish(false);
 		requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
 	}
 
+	// Saves to the page's DRAFT only — never what visitors see. Publish (below)
+	// is the one action that pushes a draft live.
 	async function save(d: any) {
 		if (!slug) return;
 		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug, data: d, version: versions[slug], create: !pages.some((p) => p.slug === slug) }) });
@@ -172,20 +181,35 @@ export default function BuilderApp() {
 			if (res.data) { setData(res.data); live.current = res.data; }
 			setVersions((v) => ({ ...v, [slug]: res.version })); say("Saved ✓");
 			setDirty(false);
+			setPendingPublish(true);
 			refresh();
 		} else { say(res.error || "Couldn't save"); }
 	}
 
-	async function setStatus(s: string, status: "draft" | "live") {
-		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status, version: versions[s] }) });
+	/** Push the current draft live. Used both for a page's first Publish and for pushing out edits to an already-live page. */
+	async function publishPage(s: string) {
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, publish: true }) });
 		if (res.ok) {
-			say(status === "live"
-				? (res.via === "git" ? "Publishing in a minute or two" : "Published ✓")
-				: "Back to draft");
-			if (slug === s && res.data) { setData(res.data); live.current = res.data; setDirty(false); }
-			setVersions((v) => ({ ...v, [s]: res.version }));
+			say(res.via === "git" ? "Publishing in a minute or two" : "Published ✓");
+			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
+			if (slug === s) setPendingPublish(false);
+			refresh();
+		} else { say(res.error || "Couldn't publish"); }
+	}
+
+	/** Hide an already-live page. Content (draft and published) is untouched — this only flips visibility. */
+	async function unpublishPage(s: string) {
+		const res = await api("/api/studio/pages", { method: "POST", body: JSON.stringify({ slug: s, status: "draft" }) });
+		if (res.ok) {
+			say("Back to draft");
+			if (slug === s && res.data) { setData(res.data); live.current = res.data; }
 			refresh();
 		} else { say(res.error || "Couldn't update"); }
+	}
+
+	/** The status pill's single action: publish when there's anything to publish, otherwise unpublish. */
+	function togglePublish(s: string, status: "draft" | "live", hasPendingPublish = false) {
+		return status === "live" && !hasPendingPublish ? unpublishPage(s) : publishPage(s);
 	}
 
 	async function setSiteStatus(path: string, status: "draft" | "live") {
@@ -289,7 +313,7 @@ export default function BuilderApp() {
 								</button>
 								<div className="builder-page-row__controls">
 									<button className="builder-page-row__copy" type="button" onClick={() => copyLink(p.path)} aria-label={`Copy link for ${p.title}`}>Copy link</button>
-									<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setStatus(p.slug, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+									<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => togglePublish(p.slug, p.status)} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
 										<span>{p.status === "live" ? "Published" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to publish"}</small>
 									</button>
 									<button className="builder-page-row__edit" type="button" onClick={() => openPage(p.slug)} aria-label={`Edit ${p.title}`}>Edit</button>
@@ -342,20 +366,25 @@ export default function BuilderApp() {
 					onPublish={save}
 					overrides={{
 						// Puck's own built-in button always says "Publish" — but it's
-						// wired to `save`, which only writes the content and never
-						// touches the page's draft/live status. The real draft/live
-						// toggle lives right next to it (moved here from the top bar
-						// so both controls are together), and the save button itself
-						// reflects whether there's anything new to save.
+						// wired to `save`, which only writes the DRAFT and never
+						// touches what visitors see. The real draft/live control lives
+						// right next to it: DRAFT → publish it for the first time;
+						// PUBLISHED with a saved-but-unpublished edit → push that edit
+						// live (status stays live); PUBLISHED with nothing pending →
+						// unpublish. Save itself only ever reflects the draft.
 						headerActions: () => (
 							<>
 								<button
 									type="button"
-									className={`builder-status builder-status--${data?.status === "live" ? "live" : "draft"}`}
-									title="Click to flip between draft and live"
-									onClick={() => setStatus(slug, data?.status === "live" ? "draft" : "live")}
+									className={`builder-status builder-status--${data?.status === "live" ? (pendingPublish ? "pending" : "live") : "draft"}`}
+									title={data?.status !== "live" ? "Click to publish" : pendingPublish ? "Click to publish your changes" : "Click to unpublish"}
+									onClick={() => togglePublish(slug, data?.status, pendingPublish)}
 								>
-									{data?.status === "live" ? "PUBLISHED · Click to unpublish" : "DRAFT · Click to publish"}
+									{data?.status !== "live"
+										? "DRAFT · Click to publish"
+										: pendingPublish
+											? "PUBLISHED · Unsaved changes — click to publish"
+											: "PUBLISHED · Click to unpublish"}
 								</button>
 								<Button onClick={() => save(live.current)} disabled={!dirty} icon={<span aria-hidden="true">✓</span>}>
 									{dirty ? "Save" : "Saved"}

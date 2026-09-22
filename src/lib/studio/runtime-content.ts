@@ -111,7 +111,7 @@ async function write<T>(key: string, value: T, expectedVersion: string | undefin
 	return next;
 }
 
-export async function readPublished<T>(key: string, fallback: T, locals?: RuntimeLocals): Promise<Stored<T>> {
+export async function readPublished<T>(key: string, fallback: T, locals?: RuntimeLocals): Promise<Stored<T> & { exists: boolean }> {
 	return read(key, fallback, locals);
 }
 
