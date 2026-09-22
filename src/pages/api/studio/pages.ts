@@ -1,8 +1,11 @@
 // Builder pages API. Staff-only; all writes pass the sanitize fence.
 //   GET                    → list pages (slug, title, status, order)
-//   GET ?slug=             → one page document
-//   POST {slug, data}      → save content (keeps current status/order)
-//   POST {slug, status}    → flip draft/live
+//   GET ?slug=             → one page's DRAFT (the editor's working copy —
+//                            see readDraftPageState; never the public page)
+//   POST {slug, data}      → save the draft (never touches the live page)
+//   POST {slug, publish}   → push the draft live (content + status:"live")
+//   POST {slug, status}    → flip draft/live with NO content change
+//                            (unpublish — the one visibility-only toggle left)
 //   POST {slug, order}     → set position
 //   POST {slug, delete}    → remove the page
 // In production writes commit to GitHub (result includes via:"git" so the UI
@@ -11,7 +14,7 @@ export const prerender = false;
 
 import type { APIRoute } from "astro";
 import { isAuthed } from "../../../lib/studio/auth";
-import { listPages, readPageState, writePage, updatePageMeta, deletePage } from "../../../lib/studio/pages";
+import { listPages, readDraftPageState, writeDraftPage, publishDraft, updatePageMeta, deletePage } from "../../../lib/studio/pages";
 import { listHandBuiltPages } from "../../../lib/studio/site-pages";
 import { ContentConflict } from "../../../lib/studio/runtime-content";
 import { readSitePageStatuses, sitePageStatus, updateSitePageStatus } from "../../../lib/studio/site-page-state";
@@ -23,7 +26,7 @@ export const GET: APIRoute = async ({ url, cookies, locals }) => {
 	if (!isAuthed(cookies)) return json({ error: "Unauthorized" }, 401);
 	const slug = url.searchParams.get("slug");
 	if (slug) {
-		const page = await readPageState(slug, locals);
+		const page = await readDraftPageState(slug, locals);
 		return page ? json(page) : json({ error: "Not found" }, 404);
 	}
 	const siteState = await readSitePageStatuses(locals);
@@ -54,9 +57,17 @@ export const POST: APIRoute = async ({ request, cookies, locals }) => {
 		}
 		if (body?.data) {
 			// Content saves genuinely need a version too, to guard against one save
-			// silently clobbering a newer edit made elsewhere in the meantime.
-			if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before publishing your edits." }, 409);
-			const res = await writePage(body.slug, body.data, undefined, body?.version, locals);
+			// silently clobbering a newer edit made elsewhere in the meantime. This
+			// writes the DRAFT only — the live page is untouched until Publish.
+			if (typeof body?.version !== "string" && !body?.create) return json({ ok: false, error: "This page changed. Refresh before saving your edits." }, 409);
+			const res = await writeDraftPage(body.slug, body.data, body?.version, locals);
+			return json({ ok: true, data: res.data, via: res.via, version: res.version, dirty: res.dirty });
+		}
+		if (body?.publish) {
+			// Copies the current draft's content into the published record and
+			// puts the page live — the one action that actually changes what
+			// visitors see.
+			const res = await publishDraft(body.slug, body?.version, locals);
 			return json({ ok: true, data: res.data, via: res.via, version: res.version });
 		}
 		if (body?.status || body?.order != null) {

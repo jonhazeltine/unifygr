@@ -225,7 +225,7 @@ test("nav API returns a fresh version for the next save and rejects a stale clie
 	assert.equal(stale.status, 409);
 });
 
-test("page API returns a fresh version for content and metadata saves", async () => {
+test("page API returns a fresh draft version for content saves, and rejects a stale one", async () => {
 	__setRuntimeContentDriverForTests(memoryBlob() as any);
 	__setBundledPagesForTests({});
 	const cookies = await authedCookies();
@@ -235,11 +235,54 @@ test("page API returns a fresh version for content and metadata saves", async ()
 	const second = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", data: page("draft", "Two"), version: first.body.version }, cookies);
 	assert.equal(second.status, 200);
 	assert.equal(typeof second.body.version, "string");
-	const meta = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "live", version: second.body.version }, cookies);
+	// A draft/live flip is a separate record with its own version — the client
+	// never sends one for it (see the regression test below), so reusing a
+	// content-save version here would be stale by definition, not a real check.
+	const meta = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "live" }, cookies);
 	assert.equal(meta.status, 200);
 	assert.equal(meta.body.data.status, "live");
-	const stale = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", status: "draft", version: first.body.version }, cookies);
-	assert.equal(stale.status, 409);
+	const staleContentSave = await studioPost("../src/pages/api/studio/pages.ts", { slug: "api-flow", data: page("draft", "Stale"), version: first.body.version }, cookies);
+	assert.equal(staleContentSave.status, 409);
+});
+
+test("saving a page's draft never changes what the public site reads until it's published", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({});
+	const cookies = await authedCookies();
+	const created = await studioPost("../src/pages/api/studio/pages.ts", { slug: "draft-flow", data: page("draft", "Original"), version: "seed", create: true }, cookies);
+	assert.notEqual((await readPage("draft-flow", locals))?.root.props.title, "Original", "a brand-new page has no public content until it's published");
+
+	const firstPublish = await studioPost("../src/pages/api/studio/pages.ts", { slug: "draft-flow", publish: true }, cookies);
+	assert.equal(firstPublish.status, 200);
+	assert.equal((await readPage("draft-flow", locals))?.root.props.title, "Original");
+	assert.equal((await readPage("draft-flow", locals))?.status, "live");
+
+	const edited = await studioPost("../src/pages/api/studio/pages.ts", { slug: "draft-flow", data: page("draft", "Edited"), version: created.body.version }, cookies);
+	assert.equal(edited.status, 200);
+	assert.equal(edited.body.data.root.props.title, "Edited");
+	assert.equal(edited.body.dirty, true);
+	// The live page is still the original — the draft save never touched it.
+	assert.equal((await readPage("draft-flow", locals))?.root.props.title, "Original");
+
+	const published = await studioPost("../src/pages/api/studio/pages.ts", { slug: "draft-flow", publish: true }, cookies);
+	assert.equal(published.status, 200);
+	assert.equal(published.body.data.root.props.title, "Edited");
+	assert.equal((await readPage("draft-flow", locals))?.root.props.title, "Edited");
+});
+
+test("unpublishing hides a page without touching its content, draft or published", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	__setBundledPagesForTests({});
+	const cookies = await authedCookies();
+	await studioPost("../src/pages/api/studio/pages.ts", { slug: "hide-flow", data: page("draft", "Visible"), version: "seed", create: true }, cookies);
+	await studioPost("../src/pages/api/studio/pages.ts", { slug: "hide-flow", publish: true }, cookies);
+	assert.equal((await readPage("hide-flow", locals))?.status, "live");
+
+	const hidden = await studioPost("../src/pages/api/studio/pages.ts", { slug: "hide-flow", status: "draft" }, cookies);
+	assert.equal(hidden.status, 200);
+	assert.equal(hidden.body.data.status, "draft");
+	// The content is untouched — only visibility changed.
+	assert.equal(hidden.body.data.root.props.title, "Visible");
 });
 
 test("a draft/live flip succeeds with no version at all — the real regression", async () => {

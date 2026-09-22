@@ -102,6 +102,16 @@ function bundledSlugs(): string[] {
 	return Object.keys(bundledPages()).map((key) => key.split("/").pop()!.replace(/\.json$/, ""));
 }
 const keyFor = (slug: string) => `studio/pages/${slug}/published.json`;
+// The editor's private working copy — never read by the public site. Saving
+// in the Page Builder writes only here; an explicit Publish is what copies
+// this into the published record above. A boolean sits in its own tiny key
+// rather than being inferred by comparing draft and published content:
+// diffing two independently-edited Puck documents for equality is exactly
+// the trap that bit the Save/Saved button earlier (see PR #228) — Puck
+// re-shapes saved data in ways that read as "different" even when nothing
+// visible changed, so the flag is set and cleared explicitly instead.
+const draftKeyFor = (slug: string) => `studio/pages/${slug}/draft.json`;
+const draftDirtyKeyFor = (slug: string) => `studio/pages/${slug}/draft-dirty.json`;
 
 async function updatePageIndex(
 	change: (slugs: string[]) => string[],
@@ -179,8 +189,12 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 	for (const slug of slugs) {
 		if (!validSlug(slug)) continue;
 		const record = await readPageState(slug, locals);
-		if (record) {
-			const data = record.data;
+		// A page with no published record yet (created but never published) has
+		// no real title/description to show here except in its draft — without
+		// this, a brand-new page would list as "Untitled page" until published.
+		const listing = record?.hasPublished ? record : await readDraftPageState(slug, locals);
+		if (listing) {
+			const data = listing.data;
 			out.push({
 				slug,
 				title: String(data.root.props.title || slug),
@@ -190,7 +204,7 @@ export async function listPages(locals?: RuntimeLocals): Promise<PageListing[]> 
 				order: data.order,
 				path: MOUNTED[slug] || `/p/${slug}`,
 				mounted: Boolean(MOUNTED[slug]),
-				version: record.version,
+				version: record?.version ?? listing.version,
 			});
 		}
 	}
@@ -201,9 +215,10 @@ export async function readPage(slug: string, locals?: RuntimeLocals): Promise<Pa
 	return (await readPageState(slug, locals))?.data ?? null;
 }
 
-export async function readPageState(slug: string, locals?: RuntimeLocals): Promise<{ data: PageData; version: string } | null> {
+export async function readPageState(slug: string, locals?: RuntimeLocals): Promise<{ data: PageData; version: string; hasPublished: boolean } | null> {
 	if (!validSlug(slug)) return null;
-	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	const seed = bundledPage(slug);
+	const bundled = seed ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
 	const stored = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
 	// A tombstone wins over the repository seed so deleting a Builder page never
 	// leaves it publicly reachable after the index changes.
@@ -211,7 +226,38 @@ export async function readPageState(slug: string, locals?: RuntimeLocals): Promi
 	const data = sanitizeData(stored.value);
 	const statuses = await readSitePageStatuses(locals);
 	data.status = sitePageStatus(pagePath(slug), statuses.value, data.status);
-	return { data, version: stored.version };
+	// A page seeded from the repo counts as published even before its first
+	// runtime write; a brand-new page created only in the editor (no seed,
+	// no blob record yet) does not — that's the one case listPages() needs
+	// to fall back to draft content for, so a never-published page still
+	// shows its real title instead of "Untitled page".
+	return { data, version: stored.version, hasPublished: stored.exists || Boolean(seed) };
+}
+
+/**
+ * The editor's working copy — a draft if one has ever been saved, else a
+ * fresh copy of what's currently published (or the seed, for a page that's
+ * never been published at all). Status/order always come from the published
+ * record: they describe the live page, not a pending edit, so opening a
+ * draft never shows the wrong pill. `dirty` is true when this draft has
+ * changes the published record doesn't yet have.
+ */
+export async function readDraftPageState(
+	slug: string,
+	locals?: RuntimeLocals,
+): Promise<{ data: PageData; version: string; dirty: boolean } | null> {
+	if (!validSlug(slug)) return null;
+	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	const published = await readPageState(slug, locals);
+	const fallback = published?.data ?? sanitizeData(bundled);
+	const stored = await readPublished<PageData | null>(draftKeyFor(slug), fallback, locals);
+	// A tombstone (the page was deleted) wins over any leftover draft.
+	if (stored.value === null) return null;
+	const data = sanitizeData(stored.value);
+	data.status = published?.data.status ?? "draft";
+	data.order = published?.data.order ?? 0;
+	const dirty = await readPublished<boolean>(draftDirtyKeyFor(slug), false, locals);
+	return { data, version: stored.version, dirty: dirty.value };
 }
 
 function serialize(data: PageData): string {
@@ -248,6 +294,52 @@ export async function writePage(
 	return { data: clean, via: "runtime", version: saved.version };
 }
 
+/**
+ * The editor's Save button. Writes ONLY the draft copy and marks it dirty —
+ * the published page (what visitors see) is untouched until an explicit
+ * Publish. Safe to call on a page that's never had a draft before; safe to
+ * call on a page that's never been published at all.
+ */
+export async function writeDraftPage(
+	slug: string,
+	data: any,
+	expectedVersion?: string,
+	locals?: RuntimeLocals,
+): Promise<SaveResult & { dirty: true }> {
+	if (!validSlug(slug)) throw new Error("Bad page name — use lowercase letters, numbers, and dashes.");
+	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
+	const published = await readPageState(slug, locals);
+	const fallback = published?.data ?? sanitizeData(bundled);
+	const clean = sanitizeData({
+		...data,
+		status: published?.data.status ?? "draft",
+		order: published?.data.order ?? (published ? 0 : Date.now() % 100000),
+	});
+	const current = await readPublished<PageData | null>(draftKeyFor(slug), fallback, locals);
+	const saved = await publish(draftKeyFor(slug), clean, fallback, expectedVersion ?? current.version, locals);
+	const dirtyCurrent = await readPublished<boolean>(draftDirtyKeyFor(slug), false, locals);
+	await publish(draftDirtyKeyFor(slug), true, false, dirtyCurrent.version, locals);
+	// A brand-new page needs to show up in the page list even before its
+	// first Publish, so its author can find and finish it later.
+	await updatePageIndex((slugs) => (slugs.includes(slug) ? slugs : [...slugs, slug]), locals);
+	return { data: clean, via: "runtime", version: saved.version, dirty: true };
+}
+
+/**
+ * The editor's Publish action: copies the current draft's content into the
+ * published record and puts the page live. The draft itself is left as-is
+ * (still there for the next edit) — only its dirty flag clears, since it now
+ * matches what's published.
+ */
+export async function publishDraft(slug: string, expectedPublishedVersion?: string, locals?: RuntimeLocals): Promise<SaveResult> {
+	const draft = await readDraftPageState(slug, locals);
+	if (!draft) throw new Error("Nothing to publish — open the page and make a change first.");
+	const result = await writePage(slug, draft.data, { status: "live" }, expectedPublishedVersion, locals);
+	const dirtyCurrent = await readPublished<boolean>(draftDirtyKeyFor(slug), false, locals);
+	await publish(draftDirtyKeyFor(slug), false, false, dirtyCurrent.version, locals);
+	return result;
+}
+
 /** Change only status/order without touching content. */
 export async function updatePageMeta(slug: string, meta: { status?: PageStatus; order?: number }, expectedVersion?: string, locals?: RuntimeLocals): Promise<SaveResult> {
 	const current = await readPage(slug, locals);
@@ -259,9 +351,19 @@ export async function deletePage(slug: string, expectedVersion?: string, locals?
 	if (!validSlug(slug)) throw new Error("Bad page name.");
 	if (MOUNTED[slug]) throw new Error("This page is part of the site's structure — it can't be deleted (unpublish it instead).");
 	const bundled = bundledPage(slug) ?? { status: "draft", order: 0, root: { props: {} }, content: [] };
-	const current = await readPublished(keyFor(slug), bundled, locals);
-	if (expectedVersion && expectedVersion !== current.version) throw new ContentConflict();
-	await publish<PageData | null>(keyFor(slug), null, bundled, current.version, locals);
+	// The editor only ever hands back a draft version (GET/Save both work on
+	// the draft) — never the published record's — so that's what a caller's
+	// expectedVersion actually means here, even for a page that's also live.
+	const draftCurrent = await readPublished<PageData | null>(draftKeyFor(slug), bundled, locals);
+	if (expectedVersion && expectedVersion !== draftCurrent.version) throw new ContentConflict();
+	await publish<PageData | null>(draftKeyFor(slug), null, bundled, draftCurrent.version, locals);
+	// Tombstone the published copy too, best-effort — the draft-version check
+	// above is the real guard the user just confirmed against; a page that
+	// was never published has no published record to conflict over anyway.
+	const publishedCurrent = await readPublished<PageData | null>(keyFor(slug), bundled, locals);
+	await publish<PageData | null>(keyFor(slug), null, bundled, publishedCurrent.version, locals).catch(() => {});
+	const dirtyCurrent = await readPublished<boolean>(draftDirtyKeyFor(slug), false, locals);
+	await publish(draftDirtyKeyFor(slug), false, false, dirtyCurrent.version, locals).catch(() => {});
 	// Deleted runtime pages are removed from the index; their immutable versions
 	// remain available for recovery.
 	await updatePageIndex((entries) => entries.filter((entry) => entry !== slug), locals);
