@@ -47,11 +47,11 @@ export function inlineFormatting(text: string): string {
  * and ignores a lone newline entirely, which read as the editor silently
  * dropping what someone just typed.
  */
-function RichParagraphs({ text, className }: { text: string; className?: string }) {
+function RichParagraphs({ text, className, align }: { text: string; className?: string; align?: string }) {
 	return (
 		<>
 			{paras(text).map((p, i) => (
-				<p className={className} key={i} style={{ whiteSpace: "pre-wrap" }} dangerouslySetInnerHTML={{ __html: inlineFormatting(p) }} />
+				<p className={className} key={i} style={{ whiteSpace: "pre-wrap", textAlign: (align as any) || undefined }} dangerouslySetInnerHTML={{ __html: inlineFormatting(p) }} />
 			))}
 		</>
 	);
@@ -145,18 +145,67 @@ const richTextField = (label: string) => ({
 	render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <RichTextField value={value} onChange={onChange} />,
 });
 
-// A section's heading — eyebrow + title, sometimes a lede too — can be
-// pulled left (default), centered, or pushed right. Only the heading itself
-// moves; body copy stays put, since a paragraph of centered or right-aligned
-// body text is usually harder to read, not better.
-const alignField = (label = "Heading alignment") => ({
-	type: "radio" as const,
+// Three small bars, justified the way the button aligns — a left/center/right
+// icon built from CSS instead of an emoji, so it reads clearly at any size.
+function AlignIcon({ align }: { align: "left" | "center" | "right" }) {
+	const justify = align === "center" ? "center" : align === "right" ? "flex-end" : "flex-start";
+	return (
+		<span style={{ display: "flex", flexDirection: "column", gap: 2, alignItems: justify, width: 16 }} aria-hidden="true">
+			<span style={{ height: 2, width: "100%", background: "currentColor", borderRadius: 1 }} />
+			<span style={{ height: 2, width: "65%", background: "currentColor", borderRadius: 1 }} />
+			<span style={{ height: 2, width: "80%", background: "currentColor", borderRadius: 1 }} />
+		</span>
+	);
+}
+
+// A compact left/center/right button row for one specific piece of text —
+// used right next to the field it aligns (the heading's own alignment sits
+// with the heading, the body's own alignment sits with the body), instead of
+// one alignment control for the whole block sitting somewhere else in the
+// list and only affecting some of what's on screen.
+function AlignField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+	const options: Array<{ value: "left" | "center" | "right"; title: string }> = [
+		{ value: "left", title: "Left" },
+		{ value: "center", title: "Center" },
+		{ value: "right", title: "Right" },
+	];
+	const current = value || "left";
+	return (
+		<div style={{ display: "flex", gap: 4 }}>
+			{options.map((o) => {
+				const active = current === o.value;
+				return (
+					<button
+						key={o.value}
+						type="button"
+						title={o.title}
+						aria-label={o.title}
+						aria-pressed={active}
+						onClick={() => onChange(o.value)}
+						style={{
+							flex: 1,
+							display: "flex",
+							justifyContent: "center",
+							padding: "7px 0",
+							borderRadius: 6,
+							border: "1px solid " + (active ? "#4a7bd0" : "rgba(128,128,128,.35)"),
+							background: active ? "rgba(74,123,208,.14)" : "transparent",
+							color: active ? "#4a7bd0" : "inherit",
+							cursor: "pointer",
+						}}
+					>
+						<AlignIcon align={o.value} />
+					</button>
+				);
+			})}
+		</div>
+	);
+}
+
+const elementAlignField = (label: string) => ({
+	type: "custom" as const,
 	label,
-	options: [
-		{ label: "Left", value: "left" },
-		{ label: "Center", value: "center" },
-		{ label: "Right", value: "right" },
-	],
+	render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <AlignField value={value} onChange={onChange} />,
 });
 
 /** A friendly name for a block, for the "jump to a section" list below. */
@@ -335,22 +384,26 @@ export const blocksConfig: Config = {
 			label: "Page heading",
 			fields: {
 				kicker: { type: "text", label: "Small line above (kicker)" },
+				kickerAlign: elementAlignField("Small line alignment"),
 				heading: { type: "text", label: "Big heading" },
+				headingAlign: elementAlignField("Heading alignment"),
 				lede: { type: "textarea", label: "Intro sentence" },
-				align: alignField(),
+				ledeAlign: elementAlignField("Intro sentence alignment"),
 			},
 			defaultProps: {
 				kicker: "New Life",
+				kickerAlign: "left",
 				heading: "A new page",
+				headingAlign: "left",
 				lede: "",
-				align: "left",
+				ledeAlign: "left",
 			},
-			render: ({ id, kicker, heading, lede, align }) => (
+			render: ({ id, kicker, kickerAlign, heading, headingAlign, lede, ledeAlign, align }) => (
 				<section className="section interior-hero" id={id}>
-					<div className="container" style={{ textAlign: align || "left" }}>
-						{kicker ? <p className="eyebrow reveal is-visible">{kicker}</p> : null}
-						<h1 className="interior-hero__title reveal is-visible">{heading}</h1>
-						{lede ? <p className="interior-hero__lede reveal is-visible" style={{ whiteSpace: "pre-wrap" }}>{lede}</p> : null}
+					<div className="container">
+						{kicker ? <p className="eyebrow reveal is-visible" style={{ textAlign: kickerAlign || align || "left" }}>{kicker}</p> : null}
+						<h1 className="interior-hero__title reveal is-visible" style={{ textAlign: headingAlign || align || "left" }}>{heading}</h1>
+						{lede ? <p className="interior-hero__lede reveal is-visible" style={{ whiteSpace: "pre-wrap", textAlign: ledeAlign || "left" }}>{lede}</p> : null}
 					</div>
 				</section>
 			),
@@ -360,8 +413,11 @@ export const blocksConfig: Config = {
 			label: "Text section",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Section title" },
+				titleAlign: elementAlignField("Title alignment"),
 				body: richTextField("Body (blank line = new paragraph)"),
+				bodyAlign: elementAlignField("Body text alignment"),
 				tinted: {
 					type: "radio",
 					label: "Background",
@@ -370,20 +426,19 @@ export const blocksConfig: Config = {
 						{ label: "Tinted", value: true },
 					],
 				},
-				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "Section title", body: "Write something here.", tinted: false, align: "left" },
-			render: ({ id, eyebrow, title, body, tinted, align }) => (
+			defaultProps: { eyebrow: "", eyebrowAlign: "left", title: "Section title", titleAlign: "left", body: "Write something here.", bodyAlign: "left", tinted: false },
+			render: ({ id, eyebrow, eyebrowAlign, title, titleAlign, body, bodyAlign, tinted, align }) => (
 				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}${!eyebrow && !title ? " prose-block--body-only" : ""}`} id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div style={{ textAlign: align || "left" }}>
-								{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
-								{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
+							<div>
+								{eyebrow ? <p className="eyebrow reveal is-visible" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+								{title ? <h2 className="prose-block__title reveal is-visible" style={{ textAlign: titleAlign || align || "left" }}>{title}</h2> : null}
 							</div>
 						) : null}
 						<div className="prose-block__body">
-							<RichParagraphs text={body} className="reveal is-visible" />
+							<RichParagraphs text={body} className="reveal is-visible" align={bodyAlign} />
 						</div>
 					</div>
 				</section>
@@ -394,7 +449,9 @@ export const blocksConfig: Config = {
 			label: "Card row",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Row title" },
+				titleAlign: elementAlignField("Title alignment"),
 				style: {
 					type: "radio",
 					label: "Card style",
@@ -413,25 +470,25 @@ export const blocksConfig: Config = {
 					defaultItemProps: { title: "Card", text: "" },
 					getItemSummary: (item: any) => item?.title || "Card",
 				},
-				align: alignField(),
 			},
 			defaultProps: {
 				eyebrow: "",
+				eyebrowAlign: "left",
 				title: "",
+				titleAlign: "left",
 				style: "numbered",
-				align: "left",
 				cards: [
 					{ title: "First", text: "Something true." },
 					{ title: "Second", text: "Something good." },
 				],
 			},
-			render: ({ id, eyebrow, title, style, cards, align }) => (
+			render: ({ id, eyebrow, eyebrowAlign, title, titleAlign, style, cards, align }) => (
 				<section className="section prose-block" id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div className="section-heading reveal is-visible" style={{ textAlign: align || "left" }}>
-								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-								{title ? <h2>{title}</h2> : null}
+							<div className="section-heading reveal is-visible">
+								{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+								{title ? <h2 style={{ textAlign: titleAlign || align || "left" }}>{title}</h2> : null}
 							</div>
 						) : null}
 						{style === "simple" ? (
@@ -463,7 +520,9 @@ export const blocksConfig: Config = {
 			label: "Questions & answers",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Section title" },
+				titleAlign: elementAlignField("Title alignment"),
 				items: {
 					type: "array",
 					label: "Questions",
@@ -474,17 +533,16 @@ export const blocksConfig: Config = {
 					defaultItemProps: { q: "A question?", a: "" },
 					getItemSummary: (item: any) => item?.q || "Question",
 				},
-				align: alignField(),
 			},
-			defaultProps: { eyebrow: "Good to Know", title: "Frequently asked.", items: [], align: "left" },
-			render: ({ id, eyebrow, title, items, align }) => (
+			defaultProps: { eyebrow: "Good to Know", eyebrowAlign: "left", title: "Frequently asked.", titleAlign: "left", items: [] },
+			render: ({ id, eyebrow, eyebrowAlign, title, titleAlign, items, align }) => (
 				<section className="section section--rhythm" id={id}>
 					<div className="rhythm__veil"></div>
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div className="section-heading reveal is-visible" style={{ textAlign: align || "left" }}>
-								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-								{title ? <h2>{title}</h2> : null}
+							<div className="section-heading reveal is-visible">
+								{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+								{title ? <h2 style={{ textAlign: titleAlign || align || "left" }}>{title}</h2> : null}
 							</div>
 						) : null}
 						<div className="faq-list">
@@ -504,8 +562,11 @@ export const blocksConfig: Config = {
 			label: "Callout panel",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Panel title" },
+				titleAlign: elementAlignField("Title alignment"),
 				body: richTextField("Body"),
+				bodyAlign: elementAlignField("Body text alignment"),
 				buttons: {
 					type: "array",
 					label: "Buttons",
@@ -524,20 +585,19 @@ export const blocksConfig: Config = {
 					defaultItemProps: { label: "Learn more", href: "/", style: "primary" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
-				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "A word from us", body: "", buttons: [], align: "left" },
-			render: ({ id, eyebrow, title, body, buttons, align }) => (
+			defaultProps: { eyebrow: "", eyebrowAlign: "left", title: "A word from us", titleAlign: "left", body: "", bodyAlign: "left", buttons: [] },
+			render: ({ id, eyebrow, eyebrowAlign, title, titleAlign, body, bodyAlign, buttons, align }) => (
 				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }} id={id}>
 					<div className="container">
 						<div className="formation-cta reveal is-visible">
 							{(eyebrow || title) ? (
-								<div style={{ textAlign: align || "left" }}>
-									{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-									{title ? <h3>{title}</h3> : null}
+								<div>
+									{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+									{title ? <h3 style={{ textAlign: titleAlign || align || "left" }}>{title}</h3> : null}
 								</div>
 							) : null}
-							<RichParagraphs text={body} />
+							<RichParagraphs text={body} align={bodyAlign} />
 							{(buttons || []).length ? (
 								<div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "6px" }}>
 									{(buttons || []).map((b: any, i: number) => (
@@ -646,9 +706,12 @@ export const blocksConfig: Config = {
 			label: "Feature (media + facts)",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				heading: { type: "text", label: "Heading" },
+				headingAlign: elementAlignField("Heading alignment"),
 				subline: { type: "text", label: "Highlighted line (e.g. dates)" },
 				body: richTextField("Body"),
+				bodyAlign: elementAlignField("Body text alignment"),
 				image: {
 					type: "custom",
 					label: "Photo (also used as the video's poster)",
@@ -683,10 +746,9 @@ export const blocksConfig: Config = {
 					defaultItemProps: { label: "Fact", value: "" },
 					getItemSummary: (item: any) => item?.label || "Fact",
 				},
-				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", heading: "A big thing", subline: "", body: "", image: "", video: "", buttons: [], facts: [], align: "left" },
-			render: ({ id, eyebrow, heading, subline, body, image, video, buttons, facts, align }) => (
+			defaultProps: { eyebrow: "", eyebrowAlign: "left", heading: "A big thing", headingAlign: "left", subline: "", body: "", bodyAlign: "left", image: "", video: "", buttons: [], facts: [] },
+			render: ({ id, eyebrow, eyebrowAlign, heading, headingAlign, subline, body, bodyAlign, image, video, buttons, facts, align }) => (
 				<section className="section" id={id}>
 					<div className="container trip-hero">
 						{(video || image) ? (
@@ -702,13 +764,13 @@ export const blocksConfig: Config = {
 						) : null}
 						<div className="trip-hero__body reveal is-visible">
 							{(eyebrow || heading || subline) ? (
-								<div style={{ textAlign: align || "left" }}>
-									{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-									{heading ? <h2>{heading}</h2> : null}
-									{subline ? <p className="trip-hero__dates">{subline}</p> : null}
+								<div>
+									{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+									{heading ? <h2 style={{ textAlign: headingAlign || align || "left" }}>{heading}</h2> : null}
+									{subline ? <p className="trip-hero__dates" style={{ textAlign: headingAlign || align || "left" }}>{subline}</p> : null}
 								</div>
 							) : null}
-							<RichParagraphs text={body} />
+							<RichParagraphs text={body} align={bodyAlign} />
 							{(buttons || []).length ? (
 								<div className="trip-hero__actions">
 									{(buttons || []).map((b: any, i: number) => (
@@ -965,7 +1027,9 @@ export const blocksConfig: Config = {
 			label: "Photo gallery",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Section title" },
+				titleAlign: elementAlignField("Title alignment"),
 				photos: {
 					type: "array",
 					label: "Photos",
@@ -980,16 +1044,15 @@ export const blocksConfig: Config = {
 					defaultItemProps: { src: "", alt: "" },
 					getItemSummary: (item: any, i?: number) => item?.alt || `Photo ${(i ?? 0) + 1}`,
 				},
-				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "", photos: [], align: "left" },
-			render: ({ id, eyebrow, title, photos, align }) => (
+			defaultProps: { eyebrow: "", eyebrowAlign: "left", title: "", titleAlign: "left", photos: [] },
+			render: ({ id, eyebrow, eyebrowAlign, title, titleAlign, photos, align }) => (
 				<section className="section" id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div style={{ textAlign: align || "left" }}>
-								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-								{title ? <h2>{title}</h2> : null}
+							<div>
+								{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+								{title ? <h2 style={{ textAlign: titleAlign || align || "left" }}>{title}</h2> : null}
 							</div>
 						) : null}
 						<div
@@ -1056,34 +1119,38 @@ export const blocksConfig: Config = {
 			label: "Team sign-up form (Meals of Hope)",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Title" },
+				titleAlign: elementAlignField("Title alignment"),
 				body: richTextField("Intro copy"),
+				bodyAlign: elementAlignField("Intro copy alignment"),
 				submitLabel: { type: "text", label: "Button label" },
-				align: alignField(),
 				anchorId: { type: "text", label: "Link anchor (for a button elsewhere on this page to jump here, e.g. volunteer-to-pack)" },
 			},
 			defaultProps: {
 				eyebrow: "Bring a team",
+				eyebrowAlign: "left",
 				title: "Save us a table",
+				titleAlign: "left",
 				body: "Tell us who's coming and we'll have a table ready for you on November 14th.",
+				bodyAlign: "left",
 				submitLabel: "Save our table",
-				align: "left",
 				anchorId: "volunteer-to-pack",
 			},
 			// Static, server-rendered markup — the same pattern as every other
 			// block. A small vanilla-JS enhancer (in MountedPage.astro, scoped to
 			// [data-pack-signup-form]) wires the fetch/submit behavior, the same
 			// way /connect.astro's own form works with no client-side React.
-			render: ({ eyebrow, title, body, submitLabel, align, anchorId }) => (
+			render: ({ eyebrow, eyebrowAlign, title, titleAlign, body, bodyAlign, submitLabel, align, anchorId }) => (
 				<section className="section pack-signup" id={anchorId || "volunteer-to-pack"}>
 					<div className="container pack-signup__wrap">
 						{(eyebrow || title) ? (
-							<div style={{ textAlign: align || "left" }}>
-								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-								{title ? <h2>{title}</h2> : null}
+							<div>
+								{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "left" }}>{eyebrow}</p> : null}
+								{title ? <h2 style={{ textAlign: titleAlign || align || "left" }}>{title}</h2> : null}
 							</div>
 						) : null}
-						{body ? <RichParagraphs text={body} /> : null}
+						{body ? <RichParagraphs text={body} align={bodyAlign} /> : null}
 
 						<form className="pack-signup-form" data-pack-signup-form noValidate>
 							<div className="pack-signup-row">
@@ -1142,25 +1209,27 @@ export const blocksConfig: Config = {
 			label: "Giving form (embedded)",
 			fields: {
 				eyebrow: { type: "text", label: "Small label above" },
+				eyebrowAlign: elementAlignField("Small label alignment"),
 				title: { type: "text", label: "Title" },
+				titleAlign: elementAlignField("Title alignment"),
 				src: { type: "text", label: "SecureGive widget link (from SecureGive's embed code)" },
 				height: { type: "text", label: "Height (px)" },
 				anchorId: { type: "text", label: "Link anchor (for a button elsewhere on this page to jump here, e.g. give-online)" },
-				align: alignField(),
 			},
 			defaultProps: {
 				eyebrow: "Give online",
+				eyebrowAlign: "center",
 				title: "Give toward Meals of Hope",
+				titleAlign: "center",
 				src: "https://app.securegive.com/NewLifeGR/global-impact-and-city-transformation/static/widget/donate?cats=47923&amts=false",
 				height: "772",
 				anchorId: "give-meals",
-				align: "center",
 			},
-			render: ({ eyebrow, title, src, height, anchorId, align }) => (
+			render: ({ eyebrow, eyebrowAlign, title, titleAlign, src, height, anchorId, align }) => (
 				<section className="section giving-embed" id={anchorId || "give-meals"}>
-					<div className="container" style={{ maxWidth: "640px", textAlign: align || "center" }}>
-						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-						{title ? <h2>{title}</h2> : null}
+					<div className="container" style={{ maxWidth: "640px" }}>
+						{eyebrow ? <p className="eyebrow" style={{ textAlign: eyebrowAlign || align || "center" }}>{eyebrow}</p> : null}
+						{title ? <h2 style={{ textAlign: titleAlign || align || "center" }}>{title}</h2> : null}
 						{src ? (
 							<div className="giving-embed__frame">
 								<iframe
