@@ -4,7 +4,7 @@
 // page document and the change appears in the editor for review. Publish saves.
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { Button, Puck } from "@measured/puck";
+import { Puck } from "@measured/puck";
 import "@measured/puck/puck.css";
 import { blocksConfig } from "./blocks";
 import MenuEditor from "./MenuEditor";
@@ -376,19 +376,19 @@ export default function BuilderApp() {
 							<>
 								<button
 									type="button"
-									className={`builder-status builder-status--${data?.status === "live" ? (pendingPublish ? "pending" : "live") : "draft"}`}
+									className={`builder-pub-btn builder-status builder-status--${data?.status === "live" ? (pendingPublish ? "pending" : "live") : "draft"}`}
 									title={data?.status !== "live" ? "Click to publish" : pendingPublish ? "Click to publish your changes" : "Click to unpublish"}
 									onClick={() => togglePublish(slug, data?.status, pendingPublish)}
 								>
 									{data?.status !== "live"
-										? "DRAFT · Click to publish"
+										? "Draft · Click to publish"
 										: pendingPublish
-											? "PUBLISHED · Unsaved changes — click to publish"
-											: "PUBLISHED · Click to unpublish"}
+											? "Published · Click to publish"
+											: "Published · Click to unpublish"}
 								</button>
-								<Button onClick={() => save(live.current)} disabled={!dirty} icon={<span aria-hidden="true">✓</span>}>
-									{dirty ? "Save" : "Saved"}
-								</Button>
+								<button type="button" className="builder-pub-btn builder-save-btn" onClick={() => save(live.current)} disabled={!dirty}>
+									<span aria-hidden="true">✓</span> {dirty ? "Save" : "Saved"}
+								</button>
 							</>
 						),
 					}}
