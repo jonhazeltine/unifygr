@@ -7,6 +7,7 @@
 // src/lib/studio/pages.ts (the fence), then it's available everywhere.
 
 import type { Config } from "@measured/puck";
+import { usePuck } from "@measured/puck";
 import { useEffect, useRef, useState } from "react";
 
 // Split a textarea into paragraphs on blank lines.
@@ -158,6 +159,83 @@ const alignField = (label = "Heading alignment") => ({
 	],
 });
 
+/** A friendly name for a block, for the "jump to a section" list below. */
+function sectionLabel(item: any): string {
+	const p = item?.props || {};
+	const text = p.title || p.heading || p.eyebrow || "";
+	const typeLabel = (blocksConfig.components as any)[item?.type]?.label || item?.type || "Section";
+	return text ? `${typeLabel} — "${text}"` : typeLabel;
+}
+
+/**
+ * The id a block actually renders under — the ONE place this is computed,
+ * so the "jump to a section" list (LinkField, below) can never drift from
+ * what each block's own `render` puts on its `<section id=…>`. Most blocks
+ * just use their own Puck-assigned id; GivingEmbed and PackSignupForm carry
+ * an explicit `anchorId` field instead (so existing links into them keep
+ * working even if the block itself is later duplicated), falling back to
+ * the same fixed default their render functions use.
+ */
+export function blockAnchorId(item: any): string | undefined {
+	const p = item?.props || {};
+	if (item?.type === "GivingEmbed") return p.anchorId || "give-meals";
+	if (item?.type === "PackSignupForm") return p.anchorId || "volunteer-to-pack";
+	return typeof p.id === "string" ? p.id : undefined;
+}
+
+/**
+ * Every button/link field on the site used to be a bare text box — to send
+ * someone to a section on the SAME page you had to already know it had an
+ * id and type "#that-id" by hand. This lists every section on the page
+ * that's actually there to jump to (using usePuck() to read the live
+ * document, not a stale copy) alongside the plain URL option, so "link this
+ * button to that section" is a pick from a list instead of a guess.
+ */
+function LinkField({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+	const { appState } = usePuck();
+	const content: any[] = appState?.data?.content || [];
+	const sections = content
+		.map((item) => ({ id: blockAnchorId(item), label: sectionLabel(item) }))
+		.filter((s): s is { id: string; label: string } => typeof s.id === "string" && s.id.length > 0);
+
+	const isAnchor = typeof value === "string" && value.startsWith("#");
+	const matchesKnownSection = isAnchor && sections.some((s) => `#${s.id}` === value);
+	const selectValue = matchesKnownSection ? value : "__url__";
+
+	return (
+		<div style={{ display: "grid", gap: 6 }}>
+			<select
+				value={selectValue}
+				onChange={(e) => {
+					if (e.target.value !== "__url__") onChange(e.target.value);
+					else if (isAnchor) onChange(""); // switching off a section jump — start the URL fresh
+				}}
+				style={{ width: "100%", boxSizing: "border-box", font: "inherit", padding: "8px" }}
+			>
+				<option value="__url__">A page or web address (typed below)</option>
+				{sections.map((s) => (
+					<option key={s.id} value={`#${s.id}`}>Jump to: {s.label}</option>
+				))}
+			</select>
+			{selectValue === "__url__" ? (
+				<input
+					type="text"
+					value={value || ""}
+					onChange={(e) => onChange(e.target.value)}
+					placeholder="/giving or https://…"
+					style={{ width: "100%", boxSizing: "border-box", font: "inherit", padding: "8px" }}
+				/>
+			) : null}
+		</div>
+	);
+}
+
+const linkField = (label = "Link") => ({
+	type: "custom" as const,
+	label,
+	render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <LinkField value={value} onChange={onChange} />,
+});
+
 // Pull a Vimeo id out of a pasted link (or accept a bare id). Meals of Hope's
 // two films live on Vimeo, not YouTube.
 function vimeoId(input: string): string | null {
@@ -267,8 +345,8 @@ export const blocksConfig: Config = {
 				lede: "",
 				align: "left",
 			},
-			render: ({ kicker, heading, lede, align }) => (
-				<section className="section interior-hero">
+			render: ({ id, kicker, heading, lede, align }) => (
+				<section className="section interior-hero" id={id}>
 					<div className="container" style={{ textAlign: align || "left" }}>
 						{kicker ? <p className="eyebrow reveal is-visible">{kicker}</p> : null}
 						<h1 className="interior-hero__title reveal is-visible">{heading}</h1>
@@ -295,8 +373,8 @@ export const blocksConfig: Config = {
 				align: alignField(),
 			},
 			defaultProps: { eyebrow: "", title: "Section title", body: "Write something here.", tinted: false, align: "left" },
-			render: ({ eyebrow, title, body, tinted, align }) => (
-				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}${!eyebrow && !title ? " prose-block--body-only" : ""}`}>
+			render: ({ id, eyebrow, title, body, tinted, align }) => (
+				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}${!eyebrow && !title ? " prose-block--body-only" : ""}`} id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
 							<div style={{ textAlign: align || "left" }}>
@@ -347,8 +425,8 @@ export const blocksConfig: Config = {
 					{ title: "Second", text: "Something good." },
 				],
 			},
-			render: ({ eyebrow, title, style, cards, align }) => (
-				<section className="section prose-block">
+			render: ({ id, eyebrow, title, style, cards, align }) => (
+				<section className="section prose-block" id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
 							<div className="section-heading reveal is-visible" style={{ textAlign: align || "left" }}>
@@ -399,8 +477,8 @@ export const blocksConfig: Config = {
 				align: alignField(),
 			},
 			defaultProps: { eyebrow: "Good to Know", title: "Frequently asked.", items: [], align: "left" },
-			render: ({ eyebrow, title, items, align }) => (
-				<section className="section section--rhythm">
+			render: ({ id, eyebrow, title, items, align }) => (
+				<section className="section section--rhythm" id={id}>
 					<div className="rhythm__veil"></div>
 					<div className="container">
 						{(eyebrow || title) ? (
@@ -433,7 +511,7 @@ export const blocksConfig: Config = {
 					label: "Buttons",
 					arrayFields: {
 						label: { type: "text", label: "Label" },
-						href: { type: "text", label: "Link" },
+						href: linkField(),
 						style: {
 							type: "radio",
 							label: "Style",
@@ -449,8 +527,8 @@ export const blocksConfig: Config = {
 				align: alignField(),
 			},
 			defaultProps: { eyebrow: "", title: "A word from us", body: "", buttons: [], align: "left" },
-			render: ({ eyebrow, title, body, buttons, align }) => (
-				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+			render: ({ id, eyebrow, title, body, buttons, align }) => (
+				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }} id={id}>
 					<div className="container">
 						<div className="formation-cta reveal is-visible">
 							{(eyebrow || title) ? (
@@ -497,8 +575,8 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { items: [] },
-			render: ({ items }) => (
-				<section className="section profiles-block">
+			render: ({ id, items }) => (
+				<section className="section profiles-block" id={id}>
 					<div className="container">
 						<div className="staff-grid">
 							{(items || []).map((p: any, i: number) => (
@@ -544,8 +622,8 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { cards: [] },
-			render: ({ cards }) => (
-				<section className="section section--rhythm">
+			render: ({ id, cards }) => (
+				<section className="section section--rhythm" id={id}>
 					<div className="rhythm__veil"></div>
 					<div className="container team-grid">
 						{(cards || []).map((c: any, i: number) => (
@@ -582,7 +660,7 @@ export const blocksConfig: Config = {
 					label: "Buttons",
 					arrayFields: {
 						label: { type: "text", label: "Label" },
-						href: { type: "text", label: "Link" },
+						href: linkField(),
 						style: {
 							type: "radio",
 							label: "Style",
@@ -608,8 +686,8 @@ export const blocksConfig: Config = {
 				align: alignField(),
 			},
 			defaultProps: { eyebrow: "", heading: "A big thing", subline: "", body: "", image: "", video: "", buttons: [], facts: [], align: "left" },
-			render: ({ eyebrow, heading, subline, body, image, video, buttons, facts, align }) => (
-				<section className="section">
+			render: ({ id, eyebrow, heading, subline, body, image, video, buttons, facts, align }) => (
+				<section className="section" id={id}>
 					<div className="container trip-hero">
 						{(video || image) ? (
 							<div className="trip-hero__media reveal is-visible">
@@ -662,7 +740,7 @@ export const blocksConfig: Config = {
 						title: { type: "text", label: "Card title" },
 						body: richTextField("Card text"),
 						buttonLabel: { type: "text", label: "Button label (optional)" },
-						buttonHref: { type: "text", label: "Button link" },
+						buttonHref: linkField("Button link"),
 						featured: {
 							type: "radio",
 							label: "Highlight",
@@ -677,8 +755,8 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { cards: [] },
-			render: ({ cards }) => (
-				<section className="section">
+			render: ({ id, cards }) => (
+				<section className="section" id={id}>
 					<div className="container give-grid">
 						{(cards || []).map((c: any, i: number) => (
 							<article className={`give-card${c.featured ? " give-card--primary" : ""} reveal is-visible`} key={i}>
@@ -699,8 +777,8 @@ export const blocksConfig: Config = {
 			label: "Pull quote",
 			fields: { text: { type: "textarea", label: "The line" } },
 			defaultProps: { text: "A line worth pulling out." },
-			render: ({ text }) => (
-				<section className="section prose-block">
+			render: ({ id, text }) => (
+				<section className="section prose-block" id={id}>
 					<div className="container">
 						<p className="rest-pull reveal is-visible" style={{ whiteSpace: "pre-wrap" }}>{text}</p>
 					</div>
@@ -716,7 +794,7 @@ export const blocksConfig: Config = {
 					label: "Buttons",
 					arrayFields: {
 						label: { type: "text", label: "Label" },
-						href: { type: "text", label: "Link (e.g. /visit)" },
+						href: linkField(),
 						style: {
 							type: "radio",
 							label: "Style",
@@ -731,8 +809,8 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { buttons: [{ label: "Plan a Visit", href: "/visit", style: "primary" }] },
-			render: ({ buttons }) => (
-				<section className="section" style={{ paddingTop: 0 }}>
+			render: ({ id, buttons }) => (
+				<section className="section" style={{ paddingTop: 0 }} id={id}>
 					<div className="container" style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
 						{(buttons || []).map((b: any, i: number) => (
 							<a className={`button button--${b.style === "secondary" ? "secondary" : "primary"}`} href={b.href} key={i}>
@@ -756,7 +834,7 @@ export const blocksConfig: Config = {
 					arrayFields: {
 						label: { type: "text", label: "Button text" },
 						blurb: { type: "textarea", label: "Small line underneath" },
-						href: { type: "text", label: "Where it goes — paste the full link" },
+						href: linkField(),
 						feature: {
 							type: "radio",
 							label: "Style",
@@ -863,8 +941,8 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { src: "", alt: "", caption: "", width: "inset" },
-			render: ({ src, alt, caption, width }) => (
-				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+			render: ({ id, src, alt, caption, width }) => (
+				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }} id={id}>
 					<div className="container">
 						{src ? (
 							<figure style={{ margin: 0, maxWidth: width === "inset" ? "760px" : "100%", marginInline: "auto" }}>
@@ -905,8 +983,8 @@ export const blocksConfig: Config = {
 				align: alignField(),
 			},
 			defaultProps: { eyebrow: "", title: "", photos: [], align: "left" },
-			render: ({ eyebrow, title, photos, align }) => (
-				<section className="section">
+			render: ({ id, eyebrow, title, photos, align }) => (
+				<section className="section" id={id}>
 					<div className="container">
 						{(eyebrow || title) ? (
 							<div style={{ textAlign: align || "left" }}>
@@ -944,11 +1022,11 @@ export const blocksConfig: Config = {
 				caption: { type: "text", label: "Caption (optional)" },
 			},
 			defaultProps: { url: "", caption: "" },
-			render: ({ url, caption }) => {
+			render: ({ id: blockId, url, caption }) => {
 				const id = youtubeId(url);
 				const vimeo = id ? null : vimeoId(url);
 				return (
-					<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+					<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }} id={blockId}>
 						<div className="container">
 							<figure style={{ margin: 0, maxWidth: "860px", marginInline: "auto" }}>
 								{id || vimeo ? (
@@ -982,6 +1060,7 @@ export const blocksConfig: Config = {
 				body: richTextField("Intro copy"),
 				submitLabel: { type: "text", label: "Button label" },
 				align: alignField(),
+				anchorId: { type: "text", label: "Link anchor (for a button elsewhere on this page to jump here, e.g. volunteer-to-pack)" },
 			},
 			defaultProps: {
 				eyebrow: "Bring a team",
@@ -989,13 +1068,14 @@ export const blocksConfig: Config = {
 				body: "Tell us who's coming and we'll have a table ready for you on November 14th.",
 				submitLabel: "Save our table",
 				align: "left",
+				anchorId: "volunteer-to-pack",
 			},
 			// Static, server-rendered markup — the same pattern as every other
 			// block. A small vanilla-JS enhancer (in MountedPage.astro, scoped to
 			// [data-pack-signup-form]) wires the fetch/submit behavior, the same
 			// way /connect.astro's own form works with no client-side React.
-			render: ({ eyebrow, title, body, submitLabel, align }) => (
-				<section className="section pack-signup" id="volunteer-to-pack">
+			render: ({ eyebrow, title, body, submitLabel, align, anchorId }) => (
+				<section className="section pack-signup" id={anchorId || "volunteer-to-pack"}>
 					<div className="container pack-signup__wrap">
 						{(eyebrow || title) ? (
 							<div style={{ textAlign: align || "left" }}>
@@ -1077,7 +1157,7 @@ export const blocksConfig: Config = {
 				align: "center",
 			},
 			render: ({ eyebrow, title, src, height, anchorId, align }) => (
-				<section className="section giving-embed" id={anchorId || "give-online"}>
+				<section className="section giving-embed" id={anchorId || "give-meals"}>
 					<div className="container" style={{ maxWidth: "640px", textAlign: align || "center" }}>
 						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 						{title ? <h2>{title}</h2> : null}
