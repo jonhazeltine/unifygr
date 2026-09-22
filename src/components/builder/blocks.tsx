@@ -103,24 +103,31 @@ function RichTextField({ value, onChange, placeholder }: { value: string; onChan
 }
 
 /**
- * A drag handle for the gap between sections (the "Space" block) — plainer
- * than picking from three fixed sizes, and it previews live as you drag
- * instead of only after you release. 0–200px covers "touching" through the
- * biggest gap anyone's used on this site (Meals of Hope's Callout wrapper
- * uses 24px top/bottom, Video/Image blocks use 24px — 200px is comfortably
- * past that).
+ * A drag handle for the gap between sections (the "Space" block).
+ *
+ * Every `.section` already carries its own built-in padding (4rem top and
+ * bottom in global.css, trimmed to 3.25rem where one section follows
+ * another) — roughly 116px between two ordinary sections with nothing
+ * between them at all. A Spacer set to 0 only means "add nothing more"; it
+ * was never able to remove that baseline, so once the built-in padding was
+ * already more than someone wanted, there was no dial to turn. Letting the
+ * slider go negative fixes that: it's a real margin, so a negative value
+ * pulls the next section up and directly eats into that baseline gap
+ * instead of only ever adding to it. Capped at -120px so two sections can
+ * be pulled essentially edge to edge without one's content overlapping the
+ * other's; 200px covers the biggest gap anyone's used on this site.
  */
 function SpacerDrag({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-	const px = Math.max(0, Math.min(200, parseInt(value, 10) || 0));
+	const px = Math.max(-120, Math.min(200, parseInt(value, 10) || 0));
 	return (
 		<div style={{ display: "grid", gap: 6 }}>
 			<div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, opacity: 0.7 }}>
-				<span>Drag to shrink or grow the gap</span>
+				<span>Drag left to pull sections together, right for more room</span>
 				<span>{px}px</span>
 			</div>
 			<input
 				type="range"
-				min={0}
+				min={-120}
 				max={200}
 				step={4}
 				value={px}
@@ -1102,7 +1109,9 @@ export const blocksConfig: Config = {
 				},
 			},
 			defaultProps: { size: "64px" },
-			render: ({ size }) => <div style={{ height: size }} aria-hidden="true" />,
+			// A margin, not a height — height can't go negative, and negative is
+			// the whole point of the drag handle above (see SpacerDrag).
+			render: ({ size }) => <div style={{ marginTop: size }} aria-hidden="true" />,
 		},
 	},
 };
