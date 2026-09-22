@@ -60,9 +60,9 @@ export const prerender = false;
 				<p class="admin-error" id="error" role="alert" hidden></p>
 
 				<nav class="pc-workspaces" aria-label="Partner workspaces">
-					<button type="button" data-workspace="calendar" class="is-active">Calendar <span>Sources and coverage</span></button>
-					<button type="button" data-workspace="directory">Directory <span>Curated partnerships</span></button>
-					<button type="button" data-workspace="rules">Publishing rules <span>Site-wide settings</span></button>
+					<button type="button" data-workspace="calendar" class="is-active">Curated Partnerships <span>Churches</span></button>
+					<button type="button" data-workspace="directory" id="tab-directory">Curated Partnerships <span>Nonprofit Ministries</span><small class="pc-workspace-off" id="directory-off" hidden>Hidden from the site</small></button>
+					<button type="button" data-workspace="rules">Publishing Rules <span>Site-wide settings</span></button>
 				</nav>
 
 				<section class="pc-workspace" id="workspace-calendar">
@@ -134,6 +134,9 @@ export const prerender = false;
 			.pc-workspaces button span { font-size:.78rem; }
 			.pc-workspaces button.is-active { background:var(--panel-strong); color:var(--text); box-shadow:0 1px 5px rgba(0,0,0,.08); }
 			.pc-workspaces button:hover { color:var(--text); }
+			.pc-workspaces button.is-dimmed { opacity:.55; }
+			.pc-workspaces button.is-dimmed.is-active { opacity:.85; }
+			.pc-workspace-off { font-size:.68rem; font-weight:750; letter-spacing:.03em; text-transform:uppercase; color:var(--rose); }
 			.pc-workspace--rules { max-width:52rem; }
 			.pc-workspace--rules h2 { margin:.25rem 0 .5rem; }
 			.pc-coverage { padding:1.25rem 1.35rem; border:1px solid var(--line); border-radius:16px; background:var(--panel); }
@@ -1137,6 +1140,13 @@ export const prerender = false;
 				$("coverage-toggle").textContent = $("coverage").hidden ? "Show details" : "Hide details";
 				$("coverage-toggle").setAttribute("aria-expanded", String(!$("coverage").hidden));
 				for (const button of panel.querySelectorAll<HTMLButtonElement>("[data-workspace]")) button.classList.toggle("is-active", button.dataset.workspace === workspace);
+				// The "Show curated partnerships and specialised ministries" switch in
+				// Publishing Rules is the one setting that takes the whole Nonprofit
+				// Ministries directory off the live site — reflect that on its own tab
+				// instead of making someone open Publishing Rules to discover why.
+				const externalOff = settings.globals.showExternalMinistries === false;
+				$("tab-directory").classList.toggle("is-dimmed", externalOff);
+				$("directory-off").hidden = !externalOff;
 				if (workspace === "calendar") {
 					$("inventory-host-calendar").append(inventory);
 					$("inventory-eyebrow").textContent = "Calendar sources";
