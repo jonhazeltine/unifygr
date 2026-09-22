@@ -102,35 +102,31 @@
  * onto the iframe's own <body> for visual parity with the Studio chrome —
  * including data-theme, since the real site's own theme-init script also
  * runs inside that iframe and reads the same localStorage key the Studio's
- * OWN appearance toggle uses. So flipping the Studio to light mode also set
- * data-theme="light" on the iframe's copy of the real page — and global.css
- * has NO light-theme override for --text/--muted anywhere (only a few
- * specific pages, like /sunday, do): they stay their near-white default.
- * Meanwhile Puck's own canvas painted light in light mode. Near-white text on
- * a light canvas is invisible — correctly typed, silently unreadable.
+ * OWN appearance toggle uses.
  *
- * `body.builder-body` is the actual element carrying this bug in the iframe
- * copy, so give it the site's real, always-dark background directly — the
- * real site has no working light theme for ordinary content in the first
- * place, so "always dark" is also just correct. This same rule also matches
- * body.builder-body in THIS outer document, but .builder-app (a full-height
- * child of body) already paints its own background over the entirety of it,
- * so nothing here is ever visible outside the iframe.
+ * On a real published page (any Interior/Bare/Site layout), the light theme
+ * works precisely because the real <body> carries the "v2" class, and
+ * sunday.css's `:root[data-theme="light"] body.v2 { --text: …; --muted: …;
+ * --bg: …; … }` overrides the exact tokens global.css's block classes read.
+ * This canvas iframe never gets that: it's Puck's own bare render of the
+ * block config, not a real Interior/Bare/Site page, so its body is only ever
+ * "builder-body" — no "v2", and this page never imports sunday.css in the
+ * first place (builder.astro only pulls in global.css, tap.css and this
+ * file). So in light mode, --text/--muted/--bg simply keep global.css's
+ * :root DARK defaults (there's no light override to find), and Puck's own
+ * canvas frame paints itself light regardless — near-white text on a light
+ * canvas, correctly typed, silently unreadable. That old bug is what an
+ * earlier fix here band-aided by forcing the canvas to stay dark always,
+ * with the comment reasoning that the site "has no working light theme for
+ * ordinary content" — true of global.css alone, but false in practice: it's
+ * exactly what body.v2 supplies on every real page. So mirror those same
+ * tokens (the values sunday.css's own light override uses) directly here,
+ * scoped to this iframe's body, instead of refusing to follow the toggle.
  *
- * The FIRST version of this fix only set `background`, and missed a second
- * copy of the exact same leak: the base .builder-body rule just above also
- * sets `color: var(--studio-text)` directly on body — a class selector, so
- * it beats global.css's plain `body { color: var(--text) }` (an element
- * selector) on specificity alone, regardless of source order. Any element
- * with no color rule of its own (headings, secondary buttons — anything that
- * just inherits body's color rather than setting --text/--muted explicitly)
- * inherited the Studio's OWN light/dark text color instead of the site's
- * real one. Result: correct dark background (from the first fix) plus
- * inherited dark-navy light-mode text on top of it — worse than before,
- * because now it's dark-on-dark instead of light-on-light. `color: var(--text)`
- * below closes that the same way `background` already does: unconditionally,
- * matching the site's one real appearance regardless of the Studio's own
- * light/dark choice.
+ * This same rule also matches body.builder-body in THIS outer document, but
+ * .builder-app (a full-height child of body) already paints its own
+ * background over the entirety of it, so nothing here is ever visible
+ * outside the iframe.
  *
  * An earlier version of this fix used Puck's `overrides.preview` to wrap the
  * canvas in an extra div instead, which looked identical in principle but
@@ -139,15 +135,31 @@
  * from rendering any page content at all. Plain CSS against Puck's own
  * element has no such risk.
  *
- * Same base gradient as global.css's real `body` rule (the decorative
- * pointer-tracked highlights are dropped; --pointer-x/-y fall back to their
- * :root defaults so this still matches closely without live mouse tracking). */
+ * Dark background: same base gradient as global.css's real `body` rule (the
+ * decorative pointer-tracked highlights are dropped; --pointer-x/-y fall
+ * back to their :root defaults so this still matches closely without live
+ * mouse tracking). */
 body.builder-body {
 	background:
 		radial-gradient(circle at 18% 16%, rgba(132, 185, 255, 0.11), transparent 18%),
 		radial-gradient(circle at 80% 22%, rgba(238, 199, 183, 0.08), transparent 20%),
 		linear-gradient(180deg, #050608 0%, #090d14 40%, #050608 100%);
 	color: var(--text);
+}
+
+:root[data-theme="light"] body.builder-body {
+	--bg: #f7f2ea;
+	--bg-soft: #f0e9de;
+	--panel: #fffdf9;
+	--panel-strong: #f0e9de;
+	--text: #17202b;
+	--muted: rgba(23, 32, 43, 0.68);
+	--line: rgba(23, 32, 43, 0.16);
+	--gold: #7b5d2b;
+	--gold-soft: rgba(123, 93, 43, 0.22);
+	--gold-strong: #5e461f;
+	--shadow: 0 24px 60px rgba(42, 32, 19, 0.12);
+	background: var(--bg);
 }
 
 /* Puck uses a token palette. Re-map its neutral controls in light mode so the
