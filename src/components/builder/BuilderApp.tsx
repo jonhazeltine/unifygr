@@ -28,6 +28,11 @@ function slugify(s: string) {
 	return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 60);
 }
 
+/** Anchor id for a header section's card in "Pages by header section" below — shared by the jump buttons above and the section they jump to. */
+function groupAnchorId(label: string) {
+	return `builder-group-${slugify(label) || "group"}`;
+}
+
 const api = (path: string, opts?: RequestInit) =>
 	fetch(path, { headers: { "content-type": "application/json" }, ...opts }).then((r) => r.json());
 
@@ -286,7 +291,16 @@ export default function BuilderApp() {
 					<section className="builder-header-map" aria-labelledby="builder-header-map-title">
 						<div><p className="builder-header-map__eyebrow">Top-level organization</p><h2 id="builder-header-map-title">Site header</h2><p>This is the structure visitors use to find everything.</p></div>
 						<div className="builder-header-map__groups">
-							{navGroups.map((group) => <span key={`${group.label}-${group.href}`}><strong>{group.label}</strong><small>{1 + group.items.length} {group.items.length === 0 ? "page" : "pages"}</small></span>)}
+							{navGroups.map((group) => (
+								<button
+									key={`${group.label}-${group.href}`}
+									type="button"
+									className="builder-header-map__group"
+									onClick={() => document.getElementById(groupAnchorId(group.label))?.scrollIntoView({ behavior: "smooth", block: "start" })}
+								>
+									<strong>{group.label}</strong><small>{1 + group.items.length} {group.items.length === 0 ? "page" : "pages"}</small>
+								</button>
+							))}
 						</div>
 						<button className="builder-button builder-button--secondary" type="button" onClick={() => setMenuMode(true)}>Organize header →</button>
 					</section>
@@ -300,7 +314,7 @@ export default function BuilderApp() {
 					<div className="builder-directory__section-heading"><div><h2>Pages by header section</h2><p>The same organization visitors see on the site.</p></div><span>{visiblePages.length + visibleSitePages.length} {visiblePages.length + visibleSitePages.length === 1 ? "page" : "pages"}</span></div>
 					<div className="builder-page-groups">
 						{[...directoryGroups, ...(ungroupedPages.length || ungroupedSitePages.length ? [{ label: "Not in the header", href: "", items: [], pages: ungroupedPages, sitePages: ungroupedSitePages }] : [])].map((group) => (
-							<section className="builder-page-group" key={`${group.label}-${group.href}`}>
+							<section className="builder-page-group" key={`${group.label}-${group.href}`} id={groupAnchorId(group.label)}>
 								<header><h3>{group.label}</h3><span>{group.pages.length + group.sitePages.length}</span></header>
 								<div className="builder-page-list">
 								{group.pages.map((p) => <article key={p.slug} className="builder-page-row">
@@ -312,8 +326,8 @@ export default function BuilderApp() {
 									<strong>{p.title}</strong><small>{p.path}</small><span>{p.description || "Open this page to see its sections."}</span>
 								</button>
 								<div className="builder-page-row__controls">
-									<button className="builder-page-row__copy" type="button" onClick={() => copyLink(p.path)} aria-label={`Copy link for ${p.title}`}>Copy link</button>
-									<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => togglePublish(p.slug, p.status)} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+									<button className="builder-page-row__copy builder-page-row__action" type="button" onClick={() => copyLink(p.path)} aria-label={`Copy link for ${p.title}`}>Copy link</button>
+									<button className={`builder-page-row__status builder-page-row__action builder-page-row__status--${p.status}`} type="button" onClick={() => togglePublish(p.slug, p.status)} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
 										<span>{p.status === "live" ? "Published" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to publish"}</small>
 									</button>
 									<button className="builder-page-row__edit" type="button" onClick={() => openPage(p.slug)} aria-label={`Edit ${p.title}`}>Edit</button>
@@ -324,8 +338,8 @@ export default function BuilderApp() {
 									<a className="builder-page-row__preview" href={p.path} target="_blank" rel="noreferrer" aria-label={`View ${p.title}`}><img src={p.previewImage} alt="" loading="lazy" /></a>
 									<a className="builder-page-row__open" href={p.path} target="_blank" rel="noreferrer"><strong>{p.title}</strong><small>{p.path}</small><span>Open the page to edit its words and images.</span></a>
 									<div className="builder-page-row__controls">
-										<button className="builder-page-row__copy" type="button" onClick={() => copyLink(p.path)} aria-label={`Copy link for ${p.title}`}>Copy link</button>
-										<button className={`builder-page-row__status builder-page-row__status--${p.status}`} type="button" onClick={() => setSiteStatus(p.path, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
+										<button className="builder-page-row__copy builder-page-row__action" type="button" onClick={() => copyLink(p.path)} aria-label={`Copy link for ${p.title}`}>Copy link</button>
+										<button className={`builder-page-row__status builder-page-row__action builder-page-row__status--${p.status}`} type="button" onClick={() => setSiteStatus(p.path, p.status === "live" ? "draft" : "live")} aria-label={`${p.title} is ${p.status === "live" ? "published" : "draft"}. Click to ${p.status === "live" ? "unpublish" : "publish"}.`}>
 											<span>{p.status === "live" ? "Published" : "Draft"}</span><small>{p.status === "live" ? "Click to unpublish" : "Click to publish"}</small>
 										</button>
 									</div>
