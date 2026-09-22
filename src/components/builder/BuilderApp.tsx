@@ -292,15 +292,16 @@ export default function BuilderApp() {
 						<div><p className="builder-header-map__eyebrow">Top-level organization</p><h2 id="builder-header-map-title">Site header</h2><p>This is the structure visitors use to find everything.</p></div>
 						<div className="builder-header-map__groups">
 							{navGroups.map((group) => {
-								// A card is a real link to that section's own page — open it for
-								// editing directly if it's a builder page, or open the live page
-								// if it's hand-built. Only falls back to scrolling down to the
-								// list below when the header item has no page of its own to go to.
-								const builderMatch = pages.find((p) => p.path === group.href);
-								const siteMatch = sitePages.find((p) => p.path === group.href);
+								// A card follows whatever link is set for it in "Organize header"
+								// (any page on the site, or any web address) — open it for editing
+								// directly if it's a builder page, otherwise open that link in a new
+								// tab. Only falls back to scrolling down to the list below when the
+								// header item has no link set at all.
+								const href = String(group.href || "").trim();
+								const builderMatch = pages.find((p) => p.path === href);
 								const openGroup = () => {
 									if (builderMatch) openPage(builderMatch.slug);
-									else if (siteMatch) window.open(group.href, "_blank", "noopener");
+									else if (href) window.open(href, "_blank", "noopener");
 									else document.getElementById(groupAnchorId(group.label))?.scrollIntoView({ behavior: "smooth", block: "start" });
 								};
 								return (
@@ -309,7 +310,7 @@ export default function BuilderApp() {
 										type="button"
 										className="builder-header-map__group"
 										onClick={openGroup}
-										title={builderMatch ? `Edit ${group.label}` : siteMatch ? `Open ${group.label} ↗` : `Jump to ${group.label} below`}
+										title={builderMatch ? `Edit ${group.label}` : href ? `Open ${group.label} ↗` : `Jump to ${group.label} below`}
 									>
 										<strong>{group.label}</strong><small>{1 + group.items.length} {group.items.length === 0 ? "page" : "pages"}</small>
 									</button>

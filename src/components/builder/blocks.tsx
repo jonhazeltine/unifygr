@@ -848,7 +848,7 @@ export const blocksConfig: Config = {
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
-				footHref: { type: "text", label: "Where the bottom link goes" },
+				footHref: linkField("Where the bottom link goes"),
 			},
 			defaultProps: {
 				brand: "New Life Grand Rapids",
