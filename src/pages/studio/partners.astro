@@ -60,7 +60,7 @@ export const prerender = false;
 				<p class="admin-error" id="error" role="alert" hidden></p>
 
 				<nav class="pc-workspaces" aria-label="Partner workspaces">
-					<button type="button" data-workspace="calendar" class="is-active">Curated Partnerships <span>Churches</span></button>
+					<button type="button" data-workspace="calendar" class="is-active" id="tab-calendar">Curated Partnerships <span>Churches</span><small class="pc-workspace-off" id="calendar-off" hidden>Hidden from the site</small></button>
 					<button type="button" data-workspace="directory" id="tab-directory">Curated Partnerships <span>Nonprofit Ministries</span><small class="pc-workspace-off" id="directory-off" hidden>Hidden from the site</small></button>
 					<button type="button" data-workspace="rules">Publishing Rules <span>Site-wide settings</span></button>
 				</nav>
@@ -1141,10 +1141,15 @@ export const prerender = false;
 				$("coverage-toggle").setAttribute("aria-expanded", String(!$("coverage").hidden));
 				for (const button of panel.querySelectorAll<HTMLButtonElement>("[data-workspace]")) button.classList.toggle("is-active", button.dataset.workspace === workspace);
 				// The "Show curated partnerships and specialised ministries" switch in
-				// Publishing Rules is the one setting that takes the whole Nonprofit
-				// Ministries directory off the live site — reflect that on its own tab
-				// instead of making someone open Publishing Rules to discover why.
+				// Publishing Rules takes down BOTH public pages — /ministries/calendar
+				// redirects away exactly like the directory and specialised-ministry
+				// pages do (see ministries/calendar.astro, .../specialized.astro,
+				// .../partnerships.astro). Only New Life's own in-house ministries stay
+				// up. Reflect that on both tabs instead of making someone open
+				// Publishing Rules to discover why the calendar itself is unreachable.
 				const externalOff = settings.globals.showExternalMinistries === false;
+				$("tab-calendar").classList.toggle("is-dimmed", externalOff);
+				$("calendar-off").hidden = !externalOff;
 				$("tab-directory").classList.toggle("is-dimmed", externalOff);
 				$("directory-off").hidden = !externalOff;
 				if (workspace === "calendar") {
