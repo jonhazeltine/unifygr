@@ -38,12 +38,19 @@ export function inlineFormatting(text: string): string {
 		.replace(/\*([^*]+)\*/g, "<em>$1</em>");
 }
 
-/** One or more formatted paragraphs, split the same way `paras` splits plain text. */
+/**
+ * One or more formatted paragraphs, split the same way `paras` splits plain
+ * text. `white-space: pre-wrap` makes a single Enter or an extra space
+ * inside a paragraph show up exactly as typed instead of collapsing to
+ * nothing — plain HTML otherwise renders any run of whitespace as one space
+ * and ignores a lone newline entirely, which read as the editor silently
+ * dropping what someone just typed.
+ */
 function RichParagraphs({ text, className }: { text: string; className?: string }) {
 	return (
 		<>
 			{paras(text).map((p, i) => (
-				<p className={className} key={i} dangerouslySetInnerHTML={{ __html: inlineFormatting(p) }} />
+				<p className={className} key={i} style={{ whiteSpace: "pre-wrap" }} dangerouslySetInnerHTML={{ __html: inlineFormatting(p) }} />
 			))}
 		</>
 	);
@@ -95,10 +102,53 @@ function RichTextField({ value, onChange, placeholder }: { value: string; onChan
 	);
 }
 
+/**
+ * A drag handle for the gap between sections (the "Space" block) — plainer
+ * than picking from three fixed sizes, and it previews live as you drag
+ * instead of only after you release. 0–200px covers "touching" through the
+ * biggest gap anyone's used on this site (Meals of Hope's Callout wrapper
+ * uses 24px top/bottom, Video/Image blocks use 24px — 200px is comfortably
+ * past that).
+ */
+function SpacerDrag({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+	const px = Math.max(0, Math.min(200, parseInt(value, 10) || 0));
+	return (
+		<div style={{ display: "grid", gap: 6 }}>
+			<div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, opacity: 0.7 }}>
+				<span>Drag to shrink or grow the gap</span>
+				<span>{px}px</span>
+			</div>
+			<input
+				type="range"
+				min={0}
+				max={200}
+				step={4}
+				value={px}
+				onChange={(e) => onChange(`${e.target.value}px`)}
+				style={{ width: "100%" }}
+			/>
+		</div>
+	);
+}
+
 const richTextField = (label: string) => ({
 	type: "custom" as const,
 	label,
 	render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <RichTextField value={value} onChange={onChange} />,
+});
+
+// A section's heading — eyebrow + title, sometimes a lede too — can be
+// pulled left (default), centered, or pushed right. Only the heading itself
+// moves; body copy stays put, since a paragraph of centered or right-aligned
+// body text is usually harder to read, not better.
+const alignField = (label = "Heading alignment") => ({
+	type: "radio" as const,
+	label,
+	options: [
+		{ label: "Left", value: "left" },
+		{ label: "Center", value: "center" },
+		{ label: "Right", value: "right" },
+	],
 });
 
 // Pull a Vimeo id out of a pasted link (or accept a bare id). Meals of Hope's
@@ -202,18 +252,20 @@ export const blocksConfig: Config = {
 				kicker: { type: "text", label: "Small line above (kicker)" },
 				heading: { type: "text", label: "Big heading" },
 				lede: { type: "textarea", label: "Intro sentence" },
+				align: alignField(),
 			},
 			defaultProps: {
 				kicker: "New Life",
 				heading: "A new page",
 				lede: "",
+				align: "left",
 			},
-			render: ({ kicker, heading, lede }) => (
+			render: ({ kicker, heading, lede, align }) => (
 				<section className="section interior-hero">
-					<div className="container">
+					<div className="container" style={{ textAlign: align || "left" }}>
 						{kicker ? <p className="eyebrow reveal is-visible">{kicker}</p> : null}
 						<h1 className="interior-hero__title reveal is-visible">{heading}</h1>
-						{lede ? <p className="interior-hero__lede reveal is-visible">{lede}</p> : null}
+						{lede ? <p className="interior-hero__lede reveal is-visible" style={{ whiteSpace: "pre-wrap" }}>{lede}</p> : null}
 					</div>
 				</section>
 			),
@@ -233,13 +285,18 @@ export const blocksConfig: Config = {
 						{ label: "Tinted", value: true },
 					],
 				},
+				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "Section title", body: "Write something here.", tinted: false },
-			render: ({ eyebrow, title, body, tinted }) => (
+			defaultProps: { eyebrow: "", title: "Section title", body: "Write something here.", tinted: false, align: "left" },
+			render: ({ eyebrow, title, body, tinted, align }) => (
 				<section className={`section prose-block${tinted ? " prose-block--tinted" : ""}${!eyebrow && !title ? " prose-block--body-only" : ""}`}>
 					<div className="container">
-						{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
-						{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
+						{(eyebrow || title) ? (
+							<div style={{ textAlign: align || "left" }}>
+								{eyebrow ? <p className="eyebrow reveal is-visible">{eyebrow}</p> : null}
+								{title ? <h2 className="prose-block__title reveal is-visible">{title}</h2> : null}
+							</div>
+						) : null}
 						<div className="prose-block__body">
 							<RichParagraphs text={body} className="reveal is-visible" />
 						</div>
@@ -271,21 +328,23 @@ export const blocksConfig: Config = {
 					defaultItemProps: { title: "Card", text: "" },
 					getItemSummary: (item: any) => item?.title || "Card",
 				},
+				align: alignField(),
 			},
 			defaultProps: {
 				eyebrow: "",
 				title: "",
 				style: "numbered",
+				align: "left",
 				cards: [
 					{ title: "First", text: "Something true." },
 					{ title: "Second", text: "Something good." },
 				],
 			},
-			render: ({ eyebrow, title, style, cards }) => (
+			render: ({ eyebrow, title, style, cards, align }) => (
 				<section className="section prose-block">
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div className="section-heading reveal is-visible">
+							<div className="section-heading reveal is-visible" style={{ textAlign: align || "left" }}>
 								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 								{title ? <h2>{title}</h2> : null}
 							</div>
@@ -330,14 +389,15 @@ export const blocksConfig: Config = {
 					defaultItemProps: { q: "A question?", a: "" },
 					getItemSummary: (item: any) => item?.q || "Question",
 				},
+				align: alignField(),
 			},
-			defaultProps: { eyebrow: "Good to Know", title: "Frequently asked.", items: [] },
-			render: ({ eyebrow, title, items }) => (
+			defaultProps: { eyebrow: "Good to Know", title: "Frequently asked.", items: [], align: "left" },
+			render: ({ eyebrow, title, items, align }) => (
 				<section className="section section--rhythm">
 					<div className="rhythm__veil"></div>
 					<div className="container">
 						{(eyebrow || title) ? (
-							<div className="section-heading reveal is-visible">
+							<div className="section-heading reveal is-visible" style={{ textAlign: align || "left" }}>
 								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 								{title ? <h2>{title}</h2> : null}
 							</div>
@@ -379,14 +439,19 @@ export const blocksConfig: Config = {
 					defaultItemProps: { label: "Learn more", href: "/", style: "primary" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
+				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "A word from us", body: "", buttons: [] },
-			render: ({ eyebrow, title, body, buttons }) => (
+			defaultProps: { eyebrow: "", title: "A word from us", body: "", buttons: [], align: "left" },
+			render: ({ eyebrow, title, body, buttons, align }) => (
 				<section className="section" style={{ paddingTop: "24px", paddingBottom: "24px" }}>
 					<div className="container">
 						<div className="formation-cta reveal is-visible">
-							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-							{title ? <h3>{title}</h3> : null}
+							{(eyebrow || title) ? (
+								<div style={{ textAlign: align || "left" }}>
+									{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+									{title ? <h3>{title}</h3> : null}
+								</div>
+							) : null}
 							<RichParagraphs text={body} />
 							{(buttons || []).length ? (
 								<div style={{ display: "flex", gap: "12px", flexWrap: "wrap", marginTop: "6px" }}>
@@ -533,9 +598,10 @@ export const blocksConfig: Config = {
 					defaultItemProps: { label: "Fact", value: "" },
 					getItemSummary: (item: any) => item?.label || "Fact",
 				},
+				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", heading: "A big thing", subline: "", body: "", image: "", video: "", buttons: [], facts: [] },
-			render: ({ eyebrow, heading, subline, body, image, video, buttons, facts }) => (
+			defaultProps: { eyebrow: "", heading: "A big thing", subline: "", body: "", image: "", video: "", buttons: [], facts: [], align: "left" },
+			render: ({ eyebrow, heading, subline, body, image, video, buttons, facts, align }) => (
 				<section className="section">
 					<div className="container trip-hero">
 						{(video || image) ? (
@@ -550,9 +616,13 @@ export const blocksConfig: Config = {
 							</div>
 						) : null}
 						<div className="trip-hero__body reveal is-visible">
-							{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-							{heading ? <h2>{heading}</h2> : null}
-							{subline ? <p className="trip-hero__dates">{subline}</p> : null}
+							{(eyebrow || heading || subline) ? (
+								<div style={{ textAlign: align || "left" }}>
+									{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+									{heading ? <h2>{heading}</h2> : null}
+									{subline ? <p className="trip-hero__dates">{subline}</p> : null}
+								</div>
+							) : null}
 							<RichParagraphs text={body} />
 							{(buttons || []).length ? (
 								<div className="trip-hero__actions">
@@ -625,7 +695,7 @@ export const blocksConfig: Config = {
 			render: ({ text }) => (
 				<section className="section prose-block">
 					<div className="container">
-						<p className="rest-pull reveal is-visible">{text}</p>
+						<p className="rest-pull reveal is-visible" style={{ whiteSpace: "pre-wrap" }}>{text}</p>
 					</div>
 				</section>
 			),
@@ -714,7 +784,7 @@ export const blocksConfig: Config = {
 								</a>
 							) : null}
 							{heading ? <h1 className="tap__title">{heading}</h1> : null}
-							{lede ? <p className="tap__lede">{lede}</p> : null}
+							{lede ? <p className="tap__lede" style={{ whiteSpace: "pre-wrap" }}>{lede}</p> : null}
 						</div>
 
 						<nav className="tap__stack" aria-label="Take a step">
@@ -825,13 +895,18 @@ export const blocksConfig: Config = {
 					defaultItemProps: { src: "", alt: "" },
 					getItemSummary: (item: any, i?: number) => item?.alt || `Photo ${(i ?? 0) + 1}`,
 				},
+				align: alignField(),
 			},
-			defaultProps: { eyebrow: "", title: "", photos: [] },
-			render: ({ eyebrow, title, photos }) => (
+			defaultProps: { eyebrow: "", title: "", photos: [], align: "left" },
+			render: ({ eyebrow, title, photos, align }) => (
 				<section className="section">
 					<div className="container">
-						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-						{title ? <h2>{title}</h2> : null}
+						{(eyebrow || title) ? (
+							<div style={{ textAlign: align || "left" }}>
+								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+								{title ? <h2>{title}</h2> : null}
+							</div>
+						) : null}
 						<div
 							style={{
 								marginTop: title || eyebrow ? "22px" : 0,
@@ -899,22 +974,28 @@ export const blocksConfig: Config = {
 				title: { type: "text", label: "Title" },
 				body: richTextField("Intro copy"),
 				submitLabel: { type: "text", label: "Button label" },
+				align: alignField(),
 			},
 			defaultProps: {
 				eyebrow: "Bring a team",
 				title: "Save us a table",
 				body: "Tell us who's coming and we'll have a table ready for you on November 14th.",
 				submitLabel: "Save our table",
+				align: "left",
 			},
 			// Static, server-rendered markup — the same pattern as every other
 			// block. A small vanilla-JS enhancer (in MountedPage.astro, scoped to
 			// [data-pack-signup-form]) wires the fetch/submit behavior, the same
 			// way /connect.astro's own form works with no client-side React.
-			render: ({ eyebrow, title, body, submitLabel }) => (
+			render: ({ eyebrow, title, body, submitLabel, align }) => (
 				<section className="section pack-signup" id="volunteer-to-pack">
 					<div className="container pack-signup__wrap">
-						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-						{title ? <h2>{title}</h2> : null}
+						{(eyebrow || title) ? (
+							<div style={{ textAlign: align || "left" }}>
+								{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
+								{title ? <h2>{title}</h2> : null}
+							</div>
+						) : null}
 						{body ? <RichParagraphs text={body} /> : null}
 
 						<form className="pack-signup-form" data-pack-signup-form noValidate>
@@ -978,6 +1059,7 @@ export const blocksConfig: Config = {
 				src: { type: "text", label: "SecureGive widget link (from SecureGive's embed code)" },
 				height: { type: "text", label: "Height (px)" },
 				anchorId: { type: "text", label: "Link anchor (for a button elsewhere on this page to jump here, e.g. give-online)" },
+				align: alignField(),
 			},
 			defaultProps: {
 				eyebrow: "Give online",
@@ -985,10 +1067,11 @@ export const blocksConfig: Config = {
 				src: "https://app.securegive.com/NewLifeGR/global-impact-and-city-transformation/static/widget/donate?cats=47923&amts=false",
 				height: "772",
 				anchorId: "give-meals",
+				align: "center",
 			},
-			render: ({ eyebrow, title, src, height, anchorId }) => (
+			render: ({ eyebrow, title, src, height, anchorId, align }) => (
 				<section className="section giving-embed" id={anchorId || "give-online"}>
-					<div className="container" style={{ maxWidth: "640px", textAlign: "center" }}>
+					<div className="container" style={{ maxWidth: "640px", textAlign: align || "center" }}>
 						{eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
 						{title ? <h2>{title}</h2> : null}
 						{src ? (
@@ -1013,13 +1096,9 @@ export const blocksConfig: Config = {
 			label: "Space",
 			fields: {
 				size: {
-					type: "radio",
+					type: "custom",
 					label: "Amount",
-					options: [
-						{ label: "Small", value: "24px" },
-						{ label: "Medium", value: "64px" },
-						{ label: "Large", value: "120px" },
-					],
+					render: ({ value, onChange }: { value: string; onChange: (v: string) => void }) => <SpacerDrag value={value} onChange={onChange} />,
 				},
 			},
 			defaultProps: { size: "64px" },
