@@ -2,7 +2,7 @@
 // the seed; staff changes stay in Blob so routine curation does not deploy.
 import directoryJson from "../../../content/ministries.json";
 import { ContentConflict, publish, readPublished, type RuntimeLocals } from "../studio/runtime-content";
-import { readSettings, type Partner } from "./settings";
+import { readSettings, type Partner, type Settings } from "./settings";
 
 const KEY = "partners/directory-overrides.json";
 type Entry = Record<string, any>;
@@ -58,6 +58,30 @@ export function partnerFor(entry: Entry, partners: Partner[]): Partner | undefin
 }
 
 /**
+ * Every church we can identify a ministry against, including ones we have
+ * said no to. `settings.partners` drops a declined church entirely (see
+ * settings.ts `normalise()` — "a church cannot be both carried and refused"),
+ * so without this a declined church's ministries would find no partner match
+ * and fall through to the standalone rule, becoming publicly eligible again
+ * the moment someone declines the church. A declined church is neither
+ * approved nor on, so `churchTicked()` is false for it here exactly as it
+ * would be for any other unticked church — its ministries stay unavailable
+ * and its Directory rows stay identifiable (named, locked) rather than
+ * silently losing their church tie.
+ */
+function churchRoster(settings: Settings): Partner[] {
+	const declined: Partner[] = (settings.declined || []).map((d) => ({
+		churchId: d.churchId,
+		name: d.name,
+		city: d.city,
+		approved: false,
+		on: false,
+		themes: [],
+	}));
+	return [...settings.partners, ...declined];
+}
+
+/**
  * Jon's rule, in one place: a church is "ticked" in the Curated Partnerships
  * tab when it is both approved (we'd put our name next to it) and on
  * (showing). Event THEMES are a calendar-only concern (see settings.ts
@@ -93,9 +117,10 @@ function entryChurch(entry: Entry, allPartners: Partner[]): EntryChurch | null {
 
 async function applyPartnerChoices(entries: Entry[], locals?: RuntimeLocals): Promise<Entry[]> {
 	const settings = await readSettings(locals);
+	const roster = churchRoster(settings);
 	return entries.filter((entry) => {
 		if (entry.house !== "out") return true;
-		const partner = partnerFor(entry, settings.partners);
+		const partner = partnerFor(entry, roster);
 		if (!partner) return true; // no linked church: its own rule (isListable) applies elsewhere
 		return churchTicked(partner);
 	});
@@ -117,34 +142,44 @@ function orgs(entries: Entry[], allPartners: Partner[]): DirectoryOrg[] {
 export async function readOrgs(locals?: RuntimeLocals): Promise<DirectoryState> {
 	const stored = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
 	const settings = await readSettings(locals);
-	return { orgs: orgs(apply(directoryJson.entries, stored.value), settings.partners), version: stored.version };
+	return { orgs: orgs(apply(directoryJson.entries, stored.value), churchRoster(settings)), version: stored.version };
 }
 
 export async function writeOrgs(changes: Record<string, OrgChange>, expectedVersion?: string, locals?: RuntimeLocals): Promise<{ touched: number; version: string }> {
 	const current = await readPublished<Record<string, OrgChange>>(KEY, {}, locals);
 	if (!expectedVersion || expectedVersion !== current.version) throw new ContentConflict();
 	const settings = await readSettings(locals);
+	const roster = churchRoster(settings);
 	const before = apply(directoryJson.entries, current.value);
 	const next = structuredClone(current.value);
 	let touched = 0;
-	for (const seed of directoryJson.entries as Entry[]) {
-		if (seed.house !== "out") continue;
-		const was = before.find((entry) => entry.slug === seed.slug)!;
-		const partner = partnerFor(seed, settings.partners);
-		// A ministry at an unticked church cannot be selected on, whatever the
-		// panel sent — the church switch is the higher authority. This is the
-		// server-side backstop for the UI's disabled control.
+	// Only the slugs a save actually asked to change are touched. Looping over
+	// every seed entry and rewriting `listed` for every ministry of an unticked
+	// church — even ones nobody asked about — would permanently persist "off"
+	// for a ministry someone had legitimately selected before its church went
+	// dark, so re-ticking the church later would not bring it back. Public
+	// gating (`ministryAvailable`/`applyPartnerChoices`) already hides an
+	// unticked church's ministries without anyone's selection being rewritten;
+	// this loop's only job for a locked entry is to refuse to persist `true`.
+	for (const slug of Object.keys(changes)) {
+		const seed = (directoryJson.entries as Entry[]).find((entry) => entry.slug === slug);
+		if (!seed || seed.house !== "out") continue;
+		const was = before.find((entry) => entry.slug === slug)!;
+		const partner = partnerFor(seed, roster);
+		// A ministry at an unticked (or declined) church cannot be turned ON,
+		// whatever the panel sent — the church switch is the higher authority.
+		// This is the server-side backstop for the UI's disabled control.
 		const churchAllows = !partner || churchTicked(partner);
-		const change = changes[seed.slug];
-		const requestedListed = change?.listed ?? (was.listed !== false);
-		const listed = churchAllows ? requestedListed : false;
-		const confirmed = change?.confirmed ?? (was.status === "live");
+		const change = changes[slug]!;
+		const requestedListed = change.listed ?? (was.listed !== false);
+		const listed = change.listed === true && !churchAllows ? false : requestedListed;
+		const confirmed = change.confirmed ?? (was.status === "live");
 		if (listed !== (was.listed !== false) || confirmed !== (was.status === "live")) touched++;
 		const override: OrgChange = {};
 		if (listed !== (seed.listed !== false)) override.listed = listed;
 		if (confirmed !== (seed.status === "live")) override.confirmed = confirmed;
-		if (Object.keys(override).length) next[seed.slug] = override;
-		else delete next[seed.slug];
+		if (Object.keys(override).length) next[slug] = override;
+		else delete next[slug];
 	}
 	if (!touched) return { touched: 0, version: current.version };
 	const saved = await publish(KEY, next, {}, current.version, locals);

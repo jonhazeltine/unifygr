@@ -20,6 +20,7 @@ import {
 } from "../src/lib/studio/runtime-content.ts";
 import { churchTicked, ministryAvailable, partnerFor, readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
 import { readSettingsState, writeSettingsVersioned, type Partner } from "../src/lib/partners/settings.ts";
+import { churchTickedLive, orgEditAllowed } from "../src/lib/partners/studio-directory-lock.ts";
 
 type Entry = { house: "in" | "out"; listed?: boolean; venue?: string | null };
 
@@ -173,4 +174,124 @@ test("a standalone org with no linked church is governed by `listed` alone", asy
 	assert.ok(standalone, "the seed content must include at least one standalone org (e.g. Mel Trotter / Pine Rest)");
 	assert.equal(standalone!.church, null);
 	__setRuntimeContentDriverForTests();
+});
+
+// --- Regression: a declined church must stay identifiable and unavailable --
+// (P1 review finding on PR #273: `settings.partners` drops a declined church
+// entirely, so `partnerFor` found no match and the ministry fell through to
+// the standalone rule — publicly eligible again the moment its church was
+// declined, exactly the opposite of Jon's rule.)
+
+test("a declined church's ministries stay unavailable and identifiable, not treated as standalone", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const CHURCH_NAME = "All Nations Church";
+	const ENTRY_SLUG = "anc-midweek";
+
+	const state = await readSettingsState(locals);
+	const partnerRecord = state.settings.partners.find((p) => p.name === CHURCH_NAME);
+	assert.ok(partnerRecord, "seed must carry the All Nations Church partner");
+	state.settings.declined = [
+		...state.settings.declined,
+		{ churchId: partnerRecord!.churchId, name: partnerRecord!.name, city: partnerRecord!.city },
+	];
+	await writeSettingsVersioned(state.settings, state.version, locals);
+
+	const entries = await runtimeDirectoryEntries(locals);
+	assert.equal(
+		entries.find((e: any) => e.slug === ENTRY_SLUG),
+		undefined,
+		"a declined church's ministry must stay unavailable, not fall through to the standalone (no-linked-church) rule",
+	);
+
+	const orgsState = await readOrgs(locals);
+	const org = orgsState.orgs.find((o) => o.slug === ENTRY_SLUG);
+	assert.ok(org, "the ministry must still exist and be identifiable in the Directory tab");
+	assert.equal(org!.church?.name, CHURCH_NAME, "its church must still be named, not silently lost");
+	assert.equal(org!.church?.ticked, false);
+
+	await writeOrgs({ [ENTRY_SLUG]: { listed: true } }, orgsState.version, locals);
+	const after = await readOrgs(locals);
+	assert.equal(after.orgs.find((o) => o.slug === ENTRY_SLUG)?.listed, false, "cannot be forced on for a declined church either");
+
+	__setRuntimeContentDriverForTests();
+});
+
+// --- Regression: writeOrgs must only touch the slugs it was asked about ----
+// (P1 review finding on PR #273: the save loop iterated every seed entry and
+// forced `listed:false` onto every ministry of an unticked church even when
+// that ministry wasn't in the request, permanently overwriting a selection
+// that predated the church going dark — so re-ticking the church later did
+// not bring it back.)
+
+test("writeOrgs never rewrites a ministry's stored selection unless its slug is in the request", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const CHURCH_NAME = "All Nations Church";
+	const ENTRY_SLUG = "anc-midweek";
+
+	const initial = await readOrgs(locals);
+	const other = initial.orgs.find((o) => o.slug !== ENTRY_SLUG && o.church?.name !== CHURCH_NAME);
+	assert.ok(other, "seed content must carry a second out-of-house entry to make an unrelated request against");
+
+	// Select the ministry while its church is ticked.
+	await writeOrgs({ [ENTRY_SLUG]: { listed: true } }, initial.version, locals);
+	assert.equal((await readOrgs(locals)).orgs.find((o) => o.slug === ENTRY_SLUG)?.listed, true, "selection must stick while the church is ticked");
+
+	// Turn its church off.
+	const state = await readSettingsState(locals);
+	const partnerRecord = state.settings.partners.find((p) => p.name === CHURCH_NAME)!;
+	partnerRecord.on = false;
+	await writeSettingsVersioned(state.settings, state.version, locals);
+
+	// Save something else entirely — confirming an unrelated ministry.
+	const beforeUnrelated = await readOrgs(locals);
+	await writeOrgs({ [other!.slug]: { confirmed: true } }, beforeUnrelated.version, locals);
+
+	const afterUnrelated = await readOrgs(locals);
+	assert.equal(
+		afterUnrelated.orgs.find((o) => o.slug === ENTRY_SLUG)?.listed,
+		true,
+		"an unrelated save must not persist listed:false onto a ministry nobody asked to change",
+	);
+	assert.equal(afterUnrelated.orgs.find((o) => o.slug === ENTRY_SLUG)?.church?.ticked, false, "but it still reads as locked while its church is off");
+
+	// Public gating still hides it while the church is off, with nobody's
+	// selection having been rewritten.
+	assert.equal((await runtimeDirectoryEntries(locals)).find((e: any) => e.slug === ENTRY_SLUG), undefined);
+
+	// Re-ticking the church restores it using its ORIGINAL, untouched selection.
+	const state2 = await readSettingsState(locals);
+	state2.settings.partners.find((p) => p.name === CHURCH_NAME)!.on = true;
+	await writeSettingsVersioned(state2.settings, state2.version, locals);
+	assert.ok((await runtimeDirectoryEntries(locals)).find((e: any) => e.slug === ENTRY_SLUG), "re-ticking restores the ministry from its untouched stored selection");
+
+	__setRuntimeContentDriverForTests();
+});
+
+// --- Regression: the Studio Directory tab's lock must be LIVE, and must -----
+// only ever block turning a ministry ON (P2 review findings on PR #273).
+
+test("churchTickedLive() reads the live in-page roster (not a load-time snapshot), and a declined church is never ticked", () => {
+	const partners = [
+		{ churchId: "a", approved: true, on: true },
+		{ churchId: "b", approved: true, on: false },
+	];
+	const declined = [{ churchId: "c" }];
+	assert.equal(churchTickedLive(partners, declined, "a"), true);
+	assert.equal(churchTickedLive(partners, declined, "b"), false);
+	assert.equal(churchTickedLive(partners, declined, "c"), false, "a declined church is never ticked");
+	assert.equal(churchTickedLive(partners, declined, "unknown-church"), false);
+
+	// The whole point: toggling the SAME roster in place changes the answer
+	// immediately, with no re-fetch — this is what makes the Directory tab's
+	// lock live instead of frozen at the moment the tab first loaded.
+	partners[1].on = true;
+	assert.equal(churchTickedLive(partners, declined, "b"), true, "a church ticked earlier in the same session must unlock immediately");
+});
+
+test("orgEditAllowed() blocks only turning a locked ministry ON — confirming and turning off are always allowed", () => {
+	assert.equal(orgEditAllowed(true, { listed: true }), false, "a locked ministry cannot be turned on");
+	assert.equal(orgEditAllowed(true, { listed: false }), true, "turning a locked ministry off is harmless and allowed");
+	assert.equal(orgEditAllowed(true, { confirmed: true }), true, "confirming (the star) is independent of the selection lock");
+	assert.equal(orgEditAllowed(true, {}), true, "a patch that doesn't touch `listed` is never blocked");
+	assert.equal(orgEditAllowed(false, { listed: true }), true, "an unlocked ministry can be turned on");
 });
