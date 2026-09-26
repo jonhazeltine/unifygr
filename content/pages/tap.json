@@ -27,10 +27,11 @@
 						"feature": "yes"
 					},
 					{
-						"label": "Pray for The Church",
-						"blurb": "Join this month\u2019s prayer for the Church across Grand Rapids.",
+						"label": "Strengthen the Church",
+						"blurb": "Share an encouraging word, a scripture or a prayer with another congregation in Grand Rapids.",
 						"href": "https://thechurchmap.com/grandrapids/pray",
-						"feature": "no"
+						"feature": "no",
+						"embed": "inline"
 					},
 					{
 						"label": "Go with an Ambassador Team",

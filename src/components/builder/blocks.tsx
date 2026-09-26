@@ -939,11 +939,16 @@ export const blocksConfig: Config = {
 							label: "Open inline (instead of navigating away)",
 							options: [
 								{ label: "No — normal link", value: "" },
+								{ label: "Yes — open inline", value: "inline" },
 								{ label: "Yes — SecureGive giving form", value: "securegive" },
 							],
 						},
+						embedHeight: {
+							type: "text",
+							label: "Inline panel height (optional, e.g. 80vh or 600px)",
+						},
 					},
-					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "" },
+					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "", embedHeight: "" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
@@ -1068,13 +1073,19 @@ export const blocksConfig: Config = {
 								);
 								// A button with no link yet is shown to staff as a placeholder
 								// rather than rendered as a link that goes nowhere.
-								const embedKind = href && l?.embed === "securegive" ? "securegive" : "";
+								const embedKind = href && l?.embed ? String(l.embed).trim() : "";
 								if (embedKind) {
 									// Progressive enhancement: this is a real <a href> to the
-									// giving URL, so with no JS it behaves like any other link.
+									// target URL, so with no JS it behaves like any other link.
 									// The script in MountedPage.astro intercepts the click and
-									// expands the panel below in place instead.
+									// expands the panel below in place instead. "securegive" is
+									// the original, specific flag; any other truthy value (e.g.
+									// "inline") gets the same generic inline-panel treatment.
 									const panelId = `tapbtn-embed-${i}`;
+									const embedHeight = String(l?.embedHeight || "").trim();
+									const panelStyle = embedHeight
+										? ({ "--tapbtn-embed-panel-height": embedHeight } as Record<string, string>)
+										: undefined;
 									return (
 										<div className="tapbtn-embed-wrap" key={i}>
 											<a
@@ -1085,7 +1096,13 @@ export const blocksConfig: Config = {
 											>
 												{body}
 											</a>
-											<div className="tapbtn-embed-panel" id={panelId} data-tapbtn-embed-panel hidden>
+											<div
+												className="tapbtn-embed-panel"
+												id={panelId}
+												data-tapbtn-embed-panel
+												hidden
+												style={panelStyle}
+											>
 												<div className="tapbtn-embed-panel__bar">
 													<span className="tapbtn-embed-panel__label" aria-hidden="true"></span>
 													<button

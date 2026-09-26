@@ -273,7 +273,7 @@
 	border-radius: 18px;
 	overflow: hidden;
 	background: var(--ink-raised);
-	height: min(80vh, 700px);
+	height: var(--tapbtn-embed-panel-height, min(80vh, 700px));
 }
 
 .tapbtn-embed-panel__bar {
