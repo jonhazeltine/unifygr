@@ -1114,7 +1114,15 @@ export const blocksConfig: Config = {
 									// opened directly, e.g. an installed-app link); any other
 									// truthy value (e.g. "inline") gets the generic iframe panel.
 									const panelId = `tapbtn-embed-${i}`;
-									const embedHeight = String(l?.embedHeight || "").trim();
+									// SecureGive is a frame we don't control, so it never posts
+									// its height back (see the listener in MountedPage.astro) —
+									// it keeps a fixed height. 760px was measured against the
+									// live SecureGive donate widget on a 375×812 phone viewport:
+									// the amount + message + total/Continue bar all sit without
+									// an inner scrollbar or the sticky checkout bar overlapping
+									// the form (a shorter height clipped "I want to donate
+									// anonymously" under the Total bar).
+									const embedHeight = String(l?.embedHeight || "").trim() || (embedKind === "securegive" ? "760px" : "");
 									const embedSrc = String(l?.embedSrc || "").trim() || href;
 									const panelStyle = embedHeight
 										? ({ "--tapbtn-embed-panel-height": embedHeight } as Record<string, string>)

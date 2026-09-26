@@ -51,14 +51,42 @@ const isMinistry = Astro.url.pathname === "/ministries"
 			<style>
 				/* Readable down to about 330px wide, and transparent so the
 				   frame matches whatever dark panel it sits inside instead of
-				   showing its own backdrop. */
-				html, body { background: transparent; }
+				   showing its own backdrop. overflow: hidden means this
+				   document never grows its own scrollbar — the parent page
+				   (MountedPage.astro) resizes the iframe to fit, so the outer
+				   page stays the only scroll surface. */
+				html, body { background: transparent; overflow: hidden; }
 				body::before, body::after { display: none; }
 				.pagehead { padding-top: 0.4rem; }
 				.landing-shell { padding-top: 0; }
 				.section { padding: 1.1rem 0.4rem; }
 				.container { padding: 0; }
 			</style>
+		)}
+		{isEmbed && (
+			<script>
+				// Tells the parent page how tall this embedded document
+				// actually is, so it can size the iframe with no scrollbar of
+				// its own — the outer page stays the only scroll surface (see
+				// the "nlgr-embed-height" listener in MountedPage.astro).
+				(function postEmbedHeight() {
+					let lastHeight = 0;
+					function post() {
+						const height = Math.ceil(document.documentElement.getBoundingClientRect().height);
+						if (!height || Math.abs(height - lastHeight) < 2) return;
+						lastHeight = height;
+						window.parent.postMessage({ type: "nlgr-embed-height", height }, "*");
+					}
+					if (typeof ResizeObserver !== "undefined") {
+						new ResizeObserver(() => post()).observe(document.documentElement);
+					}
+					window.addEventListener("load", post);
+					document.addEventListener("nlgr:embed-height-refresh", post);
+					if (document.fonts?.ready) document.fonts.ready.then(post).catch(() => {});
+					post();
+					setTimeout(post, 300);
+				})();
+			</script>
 		)}
 	</head>
 	<body class:list={["v2", { "v2--ministry": isMinistry, "v2--embed": isEmbed }]}>

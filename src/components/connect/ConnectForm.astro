@@ -258,6 +258,10 @@ const showConfirmation = embed && pickedItems.length > 0;
 			box.disabled = false;
 			box.name = "interests";
 		});
+		// Inside ?embed=1 this document posts its new, taller height to the
+		// parent panel (see postEmbedHeight in Interior.astro/ConnectEmbed.astro)
+		// so the panel grows instead of scrolling internally.
+		document.dispatchEvent(new Event("nlgr:embed-height-refresh"));
 	});
 
 	function fieldError(name: string): HTMLElement | null {
@@ -347,6 +351,7 @@ const showConfirmation = embed && pickedItems.length > 0;
 			form.hidden = true;
 			done.hidden = false;
 			done.scrollIntoView({ behavior: "smooth", block: "center" });
+			document.dispatchEvent(new Event("nlgr:embed-height-refresh"));
 		} catch (err) {
 			error.textContent = err instanceof Error ? err.message : "Something went wrong. Please try again.";
 			error.hidden = false;
