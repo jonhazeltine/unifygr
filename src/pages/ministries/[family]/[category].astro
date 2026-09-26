@@ -11,6 +11,7 @@ import {
 	sortEntries,
 	splitOffering,
 	newLifeNote,
+	isListable,
 	type Entry,
 } from "../../../data/ministries";
 import { runtimeDirectoryEntries } from "../../../lib/partners/directory";
@@ -26,7 +27,7 @@ if (!family || !category) return new Response(null, { status: 404 });
 const showExternalMinistries = externalMinistriesEnabled(await readSettings(Astro.locals));
 const allRuntimeEntries = await runtimeDirectoryEntries(Astro.locals);
 const runtimeEntries = showExternalMinistries ? allRuntimeEntries : allRuntimeEntries.filter((entry) => entry.house === "in");
-const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
+const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && isListable(entry as Entry));
 
 const list = sortEntries(entriesInCategory(category.slug));
 // When curated partnerships are off, a category can be only another tag on one
@@ -51,7 +52,7 @@ const { events: allEvents } = showExternalMinistries ? await calendar(Astro.loca
 const events = allEvents.filter((ev) => ev.categories.includes(category.slug)).slice(0, 12);
 // Fresh within a few minutes, but served from cache like a static page. A
 // switch flipped in the partners panel shows here within five minutes.
-Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=3600");
+Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=300");
 
 
 // Where a category sits inside school districts, that is the useful grouping.

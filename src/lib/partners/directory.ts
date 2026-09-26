@@ -40,7 +40,16 @@ function hostKey(value: unknown): string {
 		.trim();
 }
 
+// The Church Map's church id is the one stable handle we have (AGENTS.md:
+// "the events feed carries no coordinates, and matching churches by name
+// resolves ~17 of 46 — do not try it, join on the id"). Most entries now carry
+// a `churchId` written at authoring time; those join directly and can never be
+// confused by two campuses sharing a building name. Older entries without one
+// fall back to the venue-name match, which stays ambiguity-prone for
+// multi-campus churches — a gap to close by backfilling `churchId` as those
+// entries are touched, not a reason to keep matching by name going forward.
 function partnerFor(entry: Entry, partners: Map<string, Partner>): Partner | undefined {
+	if (entry.churchId) return partners.get(entry.churchId);
 	const host = hostKey(entry.venue);
 	if (!host) return undefined;
 	return [...partners.values()].find((partner) => hostKey(partner.name) === host);

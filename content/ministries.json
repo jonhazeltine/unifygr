@@ -295,7 +295,6 @@
 			"city": "Dominican Republic and Haiti",
 			"rhythm": "Every summer"
 		},
-
 		{
 			"slug": "outreach",
 			"name": "Outreach Teams",
@@ -2392,7 +2391,8 @@
 			"lng": -85.66375689,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "We are a group of Sabbath-keeping believers who strive to connect people with Jesus and his family, equip them for spiritual growth and Christ-like living, develop them for their role of service in the church and their mission of sharing Christ in the world, and release them to worship and bring glory to God.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/all-nations-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/all-nations-church",
+			"churchId": "301310ad-78a2-4d13-acff-c3d15ea4a077"
 		},
 		{
 			"slug": "pw-kids",
@@ -2728,7 +2728,8 @@
 			"lng": -85.661778,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church",
+			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f"
 		},
 		{
 			"slug": "crossroads-outpost",
@@ -2766,7 +2767,8 @@
 			"lat": 42.9773282,
 			"lng": -85.6766588,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church",
+			"churchId": "73005957-094a-4bc8-850d-d6143041050c"
 		},
 		{
 			"slug": "messiah-seasoned-sisters",
@@ -2804,7 +2806,8 @@
 			"lat": 42.8819205,
 			"lng": -85.8532563,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church",
+			"churchId": "b2e653a1-d4e1-4c86-9643-1fb2c6fef771"
 		},
 		{
 			"slug": "stones-men-of-valor",
@@ -2841,7 +2844,8 @@
 			"lat": 42.8416916,
 			"lng": -85.6287557,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/stones-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/stones-church",
+			"churchId": "72eb675c-24a5-49f9-903e-46c3a7e8375b"
 		},
 		{
 			"slug": "crossroads-band-of-brothers",
@@ -2878,7 +2882,8 @@
 			"lat": 42.9773282,
 			"lng": -85.6766588,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church",
+			"churchId": "73005957-094a-4bc8-850d-d6143041050c"
 		},
 		{
 			"slug": "magnify-northview-womens",
@@ -2916,7 +2921,8 @@
 			"lat": 43.0389909,
 			"lng": -85.6188172,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "gr-dream-center",
@@ -3031,7 +3037,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "cedar-creek-community-church-rooted-women-s-bible-study",
@@ -3069,7 +3076,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/algoma-township/cedar-creek-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/algoma-township/cedar-creek-community-church",
+			"churchId": "81505dff-6a76-4b5c-8ccc-9accbc187ead"
 		},
 		{
 			"slug": "community-christian-church-dude-s-night",
@@ -3142,7 +3150,8 @@
 			"lat": 42.8687201,
 			"lng": -85.7224491,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church",
+			"churchId": "c1cf5386-326a-4fbb-baa1-a976dc4064a1"
 		},
 		{
 			"slug": "grace-christian-reformed-church-public-reading-of-scripture",
@@ -3254,7 +3263,8 @@
 			"verified": null,
 			"lat": null,
 			"lng": null,
-			"relationship": "not-yet-spoken-to"
+			"relationship": "not-yet-spoken-to",
+			"churchId": "92cb85cc-9560-4f56-8034-c3b327762700"
 		},
 		{
 			"slug": "set-free-ministries-sf-ministry-center-michigan-warrior-wedn",
@@ -3292,7 +3302,8 @@
 			"lng": -85.73288096,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Warriors Set Free guides military, veterans, and first responders In growing their faith, healing from the past, and winning life’s battles.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/set-free-ministries-sf-ministry-center"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/set-free-ministries-sf-ministry-center",
+			"churchId": "6fa5b464-1304-43d8-b0de-b9fdd3539547"
 		},
 		{
 			"slug": "sunshine-community-church-60-up-breakfast-bunch",
@@ -3330,7 +3341,8 @@
 			"lng": -85.5878996,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church",
+			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f"
 		},
 		{
 			"slug": "sunshine-community-church-young-adults-bible-study",
@@ -3368,7 +3380,8 @@
 			"lng": -85.5878996,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church",
+			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-financial-p",
@@ -3405,7 +3418,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-summer-jam-",
@@ -3443,7 +3457,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-men-s-fish-",
@@ -3480,7 +3495,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "blythefield-hills-baptist-church-rockford-campus-women-s-sum",
@@ -3518,7 +3534,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0"
+			"churchMapUrl": "https://thechurchmap.com/grandrapids/church/65739774-dcd2-408e-b6d8-ad314c77f3c0",
+			"churchId": "8ce70d32-3c9a-42f2-8fda-3d752844ea4c"
 		},
 		{
 			"slug": "crossroads-bible-church-the-post",
@@ -3555,7 +3572,8 @@
 			"lat": 42.9773282,
 			"lng": -85.6766588,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church",
+			"churchId": "73005957-094a-4bc8-850d-d6143041050c"
 		},
 		{
 			"slug": "crossroads-bible-church-women-s-fall-kickoff",
@@ -3593,7 +3611,8 @@
 			"lat": 42.9773282,
 			"lng": -85.6766588,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/crossroads-bible-church",
+			"churchId": "73005957-094a-4bc8-850d-d6143041050c"
 		},
 		{
 			"slug": "faith-community-christian-reformed-church-fall-kick-off-comm",
@@ -3630,7 +3649,8 @@
 			"lat": 42.8687201,
 			"lng": -85.7224491,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/wyoming/faith-community-christian-reformed-church",
+			"churchId": "c1cf5386-326a-4fbb-baa1-a976dc4064a1"
 		},
 		{
 			"slug": "messiah-christian-reformed-church-i-scream-for-ice-cream",
@@ -3667,7 +3687,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church",
+			"churchId": "b2e653a1-d4e1-4c86-9643-1fb2c6fef771"
 		},
 		{
 			"slug": "messiah-christian-reformed-church-m-i-s-t-seniors-group-mont",
@@ -3704,7 +3725,8 @@
 			"lat": null,
 			"lng": null,
 			"relationship": "not-yet-spoken-to",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/hudsonville/messiah-christian-reformed-church",
+			"churchId": "b2e653a1-d4e1-4c86-9643-1fb2c6fef771"
 		},
 		{
 			"slug": "mosaic-church-seidman-bgc-back-to-school-bash",
@@ -3740,7 +3762,8 @@
 			"verified": null,
 			"lat": null,
 			"lng": null,
-			"relationship": "not-yet-spoken-to"
+			"relationship": "not-yet-spoken-to",
+			"churchId": "92cb85cc-9560-4f56-8034-c3b327762700"
 		},
 		{
 			"slug": "sunshine-community-church-sunshine-sewing-group-stitches-of-",
@@ -3778,7 +3801,8 @@
 			"lng": -85.5878996,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church",
+			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f"
 		},
 		{
 			"slug": "sunshine-community-church-kids-courtyard-grand-opening",
@@ -3817,7 +3841,8 @@
 			"lng": -85.5878996,
 			"relationship": "not-yet-spoken-to",
 			"venueBio": "Our staff are fun-loving, hard-working, and sincere. They know their role is not to do all the work of ministry by themselves, but to lead, equip, and encourage the whole church to do it together.",
-			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church"
+			"churchMapUrl": "https://thechurchmap.com/church/mi/grand-rapids/sunshine-community-church",
+			"churchId": "0330c9ad-6b5f-4f42-b17a-55c909c5193f"
 		}
 	]
 }

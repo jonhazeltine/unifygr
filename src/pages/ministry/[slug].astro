@@ -37,7 +37,7 @@ const cats = entry.categories.map((slug) => ({
 const seen = new Set([entry.slug]);
 const alternatives: Entry[] = [];
 for (const slug of entry.categories) {
-	for (const other of sortEntries(entries.filter((candidate) => candidate.categories.includes(slug) && candidate.status !== "no-details" && candidate.listed !== false))) {
+	for (const other of sortEntries(entries.filter((candidate) => candidate.categories.includes(slug) && isListable(candidate as Entry)))) {
 		if (seen.has(other.slug)) continue;
 		seen.add(other.slug);
 		alternatives.push(other);
