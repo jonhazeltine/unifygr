@@ -10,6 +10,7 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 // and stays in, in its original order, with nothing invented or dropped.
 const BIG_BUTTONS = [
 	{ label: "I'm New", href: "/links/next-steps" },
+	{ label: "Welcome to New Life", href: "https://theformation.app/m/welcome-to-new-life" },
 	{ label: "Pray", href: "/links/pray" },
 	{ label: "The Formation App", href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R" },
 	{
@@ -36,11 +37,11 @@ test("/links carries a title and description for meta/OG tags", () => {
 	assert.ok(linksPage.root.props.description);
 });
 
-test("/links has exactly four big buttons, in order, with no description text", () => {
+test("/links has exactly five big buttons, in order, with no description text", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	assert.ok(block, "expected a TapButtons block");
 	const links: any[] = block!.props.links;
-	assert.equal(links.length, 4, "expected exactly four big buttons");
+	assert.equal(links.length, 5, "expected exactly five big buttons");
 
 	links.forEach((link, i) => {
 		assert.equal(link.label, BIG_BUTTONS[i].label);
@@ -62,6 +63,24 @@ test("/links opens Give inline (SecureGive embedded) instead of navigating away"
 		if (link.label === "Give") continue;
 		assert.ok(!link.embed, `only Give should be flagged inline, not "${link.label}"`);
 	}
+});
+
+test("/links has a Welcome to New Life button directly below I'm New, external and not inline", () => {
+	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
+	const links: any[] = block!.props.links;
+	const newIndex = links.findIndex((l: any) => l.label === "I'm New");
+	const welcomeIndex = links.findIndex((l: any) => l.label === "Welcome to New Life");
+	assert.ok(welcomeIndex >= 0, "expected a Welcome to New Life button");
+	assert.equal(welcomeIndex, newIndex + 1, "Welcome to New Life should sit directly below I'm New");
+
+	const welcome = links[welcomeIndex];
+	assert.equal(welcome.href, "https://theformation.app/m/welcome-to-new-life");
+	assert.equal(welcome.blurb, "");
+	assert.ok(!welcome.embed, "Welcome to New Life should not be an inline embed");
+	assert.equal(welcome.feature, "no", "only I'm New keeps the gold highlight");
+
+	const imNew = links[newIndex];
+	assert.equal(imNew.feature, "yes", "I'm New should keep its gold highlight");
 });
 
 test("/links no longer has a Website big button", () => {

@@ -18,6 +18,12 @@ const DESKTOP_MAC_UA =
 const DESKTOP_WINDOWS_UA =
 	"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36";
 
+describe("FORMATION_DESKTOP_URL", () => {
+	it("points at theformation.app's join path, which app-links claim, instead of the query-param path they don't", () => {
+		assert.equal(FORMATION_DESKTOP_URL, "https://theformation.app/join/0LY0R");
+	});
+});
+
 describe("pickFormationDestination", () => {
 	it("sends an iPhone to the App Store", () => {
 		assert.equal(pickFormationDestination(IPHONE_UA), IOS_APP_STORE_URL);
