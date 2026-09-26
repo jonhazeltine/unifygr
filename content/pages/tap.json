@@ -1,55 +1,58 @@
 {
-	"status": "live",
-	"order": 20,
-	"root": {
-		"props": {
-			"title": "Start here",
-			"kicker": "New Life Grand Rapids",
-			"description": "Three ways to take a step today: pray for a neighbor, find a church in Grand Rapids, or join an Ambassador Team."
-		}
-	},
-	"content": [
-		{
-			"type": "TapButtons",
-			"props": {
-				"id": "TapButtons-tap",
-				"brand": "New Life Grand Rapids",
-				"heading": "Start here.",
-				"lede": "Three steps you can take from this screen.",
-				"homeLabel": "Links",
-				"homeHref": "/links",
-				"homeIcon": "back",
-				"links": [
-					{
-						"label": "Pray for a Person",
-						"blurb": "A real request from a real neighbor, one at a time.",
-						"href": "https://thechurchmap.com/pray",
-						"feature": "yes"
-					},
-					{
-						"label": "Strengthen the Church",
-						"blurb": "Share an encouraging word, a scripture or a prayer with another congregation in Grand Rapids.",
-						"href": "https://thechurchmap.com/grandrapids/pray?embed=1",
-						"feature": "no",
-						"embed": "inline"
-					},
-					{
-						"label": "Go with an Ambassador Team",
-						"blurb": "One Sunday a month, we go and pray for another church in our city.",
-						"href": "/connect?interest=ambassador&from=tap+page",
-						"feature": "no"
-					},
-					{
-						"label": "The Church Map",
-						"blurb": "Every church in Grand Rapids, on one map.",
-						"href": "https://thechurchmap.com/grandrapids",
-						"feature": "no"
-					}
-				],
-				"footLabel": "Everything else at New Life",
-				"footHref": "/"
-			}
-		}
-	],
-	"zones": {}
+    "status": "live",
+    "order": 20,
+    "root": {
+        "props": {
+            "title": "Start here",
+            "kicker": "New Life Grand Rapids",
+            "description": "Three ways to take a step today: pray for a neighbor, find a church in Grand Rapids, or join an Ambassador Team."
+        }
+    },
+    "content": [
+        {
+            "type": "TapButtons",
+            "props": {
+                "id": "TapButtons-tap",
+                "brand": "New Life Grand Rapids",
+                "heading": "Start here.",
+                "lede": "Three steps you can take from this screen.",
+                "homeLabel": "Links",
+                "homeHref": "/links",
+                "homeIcon": "back",
+                "links": [
+                    {
+                        "label": "Pray for a Person",
+                        "blurb": "A real request from a real neighbor, one at a time.",
+                        "href": "https://thechurchmap.com/pray",
+                        "feature": "yes"
+                    },
+                    {
+                        "label": "Strengthen the Church",
+                        "blurb": "Share an encouraging word, a scripture or a prayer with another congregation in Grand Rapids.",
+                        "href": "https://thechurchmap.com/grandrapids/pray?embed=1",
+                        "feature": "no",
+                        "embed": "inline"
+                    },
+                    {
+                        "label": "Go with an Ambassador Team",
+                        "blurb": "One Sunday a month, we go and pray for another church in our city.",
+                        "href": "/connect?interest=ambassador&from=tap+page",
+                        "feature": "no",
+                        "embed": "inline",
+                        "embedSrc": "/connect?interest=ambassador&from=tap+page&embed=1",
+                        "embedHeight": "80vh"
+                    },
+                    {
+                        "label": "The Church Map",
+                        "blurb": "Every church in Grand Rapids, on one map.",
+                        "href": "https://thechurchmap.com/grandrapids",
+                        "feature": "no"
+                    }
+                ],
+                "footLabel": "Everything else at New Life",
+                "footHref": "/"
+            }
+        }
+    ],
+    "zones": {}
 }

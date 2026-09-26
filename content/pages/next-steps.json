@@ -1,48 +1,54 @@
 {
-	"status": "live",
-	"order": 7,
-	"root": {
-		"props": {
-			"title": "Next steps",
-			"kicker": "New Life Grand Rapids",
-			"description": "Your next step at New Life: join a life group, start Growth Track, or join a GO Team."
-		}
-	},
-	"content": [
-		{
-			"type": "TapButtons",
-			"props": {
-				"id": "TapButtons-next-steps",
-				"brand": "New Life Grand Rapids",
-				"heading": "Next steps.",
-				"lede": "Pick the one that's yours.",
-				"homeLabel": "Links",
-				"homeHref": "/links",
-				"homeIcon": "back",
-				"links": [
-					{
-						"label": "Join a Life Group",
-						"blurb": "A handful of people who will actually know you.",
-						"href": "/connect?interest=group&from=next+steps+page",
-						"feature": "yes"
-					},
-					{
-						"label": "Start Growth Track",
-						"blurb": "A clear, personal path for growing in Christ.",
-						"href": "/spiritual-formation",
-						"feature": "no"
-					},
-					{
-						"label": "Join a GO Team",
-						"blurb": "The Great Commission calls us to go \u2014 join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
-						"href": "/connect?from=next+steps+page#teams",
-						"feature": "no"
-					}
-				],
-				"footLabel": "Everything else at New Life",
-				"footHref": "/"
-			}
-		}
-	],
-	"zones": {}
+    "status": "live",
+    "order": 7,
+    "root": {
+        "props": {
+            "title": "Next steps",
+            "kicker": "New Life Grand Rapids",
+            "description": "Your next step at New Life: join a life group, start Growth Track, or join a GO Team."
+        }
+    },
+    "content": [
+        {
+            "type": "TapButtons",
+            "props": {
+                "id": "TapButtons-next-steps",
+                "brand": "New Life Grand Rapids",
+                "heading": "Next steps.",
+                "lede": "Pick the one that's yours.",
+                "homeLabel": "Links",
+                "homeHref": "/links",
+                "homeIcon": "back",
+                "links": [
+                    {
+                        "label": "Join a Life Group",
+                        "blurb": "A handful of people who will actually know you.",
+                        "href": "/connect?interest=group&from=next+steps+page",
+                        "feature": "yes",
+                        "embed": "inline",
+                        "embedSrc": "/connect?interest=group&from=next+steps+page&embed=1",
+                        "embedHeight": "80vh"
+                    },
+                    {
+                        "label": "Start Growth Track",
+                        "blurb": "A clear, personal path for growing in Christ.",
+                        "href": "/spiritual-formation",
+                        "feature": "no"
+                    },
+                    {
+                        "label": "Join a GO Team",
+                        "blurb": "The Great Commission calls us to go \u2014 join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
+                        "href": "/connect?from=next+steps+page#teams",
+                        "feature": "no",
+                        "embed": "inline",
+                        "embedSrc": "/connect?from=next+steps+page&embed=1#teams",
+                        "embedHeight": "80vh"
+                    }
+                ],
+                "footLabel": "Everything else at New Life",
+                "footHref": "/"
+            }
+        }
+    ],
+    "zones": {}
 }

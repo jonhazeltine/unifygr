@@ -947,8 +947,12 @@ export const blocksConfig: Config = {
 							type: "text",
 							label: "Inline panel height (optional, e.g. 80vh or 600px)",
 						},
+						embedSrc: {
+							type: "text",
+							label: "Inline panel URL (optional — defaults to the link above; use this when the link itself must stay a plain page for no-JS visitors, e.g. an embed=1 variant of our own page)",
+						},
 					},
-					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "", embedHeight: "" },
+					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "", embedHeight: "", embedSrc: "" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
@@ -1083,6 +1087,7 @@ export const blocksConfig: Config = {
 									// "inline") gets the same generic inline-panel treatment.
 									const panelId = `tapbtn-embed-${i}`;
 									const embedHeight = String(l?.embedHeight || "").trim();
+									const embedSrc = String(l?.embedSrc || "").trim() || href;
 									const panelStyle = embedHeight
 										? ({ "--tapbtn-embed-panel-height": embedHeight } as Record<string, string>)
 										: undefined;
@@ -1114,7 +1119,7 @@ export const blocksConfig: Config = {
 														✕
 													</button>
 												</div>
-												<div className="tapbtn-embed-panel__frame" data-tapbtn-embed-frame data-src={href}></div>
+												<div className="tapbtn-embed-panel__frame" data-tapbtn-embed-frame data-src={embedSrc}></div>
 											</div>
 										</div>
 									);
