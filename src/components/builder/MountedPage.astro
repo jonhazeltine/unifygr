@@ -142,6 +142,14 @@ const Layout = bare ? Bare : Interior;
 					// frame's edges instead of trapping it (matters for the
 					// fixed-height SecureGive frame, which scrolls internally).
 					iframe.setAttribute("style", iframe.getAttribute("style") + "overscroll-behavior:auto;");
+					// A framed page that can't read `location.ancestorOrigins`
+					// (Safari/iOS) falls back to `document.referrer` to learn who
+					// its parent is before it will postMessage a height back.
+					// This is already the browser's own default policy, but we
+					// set it explicitly so it can never be weakened later by a
+					// stricter site-wide Referrer-Policy header or meta tag —
+					// it still sends only our origin, never the full URL.
+					iframe.referrerPolicy = "strict-origin-when-cross-origin";
 					frame.appendChild(iframe);
 				}
 			}
