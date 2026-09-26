@@ -54,7 +54,7 @@ test("every other button on both pages is left as a normal, non-embedded link", 
 		const links: any[] = block!.props.links;
 		for (const link of links) {
 			if (String(link.href || "").startsWith("/connect")) continue;
-			if (link.label === "Strengthen the Church") continue; // pre-existing, unrelated inline embed
+			if (link.label === "Strengthen the Church" || link.label === "Pray for a Person") continue; // Church Map card-only embeds
 			assert.ok(!link.embed, `expected "${link.label}" to stay a normal link`);
 		}
 	}
