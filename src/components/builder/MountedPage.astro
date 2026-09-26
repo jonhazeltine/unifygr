@@ -59,6 +59,8 @@ const Layout = bare ? Bare : Interior;
 </Layout>
 
 <script>
+	import { parseEmbedHeightMessage, findEmbedFrame, clampEmbedHeight } from "../../lib/embed/panel-height";
+
 	// Progressive enhancement for every PackSignupForm block on the page (see
 	// blocks.tsx) — plain fetch + vanilla JS, the same pattern as /connect.astro,
 	// since Puck's server-rendered blocks carry no client-side React.
@@ -103,6 +105,24 @@ const Layout = bare ? Bare : Interior;
 	// Progressive enhancement for a TapButtons link marked "open inline"
 	// (see blocks.tsx) — plain vanilla JS, same pattern as above. With no JS
 	// the element is a normal <a href> to the giving URL, so it still works.
+	//
+	// ONE scroll surface: a frame we control (our own ?embed=1 pages) posts
+	// its real document height up via postMessage (see the "nlgr-embed-height"
+	// listener below), and the panel grows to match with no scrollbar of its
+	// own — the outer page is the only thing that scrolls. A frame we don't
+	// control (SecureGive) never sends that message, so it keeps the fixed,
+	// pre-tuned height in tap.css and scrolls internally at that size, chosen
+	// so its form fits a 375×812 phone without needing to.
+	const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	function scrollPanelIntoView(panel: HTMLElement) {
+		const rect = panel.getBoundingClientRect();
+		const top = window.scrollY + rect.top - 12; // just under the button
+		window.scrollTo({ top: Math.max(top, 0), behavior: reduceMotion ? "auto" : "smooth" });
+	}
+
+	let triggerIdCounter = 0;
+
 	for (const trigger of document.querySelectorAll<HTMLAnchorElement>("[data-tapbtn-embed]")) {
 		trigger.addEventListener("click", (event) => {
 			const targetId = trigger.getAttribute("data-tapbtn-embed-target");
@@ -118,19 +138,52 @@ const Layout = bare ? Bare : Interior;
 					iframe.src = src;
 					iframe.title = trigger.textContent?.trim() || "Give online";
 					iframe.style.cssText = "width:100%;height:100%;border:0;display:block;";
+					// Let touch scrolling hand off to the page smoothly at the
+					// frame's edges instead of trapping it (matters for the
+					// fixed-height SecureGive frame, which scrolls internally).
+					iframe.setAttribute("style", iframe.getAttribute("style") + "overscroll-behavior:auto;");
 					frame.appendChild(iframe);
 				}
 			}
 
+			if (!trigger.id) trigger.id = `tapbtn-embed-trigger-${++triggerIdCounter}`;
+			panel.dataset.tapbtnEmbedTrigger = trigger.id;
+
 			panel.hidden = !panel.hidden;
-			if (!panel.hidden) panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+			if (!panel.hidden) requestAnimationFrame(() => scrollPanelIntoView(panel));
 		});
 	}
 
 	for (const closeBtn of document.querySelectorAll<HTMLButtonElement>("[data-tapbtn-embed-close]")) {
 		closeBtn.addEventListener("click", () => {
 			const panel = closeBtn.closest<HTMLElement>("[data-tapbtn-embed-panel]");
-			if (panel) panel.hidden = true;
+			if (!panel) return;
+			panel.hidden = true;
+			const triggerId = panel.dataset.tapbtnEmbedTrigger;
+			const trigger = triggerId ? document.getElementById(triggerId) : null;
+			trigger?.focus();
 		});
 	}
+
+	// Accepts a height only from a window we ourselves put in an iframe —
+	// checked by object identity against event.source (findEmbedFrame), never
+	// by string-matching event.origin, so it works the same for our own
+	// ?embed=1 pages and (once the Church Map lead wires it up on their side)
+	// any thechurchmap.com frame, with no allowlist to maintain. A message
+	// from anything else (e.g. an ad inside SecureGive) matches no iframe here
+	// and is ignored. See src/lib/embed/panel-height.ts for the unit-tested
+	// parsing/matching/clamping logic.
+	window.addEventListener("message", (event) => {
+		const height = parseEmbedHeightMessage(event.data);
+		if (height == null) return;
+
+		const frames = Array.from(document.querySelectorAll<HTMLIFrameElement>("[data-tapbtn-embed-frame] iframe"));
+		const iframe = findEmbedFrame(frames, event.source);
+		if (!iframe) return;
+		const panel = iframe.closest<HTMLElement>("[data-tapbtn-embed-panel]");
+		if (!panel) return;
+
+		panel.style.setProperty("--tapbtn-embed-panel-height", `${clampEmbedHeight(height)}px`);
+		panel.classList.add("tapbtn-embed-panel--auto");
+	});
 </script>

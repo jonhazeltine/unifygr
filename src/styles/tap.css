@@ -304,6 +304,25 @@
 	overflow: hidden;
 	background: var(--ink-raised);
 	height: var(--tapbtn-embed-panel-height, min(80vh, 700px));
+	/* Height changes smoothly instead of jumping the layout — e.g. when a
+	   controlled frame posts a taller measurement after "Add something else"
+	   expands, or after its own thank-you screen appears. */
+	transition: height 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tapbtn-embed-panel {
+		transition: none;
+	}
+}
+
+/* Set once a frame we control (our own ?embed=1 pages, or a thechurchmap.com
+   frame that adopts the same postMessage contract) reports its real document
+   height — see the "nlgr-embed-height" listener in MountedPage.astro. The
+   panel is now sized exactly to the frame's content, so the frame itself
+   never needs its own scrollbar: the outer page is the only scroll surface. */
+.tapbtn-embed-panel--auto .tapbtn-embed-panel__frame {
+	overflow: visible;
 }
 
 .tapbtn-embed-panel__bar {
@@ -344,6 +363,10 @@
 	height: 100%;
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
+	/* For a frame we don't control (SecureGive) that still needs its own
+	   scroll at a fixed height: let touch scrolling hand off to the page
+	   smoothly at the frame's top/bottom edge instead of trapping it there. */
+	overscroll-behavior: auto;
 }
 
 /* Preview panels don't hold an iframe — they're a short description plus a
