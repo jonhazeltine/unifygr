@@ -1,0 +1,75 @@
+{
+	"status": "live",
+	"order": 40,
+	"root": {
+		"props": {
+			"title": "Links",
+			"kicker": "New Life Grand Rapids",
+			"description": "Encounter God. Be Transformed. Change the World. Everything you need from New Life Grand Rapids, in one place."
+		}
+	},
+	"content": [
+		{
+			"type": "TapButtons",
+			"props": {
+				"id": "TapButtons-links",
+				"brand": "New Life Grand Rapids",
+				"heading": "New Life GR",
+				"lede": "Encounter God. Be Transformed.\nChange the World.",
+				"links": [
+					{
+						"label": "I'm New",
+						"blurb": "Take your next step with us.",
+						"href": "https://newlifegr.com/next-steps",
+						"feature": "yes"
+					},
+					{
+						"label": "Pray",
+						"blurb": "Bring a request to our prayer team.",
+						"href": "https://newlifegr.com/tap",
+						"feature": "no"
+					},
+					{
+						"label": "The Formation App",
+						"blurb": "Grow in your faith, day by day.",
+						"href": "https://theformation.app/?community=0LY0R#/auth?community=0LY0R",
+						"feature": "no"
+					},
+					{
+						"label": "Give",
+						"blurb": "Support the mission of New Life.",
+						"href": "https://app.securegive.com/NewLifeGR/new-life/donate/category",
+						"feature": "no"
+					},
+					{
+						"label": "Website",
+						"blurb": "newlifegr.com",
+						"href": "https://newlifegr.com",
+						"feature": "no"
+					},
+					{
+						"label": "YouTube",
+						"blurb": "Watch our services and worship nights.",
+						"href": "https://www.youtube.com/@newlifegrandrapids2177/streams",
+						"feature": "no"
+					},
+					{
+						"label": "Facebook",
+						"blurb": "",
+						"href": "https://www.facebook.com/NewLifeGr/mentions",
+						"feature": "no"
+					},
+					{
+						"label": "Instagram",
+						"blurb": "",
+						"href": "https://www.instagram.com/newlifegr/",
+						"feature": "no"
+					}
+				],
+				"footLabel": "Everything else at New Life",
+				"footHref": "/"
+			}
+		}
+	],
+	"zones": {}
+}
