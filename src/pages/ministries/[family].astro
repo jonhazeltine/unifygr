@@ -13,6 +13,7 @@ import {
 	curationNote,
 	sortEntries,
 	isOffering,
+	isListable,
 	type Entry,
 } from "../../data/ministries";
 import { runtimeDirectoryEntries } from "../../lib/partners/directory";
@@ -26,9 +27,9 @@ const runtimeEntries = showExternalMinistries ? allRuntimeEntries : allRuntimeEn
 const entriesInFamily = (slug: string) => {
 	const target = families.find((candidate) => candidate.slug === slug);
 	const categories = new Set(target ? target.categories.map((category) => category.slug) : []);
-	return runtimeEntries.filter((entry) => entry.categories.some((category) => categories.has(category)) && entry.status !== "no-details" && entry.listed !== false);
+	return runtimeEntries.filter((entry) => entry.categories.some((category) => categories.has(category)) && isListable(entry as Entry));
 };
-const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && entry.status !== "no-details" && entry.listed !== false);
+const entriesInCategory = (slug: string) => runtimeEntries.filter((entry) => entry.categories.includes(slug) && isListable(entry as Entry));
 
 if (!showExternalMinistries && entriesInFamily(family.slug).length === 0) return Astro.redirect("/ministries");
 const { offering, specialized } = splitOffering(sortEntries(entriesInFamily(family.slug)));

@@ -83,6 +83,8 @@ export type Entry = {
 	venueServiceTimes?: string | null;
 	/** This church's page on The Church Map. */
 	churchMapUrl?: string | null;
+	/** The Church Map's church id — the stable join key to a partner. Prefer this over matching on `venue`. */
+	churchId?: string | null;
 	/** Where the relationship stands: not-yet-spoken-to | in-conversation | ministry-share | joint */
 	relationship?: string | null;
 	rhythm?: string | null;

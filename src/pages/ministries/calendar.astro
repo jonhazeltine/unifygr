@@ -17,7 +17,7 @@ const { church } = await runtimeSite(Astro.locals);
 const data = await calendar(Astro.locals);
 // Fresh within a few minutes, but served from cache like a static page. A
 // switch flipped in the partners panel shows here within five minutes.
-Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=3600");
+Astro.response.headers.set("cache-control", "public, s-maxage=300, stale-while-revalidate=300");
 
 // Our own weekly rhythms sit in the same list as everything else, because it is
 // one calendar.
