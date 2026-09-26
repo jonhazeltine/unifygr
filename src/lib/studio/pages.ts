@@ -61,6 +61,24 @@ export function validSlug(slug: unknown): slug is string {
 	return typeof slug === "string" && /^[a-z0-9][a-z0-9-]{0,58}[a-z0-9]$/.test(slug);
 }
 
+/**
+ * Reverse-map a URL pathname (as the Studio dock sees it, e.g. "/giving" or
+ * "/p/welcome") to its Page Builder slug — or null when the page at that path
+ * isn't a Page Builder document at all (a hand-built .astro page, or one that
+ * doesn't exist). Used to route the dock's AI chat to the full-page brain only
+ * when there's an actual Page Builder document behind the page being viewed.
+ */
+export function resolvePageSlugFromPath(pathname: string): string | null {
+	const clean = pathname.split(/[?#]/)[0].replace(/\/+$/, "") || "/";
+	const mounted = Object.entries(MOUNTED).find(([, path]) => path === clean);
+	if (mounted) return mounted[0];
+	if (clean.startsWith("/p/")) {
+		const slug = clean.slice(3);
+		return validSlug(slug) ? slug : null;
+	}
+	return null;
+}
+
 export function sanitizeData(input: any): PageData {
 	const allowed = new Set<string>(ALLOWED_BLOCKS);
 	const content = Array.isArray(input?.content) ? input.content : [];
