@@ -5,7 +5,7 @@
         "props": {
             "title": "Grow",
             "kicker": "New Life Grand Rapids",
-            "description": "Grow at New Life: join a life group, start Growth Track, or dig in with The Formation App."
+            "description": "Grow at New Life: join a life group or start Growth Track in The Formation App."
         }
     },
     "content": [
@@ -30,21 +30,12 @@
                         "embedHeight": "80vh"
                     },
                     {
-                        "label": "Start Growth Track",
+                        "label": "Growth Track",
                         "blurb": "A clear, personal path for growing in Christ.",
-                        "href": "/spiritual-formation",
-                        "feature": "no",
-                        "embed": "inline",
-                        "embedSrc": "/spiritual-formation?embed=1",
-                        "embedHeight": "80vh"
-                    },
-                    {
-                        "label": "The Formation App",
-                        "blurb": "",
                         "href": "https://theformation.app/join/0LY0R",
                         "feature": "no",
-                        "preview": "Our community app for growing in faith day by day: guided paths, Life Group resources and what is happening at New Life.",
-                        "previewAction": "Open the app"
+                        "preview": "Growth Track lives in The Formation App: a set of short modules on who we are, how to grow, and where you fit. Start anytime, at your own pace.",
+                        "previewAction": "Start Growth Track"
                     }
                 ],
                 "footLabel": "Everything else at New Life",

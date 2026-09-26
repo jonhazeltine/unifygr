@@ -15,9 +15,11 @@ import growPage from "../content/pages/next-steps.json" with { type: "json" };
 // community query-param link) still works the way a plain navigation would.
 //
 // Both buttons moved off /links in the I'm New / Grow / Go / Give
-// restructure: "Welcome to New Life" now lives on /links/new, and "The
-// Formation App" now lives on /links/grow (slug "next-steps") — but they
-// kept their preview panels exactly as they were on /links.
+// restructure: "Welcome to New Life" now lives on /links/new, and its
+// counterpart on /links/grow (slug "next-steps") is now a single "Growth
+// Track" button (replacing the former "Start Growth Track" embed and "The
+// Formation App" preview) — Jon confirmed Growth Track's modules live in The
+// Formation App, so one preview button covers both.
 
 function tapButtonsLinks(page: any) {
 	const block = page.content.find((c: any) => c.type === "TapButtons");
@@ -37,20 +39,30 @@ test("Welcome to New Life carries its preview content on /links/new", () => {
 	assert.equal(welcome.href, "https://theformation.app/m/welcome-to-new-life", "href stays unchanged");
 });
 
-test("The Formation App carries its preview content on /links/grow", () => {
+test("Growth Track carries its preview content on /links/grow, replacing the old Start Growth Track / Formation App duplicate", () => {
 	const links = tapButtonsLinks(growPage);
 
-	const app = links.find((l) => l.label === "The Formation App");
-	assert.ok(app);
+	assert.ok(!links.find((l) => l.label === "Start Growth Track"), "the old embed button should be gone");
+	assert.ok(!links.find((l) => l.label === "The Formation App"), "the old duplicate button should be gone");
+
+	const growthTrack = links.find((l) => l.label === "Growth Track");
+	assert.ok(growthTrack);
 	assert.equal(
-		app.preview,
-		"Our community app for growing in faith day by day: guided paths, Life Group resources and what is happening at New Life.",
+		growthTrack.preview,
+		"Growth Track lives in The Formation App: a set of short modules on who we are, how to grow, and where you fit. Start anytime, at your own pace.",
 	);
-	assert.equal(app.previewAction, "Open the app");
-	assert.equal(
-		app.href,
-		"https://theformation.app/join/0LY0R",
-		"href stays unchanged",
+	assert.equal(growthTrack.previewAction, "Start Growth Track");
+	assert.equal(growthTrack.href, "https://theformation.app/join/0LY0R");
+	// No leftover embed config from the old inline-panel version of this button.
+	assert.ok(!growthTrack.embed);
+	assert.ok(!growthTrack.embedSrc);
+});
+
+test("/links/grow keeps Join a Life Group first, then Growth Track", () => {
+	const links = tapButtonsLinks(growPage);
+	assert.deepEqual(
+		links.map((l: any) => l.label),
+		["Join a Life Group", "Growth Track"],
 	);
 });
 

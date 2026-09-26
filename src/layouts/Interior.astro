@@ -54,13 +54,58 @@ const isMinistry = Astro.url.pathname === "/ministries"
 				   showing its own backdrop. overflow: hidden means this
 				   document never grows its own scrollbar — the parent page
 				   (MountedPage.astro) resizes the iframe to fit, so the outer
-				   page stays the only scroll surface. */
-				html, body { background: transparent; overflow: hidden; }
+				   page stays the only scroll surface.
+
+				   Specificity note: sunday.css sets `body.v2 { background:
+				   var(--ink) }` (a class selector). A plain `html, body`
+				   rule here is an element selector — lower specificity — so
+				   it silently lost that fight and the page's own opaque
+				   background showed through the panel instead of the
+				   transparent one this comment promised. Matching on
+				   `body.v2--embed` (the class Interior already adds below)
+				   wins on specificity without needing !important. */
+				html { background: transparent !important; overflow: hidden; }
+				body.v2--embed {
+					/* !important, not just a class selector: sunday.css's
+					   `body.v2 { background: var(--ink) }` carries the same
+					   specificity (one class selector) and can still win on
+					   source order depending on how Astro orders the
+					   imported stylesheet vs. this inline block, so equal
+					   specificity isn't a reliable win here. */
+					background: transparent !important;
+					overflow: hidden;
+				}
 				body::before, body::after { display: none; }
 				.pagehead { padding-top: 0.4rem; }
 				.landing-shell { padding-top: 0; }
 				.section { padding: 1.1rem 0.4rem; }
 				.container { padding: 0; }
+
+				/* Viewport-height feedback loop: an auto-height iframe sets
+				   its own CSS height to match the document height this page
+				   reports (see the postEmbedHeight script below and
+				   MountedPage.astro's "nlgr-embed-height" listener). Any
+				   element sized with 100vh/100svh/100dvh inside that same
+				   document resolves against the iframe's OWN rendered
+				   height — which we just set from that element's size. Grow
+				   the content, and the iframe grows, which grows the
+				   viewport unit, which grows the content again, spiraling
+				   until it hits panel-height.ts's MAX_EMBED_HEIGHT safety
+				   clamp (confirmed: /spiritual-formation's three
+				   `.growth-chapter` sections at 185svh each inflated to
+				   ~32,900px apiece — a ~103,800px document — before being
+				   clamped to the 20,000px ceiling). No embedded page is
+				   ever really "full height" content, so viewport-relative
+				   sizing is neutralized here for every page rendered
+				   through this layout in embed mode, not left for each
+				   page author to remember. */
+				body.v2--embed :is(section, div, article, main, header, footer) {
+					height: auto !important;
+					min-height: 0 !important;
+					max-height: none !important;
+					position: static !important;
+					top: auto !important;
+				}
 			</style>
 		)}
 		{isEmbed && (
