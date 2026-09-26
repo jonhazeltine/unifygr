@@ -33,6 +33,8 @@
                         "label": "Pray for a Person",
                         "blurb": "A real request from a real neighbor, one at a time.",
                         "href": "https://thechurchmap.com/pray",
+                        "embed": "inline",
+                        "embedSrc": "https://thechurchmap.com/pray?embed=1",
                         "feature": "no"
                     },
                     {

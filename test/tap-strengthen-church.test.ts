@@ -34,7 +34,16 @@ test("Strengthen the Church opens inline instead of navigating away", () => {
 	// flagged inline (see test/connect-inline-embed.test.ts) — every other
 	// button on the page stays a normal link.
 	for (const link of links) {
-		if (link.label === "Strengthen the Church" || link.label === "Go with an Ambassador Team") continue;
+		if (["Strengthen the Church", "Go with an Ambassador Team", "Pray for a Person"].includes(link.label)) continue;
 		assert.ok(!link.embed, `only Strengthen the Church and the Connect Card button should be flagged inline, not "${link.label}"`);
 	}
+});
+
+test("Pray for a Person opens the Church Map card-only view inline", () => {
+	const block = tapPage.content.find((c: any) => c.type === "TapButtons");
+	const button = block!.props.links.find((l: any) => l.label === "Pray for a Person");
+	assert.equal(button.embed, "inline");
+	assert.equal(button.embedSrc, "https://thechurchmap.com/pray?embed=1");
+	// No-JS fallback stays the full page.
+	assert.equal(button.href, "https://thechurchmap.com/pray");
 });
