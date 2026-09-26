@@ -60,8 +60,7 @@ test("every other button on both pages is left as a normal, non-embedded link", 
 		for (const link of links) {
 			if (String(link.href || "").startsWith("/connect")) continue;
 			if (link.label === "Strengthen the Church" || link.label === "Pray for a Person") continue; // Church Map card-only embeds
-			if (link.label === "Start Growth Track") continue; // /spiritual-formation inline embed — covered in spiritual-formation-embed.test.ts
-			if (link.label === "The Formation App") continue; // preview panel, not an inline embed — see links-preview-panels.test.ts
+			if (link.label === "Growth Track") continue; // preview panel, not an inline embed — see links-preview-panels.test.ts
 			assert.ok(!link.embed, `expected "${link.label}" to stay a normal link`);
 		}
 	}
