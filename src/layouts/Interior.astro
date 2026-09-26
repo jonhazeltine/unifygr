@@ -2,6 +2,14 @@
 // The layout the older content pages still use. It now wears the same chrome
 // and footer as the new pages, so the service time is in the header wherever a
 // visitor lands.
+//
+// Embed mode: any page using this layout can be requested with `?embed=1`
+// (e.g. for a TapButtons inline panel — see blocks.tsx / MountedPage.astro).
+// That renders the SAME page content with no header, nav, footer or Studio
+// dock, and a transparent background sized to sit inside a dark panel at
+// about 330px wide. Without `?embed=1` a page is completely unchanged. This
+// lives here (rather than a per-page *Embed.astro copy like ConnectEmbed) so
+// any page on Interior gets embed support for free.
 import BaseHead from "../components/BaseHead.astro";
 import SiteHeader from "../components/SiteHeader.astro";
 import { isPagePublished } from "../lib/studio/page-visibility";
@@ -23,7 +31,8 @@ interface Props {
 
 const { title, description, image, kicker, heading, lede } = Astro.props;
 const year = new Date().getFullYear();
-const footerLinks = (await Promise.all([
+const isEmbed = Astro.url.searchParams.get("embed") === "1";
+const footerLinks = isEmbed ? [] : (await Promise.all([
 	["/sunday", "Plan your visit"], ["/watch", "Watch a service"], ["/beliefs", "What we believe"], ["/ministries", "Ministries"], ["/giving", "Give"],
 ].map(async ([href, label]) => ({ href, label, published: await isPagePublished(href, Astro.locals) })))).filter((link) => link.published);
 const { church } = await runtimeSite(Astro.locals);
@@ -38,9 +47,22 @@ const isMinistry = Astro.url.pathname === "/ministries"
 	<head>
 		<BaseHead title={title} description={description} image={image ?? pageOgImage(Astro.url.pathname)} />
 		<link rel="preload" href="/fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin />
+		{isEmbed && (
+			<style>
+				/* Readable down to about 330px wide, and transparent so the
+				   frame matches whatever dark panel it sits inside instead of
+				   showing its own backdrop. */
+				html, body { background: transparent; }
+				body::before, body::after { display: none; }
+				.pagehead { padding-top: 0.4rem; }
+				.landing-shell { padding-top: 0; }
+				.section { padding: 1.1rem 0.4rem; }
+				.container { padding: 0; }
+			</style>
+		)}
 	</head>
-	<body class:list={["v2", { "v2--ministry": isMinistry }]}>
-		<SiteHeader church={church} />
+	<body class:list={["v2", { "v2--ministry": isMinistry, "v2--embed": isEmbed }]}>
+		{!isEmbed && <SiteHeader church={church} />}
 
 		<main class="landing-shell">
 			{(kicker || heading || lede) && (
@@ -56,28 +78,30 @@ const isMinistry = Astro.url.pathname === "/ministries"
 			<slot />
 		</main>
 
-		<footer class="foot">
-			<div class="shell foot__grid">
-				<div>
-					<p class="foot__brand">{church.name}</p>
-					<p>{service.street}<br />{service.city}, {service.state} {service.zip}</p>
-					<p style="margin-top:.6rem">{service.shortWhen}</p>
+		{!isEmbed && (
+			<footer class="foot">
+				<div class="shell foot__grid">
+					<div>
+						<p class="foot__brand">{church.name}</p>
+						<p>{service.street}<br />{service.city}, {service.state} {service.zip}</p>
+						<p style="margin-top:.6rem">{service.shortWhen}</p>
+					</div>
+					<nav aria-label="Footer">
+						{footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
+					</nav>
+					<div>
+						<a href={church.mapUrl} target="_blank" rel="noopener">Directions</a>
+						<a href={church.social.facebook} target="_blank" rel="noopener">Facebook</a>
+						<a href={church.social.instagram} target="_blank" rel="noopener">Instagram</a>
+						<a href={church.social.youtube} target="_blank" rel="noopener">YouTube</a>
+					</div>
 				</div>
-				<nav aria-label="Footer">
-					{footerLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-				</nav>
-				<div>
-					<a href={church.mapUrl} target="_blank" rel="noopener">Directions</a>
-					<a href={church.social.facebook} target="_blank" rel="noopener">Facebook</a>
-					<a href={church.social.instagram} target="_blank" rel="noopener">Instagram</a>
-					<a href={church.social.youtube} target="_blank" rel="noopener">YouTube</a>
+				<div class="shell" style="margin-top:2.4rem">
+					<p>© {year} {church.name}</p>
 				</div>
-			</div>
-			<div class="shell" style="margin-top:2.4rem">
-				<p>© {year} {church.name}</p>
-			</div>
-		</footer>
+			</footer>
+		)}
 
-		<StudioDock />
+		{!isEmbed && <StudioDock />}
 	</body>
 </html>

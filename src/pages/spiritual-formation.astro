@@ -7,6 +7,12 @@ import { FORMATION_SMART_LINK } from "../lib/formation-links";
 
 export const prerender = false;
 
+// ?embed=1 renders this same page inline in a TapButtons panel (Interior
+// handles hiding the chrome) — the one link here to another site page must
+// not navigate that frame away, so it opens in a new tab like every other
+// link on this page already does.
+const isEmbed = Astro.url.searchParams.get("embed") === "1";
+
 const { modules, stale, reason } = await formation();
 
 const practices = [
@@ -67,7 +73,7 @@ Astro.response.headers.set("cache-control", "public, s-maxage=600, stale-while-r
 					<a class="button button--primary" href={FORMATION_SMART_LINK} target="_blank" rel="noopener">
 						Start Growth Track
 					</a>
-					<a class="button button--secondary" href="/ministries#ours">Find a Life Group</a>
+					<a class="button button--secondary" href="/ministries#ours" target={isEmbed ? "_blank" : undefined} rel={isEmbed ? "noopener" : undefined}>Find a Life Group</a>
 				</div>
 			</div>
 		</div>
