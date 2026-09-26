@@ -934,8 +934,16 @@ export const blocksConfig: Config = {
 								{ label: "Gold (the main one)", value: "yes" },
 							],
 						},
+						embed: {
+							type: "radio",
+							label: "Open inline (instead of navigating away)",
+							options: [
+								{ label: "No — normal link", value: "" },
+								{ label: "Yes — SecureGive giving form", value: "securegive" },
+							],
+						},
 					},
-					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no" },
+					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
@@ -1044,6 +1052,40 @@ export const blocksConfig: Config = {
 								);
 								// A button with no link yet is shown to staff as a placeholder
 								// rather than rendered as a link that goes nowhere.
+								const embedKind = href && l?.embed === "securegive" ? "securegive" : "";
+								if (embedKind) {
+									// Progressive enhancement: this is a real <a href> to the
+									// giving URL, so with no JS it behaves like any other link.
+									// The script in MountedPage.astro intercepts the click and
+									// expands the panel below in place instead.
+									const panelId = `tapbtn-embed-${i}`;
+									return (
+										<div className="tapbtn-embed-wrap" key={i}>
+											<a
+												className={cls}
+												href={href}
+												data-tapbtn-embed={embedKind}
+												data-tapbtn-embed-target={panelId}
+											>
+												{body}
+											</a>
+											<div className="tapbtn-embed-panel" id={panelId} data-tapbtn-embed-panel hidden>
+												<div className="tapbtn-embed-panel__bar">
+													<span className="tapbtn-embed-panel__label">{l?.label || "Give"}</span>
+													<button
+														type="button"
+														className="tapbtn-embed-panel__close"
+														data-tapbtn-embed-close
+														aria-label="Close"
+													>
+														✕
+													</button>
+												</div>
+												<div className="tapbtn-embed-panel__frame" data-tapbtn-embed-frame data-src={href}></div>
+											</div>
+										</div>
+									);
+								}
 								return href ? (
 									<a
 										className={cls}
