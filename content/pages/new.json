@@ -35,6 +35,14 @@
                         "feature": "no"
                     },
                     {
+                        "label": "Kids",
+                        "blurb": "",
+                        "href": "https://theformation.app/c/newlifegr",
+                        "feature": "no",
+                        "preview": "Parent companions to this month's New Life Kids lessons, so you can keep the conversation going at home.",
+                        "previewAction": "Open kids lessons"
+                    },
+                    {
                         "label": "Calendar",
                         "blurb": "",
                         "href": "/ministries/calendar",

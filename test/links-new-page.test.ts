@@ -34,11 +34,19 @@ test("/links/new has the 'Welcome home.' heading and lede", () => {
 	assert.equal(block.props.lede, "Everything you need for your first few Sundays at New Life.");
 });
 
-test("/links/new has exactly the four expected buttons, in order, and no Kids button", () => {
+test("/links/new has exactly the five expected buttons, in order", () => {
 	const block = tapButtonsBlock();
 	const labels: string[] = block.props.links.map((l: any) => l.label);
-	assert.deepEqual(labels, ["Welcome to New Life", "Plan your Sunday", "Calendar", "Let us know you're here"]);
-	assert.ok(!labels.includes("Kids"), "Kids is left out until the Formation kids-lessons link is confirmed");
+	assert.deepEqual(labels, ["Welcome to New Life", "Plan your Sunday", "Kids", "Calendar", "Let us know you're here"]);
+});
+
+test("Kids previews then opens the public New Life page in The Formation App", () => {
+	const block = tapButtonsBlock();
+	const link = block.props.links.find((l: any) => l.label === "Kids");
+	assert.ok(link);
+	assert.equal(link.href, "https://theformation.app/c/newlifegr");
+	assert.ok(link.preview);
+	assert.equal(link.previewAction, "Open kids lessons");
 });
 
 test("Plan your Sunday links to /sunday", () => {
