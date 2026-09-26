@@ -69,15 +69,10 @@ test("/links opens Give inline (SecureGive embedded) instead of navigating away"
 	}
 });
 
-test("/links only I'm New keeps the gold highlight", () => {
+test("/links has no pre-highlighted button; gold is the hover for all of them", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	const links: any[] = block!.props.links;
-	const imNew = links.find((l: any) => l.label === "I'm New");
-	assert.equal(imNew!.feature, "yes", "I'm New should keep its gold highlight");
-	for (const link of links) {
-		if (link.label === "I'm New") continue;
-		assert.equal(link.feature, "no", `expected "${link.label}" not to be featured`);
-	}
+	for (const link of links) assert.notEqual(link.feature, "yes", `expected "${link.label}" not to be featured`);
 });
 
 test("/links no longer has Welcome to New Life or The Formation App as big buttons", () => {

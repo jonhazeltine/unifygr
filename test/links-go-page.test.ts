@@ -46,7 +46,7 @@ test("/links/go has exactly three buttons, in order Church, City, Nations, with 
 		links.map((l: any) => l.label),
 		["Go to the Church", "Go to the City", "Go to the Nations"],
 	);
-	assert.equal(links[0].feature, "yes");
+	assert.equal(links[0].feature, "no");
 	for (const link of links.slice(1)) {
 		assert.equal(link.feature, "no");
 	}

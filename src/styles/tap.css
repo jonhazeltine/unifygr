@@ -210,11 +210,29 @@
 	transform: scale(0.985);
 }
 
+/* Every button is the same dark card; gold is the hover (and the tap-down on
+   phones, which have no hover). Jon, 2026-09-26: no pre-highlighted button. */
 @media (hover: hover) {
 	.tapbtn:hover {
 		border-color: var(--gold);
-		background: #151a24;
+		background: var(--gold);
 	}
+	.tapbtn:hover .tapbtn__label,
+	.tapbtn:hover .tapbtn__arrow {
+		color: var(--gold-ink);
+	}
+	.tapbtn:hover .tapbtn__blurb {
+		color: rgba(28, 19, 5, 0.72);
+	}
+}
+
+.tapbtn:active {
+	border-color: var(--gold);
+	background: var(--gold);
+}
+.tapbtn:active .tapbtn__label,
+.tapbtn:active .tapbtn__arrow {
+	color: var(--gold-ink);
 }
 
 /* One button per page can be marked "featured" — the step we most want taken. */

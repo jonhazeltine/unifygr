@@ -50,11 +50,11 @@ test("/links/pray leads with Strengthen the Church, and the gold highlight moved
 	const props = tapButtonsProps(tapPage);
 	const links: any[] = props.links;
 	assert.equal(links[0].label, "Strengthen the Church");
-	assert.equal(links[0].feature, "yes");
+	assert.equal(links[0].feature, "no");
 	const pray = links.find((l: any) => l.label === "Pray for a Person");
 	assert.ok(pray, "expected the Pray for a Person button to still exist");
 	assert.equal(pray.feature, "no");
 
 	// Only one button is featured.
-	assert.equal(links.filter((l: any) => l.feature === "yes").length, 1);
+	assert.equal(links.filter((l: any) => l.feature === "yes").length, 0);
 });

@@ -24,7 +24,7 @@
                         "label": "Join a Life Group",
                         "blurb": "A handful of people who will actually know you.",
                         "href": "/connect?interest=group&from=next+steps+page",
-                        "feature": "yes",
+                        "feature": "no",
                         "embed": "inline",
                         "embedSrc": "/connect?interest=group&from=next+steps+page&embed=1",
                         "embedHeight": "80vh"
