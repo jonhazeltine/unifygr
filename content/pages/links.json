@@ -37,7 +37,7 @@
 						"label": "I'm New",
 						"blurb": "",
 						"href": "/links/new",
-						"feature": "yes"
+						"feature": "no"
 					},
 					{
 						"label": "Grow",

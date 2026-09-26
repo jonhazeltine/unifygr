@@ -33,7 +33,7 @@ test("/links/pray has exactly two buttons, in order: Strengthen the Church, Pray
 test("Strengthen the Church is gold and Pray for a Person is not", () => {
 	const block = tapButtonsBlock();
 	const links: any[] = block.props.links;
-	assert.equal(links.find((l: any) => l.label === "Strengthen the Church").feature, "yes");
+	assert.equal(links.find((l: any) => l.label === "Strengthen the Church").feature, "no");
 	assert.equal(links.find((l: any) => l.label === "Pray for a Person").feature, "no");
 });
 

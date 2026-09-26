@@ -23,7 +23,7 @@
                     {
                         "label": "Go to the Church",
                         "href": "/connect?interest=ambassador&from=links+go",
-                        "feature": "yes",
+                        "feature": "no",
                         "embed": "inline",
                         "embedSrc": "/connect?interest=ambassador&from=links+go&embed=1",
                         "embedHeight": "80vh"
