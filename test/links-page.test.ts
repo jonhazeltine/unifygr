@@ -12,7 +12,11 @@ const BIG_BUTTONS = [
 	{ label: "I'm New", href: "https://newlifegr.com/next-steps" },
 	{ label: "Pray", href: "https://newlifegr.com/tap" },
 	{ label: "The Formation App", href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R" },
-	{ label: "Give", href: "https://app.securegive.com/NewLifeGR/new-life/donate/category" },
+	{
+		label: "Give",
+		href: "https://app.securegive.com/NewLifeGR/new-life/static/widget/donate?cats=14982&amts=false",
+		embed: "securegive",
+	},
 ];
 
 const SOCIALS = [
@@ -43,6 +47,21 @@ test("/links has exactly four big buttons, in order, with no description text", 
 		assert.equal(link.href, BIG_BUTTONS[i].href);
 		assert.equal(link.blurb, "", `expected no blurb/description text under "${link.label}"`);
 	});
+});
+
+test("/links opens Give inline (SecureGive embedded) instead of navigating away", () => {
+	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
+	const links: any[] = block!.props.links;
+	const give = links.find((l: any) => l.label === "Give");
+	assert.ok(give, "expected a Give button");
+	assert.equal(give.embed, "securegive", "the Give button should be flagged to embed inline");
+	assert.ok(give.href.startsWith("https://app.securegive.com/"), "the href stays a real SecureGive link for no-JS visitors");
+
+	// No other button on /links is flagged inline — Give is the one exception.
+	for (const link of links) {
+		if (link.label === "Give") continue;
+		assert.ok(!link.embed, `only Give should be flagged inline, not "${link.label}"`);
+	}
 });
 
 test("/links no longer has a Website big button", () => {

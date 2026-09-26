@@ -54,8 +54,9 @@
 					{
 						"label": "Give",
 						"blurb": "",
-						"href": "https://app.securegive.com/NewLifeGR/new-life/donate/category",
-						"feature": "no"
+						"href": "https://app.securegive.com/NewLifeGR/new-life/static/widget/donate?cats=14982&amts=false",
+						"feature": "no",
+						"embed": "securegive"
 					}
 				],
 				"footLabel": "Everything else at New Life",
