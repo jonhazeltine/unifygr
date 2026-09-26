@@ -34,7 +34,7 @@ const groups = formInterests.reduce<{ name: string; items: typeof formInterests 
 		title="New Life | Connect Card"
 		description="Tell us you're here, ask for prayer, or take a next step at New Life Grand Rapids."
 	>
-		<ConnectForm groups={groups} picked={picked} from={from} />
+		<ConnectForm groups={groups} picked={picked} from={from} embed />
 	</ConnectEmbed>
 ) : (
 	<Interior

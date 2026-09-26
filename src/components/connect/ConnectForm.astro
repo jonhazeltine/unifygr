@@ -3,6 +3,12 @@
 // Interior, with header/nav/footer) and its embed=1 mode (a bare document
 // meant to live inside an <iframe> on a tap/next-steps button). Keeping this
 // in one place means the two modes can never drift apart.
+//
+// `embed` reorders the layout for the iframe case ONLY (Jon approved this
+// 2026-09-26): the prefilled interest(s) surface as a confirmation up top,
+// with the rest of the checklist collapsed behind "Add something else", and
+// the contact fields move to sit directly above Submit. The full /connect
+// page (embed falsy) keeps its original markup order untouched.
 interface Group {
 	name: string;
 	items: { id: string; label: string }[];
@@ -12,47 +18,63 @@ interface Props {
 	groups: Group[];
 	picked?: string;
 	from: string;
+	embed?: boolean;
 }
 
-const { groups, picked, from } = Astro.props;
+const { groups, picked, from, embed = false } = Astro.props;
+
+const allItems = groups.flatMap((g) => g.items);
+const pickedItems = picked ? allItems.filter((item) => item.id === picked) : [];
+const showConfirmation = embed && pickedItems.length > 0;
 ---
 
 <div class="container connect-wrap">
 	<form class="connect-form" id="connect-form" novalidate>
-		<div class="connect-row">
-			<label class="field">
-				<span>First name</span>
-				<input name="firstName" type="text" autocomplete="given-name" required />
-			</label>
-			<label class="field">
-				<span>Last name</span>
-				<input name="lastName" type="text" autocomplete="family-name" required />
-			</label>
-		</div>
+		{showConfirmation && (
+			<section class="field field--confirm" aria-labelledby="interest-confirm-heading">
+				<div class="choice-intro">
+					<h2 id="interest-confirm-heading">How can we help?</h2>
+					<p>You picked this from the button you tapped — add anything else below.</p>
+				</div>
+				<div class="choice-panel choice-panel--confirm">
+					{pickedItems.map((item) => (
+						<label class="choice choice--confirmed">
+							<input type="checkbox" name="interests" value={item.id} checked />
+							<span>{item.label}</span>
+						</label>
+					))}
+				</div>
+				<button type="button" class="link-toggle" id="interest-toggle" aria-expanded="false" aria-controls="interest-more">
+					Add something else
+				</button>
+			</section>
+		)}
 
-		<div class="connect-row">
-			<label class="field">
-				<span>Email</span>
-				<input name="email" type="email" autocomplete="email" inputmode="email" />
-			</label>
-			<label class="field">
-				<span>Phone</span>
-				<input name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9()+\-\s]{7,20}" />
-			</label>
-		</div>
-
-		<section class="field field--choices" aria-labelledby="interest-heading">
-			<div class="choice-intro">
-				<h2 id="interest-heading">How can we help?</h2>
-				<p>Choose all that apply.</p>
-			</div>
+		<section
+			class="field field--choices"
+			id="interest-more"
+			aria-labelledby="interest-heading"
+			hidden={showConfirmation}
+		>
+			{!showConfirmation && (
+				<div class="choice-intro">
+					<h2 id="interest-heading">How can we help?</h2>
+					<p>Choose all that apply.</p>
+				</div>
+			)}
 			<div class="choice-panel">
 			{groups.map((group) => (
 				<div class="choice-group" id={group.name === "Serving and going" ? "teams" : undefined}>
 					<p class="choice-group__head">{group.name}</p>
 					{group.items.map((interest) => (
 						<label class="choice">
-							<input type="checkbox" name="interests" value={interest.id} checked={interest.id === picked} />
+							<input
+								type="checkbox"
+								name={showConfirmation ? undefined : "interests"}
+								value={interest.id}
+								checked={interest.id === picked}
+								disabled={showConfirmation}
+							/>
 							<span>{interest.label}</span>
 						</label>
 					))}
@@ -62,10 +84,68 @@ const { groups, picked, from } = Astro.props;
 			</div>
 		</section>
 
-		<label class="field">
-			<span>Anything you'd like us to know</span>
-			<textarea name="message" rows="5" placeholder="A prayer request, a question, or just how you found us."></textarea>
-		</label>
+		{embed && (
+			<label class="field">
+				<span>Anything you'd like us to know</span>
+				<textarea name="message" rows="4" placeholder="A prayer request, a question, or just how you found us."></textarea>
+			</label>
+		)}
+
+		<div class="connect-row">
+			<label class="field">
+				<span>First name</span>
+				<input name="firstName" type="text" autocomplete="given-name" required />
+				<span class="field-error" id="error-firstName" role="alert" hidden></span>
+			</label>
+			<label class="field">
+				<span>Last name</span>
+				<input name="lastName" type="text" autocomplete="family-name" required />
+				<span class="field-error" id="error-lastName" role="alert" hidden></span>
+			</label>
+		</div>
+
+		<div class="connect-row">
+			<label class="field">
+				<span>Email</span>
+				<input name="email" type="email" autocomplete="email" inputmode="email" />
+				<span class="field-error" id="error-email" role="alert" hidden></span>
+			</label>
+			<label class="field">
+				<span>Phone</span>
+				<input name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9()+\-\s]{7,20}" />
+				<span class="field-error" id="error-phone" role="alert" hidden></span>
+			</label>
+		</div>
+
+		{!embed && (
+			<>
+				<section class="field field--choices" aria-labelledby="interest-heading-full">
+					<div class="choice-intro">
+						<h2 id="interest-heading-full">How can we help?</h2>
+						<p>Choose all that apply.</p>
+					</div>
+					<div class="choice-panel">
+					{groups.map((group) => (
+						<div class="choice-group" id={group.name === "Serving and going" ? "teams" : undefined}>
+							<p class="choice-group__head">{group.name}</p>
+							{group.items.map((interest) => (
+								<label class="choice">
+									<input type="checkbox" name="interests" value={interest.id} checked={interest.id === picked} />
+									<span>{interest.label}</span>
+								</label>
+							))}
+
+						</div>
+					))}
+					</div>
+				</section>
+
+				<label class="field">
+					<span>Anything you'd like us to know</span>
+					<textarea name="message" rows="5" placeholder="A prayer request, a question, or just how you found us."></textarea>
+				</label>
+			</>
+		)}
 
 		{from && <input type="hidden" name="source" value={`Website — ${from}`} />}
 
@@ -110,12 +190,16 @@ const { groups, picked, from } = Astro.props;
 		border-color: var(--gold);
 		box-shadow: 0 0 0 3px var(--gold-soft);
 	}
+	.field input[aria-invalid="true"] { border-color: var(--rose); }
 	.field-note { margin: -0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
+	.field-error { margin: 0; font-size: 0.82rem; color: var(--rose); text-transform: none; letter-spacing: normal; }
 
 	.field--choices { gap: 0.8rem; }
+	.field--confirm { gap: 0.7rem; }
 	.choice-intro h2 { margin: 0; font-size: 1.15rem; }
 	.choice-intro p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; }
 	.choice-panel { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
+	.choice-panel--confirm { padding: 0.6rem 1.3rem; }
 
 	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
 	#teams { scroll-margin-top: 7rem; }
@@ -131,6 +215,19 @@ const { groups, picked, from } = Astro.props;
 	.choice { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.42rem 0; cursor: pointer; }
 	.choice input { margin-top: 0.28rem; accent-color: var(--gold); }
 	.choice span { color: var(--text); }
+	.choice--confirmed span { font-weight: 600; }
+
+	.link-toggle {
+		justify-self: start;
+		border: none;
+		background: none;
+		padding: 0;
+		color: var(--gold);
+		font: inherit;
+		font-size: 0.88rem;
+		text-decoration: underline;
+		cursor: pointer;
+	}
 
 	.connect-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
@@ -147,12 +244,91 @@ const { groups, picked, from } = Astro.props;
 	const done = document.getElementById("connect-done");
 	const error = document.getElementById("connect-error") as HTMLParagraphElement | null;
 	const submit = document.getElementById("connect-submit") as HTMLButtonElement | null;
+	const toggle = document.getElementById("interest-toggle") as HTMLButtonElement | null;
+	const more = document.getElementById("interest-more") as HTMLElement | null;
+
+	// "Add something else" reveals the full checklist in place, re-enabling its
+	// checkboxes so they submit alongside the prefilled interest(s), which stay
+	// checked either way.
+	toggle?.addEventListener("click", () => {
+		if (!more) return;
+		more.hidden = false;
+		toggle.hidden = true;
+		more.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((box) => {
+			box.disabled = false;
+			box.name = "interests";
+		});
+	});
+
+	function fieldError(name: string): HTMLElement | null {
+		return document.getElementById(`error-${name}`);
+	}
+
+	function showFieldError(input: HTMLInputElement, message: string) {
+		input.setAttribute("aria-invalid", "true");
+		const slot = fieldError(input.name);
+		if (slot) {
+			slot.textContent = message;
+			slot.hidden = false;
+		}
+		input.scrollIntoView({ behavior: "smooth", block: "center" });
+		input.focus();
+	}
+
+	function clearFieldErrors() {
+		form?.querySelectorAll<HTMLInputElement>("input[aria-invalid]").forEach((input) => input.removeAttribute("aria-invalid"));
+		form?.querySelectorAll<HTMLElement>(".field-error").forEach((slot) => {
+			slot.hidden = true;
+			slot.textContent = "";
+		});
+	}
+
+	// Client-side validation mirrors the server's own checks (see
+	// validateConnectPayload in src/pages/api/connect/submit.ts) purely so a
+	// bad submit stops here, in view, instead of round-tripping to the API and
+	// leaving a top-level error the visitor can't see inside an iframe. It does
+	// not change what is required or how a submission is routed.
+	function validate(): boolean {
+		if (!form) return false;
+		clearFieldErrors();
+
+		const firstName = form.elements.namedItem("firstName") as HTMLInputElement | null;
+		const lastName = form.elements.namedItem("lastName") as HTMLInputElement | null;
+		const email = form.elements.namedItem("email") as HTMLInputElement | null;
+		const phone = form.elements.namedItem("phone") as HTMLInputElement | null;
+
+		if (firstName && !firstName.value.trim()) {
+			showFieldError(firstName, "Please give your first and last name.");
+			return false;
+		}
+		if (lastName && !lastName.value.trim()) {
+			showFieldError(lastName, "Please give your first and last name.");
+			return false;
+		}
+		const hasEmail = Boolean(email?.value.trim());
+		const hasPhone = Boolean(phone?.value.trim());
+		if (!hasEmail && !hasPhone) {
+			if (email) showFieldError(email, "Please give an email or a phone number so we can reach you.");
+			return false;
+		}
+		if (email && hasEmail && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim())) {
+			showFieldError(email, "That email doesn't look right.");
+			return false;
+		}
+		if (phone && hasPhone && !phone.checkValidity()) {
+			showFieldError(phone, "That phone number doesn't look right.");
+			return false;
+		}
+		return true;
+	}
 
 	form?.addEventListener("submit", async (event) => {
 		event.preventDefault();
-		if (!error || !submit || !done) return;
+		if (!error || !submit || !done || !form) return;
 
 		error.hidden = true;
+		if (!validate()) return;
+
 		submit.disabled = true;
 		submit.textContent = "Sending…";
 
