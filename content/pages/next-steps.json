@@ -33,7 +33,10 @@
                         "label": "Start Growth Track",
                         "blurb": "A clear, personal path for growing in Christ.",
                         "href": "/spiritual-formation",
-                        "feature": "no"
+                        "feature": "no",
+                        "embed": "inline",
+                        "embedSrc": "/spiritual-formation?embed=1",
+                        "embedHeight": "80vh"
                     },
                     {
                         "label": "Join a GO Team",
