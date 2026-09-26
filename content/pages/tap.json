@@ -36,30 +36,6 @@
                         "embed": "inline",
                         "embedSrc": "https://thechurchmap.com/pray?embed=1",
                         "feature": "no"
-                    },
-                    {
-                        "label": "Go with an Ambassador Team",
-                        "blurb": "One Sunday a month, we go and pray for another church in our city.",
-                        "href": "/connect?interest=ambassador&from=tap+page",
-                        "feature": "no",
-                        "embed": "inline",
-                        "embedSrc": "/connect?interest=ambassador&from=tap+page&embed=1",
-                        "embedHeight": "80vh"
-                    },
-                    {
-                        "label": "The Church Map",
-                        "blurb": "Every church in Grand Rapids, on one map.",
-                        "href": "https://thechurchmap.com/grandrapids",
-                        "feature": "no"
-                    },
-                    {
-                        "label": "Join a GO Team",
-                        "blurb": "The Great Commission calls us to go — join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
-                        "href": "/connect?from=next+steps+page#teams",
-                        "feature": "no",
-                        "embed": "inline",
-                        "embedSrc": "/connect?from=next+steps+page&embed=1#teams",
-                        "embedHeight": "80vh"
                     }
                 ],
                 "footLabel": "Everything else at New Life",

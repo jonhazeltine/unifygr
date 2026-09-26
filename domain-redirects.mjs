@@ -38,12 +38,11 @@ export const LEGACY_PATH_REDIRECTS = Object.freeze({
 	// QR codes may still point at the old URLs, so these redirect forever.
 	// They point straight at the current path — never through an
 	// intermediate hop — so there is never a redirect chain.
-	"/tap": "/links/go",
+	"/tap": "/links/pray",
 	"/next-steps": "/links/grow",
-	// /links/pray and /links/next-steps were themselves renamed to /links/go
-	// and /links/grow (Jon's I'm New / Grow / Go / Give restructure). Both
-	// old paths redirect forever too.
-	"/links/pray": "/links/go",
+	// /links/next-steps was itself renamed to /links/grow (Jon's I'm New /
+	// Grow / Pray / Go / Give restructure). /links/pray is a real page again
+	// (the prayer page, slug "tap"), so it is NOT redirected any more.
 	"/links/next-steps": "/links/grow",
 });
 

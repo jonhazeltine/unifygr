@@ -46,6 +46,12 @@
 						"feature": "no"
 					},
 					{
+						"label": "Pray",
+						"blurb": "",
+						"href": "/links/pray",
+						"feature": "no"
+					},
+					{
 						"label": "Go",
 						"blurb": "",
 						"href": "/links/go",

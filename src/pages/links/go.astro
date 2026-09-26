@@ -1,21 +1,21 @@
 ---
-// The /links/go page (slug "tap") — one screen, one thumb, three
-// destinations, plus joining a GO Team. Formerly mounted at /tap, then at
-// /links/pray; both URLs now 301 here forever (see domain-redirects.mjs)
-// since printed cards, NFC tags and QR codes may still point at them.
+// The /links/go page (slug "go-links") — going with an Ambassador Team,
+// joining a GO Team, or browsing The Church Map. Split out from the old
+// "tap" slug (now /links/pray) in Jon's I'm New / Grow / Pray / Go / Give
+// restructure (2026-09-26).
 //
-// Blockified: the buttons and their links live in content/pages/tap.json and
-// are edited in the Page Builder (/studio/builder), so staff can repoint any
-// button without a developer. `bare` drops the header and footer — a menu
-// would be one more thing to read before the first button.
+// Blockified: the buttons and their links live in content/pages/go-links.json
+// and are edited in the Page Builder (/studio/builder), so staff can repoint
+// any button without a developer. `bare` drops the header and footer — a
+// menu would be one more thing to read before the first button.
 export const prerender = false;
 import MountedPage from "../../components/builder/MountedPage.astro";
 import { draftGuard } from "../../lib/studio/pages";
 import { isAuthed } from "../../lib/studio/auth";
 
 // A draft is staff-only, and answers a real 404 to everyone else.
-const notFound = await draftGuard("tap", isAuthed(Astro.cookies), Astro.locals);
+const notFound = await draftGuard("go-links", isAuthed(Astro.cookies), Astro.locals);
 if (notFound) return notFound;
 ---
 
-<MountedPage slug="tap" bare />
+<MountedPage slug="go-links" bare />

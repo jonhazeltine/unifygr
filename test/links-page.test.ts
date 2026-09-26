@@ -7,14 +7,15 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 // our own "link in bio" page. It reuses the same TapButtons block as /tap and
 // /next-steps, so every button on it comes from content/pages/links.json.
 //
-// Jon's I'm New / Grow / Go / Give restructure (2026-09-26) collapsed the
-// main buttons to exactly these four, in this order: I'm New, Grow, Go, Give.
-// Welcome to New Life, Pray and The Formation App moved off /links onto
-// /links/new and /links/grow — see links-preview-panels.test.ts and
-// links-new-page.test.ts.
+// Jon's I'm New / Grow / Pray / Go / Give restructure (2026-09-26) collapsed
+// the main buttons to exactly these five, in this order: I'm New, Grow,
+// Pray, Go, Give. Welcome to New Life and The Formation App moved off
+// /links onto /links/new and /links/grow — see links-preview-panels.test.ts
+// and links-new-page.test.ts. Pray is its own page again at /links/pray.
 const BIG_BUTTONS = [
 	{ label: "I'm New", href: "/links/new" },
 	{ label: "Grow", href: "/links/grow" },
+	{ label: "Pray", href: "/links/pray" },
 	{ label: "Go", href: "/links/go" },
 	{
 		label: "Give",
@@ -44,7 +45,7 @@ test("/links has exactly four big buttons, in order, with no description text", 
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	assert.ok(block, "expected a TapButtons block");
 	const links: any[] = block!.props.links;
-	assert.equal(links.length, 4, "expected exactly four big buttons: I'm New, Grow, Go, Give");
+	assert.equal(links.length, 5, "expected exactly five big buttons: I'm New, Grow, Pray, Go, Give");
 
 	links.forEach((link, i) => {
 		assert.equal(link.label, BIG_BUTTONS[i].label);
@@ -79,10 +80,10 @@ test("/links only I'm New keeps the gold highlight", () => {
 	}
 });
 
-test("/links no longer has Welcome to New Life, Pray, or The Formation App as big buttons", () => {
+test("/links no longer has Welcome to New Life or The Formation App as big buttons", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	const labels: string[] = block!.props.links.map((l: any) => l.label);
-	for (const removed of ["Welcome to New Life", "Pray", "The Formation App", "Website"]) {
+	for (const removed of ["Welcome to New Life", "The Formation App", "Website"]) {
 		assert.ok(!labels.includes(removed), `the ${removed} big button should be removed from /links`);
 	}
 });

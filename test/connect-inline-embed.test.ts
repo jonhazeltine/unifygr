@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { blocksConfig } from "../src/components/builder/blocks.tsx";
-import tapPage from "../content/pages/tap.json" with { type: "json" };
+import goLinksPage from "../content/pages/go-links.json" with { type: "json" };
 import nextStepsPage from "../content/pages/next-steps.json" with { type: "json" };
 
 // Jon asked that the Connect Card open inline on /links/go and
@@ -11,9 +11,9 @@ import nextStepsPage from "../content/pages/next-steps.json" with { type: "json"
 // (blocks.tsx) and their href is untouched so a no-JS visitor still lands on
 // the real, full /connect page — never the bare embed=1 variant.
 //
-// "Join a GO Team" moved from /links/grow (slug "next-steps") to /links/go
-// (slug "tap") in the I'm New / Grow / Go / Give restructure, keeping its
-// inline Connect settings intact.
+// /links/go is now its own page (slug "go-links"), holding "Go with an
+// Ambassador Team" and "Join a GO Team" with their inline Connect settings
+// carried over exactly from the old /tap slug's page.
 
 function connectButtons(page: any) {
 	const block = page.content.find((c: any) => c.type === "TapButtons");
@@ -21,7 +21,7 @@ function connectButtons(page: any) {
 }
 
 test("/links/go flags its Connect Card buttons ('Go with an Ambassador Team' and 'Join a GO Team') for inline embedding", () => {
-	const buttons = connectButtons(tapPage);
+	const buttons = connectButtons(goLinksPage);
 	assert.equal(buttons.length, 2);
 
 	const ambassador = buttons.find((b) => b.label === "Go with an Ambassador Team");
@@ -54,7 +54,7 @@ test("/links/grow flags its remaining Connect Card button for inline embedding",
 });
 
 test("every other button on both pages is left as a normal, non-embedded link", () => {
-	for (const page of [tapPage, nextStepsPage]) {
+	for (const page of [goLinksPage, nextStepsPage]) {
 		const block = page.content.find((c: any) => c.type === "TapButtons");
 		const links: any[] = block!.props.links;
 		for (const link of links) {
