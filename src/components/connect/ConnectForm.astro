@@ -37,15 +37,9 @@ const { groups, picked, from } = Astro.props;
 			</label>
 			<label class="field">
 				<span>Phone</span>
-				<input name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+				<input name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="[0-9()+\-\s]{7,20}" />
 			</label>
 		</div>
-		<p class="field-note">Either one is fine — we just need a way to reach you.</p>
-
-		<label class="field">
-			<span>City</span>
-			<input name="city" type="text" autocomplete="address-level2" />
-		</label>
 
 		<section class="field field--choices" aria-labelledby="interest-heading">
 			<div class="choice-intro">

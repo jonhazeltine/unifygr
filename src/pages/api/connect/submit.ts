@@ -13,35 +13,57 @@ import { newId, save, type Submission } from "../../../lib/connect/store";
 const json = (data: unknown, status = 200) =>
 	new Response(JSON.stringify(data), { status, headers: { "content-type": "application/json" } });
 
-function clean(v: unknown, max = 400): string | undefined {
+export function clean(v: unknown, max = 400): string | undefined {
 	if (typeof v !== "string") return undefined;
 	const s = v.trim().replace(/\s+/g, " ");
 	return s === "" ? undefined : s.slice(0, max);
 }
 
-export const POST: APIRoute = async ({ request }) => {
-	const raw = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+export type ConnectValidation =
+	| { ok: true; spam?: false; firstName: string; lastName: string; email?: string; phone?: string; interests: NonNullable<ReturnType<typeof interestById>>[] }
+	| { ok: false; spam: true }
+	| { ok: false; spam?: false; error: string };
 
+/**
+ * Pure validation of a Connect Card payload — no network, no storage. City is
+ * intentionally not validated or required here: it is an optional field that,
+ * if present, only ever rides along to CCB (see PersonFields.city in
+ * src/lib/connect/ccb.ts); CCB matching (findPerson) keys on email/phone only.
+ */
+export function validateConnectPayload(raw: Record<string, unknown>): ConnectValidation {
 	// Honeypot: a real person never fills a field they cannot see. Answer as if
 	// it worked so a bot gets no signal that it was caught.
-	if (clean(raw.website)) return json({ ok: true });
+	if (clean(raw.website)) return { ok: false, spam: true };
 
 	const firstName = clean(raw.firstName, 80);
 	const lastName = clean(raw.lastName, 80);
 	const email = clean(raw.email, 160);
 	const phone = clean(raw.phone, 40);
 
-	if (!firstName || !lastName) return json({ ok: false, error: "Please give your first and last name." }, 400);
-	if (!email && !phone) return json({ ok: false, error: "Please give an email or a phone number so we can reach you." }, 400);
-	if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return json({ ok: false, error: "That email doesn't look right." }, 400);
+	if (!firstName || !lastName) return { ok: false, error: "Please give your first and last name." };
+	if (!email && !phone) return { ok: false, error: "Please give an email or a phone number so we can reach you." };
+	if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return { ok: false, error: "That email doesn't look right." };
 
 	const requested = Array.isArray(raw.interests) ? raw.interests : [raw.interest];
 	const interests = [...new Map(requested
 		.map((id) => interestById(String(id ?? "")))
 		.filter((interest): interest is NonNullable<typeof interest> => Boolean(interest))
 		.map((interest) => [interest.id, interest]))].map(([, interest]) => interest);
-	if (!interests.length) return json({ ok: false, error: "Choose at least one way we can help." }, 400);
-	const firstInterest = interests[0];
+	if (!interests.length) return { ok: false, error: "Choose at least one way we can help." };
+
+	return { ok: true, firstName, lastName, email, phone, interests };
+}
+
+export const POST: APIRoute = async ({ request }) => {
+	const raw = (await request.json().catch(() => ({}))) as Record<string, unknown>;
+
+	const validated = validateConnectPayload(raw);
+	if (!validated.ok) {
+		if (validated.spam) return json({ ok: true });
+		return json({ ok: false, error: validated.error }, 400);
+	}
+	const { firstName, lastName, email, phone, interests } = validated;
+	const firstInterest = interests[0]!;
 
 	const submission: Submission = {
 		id: newId(),
