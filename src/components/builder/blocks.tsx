@@ -919,6 +919,8 @@ export const blocksConfig: Config = {
 				brand: { type: "text", label: "Small line at the top" },
 				heading: { type: "text", label: "Big heading (two or three short words)" },
 				lede: { type: "text", label: "One line under the heading" },
+				quote: { type: "text", label: "Scripture pull quote, under the lede (optional)" },
+				quoteCite: { type: "text", label: "Quote attribution, e.g. \"Jesus, John 17:22\" (optional)" },
 				links: {
 					type: "array",
 					label: "Buttons",
@@ -990,6 +992,8 @@ export const blocksConfig: Config = {
 				brand: "New Life Grand Rapids",
 				heading: "Start here.",
 				lede: "",
+				quote: "",
+				quoteCite: "",
 				links: [{ label: "A next step", blurb: "", href: "", feature: "no" }],
 				footLabel: "Everything else at New Life",
 				footHref: "/",
@@ -998,7 +1002,7 @@ export const blocksConfig: Config = {
 				homeIcon: "house",
 				socials: [],
 			},
-			render: ({ brand, heading, lede, links, footLabel, footHref, homeLabel, homeHref, homeIcon, socials }) => (
+			render: ({ brand, heading, lede, quote, quoteCite, links, footLabel, footHref, homeLabel, homeHref, homeIcon, socials }) => (
 				<div className="tap">
 					<div className="tap__glow" aria-hidden="true"></div>
 					{String(homeHref || "").trim() ? (
@@ -1031,6 +1035,12 @@ export const blocksConfig: Config = {
 							) : null}
 							{heading ? <h1 className="tap__title">{heading}</h1> : null}
 							{lede ? <p className="tap__lede" style={{ whiteSpace: "pre-wrap" }}>{lede}</p> : null}
+							{quote ? (
+								<blockquote className="tap__quote">
+									<p>&ldquo;{quote}&rdquo;</p>
+									{quoteCite ? <cite>{quoteCite}</cite> : null}
+								</blockquote>
+							) : null}
 						</div>
 
 						{Array.isArray(socials) && socials.some((s: any) => String(s?.href || "").trim()) ? (
