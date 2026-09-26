@@ -3,9 +3,9 @@
     "order": 20,
     "root": {
         "props": {
-            "title": "Start here",
+            "title": "Unite the Church. Reveal Jesus to the city.",
             "kicker": "New Life Grand Rapids",
-            "description": "Three ways to take a step today: pray for a neighbor, find a church in Grand Rapids, or join an Ambassador Team."
+            "description": "Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids."
         }
     },
     "content": [
@@ -14,24 +14,26 @@
             "props": {
                 "id": "TapButtons-tap",
                 "brand": "New Life Grand Rapids",
-                "heading": "Start here.",
-                "lede": "Three steps you can take from this screen.",
+                "heading": "Unite the Church. Reveal Jesus to the city.",
+                "lede": "Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids.",
+                "quote": "That they may be one, just as We are one.",
+                "quoteCite": "Jesus, John 17:22",
                 "homeLabel": "Links",
                 "homeHref": "/links",
                 "homeIcon": "back",
                 "links": [
                     {
-                        "label": "Pray for a Person",
-                        "blurb": "A real request from a real neighbor, one at a time.",
-                        "href": "https://thechurchmap.com/pray",
-                        "feature": "yes"
-                    },
-                    {
                         "label": "Strengthen the Church",
                         "blurb": "Share an encouraging word, a scripture or a prayer with another congregation in Grand Rapids.",
                         "href": "https://thechurchmap.com/grandrapids/pray?embed=1",
-                        "feature": "no",
+                        "feature": "yes",
                         "embed": "inline"
+                    },
+                    {
+                        "label": "Pray for a Person",
+                        "blurb": "A real request from a real neighbor, one at a time.",
+                        "href": "https://thechurchmap.com/pray",
+                        "feature": "no"
                     },
                     {
                         "label": "Go with an Ambassador Team",

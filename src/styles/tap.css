@@ -129,24 +129,54 @@
 	text-decoration: none;
 }
 
-/* A tap-page heading is two or three short words. The site's global
-   `text-wrap: balance` splits them across lines, which reads as a stumble
-   rather than a headline. */
+/* A short tap-page heading (two or three words) reads best as one line, but a
+   longer sentence-length heading needs to wrap gracefully rather than
+   overflow or shrink to nothing — `balance` keeps either case tidy. */
 .tap__title {
 	width: 100%;
 	margin: 0;
 	font-family: var(--display);
 	font-weight: 600;
-	font-size: clamp(1.9rem, 9vw, 2.8rem);
+	font-size: clamp(1.6rem, 8vw, 2.8rem);
 	letter-spacing: -0.02em;
-	line-height: 1.06;
-	text-wrap: nowrap;
+	line-height: 1.14;
+	text-wrap: balance;
 }
 
 .tap__lede {
 	margin: 0;
 	color: var(--muted);
 	font-size: 1rem;
+}
+
+/* A quiet scripture pull quote, sitting between the lede and the buttons.
+   Understated: serif, gold-tinted ivory, no border or background — it should
+   read as a breath, not another headline. */
+.tap__quote {
+	margin: 0.35rem 0 0;
+	padding: 0;
+	border: none;
+}
+
+.tap__quote p {
+	margin: 0;
+	font-family: var(--display);
+	font-style: italic;
+	font-weight: 400;
+	font-size: clamp(0.98rem, 4.2vw, 1.1rem);
+	line-height: 1.45;
+	color: var(--gold);
+	opacity: 0.92;
+}
+
+.tap__quote cite {
+	display: block;
+	margin-top: 0.3rem;
+	font-family: var(--body);
+	font-style: normal;
+	font-size: 0.76rem;
+	letter-spacing: 0.04em;
+	color: var(--faint);
 }
 
 .tap *,
