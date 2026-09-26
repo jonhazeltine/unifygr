@@ -8,8 +8,11 @@ text; this file is the real orientation doc.
 ## Stack
 
 - Astro 5 (MDX, RSS, React integrations) + `@astrojs/cloudflare` Worker adapter.
-- `unifygr.com` and `www.unifygr.com` are bound to Cloudflare Worker `unifygr`.
-  On September 8, 2026 the registrar delegation changed to Cloudflare and live
+- **newlifegr.com is the live, canonical site** (Jon confirmed 2026-09-26). The
+  switch shipped September 10, 2026 in PR #195: `newlifegr.com`,
+  `www.newlifegr.com`, `unifygr.com` and `www.unifygr.com` are all custom
+  domains on Cloudflare Worker `unifygr`; www and unifygr.com redirect to
+  newlifegr.com. Mail MX stays on Google Workspace. On September 8, 2026 the registrar delegation changed to Cloudflare and live
   HTTPS passed against both Cloudflare hosts. Verify current DNS and response
   headers before reporting hosting state; recursive caches can retain Vercel
   during propagation. `wrangler.jsonc` preserves both custom-domain bindings.
@@ -37,9 +40,9 @@ text; this file is the real orientation doc.
   `npx wrangler deploy` after checks; existing production secrets are preserved.
   Never commit credentials. The public verification address is
   https://unifygr.jhazeltine.workers.dev.
-- `PUBLIC_SITE_URL` defaults to unifygr.com. Set it to https://newlifegr.com only
-  for the authorized final-domain activation. Old-host API callbacks remain
-  direct while human pages redirect; email DNS records must be preserved.
+- `PUBLIC_SITE_URL` sets the canonical origin (production: https://newlifegr.com).
+  Old-host API callbacks remain direct while human pages redirect; email DNS
+  records must be preserved.
 - `.github/workflows/mirror-plan-codework.yml` is the Mirror app's dispatch
   workflow (Claude code-work runs from Mirror plans) — don't remove it.
 
