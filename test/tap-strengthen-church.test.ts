@@ -41,7 +41,7 @@ test("Strengthen the Church opens inline instead of navigating away", () => {
 
 test("Pray for a Person opens the Church Map card-only view inline", () => {
 	const block = tapPage.content.find((c: any) => c.type === "TapButtons");
-	const button = block!.props.links.find((l: any) => l.label === "Pray for a Person");
+	const button = block!.props.links.find((l: any) => l.label === "Pray for a Person")!;
 	assert.equal(button.embed, "inline");
 	assert.equal(button.embedSrc, "https://thechurchmap.com/pray?embed=1");
 	// No-JS fallback stays the full page.
