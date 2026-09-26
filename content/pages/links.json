@@ -16,53 +16,45 @@
 				"brand": "New Life Grand Rapids",
 				"heading": "New Life GR",
 				"lede": "Encounter God. Be Transformed.\nChange the World.",
+				"homeLabel": "newlifegr.com",
+				"homeHref": "https://newlifegr.com",
+				"socials": [
+					{
+						"platform": "youtube",
+						"href": "https://www.youtube.com/@newlifegrandrapids2177/streams"
+					},
+					{
+						"platform": "facebook",
+						"href": "https://www.facebook.com/NewLifeGr/mentions"
+					},
+					{
+						"platform": "instagram",
+						"href": "https://www.instagram.com/newlifegr/"
+					}
+				],
 				"links": [
 					{
 						"label": "I'm New",
-						"blurb": "Take your next step with us.",
+						"blurb": "",
 						"href": "https://newlifegr.com/next-steps",
 						"feature": "yes"
 					},
 					{
 						"label": "Pray",
-						"blurb": "Bring a request to our prayer team.",
+						"blurb": "",
 						"href": "https://newlifegr.com/tap",
 						"feature": "no"
 					},
 					{
 						"label": "The Formation App",
-						"blurb": "Grow in your faith, day by day.",
+						"blurb": "",
 						"href": "https://theformation.app/?community=0LY0R#/auth?community=0LY0R",
 						"feature": "no"
 					},
 					{
 						"label": "Give",
-						"blurb": "Support the mission of New Life.",
+						"blurb": "",
 						"href": "https://app.securegive.com/NewLifeGR/new-life/donate/category",
-						"feature": "no"
-					},
-					{
-						"label": "Website",
-						"blurb": "newlifegr.com",
-						"href": "https://newlifegr.com",
-						"feature": "no"
-					},
-					{
-						"label": "YouTube",
-						"blurb": "Watch our services and worship nights.",
-						"href": "https://www.youtube.com/@newlifegrandrapids2177/streams",
-						"feature": "no"
-					},
-					{
-						"label": "Facebook",
-						"blurb": "",
-						"href": "https://www.facebook.com/NewLifeGr/mentions",
-						"feature": "no"
-					},
-					{
-						"label": "Instagram",
-						"blurb": "",
-						"href": "https://www.instagram.com/newlifegr/",
 						"feature": "no"
 					}
 				],

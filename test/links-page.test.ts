@@ -8,18 +8,17 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 // /next-steps, so every button on it comes from content/pages/links.json —
 // this test is the guard that the full Clearstream link inventory made it in
 // and stays in, in its original order, with nothing invented or dropped.
-const CLEARSTREAM_LINKS = [
+const BIG_BUTTONS = [
 	{ label: "I'm New", href: "https://newlifegr.com/next-steps" },
 	{ label: "Pray", href: "https://newlifegr.com/tap" },
 	{ label: "The Formation App", href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R" },
 	{ label: "Give", href: "https://app.securegive.com/NewLifeGR/new-life/donate/category" },
 ];
 
-const CLEARSTREAM_SOCIALS = [
-	{ label: "Website", href: "https://newlifegr.com" },
-	{ label: "YouTube", href: "https://www.youtube.com/@newlifegrandrapids2177/streams" },
-	{ label: "Facebook", href: "https://www.facebook.com/NewLifeGr/mentions" },
-	{ label: "Instagram", href: "https://www.instagram.com/newlifegr/" },
+const SOCIALS = [
+	{ platform: "youtube", href: "https://www.youtube.com/@newlifegrandrapids2177/streams" },
+	{ platform: "facebook", href: "https://www.facebook.com/NewLifeGr/mentions" },
+	{ platform: "instagram", href: "https://www.instagram.com/newlifegr/" },
 ];
 
 test("/links is mounted as a bare, live TapButtons builder page", () => {
@@ -33,26 +32,47 @@ test("/links carries a title and description for meta/OG tags", () => {
 	assert.ok(linksPage.root.props.description);
 });
 
-test("/links renders every Clearstream item link, in the original order", () => {
+test("/links has exactly four big buttons, in order, with no description text", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	assert.ok(block, "expected a TapButtons block");
-	const hrefs: string[] = block!.props.links.map((l: any) => l.href);
-	const labels: string[] = block!.props.links.map((l: any) => l.label);
+	const links: any[] = block!.props.links;
+	assert.equal(links.length, 4, "expected exactly four big buttons");
 
-	let cursor = -1;
-	for (const expected of CLEARSTREAM_LINKS) {
-		const idx = hrefs.indexOf(expected.href);
-		assert.notEqual(idx, -1, `missing Clearstream link: ${expected.label} (${expected.href})`);
-		assert.equal(labels[idx], expected.label);
-		assert.ok(idx > cursor, `link "${expected.label}" is out of its original Clearstream order`);
-		cursor = idx;
-	}
+	links.forEach((link, i) => {
+		assert.equal(link.label, BIG_BUTTONS[i].label);
+		assert.equal(link.href, BIG_BUTTONS[i].href);
+		assert.equal(link.blurb, "", `expected no blurb/description text under "${link.label}"`);
+	});
 });
 
-test("/links also carries every Clearstream social link", () => {
+test("/links no longer has a Website big button", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
-	const hrefs: string[] = block!.props.links.map((l: any) => l.href);
-	for (const social of CLEARSTREAM_SOCIALS) {
-		assert.ok(hrefs.includes(social.href), `missing Clearstream social link: ${social.label} (${social.href})`);
+	const labels: string[] = block!.props.links.map((l: any) => l.label);
+	assert.ok(!labels.includes("Website"), "the Website big button should be removed");
+});
+
+test("/links carries the three social icons, with the correct hrefs, separate from the big buttons", () => {
+	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
+	const socials: any[] = block!.props.socials;
+	assert.ok(Array.isArray(socials) && socials.length === 3, "expected three social entries");
+	for (const expected of SOCIALS) {
+		const found = socials.find((s: any) => s.platform === expected.platform);
+		assert.ok(found, `missing social icon: ${expected.platform}`);
+		assert.equal(found.href, expected.href);
 	}
+
+	// Socials render above the "I'm New" button (which is the first big
+	// button), never mixed into the big-button list.
+	const links: any[] = block!.props.links;
+	const socialHrefs = socials.map((s: any) => s.href);
+	for (const link of links) {
+		assert.ok(!socialHrefs.includes(link.href), "a social link leaked into the big-button list");
+	}
+	assert.equal(links[0].label, "I'm New");
+});
+
+test("/links has a top-left home link pointing at newlifegr.com", () => {
+	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
+	assert.equal(block!.props.homeHref, "https://newlifegr.com");
+	assert.ok(block!.props.homeLabel, "expected a label for the top-left home link");
 });
