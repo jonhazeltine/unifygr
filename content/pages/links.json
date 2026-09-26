@@ -36,13 +36,13 @@
 					{
 						"label": "I'm New",
 						"blurb": "",
-						"href": "https://newlifegr.com/links/next-steps",
+						"href": "/links/next-steps",
 						"feature": "yes"
 					},
 					{
 						"label": "Pray",
 						"blurb": "",
-						"href": "https://newlifegr.com/links/pray",
+						"href": "/links/pray",
 						"feature": "no"
 					},
 					{
