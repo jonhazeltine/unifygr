@@ -12,7 +12,7 @@ const BIG_BUTTONS = [
 	{ label: "I'm New", href: "/links/next-steps" },
 	{ label: "Welcome to New Life", href: "https://theformation.app/m/welcome-to-new-life" },
 	{ label: "Pray", href: "/links/pray" },
-	{ label: "The Formation App", href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R" },
+	{ label: "The Formation App", href: "https://theformation.app/join/0LY0R" },
 	{
 		label: "Give",
 		href: "https://app.securegive.com/NewLifeGR/new-life/static/widget/donate?cats=14982&amts=false",

@@ -39,7 +39,7 @@ test("Welcome to New Life and The Formation App carry preview content on /links"
 	assert.equal(app.previewAction, "Open the app");
 	assert.equal(
 		app.href,
-		"https://theformation.app/?community=0LY0R#/auth?community=0LY0R",
+		"https://theformation.app/join/0LY0R",
 		"href stays unchanged",
 	);
 });
@@ -93,7 +93,7 @@ test("a preview action button defaults to \"Continue\" when no previewAction is 
 			links: [
 				{
 					label: "The Formation App",
-					href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R",
+					href: "https://theformation.app/join/0LY0R",
 					preview: "Our community app.",
 				},
 			],
