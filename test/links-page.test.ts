@@ -9,8 +9,8 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 // this test is the guard that the full Clearstream link inventory made it in
 // and stays in, in its original order, with nothing invented or dropped.
 const BIG_BUTTONS = [
-	{ label: "I'm New", href: "https://newlifegr.com/links/next-steps" },
-	{ label: "Pray", href: "https://newlifegr.com/links/pray" },
+	{ label: "I'm New", href: "/links/next-steps" },
+	{ label: "Pray", href: "/links/pray" },
 	{ label: "The Formation App", href: "https://theformation.app/?community=0LY0R#/auth?community=0LY0R" },
 	{
 		label: "Give",
