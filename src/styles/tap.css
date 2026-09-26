@@ -346,6 +346,31 @@
 	-webkit-overflow-scrolling: touch;
 }
 
+/* Preview panels don't hold an iframe — they're a short description plus a
+   button that opens the destination in a new tab, so the panel only needs to
+   be as tall as its content. */
+.tapbtn-embed-panel--preview {
+	height: auto;
+}
+
+.tapbtn-embed-panel__preview {
+	display: grid;
+	gap: 1rem;
+	padding: 1.1rem 1rem 1.4rem;
+	justify-items: start;
+}
+
+.tapbtn-embed-panel__preview-text {
+	color: var(--ivory);
+	line-height: 1.5;
+	margin: 0;
+}
+
+.tapbtn-embed-panel__preview-action {
+	justify-self: stretch;
+	text-align: center;
+}
+
 /* The Give panel is revealed by script; its display:grid must not override [hidden]. */
 .tapbtn-embed-panel[hidden] {
 	display: none;

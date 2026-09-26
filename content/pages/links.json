@@ -43,7 +43,9 @@
 						"label": "Welcome to New Life",
 						"blurb": "",
 						"href": "https://theformation.app/m/welcome-to-new-life",
-						"feature": "no"
+						"feature": "no",
+						"preview": "A short video series on who we are: our story, values, vision and mission, and what it means to be part of New Life.",
+						"previewAction": "Watch the series"
 					},
 					{
 						"label": "Pray",
@@ -55,7 +57,9 @@
 						"label": "The Formation App",
 						"blurb": "",
 						"href": "https://theformation.app/?community=0LY0R#/auth?community=0LY0R",
-						"feature": "no"
+						"feature": "no",
+						"preview": "Our community app for growing in faith day by day: guided paths, Life Group resources and what is happening at New Life.",
+						"previewAction": "Open the app"
 					},
 					{
 						"label": "Give",

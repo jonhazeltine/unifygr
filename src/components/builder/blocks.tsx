@@ -953,8 +953,16 @@ export const blocksConfig: Config = {
 							type: "text",
 							label: "Inline panel URL (optional — defaults to the link above; use this when the link itself must stay a plain page for no-JS visitors, e.g. an embed=1 variant of our own page)",
 						},
+						preview: {
+							type: "textarea",
+							label: "Preview description (optional — shown in the inline panel before leaving the site; a short line about where this button goes)",
+						},
+						previewAction: {
+							type: "text",
+							label: "Preview button label (optional, default \"Continue\") — opens the link above in a new tab",
+						},
 					},
-					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "", embedHeight: "", embedSrc: "" },
+					defaultItemProps: { label: "A next step", blurb: "", href: "", feature: "no", embed: "", embedHeight: "", embedSrc: "", preview: "", previewAction: "" },
 					getItemSummary: (item: any) => item?.label || "Button",
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
@@ -1087,20 +1095,31 @@ export const blocksConfig: Config = {
 								);
 								// A button with no link yet is shown to staff as a placeholder
 								// rather than rendered as a link that goes nowhere.
-								const embedKind = href && l?.embed ? String(l.embed).trim() : "";
+								const previewText = String(l?.preview || "").trim();
+								const embedKind = href
+									? previewText
+										? "preview"
+										: l?.embed
+											? String(l.embed).trim()
+											: ""
+									: "";
 								if (embedKind) {
 									// Progressive enhancement: this is a real <a href> to the
 									// target URL, so with no JS it behaves like any other link.
 									// The script in MountedPage.astro intercepts the click and
 									// expands the panel below in place instead. "securegive" is
-									// the original, specific flag; any other truthy value (e.g.
-									// "inline") gets the same generic inline-panel treatment.
+									// the original, specific flag; "preview" shows a short
+									// description and a button that opens the link in a new tab
+									// (no iframe — needed for deep links that only work when
+									// opened directly, e.g. an installed-app link); any other
+									// truthy value (e.g. "inline") gets the generic iframe panel.
 									const panelId = `tapbtn-embed-${i}`;
 									const embedHeight = String(l?.embedHeight || "").trim();
 									const embedSrc = String(l?.embedSrc || "").trim() || href;
 									const panelStyle = embedHeight
 										? ({ "--tapbtn-embed-panel-height": embedHeight } as Record<string, string>)
 										: undefined;
+									const isPreview = embedKind === "preview";
 									return (
 										<div className="tapbtn-embed-wrap" key={i}>
 											<a
@@ -1112,7 +1131,7 @@ export const blocksConfig: Config = {
 												{body}
 											</a>
 											<div
-												className="tapbtn-embed-panel"
+												className={`tapbtn-embed-panel${isPreview ? " tapbtn-embed-panel--preview" : ""}`}
 												id={panelId}
 												data-tapbtn-embed-panel
 												hidden
@@ -1129,7 +1148,21 @@ export const blocksConfig: Config = {
 														✕
 													</button>
 												</div>
-												<div className="tapbtn-embed-panel__frame" data-tapbtn-embed-frame data-src={embedSrc}></div>
+												{isPreview ? (
+													<div className="tapbtn-embed-panel__preview" data-tapbtn-preview>
+														<p className="tapbtn-embed-panel__preview-text">{previewText}</p>
+														<a
+															className="button button--primary tapbtn-embed-panel__preview-action"
+															href={href}
+															target="_blank"
+															rel="noopener"
+														>
+															{String(l?.previewAction || "").trim() || "Continue"}
+														</a>
+													</div>
+												) : (
+													<div className="tapbtn-embed-panel__frame" data-tapbtn-embed-frame data-src={embedSrc}></div>
+												)}
 											</div>
 										</div>
 									);
