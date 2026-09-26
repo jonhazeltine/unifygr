@@ -5,38 +5,32 @@ import { blocksConfig } from "../src/components/builder/blocks.tsx";
 import tapPage from "../content/pages/tap.json" with { type: "json" };
 import nextStepsPage from "../content/pages/next-steps.json" with { type: "json" };
 
-// Jon asked that the Connect Card open inline on /links/pray and
-// /links/next-steps, the same way Give already does on /links, instead of
+// Jon asked that the Connect Card open inline on /links/go and
+// /links/grow, the same way Give already does on /links, instead of
 // navigating away. These buttons carry the flags TapButtons needs
 // (blocks.tsx) and their href is untouched so a no-JS visitor still lands on
 // the real, full /connect page — never the bare embed=1 variant.
+//
+// "Join a GO Team" moved from /links/grow (slug "next-steps") to /links/go
+// (slug "tap") in the I'm New / Grow / Go / Give restructure, keeping its
+// inline Connect settings intact.
 
 function connectButtons(page: any) {
 	const block = page.content.find((c: any) => c.type === "TapButtons");
 	return (block!.props.links as any[]).filter((l) => String(l.href || "").startsWith("/connect"));
 }
 
-test("/links/pray flags its Connect Card button ('Go with an Ambassador Team') for inline embedding", () => {
+test("/links/go flags its Connect Card buttons ('Go with an Ambassador Team' and 'Join a GO Team') for inline embedding", () => {
 	const buttons = connectButtons(tapPage);
-	assert.equal(buttons.length, 1);
-	const [button] = buttons;
-	assert.equal(button.label, "Go with an Ambassador Team");
-	assert.equal(button.embed, "inline");
-	// No-JS visitors still get the full, chrome-on /connect page.
-	assert.equal(button.href, "/connect?interest=ambassador&from=tap+page");
-	// The iframe loads the embed=1 variant of the exact same URL.
-	assert.equal(button.embedSrc, "/connect?interest=ambassador&from=tap+page&embed=1");
-});
-
-test("/links/next-steps flags both of its Connect Card buttons for inline embedding", () => {
-	const buttons = connectButtons(nextStepsPage);
 	assert.equal(buttons.length, 2);
 
-	const lifeGroup = buttons.find((b) => b.label === "Join a Life Group");
-	assert.ok(lifeGroup);
-	assert.equal(lifeGroup.embed, "inline");
-	assert.equal(lifeGroup.href, "/connect?interest=group&from=next+steps+page");
-	assert.equal(lifeGroup.embedSrc, "/connect?interest=group&from=next+steps+page&embed=1");
+	const ambassador = buttons.find((b) => b.label === "Go with an Ambassador Team");
+	assert.ok(ambassador);
+	assert.equal(ambassador.embed, "inline");
+	// No-JS visitors still get the full, chrome-on /connect page.
+	assert.equal(ambassador.href, "/connect?interest=ambassador&from=tap+page");
+	// The iframe loads the embed=1 variant of the exact same URL.
+	assert.equal(ambassador.embedSrc, "/connect?interest=ambassador&from=tap+page&embed=1");
 
 	const goTeam = buttons.find((b) => b.label === "Join a GO Team");
 	assert.ok(goTeam);
@@ -48,6 +42,17 @@ test("/links/next-steps flags both of its Connect Card buttons for inline embedd
 	assert.equal(goTeam.embedSrc, "/connect?from=next+steps+page&embed=1#teams");
 });
 
+test("/links/grow flags its remaining Connect Card button for inline embedding", () => {
+	const buttons = connectButtons(nextStepsPage);
+	assert.equal(buttons.length, 1);
+
+	const lifeGroup = buttons.find((b) => b.label === "Join a Life Group");
+	assert.ok(lifeGroup);
+	assert.equal(lifeGroup.embed, "inline");
+	assert.equal(lifeGroup.href, "/connect?interest=group&from=next+steps+page");
+	assert.equal(lifeGroup.embedSrc, "/connect?interest=group&from=next+steps+page&embed=1");
+});
+
 test("every other button on both pages is left as a normal, non-embedded link", () => {
 	for (const page of [tapPage, nextStepsPage]) {
 		const block = page.content.find((c: any) => c.type === "TapButtons");
@@ -56,6 +61,7 @@ test("every other button on both pages is left as a normal, non-embedded link", 
 			if (String(link.href || "").startsWith("/connect")) continue;
 			if (link.label === "Strengthen the Church" || link.label === "Pray for a Person") continue; // Church Map card-only embeds
 			if (link.label === "Start Growth Track") continue; // /spiritual-formation inline embed — covered in spiritual-formation-embed.test.ts
+			if (link.label === "The Formation App") continue; // preview panel, not an inline embed — see links-preview-panels.test.ts
 			assert.ok(!link.embed, `expected "${link.label}" to stay a normal link`);
 		}
 	}

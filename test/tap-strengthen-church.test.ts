@@ -34,7 +34,7 @@ test("Strengthen the Church opens inline instead of navigating away", () => {
 	// flagged inline (see test/connect-inline-embed.test.ts) — every other
 	// button on the page stays a normal link.
 	for (const link of links) {
-		if (["Strengthen the Church", "Go with an Ambassador Team", "Pray for a Person"].includes(link.label)) continue;
+		if (["Strengthen the Church", "Go with an Ambassador Team", "Pray for a Person", "Join a GO Team"].includes(link.label)) continue;
 		assert.ok(!link.embed, `only Strengthen the Church and the Connect Card button should be flagged inline, not "${link.label}"`);
 	}
 });

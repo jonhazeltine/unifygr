@@ -5,14 +5,17 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 
 // The /links page replaces the Clearstream microsite (newlifegr.cls.co) as
 // our own "link in bio" page. It reuses the same TapButtons block as /tap and
-// /next-steps, so every button on it comes from content/pages/links.json —
-// this test is the guard that the full Clearstream link inventory made it in
-// and stays in, in its original order, with nothing invented or dropped.
+// /next-steps, so every button on it comes from content/pages/links.json.
+//
+// Jon's I'm New / Grow / Go / Give restructure (2026-09-26) collapsed the
+// main buttons to exactly these four, in this order: I'm New, Grow, Go, Give.
+// Welcome to New Life, Pray and The Formation App moved off /links onto
+// /links/new and /links/grow — see links-preview-panels.test.ts and
+// links-new-page.test.ts.
 const BIG_BUTTONS = [
-	{ label: "I'm New", href: "/links/next-steps" },
-	{ label: "Welcome to New Life", href: "https://theformation.app/m/welcome-to-new-life" },
-	{ label: "Pray", href: "/links/pray" },
-	{ label: "The Formation App", href: "https://theformation.app/join/0LY0R" },
+	{ label: "I'm New", href: "/links/new" },
+	{ label: "Grow", href: "/links/grow" },
+	{ label: "Go", href: "/links/go" },
 	{
 		label: "Give",
 		href: "https://app.securegive.com/NewLifeGR/new-life/static/widget/donate?cats=14982&amts=false",
@@ -37,11 +40,11 @@ test("/links carries a title and description for meta/OG tags", () => {
 	assert.ok(linksPage.root.props.description);
 });
 
-test("/links has exactly five big buttons, in order, with no description text", () => {
+test("/links has exactly four big buttons, in order, with no description text", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	assert.ok(block, "expected a TapButtons block");
 	const links: any[] = block!.props.links;
-	assert.equal(links.length, 5, "expected exactly five big buttons");
+	assert.equal(links.length, 4, "expected exactly four big buttons: I'm New, Grow, Go, Give");
 
 	links.forEach((link, i) => {
 		assert.equal(link.label, BIG_BUTTONS[i].label);
@@ -65,28 +68,23 @@ test("/links opens Give inline (SecureGive embedded) instead of navigating away"
 	}
 });
 
-test("/links has a Welcome to New Life button directly below I'm New, external and not inline", () => {
+test("/links only I'm New keeps the gold highlight", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	const links: any[] = block!.props.links;
-	const newIndex = links.findIndex((l: any) => l.label === "I'm New");
-	const welcomeIndex = links.findIndex((l: any) => l.label === "Welcome to New Life");
-	assert.ok(welcomeIndex >= 0, "expected a Welcome to New Life button");
-	assert.equal(welcomeIndex, newIndex + 1, "Welcome to New Life should sit directly below I'm New");
-
-	const welcome = links[welcomeIndex];
-	assert.equal(welcome.href, "https://theformation.app/m/welcome-to-new-life");
-	assert.equal(welcome.blurb, "");
-	assert.ok(!welcome.embed, "Welcome to New Life should not be an inline embed");
-	assert.equal(welcome.feature, "no", "only I'm New keeps the gold highlight");
-
-	const imNew = links[newIndex];
-	assert.equal(imNew.feature, "yes", "I'm New should keep its gold highlight");
+	const imNew = links.find((l: any) => l.label === "I'm New");
+	assert.equal(imNew!.feature, "yes", "I'm New should keep its gold highlight");
+	for (const link of links) {
+		if (link.label === "I'm New") continue;
+		assert.equal(link.feature, "no", `expected "${link.label}" not to be featured`);
+	}
 });
 
-test("/links no longer has a Website big button", () => {
+test("/links no longer has Welcome to New Life, Pray, or The Formation App as big buttons", () => {
 	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
 	const labels: string[] = block!.props.links.map((l: any) => l.label);
-	assert.ok(!labels.includes("Website"), "the Website big button should be removed");
+	for (const removed of ["Welcome to New Life", "Pray", "The Formation App", "Website"]) {
+		assert.ok(!labels.includes(removed), `the ${removed} big button should be removed from /links`);
+	}
 });
 
 test("/links carries the three social icons, with the correct hrefs, separate from the big buttons", () => {

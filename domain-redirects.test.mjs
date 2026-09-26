@@ -121,15 +121,37 @@ test("local legacy paths preserve protocol and port even with the final domain c
  }
 });
 
-test("the old /tap and /next-steps URLs redirect permanently to their new /links/* homes, query strings preserved", () => {
+test("the old /tap and /next-steps URLs redirect permanently straight to their current /links/* homes, query strings preserved", () => {
 	assert.equal(
 		redirectForRequest(new Request("https://newlifegr.com/tap?utm_source=card"), "https://newlifegr.com"),
-		"https://newlifegr.com/links/pray?utm_source=card",
+		"https://newlifegr.com/links/go?utm_source=card",
 	);
 	assert.equal(
 		redirectForRequest(new Request("https://newlifegr.com/next-steps?utm_source=qr"), "https://newlifegr.com"),
-		"https://newlifegr.com/links/next-steps?utm_source=qr",
+		"https://newlifegr.com/links/grow?utm_source=qr",
 	);
-	assert.equal(redirectForPath("/tap"), "/links/pray");
-	assert.equal(redirectForPath("/next-steps"), "/links/next-steps");
+	assert.equal(redirectForPath("/tap"), "/links/go");
+	assert.equal(redirectForPath("/next-steps"), "/links/grow");
+});
+
+test("the renamed /links/pray and /links/next-steps URLs redirect permanently to /links/go and /links/grow, query strings preserved", () => {
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/links/pray?utm_source=card"), "https://newlifegr.com"),
+		"https://newlifegr.com/links/go?utm_source=card",
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/links/next-steps?utm_source=qr"), "https://newlifegr.com"),
+		"https://newlifegr.com/links/grow?utm_source=qr",
+	);
+	assert.equal(redirectForPath("/links/pray"), "/links/go");
+	assert.equal(redirectForPath("/links/next-steps"), "/links/grow");
+});
+
+test("no redirect chains: every old path maps in one hop to a path that itself has no further mapping", () => {
+	for (const oldPath of ["/tap", "/next-steps", "/links/pray", "/links/next-steps"]) {
+		const target = redirectForPath(oldPath);
+		assert.ok(target, `expected ${oldPath} to redirect`);
+		const secondHop = redirectForPath(target);
+		assert.equal(secondHop, null, `${oldPath} -> ${target} should not redirect again (chain detected)`);
+	}
 });

@@ -51,6 +51,15 @@
                         "blurb": "Every church in Grand Rapids, on one map.",
                         "href": "https://thechurchmap.com/grandrapids",
                         "feature": "no"
+                    },
+                    {
+                        "label": "Join a GO Team",
+                        "blurb": "The Great Commission calls us to go — join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
+                        "href": "/connect?from=next+steps+page#teams",
+                        "feature": "no",
+                        "embed": "inline",
+                        "embedSrc": "/connect?from=next+steps+page&embed=1#teams",
+                        "embedHeight": "80vh"
                     }
                 ],
                 "footLabel": "Everything else at New Life",
