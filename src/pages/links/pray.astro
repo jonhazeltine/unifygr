@@ -1,14 +1,17 @@
 ---
-// The tap page — one screen, one thumb, three destinations.
+// The /links/pray page (slug "tap") — one screen, one thumb, three
+// destinations. Formerly mounted at /tap; that URL now 301s here forever
+// (see domain-redirects.mjs) since printed cards, NFC tags and QR codes may
+// still point at it.
 //
 // Blockified: the buttons and their links live in content/pages/tap.json and
 // are edited in the Page Builder (/studio/builder), so staff can repoint any
 // button without a developer. `bare` drops the header and footer — a menu
 // would be one more thing to read before the first button.
 export const prerender = false;
-import MountedPage from "../components/builder/MountedPage.astro";
-import { draftGuard } from "../lib/studio/pages";
-import { isAuthed } from "../lib/studio/auth";
+import MountedPage from "../../components/builder/MountedPage.astro";
+import { draftGuard } from "../../lib/studio/pages";
+import { isAuthed } from "../../lib/studio/auth";
 
 // A draft is staff-only, and answers a real 404 to everyone else.
 const notFound = await draftGuard("tap", isAuthed(Astro.cookies), Astro.locals);

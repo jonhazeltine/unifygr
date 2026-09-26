@@ -950,6 +950,14 @@ export const blocksConfig: Config = {
 				footHref: linkField("Where the bottom link goes"),
 				homeLabel: { type: "text", label: "Top-left small link text (optional)" },
 				homeHref: linkField("Top-left small link target (optional)"),
+				homeIcon: {
+					type: "radio",
+					label: "Top-left icon",
+					options: [
+						{ label: "House", value: "house" },
+						{ label: "Back arrow", value: "back" },
+					],
+				},
 				socials: {
 					type: "array",
 					label: "Social icons row, above the buttons (optional)",
@@ -978,9 +986,10 @@ export const blocksConfig: Config = {
 				footHref: "/",
 				homeLabel: "",
 				homeHref: "",
+				homeIcon: "house",
 				socials: [],
 			},
-			render: ({ brand, heading, lede, links, footLabel, footHref, homeLabel, homeHref, socials }) => (
+			render: ({ brand, heading, lede, links, footLabel, footHref, homeLabel, homeHref, homeIcon, socials }) => (
 				<div className="tap">
 					<div className="tap__glow" aria-hidden="true"></div>
 					{String(homeHref || "").trim() ? (
@@ -990,10 +999,17 @@ export const blocksConfig: Config = {
 							target={isExternal(String(homeHref)) ? "_blank" : undefined}
 							rel={isExternal(String(homeHref)) ? "noopener" : undefined}
 						>
-							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-								<path d="M3 12l9-9 9 9" />
-								<path d="M5 10v10h14V10" />
-							</svg>
+							{homeIcon === "back" ? (
+								<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<path d="M19 12H5" />
+									<path d="M11 18l-6-6 6-6" />
+								</svg>
+							) : (
+								<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+									<path d="M3 12l9-9 9 9" />
+									<path d="M5 10v10h14V10" />
+								</svg>
+							)}
 							<span>{homeLabel || "Website"}</span>
 						</a>
 					) : null}

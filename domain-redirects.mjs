@@ -33,6 +33,11 @@ export const LEGACY_PATH_REDIRECTS = Object.freeze({
 	"/home/member-login": "https://newlife.ccbchurch.com",
 	"/home/when-where": "/sunday#when-where",
 	"/watch": "/watch",
+	// The little phone-first "bare" pages moved under /links so they read as
+	// one family instead of a loose "tap" name. Printed cards, NFC tags and
+	// QR codes may still point at the old URLs, so these redirect forever.
+	"/tap": "/links/pray",
+	"/next-steps": "/links/next-steps",
 });
 
 function configuredSiteUrl(siteUrl = process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL) {

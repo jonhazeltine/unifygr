@@ -120,3 +120,16 @@ test("local legacy paths preserve protocol and port even with the final domain c
   assert.equal(redirectForRequest(new Request("http://127.0.0.1:4324/home?x=1"), site), "http://127.0.0.1:4324/?x=1");
  }
 });
+
+test("the old /tap and /next-steps URLs redirect permanently to their new /links/* homes, query strings preserved", () => {
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/tap?utm_source=card"), "https://newlifegr.com"),
+		"https://newlifegr.com/links/pray?utm_source=card",
+	);
+	assert.equal(
+		redirectForRequest(new Request("https://newlifegr.com/next-steps?utm_source=qr"), "https://newlifegr.com"),
+		"https://newlifegr.com/links/next-steps?utm_source=qr",
+	);
+	assert.equal(redirectForPath("/tap"), "/links/pray");
+	assert.equal(redirectForPath("/next-steps"), "/links/next-steps");
+});
