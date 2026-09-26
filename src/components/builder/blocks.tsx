@@ -296,6 +296,35 @@ function vimeoId(input: string): string | null {
 
 // A link that leaves the site opens in a new tab, so a tap page stays put
 // behind whatever someone taps into. Anything relative ("/connect") is ours.
+// Inline brand glyphs for the /links social icon row — no external icon
+// library, so the tap page keeps its zero-dependency render.
+function socialIcon(platform: string) {
+	switch (platform) {
+		case "youtube":
+			return (
+				<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">
+					<path d="M22.5 6.42a2.78 2.78 0 0 0-1.96-1.97C18.88 4 12 4 12 4s-6.88 0-8.54.45A2.78 2.78 0 0 0 1.5 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .5 5.58 2.78 2.78 0 0 0 1.96 1.97C5.12 20 12 20 12 20s6.88 0 8.54-.45a2.78 2.78 0 0 0 1.96-1.97A29 29 0 0 0 23 12a29 29 0 0 0-.5-5.58ZM9.75 15.5v-7l6 3.5-6 3.5Z" />
+				</svg>
+			);
+		case "facebook":
+			return (
+				<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="currentColor">
+					<path d="M13.5 21v-7.5H16l.4-3H13.5V8.4c0-.87.24-1.46 1.5-1.46H16.5V4.35C16.24 4.32 15.36 4.25 14.33 4.25c-2.15 0-3.62 1.31-3.62 3.72V10.5H8.25v3h2.46V21h2.79Z" />
+				</svg>
+			);
+		case "instagram":
+			return (
+				<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.8">
+					<rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+					<circle cx="12" cy="12" r="4" />
+					<circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none" />
+				</svg>
+			);
+		default:
+			return null;
+	}
+}
+
 function isExternal(href: string): boolean {
 	return /^https?:\/\//i.test(href) && !/^https?:\/\/(www\.)?unifygr\.com/i.test(href);
 }
@@ -911,6 +940,26 @@ export const blocksConfig: Config = {
 				},
 				footLabel: { type: "text", label: "Small link at the bottom" },
 				footHref: linkField("Where the bottom link goes"),
+				homeLabel: { type: "text", label: "Top-left small link text (optional)" },
+				homeHref: linkField("Top-left small link target (optional)"),
+				socials: {
+					type: "array",
+					label: "Social icons row, above the buttons (optional)",
+					arrayFields: {
+						platform: {
+							type: "radio",
+							label: "Platform",
+							options: [
+								{ label: "YouTube", value: "youtube" },
+								{ label: "Facebook", value: "facebook" },
+								{ label: "Instagram", value: "instagram" },
+							],
+						},
+						href: linkField(),
+					},
+					defaultItemProps: { platform: "youtube", href: "" },
+					getItemSummary: (item: any) => item?.platform || "Social",
+				},
 			},
 			defaultProps: {
 				brand: "New Life Grand Rapids",
@@ -919,10 +968,27 @@ export const blocksConfig: Config = {
 				links: [{ label: "A next step", blurb: "", href: "", feature: "no" }],
 				footLabel: "Everything else at New Life",
 				footHref: "/",
+				homeLabel: "",
+				homeHref: "",
+				socials: [],
 			},
-			render: ({ brand, heading, lede, links, footLabel, footHref }) => (
+			render: ({ brand, heading, lede, links, footLabel, footHref, homeLabel, homeHref, socials }) => (
 				<div className="tap">
 					<div className="tap__glow" aria-hidden="true"></div>
+					{String(homeHref || "").trim() ? (
+						<a
+							className="tap__home"
+							href={String(homeHref).trim()}
+							target={isExternal(String(homeHref)) ? "_blank" : undefined}
+							rel={isExternal(String(homeHref)) ? "noopener" : undefined}
+						>
+							<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<path d="M3 12l9-9 9 9" />
+								<path d="M5 10v10h14V10" />
+							</svg>
+							<span>{homeLabel || "Website"}</span>
+						</a>
+					) : null}
 					<div className="tap__inner">
 						<div className="tap__head">
 							{brand ? (
@@ -933,6 +999,29 @@ export const blocksConfig: Config = {
 							{heading ? <h1 className="tap__title">{heading}</h1> : null}
 							{lede ? <p className="tap__lede" style={{ whiteSpace: "pre-wrap" }}>{lede}</p> : null}
 						</div>
+
+						{Array.isArray(socials) && socials.some((s: any) => String(s?.href || "").trim()) ? (
+							<div className="tap__socials" aria-label="Follow us">
+								{socials.map((s: any, i: number) => {
+									const href = String(s?.href || "").trim();
+									if (!href) return null;
+									const platform = s?.platform || "";
+									const label = platform ? platform.charAt(0).toUpperCase() + platform.slice(1) : "Social";
+									return (
+										<a
+											key={i}
+											className="tap__social"
+											href={href}
+											aria-label={label}
+											target={isExternal(href) ? "_blank" : undefined}
+											rel={isExternal(href) ? "noopener" : undefined}
+										>
+											{socialIcon(platform)}
+										</a>
+									);
+								})}
+							</div>
+						) : null}
 
 						<nav className="tap__stack" aria-label="Take a step">
 							{(links || []).map((l: any, i: number) => {

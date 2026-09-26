@@ -54,6 +54,57 @@
 	pointer-events: none;
 }
 
+/* Discreet top-left link back to the main site. Kept clear of the header at
+   the smallest phone width by sitting above the flow, inset from the edge. */
+.tap__home {
+	position: absolute;
+	top: 0.9rem;
+	left: 0.9rem;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	min-height: 44px;
+	padding: 0.4rem 0.6rem;
+	border-radius: 999px;
+	color: var(--faint);
+	text-decoration: none;
+	font-size: 0.78rem;
+	letter-spacing: 0.02em;
+}
+
+@media (hover: hover) {
+	.tap__home:hover {
+		color: var(--gold);
+	}
+}
+
+.tap__socials {
+	display: flex;
+	justify-content: center;
+	gap: 0.6rem;
+}
+
+.tap__social {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 999px;
+	border: 1px solid var(--line);
+	color: var(--gold);
+	text-decoration: none;
+	transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+@media (hover: hover) {
+	.tap__social:hover {
+		border-color: var(--gold);
+		background: var(--ink-raised);
+	}
+}
+
 .tap__inner {
 	position: relative;
 	width: 100%;
