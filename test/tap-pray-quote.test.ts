@@ -26,10 +26,10 @@ test("/links/pray has the new heading and no trace of the old wording", () => {
 
 test("/links/pray has the new lede", () => {
 	const props = tapButtonsProps(tapPage);
-	assert.equal(props.lede, "Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids.");
+	assert.equal(props.lede, "Pray for a neighbor, encourage another congregation, and strengthen Christ's Body throughout the city.");
 	assert.equal(
 		tapPage.root.props.description,
-		"Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids.",
+		"Pray for a neighbor, encourage another congregation, and strengthen Christ's Body throughout the city.",
 	);
 });
 

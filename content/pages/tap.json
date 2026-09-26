@@ -5,7 +5,7 @@
         "props": {
             "title": "Unite the Church. Reveal Jesus to the city.",
             "kicker": "New Life Grand Rapids",
-            "description": "Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids."
+            "description": "Pray for a neighbor, encourage another congregation, and strengthen Christ's Body throughout the city."
         }
     },
     "content": [
@@ -15,7 +15,7 @@
                 "id": "TapButtons-tap",
                 "brand": "New Life Grand Rapids",
                 "heading": "Unite the Church. Reveal Jesus to the city.",
-                "lede": "Pray for a neighbor, encourage another congregation, and go with us across Grand Rapids.",
+                "lede": "Pray for a neighbor, encourage another congregation, and strengthen Christ's Body throughout the city.",
                 "quote": "That they may be one, just as We are one.",
                 "quoteCite": "Jesus, John 17:22",
                 "homeLabel": "Links",
