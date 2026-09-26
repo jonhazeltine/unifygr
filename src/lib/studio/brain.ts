@@ -7,6 +7,7 @@
 import { editableFields, type EditableField } from "./schema";
 import type { Edit } from "./store";
 import { isCloudflareWorker } from "../runtime";
+import { callAnthropicTool } from "./anthropic";
 
 export type Proposal = {
 	/** conversational reply shown in the chat */
@@ -72,7 +73,7 @@ export async function proposeEdits(
 	if (isCloudflareWorker() && process.env.ANTHROPIC_API_KEY) {
 		return proposeEditsViaApi(message, content, context);
 	}
-	if (import.meta.env.DEV && process.env.STUDIO_BRAIN !== "stub") {
+	if (import.meta.env?.DEV && process.env.STUDIO_BRAIN !== "stub") {
 		try {
 			const { proposeEditsViaClaude } = await import("./brain-claude");
 			return await proposeEditsViaClaude(message, content, context);
@@ -92,39 +93,23 @@ async function proposeEditsViaApi(message: string, content: any, context: PageCo
 		`Current page: ${context.page || context.path || "the site"}`,
 		`Staff request: ${JSON.stringify(message)}`,
 	].join("\n");
-	const response = await fetch("https://api.anthropic.com/v1/messages", {
-		method: "POST",
-		headers: {
-			"x-api-key": process.env.ANTHROPIC_API_KEY,
-			"anthropic-version": "2023-06-01",
-			"content-type": "application/json",
+	const output = await callAnthropicTool({
+		prompt,
+		toolName: "return_edits",
+		toolDescription: "Return a brief reply and proposed edits to approved fields.",
+		inputSchema: {
+			type: "object",
+			properties: {
+				reply: { type: "string" },
+				edits: { type: "array", items: { type: "object", properties: { path: { type: "string" }, to: { type: "string" } }, required: ["path", "to"] } },
+			},
+			required: ["reply", "edits"],
 		},
-		body: JSON.stringify({
-			model: process.env.STUDIO_API_MODEL || "claude-sonnet-5",
-			max_tokens: 2048,
-			tools: [{
-				name: "return_edits",
-				description: "Return a brief reply and proposed edits to approved fields.",
-				input_schema: {
-					type: "object",
-					properties: {
-						reply: { type: "string" },
-						edits: { type: "array", items: { type: "object", properties: { path: { type: "string" }, to: { type: "string" } }, required: ["path", "to"] } },
-					},
-					required: ["reply", "edits"],
-				},
-			}],
-			tool_choice: { type: "tool", name: "return_edits" },
-			messages: [{ role: "user", content: prompt }],
-		}),
-		signal: AbortSignal.timeout(30_000),
-	});
-	if (!response.ok) throw new Error(`Studio AI returned ${response.status}.`);
-	const body = await response.json() as any;
-	const output = body.content?.find((item: any) => item.type === "tool_use")?.input;
+		maxTokens: 2048,
+	}) as { reply?: unknown; edits?: unknown };
 	if (!output || typeof output !== "object" || !Array.isArray(output.edits)) throw new Error("Studio AI returned no proposal.");
 	const allowed = new Set(fields.map((field) => field.path));
-	const edits: Edit[] = output.edits
+	const edits: Edit[] = (output.edits as any[])
 		.filter((edit: any) => edit && typeof edit.path === "string" && typeof edit.to === "string" && allowed.has(edit.path))
 		.map((edit: any) => ({ path: edit.path, from: getPath(content, edit.path), to: edit.to }));
 	const reply = typeof output.reply === "string" && output.reply.trim()

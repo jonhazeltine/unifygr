@@ -217,7 +217,7 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 			renderLog();
 			api("/api/studio/content").then((r) => { contentVersion = r.version || null; });
 			if (loadLog().length === 0) addMsg(hosted
-				? `Hi! You're on ${pageName}. Tell me which published field you'd like to reword. I'll show the proposed change before it goes live.`
+				? `Hi! You're on ${pageName}. Tell me what to change — wording, buttons, links, or whole sections. I'll show the proposed change before it goes live.`
 				: `Hi! You're on ${pageName}. Tell me anything you'd like to change — reword text, edit the menu, add or move a page. I'll make the change and you can undo it anytime.`, "ai");
 			setTimeout(() => $("sd-msg")?.focus(), 50);
 		}
@@ -275,10 +275,17 @@ const workerHosted = !import.meta.env.DEV && Boolean(Astro.locals.runtime);
 		async function publish() {
 			if (!pending?.edits?.length) return;
 			($("sd-pub") as HTMLButtonElement).disabled = true;
-			const res = await api("/api/studio/apply", {
-				method: "POST",
-				body: JSON.stringify({ edits: pending.edits, message: pending.reply, summary: pending.reply, version: pending.version || contentVersion }),
-			});
+			// A full-page proposal (this page is a Page Builder document) saves and
+			// publishes its whole document through the same versioned path the
+			// visual builder uses; a fenced-field proposal (the ~10 site-wide
+			// fields) applies its small edit list directly. Same Publish button,
+			// same review-first flow — different save path underneath.
+			const res = pending.kind === "page"
+				? await api("/api/studio/page-apply", { method: "POST", body: JSON.stringify({ slug: pending.slug, data: pending.data, version: pending.version }) })
+				: await api("/api/studio/apply", {
+					method: "POST",
+					body: JSON.stringify({ edits: pending.edits, message: pending.reply, summary: pending.reply, version: pending.version || contentVersion }),
+				});
 			if (res.ok) {
 				contentVersion = res.version?.id || contentVersion;
 				toast("Published ✓"); $("sd-proposal").innerHTML = ""; pending = null;

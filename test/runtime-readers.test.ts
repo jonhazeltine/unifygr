@@ -151,5 +151,9 @@ test("page AI receives Worker locals and applies a bounded provider timeout", as
 	const source = await readFile(new URL("../src/pages/api/studio/page-ai.ts", import.meta.url), "utf8");
 	assert.match(source, /async \(\{ request, cookies, locals \}\)/);
 	assert.match(source, /listSiteImages\(locals\)/);
-	assert.match(source, /AbortSignal\.timeout\(30_000\)/);
+	// The provider call itself (and its bounded timeout) now lives in the
+	// shared anthropic.ts helper both page-ai.ts and the Studio dock's chat
+	// use — page-ai.ts no longer calls fetch() directly.
+	const providerSource = await readFile(new URL("../src/lib/studio/anthropic.ts", import.meta.url), "utf8");
+	assert.match(providerSource, /AbortSignal\.timeout\(request\.timeoutMs \?\? 30_000\)/);
 });
