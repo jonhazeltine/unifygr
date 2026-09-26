@@ -16,6 +16,9 @@
 				"brand": "New Life Grand Rapids",
 				"heading": "Next steps.",
 				"lede": "Pick the one that's yours.",
+				"homeLabel": "Links",
+				"homeHref": "/links",
+				"homeIcon": "back",
 				"links": [
 					{
 						"label": "Join a Life Group",

@@ -1,12 +1,14 @@
 ---
-// The next-steps tap page — life groups, membership class, Ambassador Teams.
+// The /links/next-steps page (slug "next-steps") — life groups, membership
+// class, Ambassador Teams. Formerly mounted at /next-steps; that URL now
+// 301s here forever (see domain-redirects.mjs).
 //
 // Blockified: the buttons and their links live in content/pages/next-steps.json
 // and are edited in the Page Builder (/studio/builder).
 export const prerender = false;
-import MountedPage from "../components/builder/MountedPage.astro";
-import { draftGuard } from "../lib/studio/pages";
-import { isAuthed } from "../lib/studio/auth";
+import MountedPage from "../../components/builder/MountedPage.astro";
+import { draftGuard } from "../../lib/studio/pages";
+import { isAuthed } from "../../lib/studio/auth";
 
 // A draft is staff-only, and answers a real 404 to everyone else.
 const notFound = await draftGuard("next-steps", isAuthed(Astro.cookies), Astro.locals);

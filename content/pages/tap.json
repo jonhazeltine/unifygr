@@ -16,6 +16,9 @@
 				"brand": "New Life Grand Rapids",
 				"heading": "Start here.",
 				"lede": "Three steps you can take from this screen.",
+				"homeLabel": "Links",
+				"homeHref": "/links",
+				"homeIcon": "back",
 				"links": [
 					{
 						"label": "Pray for a Person",
