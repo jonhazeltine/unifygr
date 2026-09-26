@@ -11,35 +11,38 @@ import nextStepsPage from "../content/pages/next-steps.json" with { type: "json"
 // (blocks.tsx) and their href is untouched so a no-JS visitor still lands on
 // the real, full /connect page — never the bare embed=1 variant.
 //
-// /links/go is now its own page (slug "go-links"), holding "Go with an
-// Ambassador Team" and "Join a GO Team" with their inline Connect settings
-// carried over exactly from the old /tap slug's page.
+// /links/go is its own page (slug "go-links"), holding exactly three
+// buttons — Go to the Church, Go to the City, Go to the Nations — each an
+// inline Connect Card with a different interest preselected (2026-09-26).
 
 function connectButtons(page: any) {
 	const block = page.content.find((c: any) => c.type === "TapButtons");
 	return (block!.props.links as any[]).filter((l) => String(l.href || "").startsWith("/connect"));
 }
 
-test("/links/go flags its Connect Card buttons ('Go with an Ambassador Team' and 'Join a GO Team') for inline embedding", () => {
+test("/links/go flags all three Connect Card buttons for inline embedding", () => {
 	const buttons = connectButtons(goLinksPage);
-	assert.equal(buttons.length, 2);
+	assert.equal(buttons.length, 3);
 
-	const ambassador = buttons.find((b) => b.label === "Go with an Ambassador Team");
-	assert.ok(ambassador);
-	assert.equal(ambassador.embed, "inline");
+	const church = buttons.find((b) => b.label === "Go to the Church");
+	assert.ok(church);
+	assert.equal(church.embed, "inline");
 	// No-JS visitors still get the full, chrome-on /connect page.
-	assert.equal(ambassador.href, "/connect?interest=ambassador&from=tap+page");
+	assert.equal(church.href, "/connect?interest=ambassador&from=links+go");
 	// The iframe loads the embed=1 variant of the exact same URL.
-	assert.equal(ambassador.embedSrc, "/connect?interest=ambassador&from=tap+page&embed=1");
+	assert.equal(church.embedSrc, "/connect?interest=ambassador&from=links+go&embed=1");
 
-	const goTeam = buttons.find((b) => b.label === "Join a GO Team");
-	assert.ok(goTeam);
-	assert.equal(goTeam.embed, "inline");
-	// The href keeps its #teams anchor for no-JS visitors landing on the full page.
-	assert.equal(goTeam.href, "/connect?from=next+steps+page#teams");
-	// embed=1 has to land in the query string, before the fragment, or it's
-	// swallowed into the anchor instead of being read as a param.
-	assert.equal(goTeam.embedSrc, "/connect?from=next+steps+page&embed=1#teams");
+	const city = buttons.find((b) => b.label === "Go to the City");
+	assert.ok(city);
+	assert.equal(city.embed, "inline");
+	assert.equal(city.href, "/connect?interest=outreach&from=links+go");
+	assert.equal(city.embedSrc, "/connect?interest=outreach&from=links+go&embed=1");
+
+	const nations = buttons.find((b) => b.label === "Go to the Nations");
+	assert.ok(nations);
+	assert.equal(nations.embed, "inline");
+	assert.equal(nations.href, "/connect?interest=missions&from=links+go");
+	assert.equal(nations.embedSrc, "/connect?interest=missions&from=links+go&embed=1");
 });
 
 test("/links/grow flags its remaining Connect Card button for inline embedding", () => {
