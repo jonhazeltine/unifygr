@@ -44,7 +44,7 @@ test("Kids previews then opens the public New Life page in The Formation App", (
 	const block = tapButtonsBlock();
 	const link = block.props.links.find((l: any) => l.label === "Kids");
 	assert.ok(link);
-	assert.equal(link.href, "https://theformation.app/c/newlifegr");
+	assert.equal(link.href, "https://theformation.app/c/newlifegr?section=new-life-kids-parents-fall-2026");
 	assert.ok(link.preview);
 	assert.equal(link.previewAction, "Open kids lessons");
 });
