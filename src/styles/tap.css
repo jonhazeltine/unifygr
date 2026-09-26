@@ -315,3 +315,13 @@
 	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 }
+
+/* The Give panel is revealed by script; its display:grid must not override [hidden]. */
+.tapbtn-embed-panel[hidden] {
+	display: none;
+}
+
+/* Leave room under the top-left home link so it never crowds the kicker. */
+.tap:has(.tap__home) {
+	padding-top: 3.25rem;
+}

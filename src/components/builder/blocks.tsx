@@ -1071,7 +1071,7 @@ export const blocksConfig: Config = {
 											</a>
 											<div className="tapbtn-embed-panel" id={panelId} data-tapbtn-embed-panel hidden>
 												<div className="tapbtn-embed-panel__bar">
-													<span className="tapbtn-embed-panel__label">{l?.label || "Give"}</span>
+													<span className="tapbtn-embed-panel__label" aria-hidden="true"></span>
 													<button
 														type="button"
 														className="tapbtn-embed-panel__close"
