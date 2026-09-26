@@ -325,6 +325,27 @@
 	overflow: visible;
 }
 
+/* The posted height is the FRAME's content height. Apply it to the frame row,
+   not the whole panel: the close bar above it shares the grid, so sizing the
+   panel to the posted value clipped the bottom ~57px of every auto-height
+   frame (the Church Map "Pray" button, found 2026-09-26). */
+.tapbtn-embed-panel.tapbtn-embed-panel--auto {
+	height: auto;
+	grid-template-rows: auto auto;
+	transition: none;
+}
+
+.tapbtn-embed-panel--auto .tapbtn-embed-panel__frame {
+	height: var(--tapbtn-embed-panel-height);
+	transition: height 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.tapbtn-embed-panel--auto .tapbtn-embed-panel__frame {
+		transition: none;
+	}
+}
+
 .tapbtn-embed-panel__bar {
 	display: flex;
 	align-items: center;
