@@ -88,7 +88,7 @@ export const prerender = false;
 
 				<section class="pc-block pc-inventory" id="inventory">
 					<div class="pc-block__head"><div><p class="eyebrow" id="inventory-eyebrow">Calendar sources</p><h2 id="inventory-title">Churches showing on the calendar</h2></div></div>
-					<p class="pc-block__note" id="inventory-note">Turn a church on to publish its dates. Open it to choose which kinds of gathering to include.</p>
+					<p class="pc-block__note" id="inventory-note">Turn a church on to publish its dates. Open it to choose which kinds of gathering to include. Calendar events stay governed by the church being ticked, the kinds you choose here, and the three switches below — the Directory tab's ministry cards are a separate, simpler rule.</p>
 					<div class="pc-filters">
 						<label class="field pc-search"><span>Search</span><input id="search" type="search" placeholder="Name, city or what they do" autocomplete="off" /></label>
 						<div class="pc-chips" id="kinds"></div><div class="pc-chips" id="filters"></div>
@@ -271,6 +271,11 @@ export const prerender = false;
 			.pc-church__acts { display: flex; gap: 0.7rem; align-items: center; flex: none; }
 			.pc-church__dupe { color: var(--rose); font-size: 0.82rem; margin: 0.4rem 0 0; line-height: 1.45; }
 			.pc-church__silent { color: var(--muted); font-size: 0.82rem; font-style: italic; margin: 0.4rem 0 0; }
+			.pc-church__church { color: var(--muted); font-weight: 500; }
+			.pc-church.is-locked { opacity: 0.6; }
+			.pc-church__hit.is-locked { cursor: not-allowed; }
+			.pc-church__hit.is-locked input { cursor: not-allowed; }
+			.pc-church__lockednote { color: var(--rose); font-size: 0.76rem; font-style: italic; }
 			@media (max-width: 46rem) {
 				.pc-church__hit { grid-template-columns: auto 1fr; }
 				.pc-church__sum { grid-column: 2; text-align: left; }
@@ -375,9 +380,11 @@ export const prerender = false;
 			// same save. Keep their own baseline so the save bar cannot dismiss them.
 			let globalsBaseline = "";
 
+			type EntryChurch = { churchId: string; name: string; ticked: boolean };
 			type DirectoryOrg = {
 				slug: string; name: string; summary: string; city: string | null; area: string | null;
 				categories: string[]; offering: boolean; confirmed: boolean; listed: boolean;
+				church: EntryChurch | null;
 			};
 			// The ministry directory — Mel Trotter, Guiding Light, Celebrate Recovery.
 			// These carry no events; their switch decides whether we list them at all.
@@ -884,7 +891,16 @@ export const prerender = false;
 				return c.state === key;
 			}
 
+			// A ministry whose church is not ticked in Curated Partnerships cannot be
+			// selected here, full stop — the church switch is the higher authority.
+			// See src/lib/partners/directory.ts `ministryAvailable`/`churchTicked`,
+			// the same rule the public pages and the server-side save both enforce.
+			function orgLocked(o: DirectoryOrg): boolean {
+				return Boolean(o.church && !o.church.ticked);
+			}
+
 			function orgListed(o: DirectoryOrg): boolean {
+				if (orgLocked(o)) return false;
 				return orgEdits.get(o.slug)?.listed ?? o.listed;
 			}
 
@@ -894,7 +910,7 @@ export const prerender = false;
 
 			function editOrg(slug: string, patch: OrgEdit) {
 				const org = orgs.find((o) => o.slug === slug);
-				if (!org) return;
+				if (!org || orgLocked(org)) return;
 				const next = { ...(orgEdits.get(slug) || {}), ...patch };
 				// Anything back at where it started is not a change at all.
 				if (next.listed === org.listed) delete next.listed;
@@ -933,16 +949,21 @@ export const prerender = false;
 						const on = orgListed(o);
 						const ok = orgConfirmed(o);
 						const changed = orgEdits.has(o.slug);
-						return `<article class="pc-church pc-church--org ${on ? "is-showing" : "is-new"} ${changed ? "is-changed" : ""}">
+						const locked = orgLocked(o);
+						const churchLine = o.church
+							? `<span class="pc-church__church">${escape(o.church.name)}${o.church.ticked ? "" : " (not ticked)"}</span>`
+							: "";
+						return `<article class="pc-church pc-church--org ${on ? "is-showing" : "is-new"} ${changed ? "is-changed" : ""} ${locked ? "is-locked" : ""}">
 							<div class="pc-church__top">
 								<button class="pc-star ${ok ? "is-on" : ""}" type="button" data-orgapprove="${o.slug}"
 									aria-pressed="${ok}"
 									title="${ok ? "Confirmed — someone here has actually spoken to them. Click to undo." : "Confirm: someone at New Life has spoken to them and would send people."}">${ok ? "★" : "☆"}</button>
-								<label class="pc-church__hit">
-									<input type="checkbox" data-org="${o.slug}" ${on ? "checked" : ""} />
+								<label class="pc-church__hit ${locked ? "is-locked" : ""}">
+									<input type="checkbox" data-org="${o.slug}" ${on ? "checked" : ""} ${locked ? "disabled" : ""} />
 									<span class="pc-church__id">
 										<span class="pc-church__name">${escape(o.name)}</span>
-										<span class="pc-church__where">${escape(o.city || o.area || "—")} · ${escape(o.summary.slice(0, 90))}</span>
+										<span class="pc-church__where">${churchLine}${churchLine ? " · " : ""}${escape(o.city || o.area || "—")} · ${escape(o.summary.slice(0, 90))}</span>
+										${locked ? `<span class="pc-church__lockednote">Tick ${escape(o.church!.name)} in Curated Partnerships to enable</span>` : ""}
 									</span>
 									<span class="pc-church__sum">${changed ? `<span class="pc-church__flag">changed</span>` : ""}${
 										o.offering ? `listed on ${o.categories.length} ${o.categories.length === 1 ? "page" : "pages"}` : "specialised list only"
@@ -1156,7 +1177,7 @@ export const prerender = false;
 					$("inventory-host-calendar").append(inventory);
 					$("inventory-eyebrow").textContent = "Calendar sources";
 					$("inventory-title").textContent = "Churches showing on the calendar";
-					$("inventory-note").textContent = "Turn a church on to publish its dates. Open it to choose which kinds of gathering to include.";
+					$("inventory-note").textContent = "Turn a church on to publish its dates. Open it to choose which kinds of gathering to include. Calendar events stay governed by the church being ticked, the kinds you choose here, and the three switches below — the Directory tab's ministry cards are a separate, simpler rule.";
 				} else if (workspace === "directory") {
 					$("inventory-host-directory").append(inventory);
 					$("inventory-eyebrow").textContent = "Curated partnerships";
