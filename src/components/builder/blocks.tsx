@@ -1339,14 +1339,13 @@ export const blocksConfig: Config = {
 								</label>
 								<label className="pack-signup-field">
 									<span>Mobile phone</span>
-									<input name="phone" type="tel" autoComplete="tel" inputMode="tel" />
+									<input name="phone" type="tel" autoComplete="tel" inputMode="tel" pattern="[0-9()+\-\s]{7,20}" />
 								</label>
 							</div>
-							<p className="pack-signup-note">Either one is fine — we just need a way to reach you.</p>
 
 							<label className="pack-signup-field">
 								<span>How many people should we expect, including yourself?</span>
-								<input name="headcount" type="number" min="1" step="1" required />
+								<input name="headcount" type="number" min="1" step="1" inputMode="numeric" pattern="[0-9]*" required />
 							</label>
 
 							{/* Not shown to people — only bots fill this in. */}
