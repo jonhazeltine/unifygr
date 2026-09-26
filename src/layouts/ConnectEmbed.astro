@@ -1,0 +1,38 @@
+---
+// The bare document used for /connect?embed=1 — the same Connect Card form,
+// meant to live inside an <iframe> on a tap/next-steps button (see
+// TapButtons in blocks.tsx). No site header, nav, footer or Studio dock, and
+// nothing in here can navigate the frame away. Kept as its own layout file
+// (rather than an inline conditional in connect.astro) so it gets a real
+// leading doctype the same way every other page does.
+import BaseHead from "../components/BaseHead.astro";
+
+interface Props {
+	title: string;
+	description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			/* Readable down to about 330px wide, and transparent so the frame
+			   matches whatever panel it sits inside instead of showing its own
+			   backdrop. */
+			html, body { background: transparent; }
+			body::before, body::after { display: none; }
+			.section { padding: 1.1rem 0.4rem; }
+			.container { padding: 0; }
+			.connect-wrap { max-width: 100%; }
+		</style>
+	</head>
+	<body class="v2 connect-embed">
+		<section class="section">
+			<slot />
+		</section>
+	</body>
+</html>

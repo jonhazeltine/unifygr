@@ -30,9 +30,11 @@ test("Strengthen the Church opens inline instead of navigating away", () => {
 	// The href stays a real, direct link so it still works with no JavaScript.
 	assert.ok(button.href.startsWith("https://thechurchmap.com/"));
 
-	// Only this button on the page is flagged inline.
+	// The Connect Card button ("Go with an Ambassador Team") was later also
+	// flagged inline (see test/connect-inline-embed.test.ts) — every other
+	// button on the page stays a normal link.
 	for (const link of links) {
-		if (link.label === "Strengthen the Church") continue;
-		assert.ok(!link.embed, `only Strengthen the Church should be flagged inline, not "${link.label}"`);
+		if (link.label === "Strengthen the Church" || link.label === "Go with an Ambassador Team") continue;
+		assert.ok(!link.embed, `only Strengthen the Church and the Connect Card button should be flagged inline, not "${link.label}"`);
 	}
 });

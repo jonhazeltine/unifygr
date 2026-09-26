@@ -1,0 +1,187 @@
+---
+// The Connect Card form markup, shared by the full /connect page (inside
+// Interior, with header/nav/footer) and its embed=1 mode (a bare document
+// meant to live inside an <iframe> on a tap/next-steps button). Keeping this
+// in one place means the two modes can never drift apart.
+interface Group {
+	name: string;
+	items: { id: string; label: string }[];
+}
+
+interface Props {
+	groups: Group[];
+	picked?: string;
+	from: string;
+}
+
+const { groups, picked, from } = Astro.props;
+---
+
+<div class="container connect-wrap">
+	<form class="connect-form" id="connect-form" novalidate>
+		<div class="connect-row">
+			<label class="field">
+				<span>First name</span>
+				<input name="firstName" type="text" autocomplete="given-name" required />
+			</label>
+			<label class="field">
+				<span>Last name</span>
+				<input name="lastName" type="text" autocomplete="family-name" required />
+			</label>
+		</div>
+
+		<div class="connect-row">
+			<label class="field">
+				<span>Email</span>
+				<input name="email" type="email" autocomplete="email" inputmode="email" />
+			</label>
+			<label class="field">
+				<span>Phone</span>
+				<input name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+			</label>
+		</div>
+		<p class="field-note">Either one is fine — we just need a way to reach you.</p>
+
+		<label class="field">
+			<span>City</span>
+			<input name="city" type="text" autocomplete="address-level2" />
+		</label>
+
+		<section class="field field--choices" aria-labelledby="interest-heading">
+			<div class="choice-intro">
+				<h2 id="interest-heading">How can we help?</h2>
+				<p>Choose all that apply.</p>
+			</div>
+			<div class="choice-panel">
+			{groups.map((group) => (
+				<div class="choice-group" id={group.name === "Serving and going" ? "teams" : undefined}>
+					<p class="choice-group__head">{group.name}</p>
+					{group.items.map((interest) => (
+						<label class="choice">
+							<input type="checkbox" name="interests" value={interest.id} checked={interest.id === picked} />
+							<span>{interest.label}</span>
+						</label>
+					))}
+
+				</div>
+			))}
+			</div>
+		</section>
+
+		<label class="field">
+			<span>Anything you'd like us to know</span>
+			<textarea name="message" rows="5" placeholder="A prayer request, a question, or just how you found us."></textarea>
+		</label>
+
+		{from && <input type="hidden" name="source" value={`Website — ${from}`} />}
+
+		{/* Not shown to people — only bots fill this in. */}
+		<div class="connect-hp" aria-hidden="true">
+			<label>Website<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+		</div>
+
+		<p class="connect-error" id="connect-error" role="alert" hidden></p>
+
+		<button class="button button--primary" type="submit" id="connect-submit">Send it</button>
+		<p class="field-note">What you write here goes to our pastoral team, not anywhere public.</p>
+	</form>
+
+	<div class="connect-done" id="connect-done" hidden>
+		<p class="eyebrow">Thank you</p>
+		<h2>We've got it.</h2>
+		<p>Someone from our team will reach out. If it's urgent, ask for a pastor when you contact us.</p>
+	</div>
+</div>
+
+<style>
+	.connect-wrap { max-width: 44rem; }
+	.connect-form { display: grid; gap: 1.4rem; }
+	.connect-row { display: grid; gap: 1.4rem; grid-template-columns: 1fr 1fr; }
+	@media (max-width: 620px) { .connect-row { grid-template-columns: 1fr; } }
+
+	.field { display: grid; gap: 0.5rem; }
+	.field > span, .field legend { font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+	.field input[type="text"], .field input[type="email"], .field input[type="tel"], .field textarea {
+		width: 100%;
+		padding: 0.85rem 1rem;
+		border: 1px solid var(--line);
+		border-radius: 12px;
+		background: var(--panel);
+		color: var(--text);
+		font: inherit;
+	}
+	.field textarea { resize: vertical; }
+	.field input:focus-visible, .field textarea:focus-visible {
+		outline: none;
+		border-color: var(--gold);
+		box-shadow: 0 0 0 3px var(--gold-soft);
+	}
+	.field-note { margin: -0.7rem 0 0; font-size: 0.85rem; color: var(--muted); }
+
+	.field--choices { gap: 0.8rem; }
+	.choice-intro h2 { margin: 0; font-size: 1.15rem; }
+	.choice-intro p { margin: 0.2rem 0 0; color: var(--muted); font-size: 0.9rem; }
+	.choice-panel { border: 1px solid var(--line); border-radius: 16px; padding: 1.2rem 1.3rem; background: var(--panel); }
+
+	.choice-group + .choice-group { margin-top: 1.15rem; padding-top: 1.15rem; border-top: 1px solid var(--line); }
+	#teams { scroll-margin-top: 7rem; }
+	.choice-group__head {
+		margin: 0 0 0.35rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--gold);
+	}
+
+
+	.choice { display: flex; gap: 0.7rem; align-items: flex-start; padding: 0.42rem 0; cursor: pointer; }
+	.choice input { margin-top: 0.28rem; accent-color: var(--gold); }
+	.choice span { color: var(--text); }
+
+	.connect-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+	.connect-error { margin: 0; color: var(--rose); }
+	.connect-done { border: 1px solid var(--gold-soft); border-radius: 20px; padding: 2.5rem; background: var(--panel); }
+	.connect-done h2 { margin: 0.4rem 0 0.8rem; }
+	.connect-done p { color: var(--muted); }
+
+	#connect-submit[disabled] { opacity: 0.6; cursor: progress; }
+</style>
+
+<script>
+	const form = document.getElementById("connect-form") as HTMLFormElement | null;
+	const done = document.getElementById("connect-done");
+	const error = document.getElementById("connect-error") as HTMLParagraphElement | null;
+	const submit = document.getElementById("connect-submit") as HTMLButtonElement | null;
+
+	form?.addEventListener("submit", async (event) => {
+		event.preventDefault();
+		if (!error || !submit || !done) return;
+
+		error.hidden = true;
+		submit.disabled = true;
+		submit.textContent = "Sending…";
+
+		const formData = new FormData(form);
+		const payload = Object.fromEntries(formData.entries());
+		payload.interests = formData.getAll("interests");
+
+		try {
+			const res = await fetch("/api/connect/submit", {
+				method: "POST",
+				headers: { "content-type": "application/json" },
+				body: JSON.stringify(payload),
+			});
+			const data = await res.json().catch(() => ({}));
+			if (!res.ok || !data.ok) throw new Error(data.error || "Something went wrong. Please try again.");
+			form.hidden = true;
+			done.hidden = false;
+			done.scrollIntoView({ behavior: "smooth", block: "center" });
+		} catch (err) {
+			error.textContent = err instanceof Error ? err.message : "Something went wrong. Please try again.";
+			error.hidden = false;
+			submit.disabled = false;
+			submit.textContent = "Send it";
+		}
+	});
+</script>
