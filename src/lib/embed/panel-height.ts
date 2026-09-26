@@ -5,12 +5,14 @@
 // things most likely to regress silently — are unit-testable without a DOM.
 
 export const MIN_EMBED_HEIGHT = 160;
-export const MAX_EMBED_HEIGHT = 4000;
+export const MAX_EMBED_HEIGHT = 20000;
 
 /** Clamp a reported iframe document height to a sane range. A tiny or
  * negative value (a bad measurement, or a message from something that isn't
- * really one of our panels) never collapses the panel to nothing; an
- * absurdly large one never runs away past a phone-sized page. */
+ * really one of our panels) never collapses the panel to nothing; the
+ * maximum is a sanity bound only (frames we control should never need an
+ * internal scrollbar, even a long page like Growth Track), not a real
+ * ceiling on page length. */
 export function clampEmbedHeight(height: number, min = MIN_EMBED_HEIGHT, max = MAX_EMBED_HEIGHT): number {
 	return Math.min(Math.max(Math.round(height), min), max);
 }

@@ -37,7 +37,12 @@ test("clampEmbedHeight never collapses the panel to nothing or lets it run away"
 	assert.equal(clampEmbedHeight(-500), MIN_EMBED_HEIGHT);
 	assert.equal(clampEmbedHeight(612), 612);
 	assert.equal(clampEmbedHeight(612.4), 612);
-	assert.equal(clampEmbedHeight(50000), MAX_EMBED_HEIGHT);
+	assert.equal(clampEmbedHeight(500000), MAX_EMBED_HEIGHT);
+});
+
+test("the maximum is a sanity bound only, high enough that a long page like Growth Track never scrolls inside its panel", () => {
+	assert.equal(MAX_EMBED_HEIGHT, 20000);
+	assert.equal(clampEmbedHeight(12000), 12000);
 });
 
 test("findEmbedFrame matches only the iframe whose contentWindow sent the message", () => {
