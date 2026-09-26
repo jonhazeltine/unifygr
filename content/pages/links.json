@@ -40,6 +40,12 @@
 						"feature": "yes"
 					},
 					{
+						"label": "Welcome to New Life",
+						"blurb": "",
+						"href": "https://theformation.app/m/welcome-to-new-life",
+						"feature": "no"
+					},
+					{
 						"label": "Pray",
 						"blurb": "",
 						"href": "/links/pray",

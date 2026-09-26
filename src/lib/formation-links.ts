@@ -21,7 +21,7 @@ export const ANDROID_PLAY_STORE_URL =
  * community. Kept as its own literal, matching src/lib/formation.ts's
  * COMMUNITY_URL, rather than importing it — see the note above.
  */
-export const FORMATION_DESKTOP_URL = "https://theformation.app/?community=0LY0R";
+export const FORMATION_DESKTOP_URL = "https://theformation.app/join/0LY0R";
 
 /**
  * Where a visitor should land, based on their browser's User-Agent.
