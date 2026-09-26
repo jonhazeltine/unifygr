@@ -15,7 +15,7 @@ test("/links/pray has the Strengthen the Church button with its new copy", () =>
 		button.blurb,
 		"Share an encouraging word, a scripture or a prayer with another congregation in Grand Rapids.",
 	);
-	assert.equal(button.href, "https://thechurchmap.com/grandrapids/pray");
+	assert.equal(button.href, "https://thechurchmap.com/grandrapids/pray?embed=1");
 
 	// No button on this page carries the old label any more.
 	assert.ok(!links.some((l: any) => l.label === "Pray for The Church"));
