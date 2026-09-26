@@ -3,23 +3,29 @@ import test from "node:test";
 import { renderToStaticMarkup } from "react-dom/server";
 import { blocksConfig } from "../src/components/builder/blocks.tsx";
 import linksPage from "../content/pages/links.json" with { type: "json" };
+import newPage from "../content/pages/new.json" with { type: "json" };
+import growPage from "../content/pages/next-steps.json" with { type: "json" };
 
-// Jon asked that "Welcome to New Life" and "The Formation App" — the two
-// /links buttons that leave the site for The Formation App — show a short
+// Jon asked that "Welcome to New Life" and "The Formation App" show a short
 // description of where the visitor is headed before they go, using the same
 // inline panel Give already opens (same open/close, animation, close
 // button), instead of navigating straight away. No iframe: the panel shows
 // text plus one gold "Continue"-style button that opens the href in a new
 // tab, so the installed-app deep link (theformation.app/m/... and the
 // community query-param link) still works the way a plain navigation would.
+//
+// Both buttons moved off /links in the I'm New / Grow / Go / Give
+// restructure: "Welcome to New Life" now lives on /links/new, and "The
+// Formation App" now lives on /links/grow (slug "next-steps") — but they
+// kept their preview panels exactly as they were on /links.
 
-function tapButtonsLinks() {
-	const block = linksPage.content.find((c: any) => c.type === "TapButtons");
+function tapButtonsLinks(page: any) {
+	const block = page.content.find((c: any) => c.type === "TapButtons");
 	return block!.props.links as any[];
 }
 
-test("Welcome to New Life and The Formation App carry preview content on /links", () => {
-	const links = tapButtonsLinks();
+test("Welcome to New Life carries its preview content on /links/new", () => {
+	const links = tapButtonsLinks(newPage);
 
 	const welcome = links.find((l) => l.label === "Welcome to New Life");
 	assert.ok(welcome);
@@ -29,6 +35,10 @@ test("Welcome to New Life and The Formation App carry preview content on /links"
 	);
 	assert.equal(welcome.previewAction, "Watch the series");
 	assert.equal(welcome.href, "https://theformation.app/m/welcome-to-new-life", "href stays unchanged");
+});
+
+test("The Formation App carries its preview content on /links/grow", () => {
+	const links = tapButtonsLinks(growPage);
 
 	const app = links.find((l) => l.label === "The Formation App");
 	assert.ok(app);
@@ -44,10 +54,9 @@ test("Welcome to New Life and The Formation App carry preview content on /links"
 	);
 });
 
-test("no other /links button carries preview content", () => {
-	const links = tapButtonsLinks();
+test("no /links button carries preview content any more — those buttons moved to /links/new and /links/grow", () => {
+	const links = tapButtonsLinks(linksPage);
 	for (const link of links) {
-		if (link.label === "Welcome to New Life" || link.label === "The Formation App") continue;
 		assert.ok(!link.preview, `expected "${link.label}" to have no preview text`);
 		assert.ok(!link.previewAction, `expected "${link.label}" to have no preview action label`);
 	}
@@ -108,8 +117,8 @@ test("a link with no preview text renders the normal plain link, not a panel", (
 		tapButtons.render({
 			links: [
 				{
-					label: "Pray",
-					href: "/links/pray",
+					label: "Go",
+					href: "/links/go",
 				},
 			],
 		} as any),

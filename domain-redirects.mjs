@@ -36,8 +36,15 @@ export const LEGACY_PATH_REDIRECTS = Object.freeze({
 	// The little phone-first "bare" pages moved under /links so they read as
 	// one family instead of a loose "tap" name. Printed cards, NFC tags and
 	// QR codes may still point at the old URLs, so these redirect forever.
-	"/tap": "/links/pray",
-	"/next-steps": "/links/next-steps",
+	// They point straight at the current path — never through an
+	// intermediate hop — so there is never a redirect chain.
+	"/tap": "/links/go",
+	"/next-steps": "/links/grow",
+	// /links/pray and /links/next-steps were themselves renamed to /links/go
+	// and /links/grow (Jon's I'm New / Grow / Go / Give restructure). Both
+	// old paths redirect forever too.
+	"/links/pray": "/links/go",
+	"/links/next-steps": "/links/grow",
 });
 
 function configuredSiteUrl(siteUrl = process.env.PUBLIC_SITE_URL || DEFAULT_SITE_URL) {

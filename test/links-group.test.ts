@@ -12,12 +12,14 @@ import linksPage from "../content/pages/links.json" with { type: "json" };
 // (see src/lib/studio/page-routes.ts and pages.ts, which key everything by
 // slug, never by mounted path).
 test("the tap and next-steps slugs now mount under /links", () => {
-	assert.equal(MOUNTED["tap"], "/links/pray");
-	assert.equal(MOUNTED["next-steps"], "/links/next-steps");
+	assert.equal(MOUNTED["tap"], "/links/go");
+	assert.equal(MOUNTED["next-steps"], "/links/grow");
 	assert.equal(MOUNTED["links"], "/links");
+	assert.equal(MOUNTED["new"], "/links/new");
 	assert.ok(BARE.has("tap"));
 	assert.ok(BARE.has("next-steps"));
 	assert.ok(BARE.has("links"));
+	assert.ok(BARE.has("new"));
 });
 
 function tapButtonsBlock(page: any) {

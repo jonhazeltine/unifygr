@@ -1,0 +1,59 @@
+{
+    "status": "live",
+    "order": 6,
+    "root": {
+        "props": {
+            "title": "Welcome home.",
+            "kicker": "New Life Grand Rapids",
+            "description": "Everything you need for your first few Sundays at New Life."
+        }
+    },
+    "content": [
+        {
+            "type": "TapButtons",
+            "props": {
+                "id": "TapButtons-new",
+                "brand": "New Life Grand Rapids",
+                "heading": "Welcome home.",
+                "lede": "Everything you need for your first few Sundays at New Life.",
+                "homeLabel": "Links",
+                "homeHref": "/links",
+                "homeIcon": "back",
+                "links": [
+                    {
+                        "label": "Welcome to New Life",
+                        "blurb": "",
+                        "href": "https://theformation.app/m/welcome-to-new-life",
+                        "feature": "no",
+                        "preview": "A short video series on who we are: our story, values, vision and mission, and what it means to be part of New Life.",
+                        "previewAction": "Watch the series"
+                    },
+                    {
+                        "label": "Plan your Sunday",
+                        "blurb": "",
+                        "href": "/sunday",
+                        "feature": "no"
+                    },
+                    {
+                        "label": "Calendar",
+                        "blurb": "",
+                        "href": "/ministries/calendar",
+                        "feature": "no"
+                    },
+                    {
+                        "label": "Let us know you're here",
+                        "blurb": "",
+                        "href": "/connect?interest=first-time&from=links+new",
+                        "feature": "no",
+                        "embed": "inline",
+                        "embedSrc": "/connect?interest=first-time&from=links+new&embed=1",
+                        "embedHeight": "80vh"
+                    }
+                ],
+                "footLabel": "Everything else at New Life",
+                "footHref": "/"
+            }
+        }
+    ],
+    "zones": {}
+}

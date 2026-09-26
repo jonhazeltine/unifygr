@@ -3,9 +3,9 @@
     "order": 7,
     "root": {
         "props": {
-            "title": "Next steps",
+            "title": "Grow",
             "kicker": "New Life Grand Rapids",
-            "description": "Your next step at New Life: join a life group, start Growth Track, or join a GO Team."
+            "description": "Grow at New Life: join a life group, start Growth Track, or dig in with The Formation App."
         }
     },
     "content": [
@@ -14,8 +14,8 @@
             "props": {
                 "id": "TapButtons-next-steps",
                 "brand": "New Life Grand Rapids",
-                "heading": "Next steps.",
-                "lede": "Pick the one that's yours.",
+                "heading": "Grow.",
+                "lede": "A church family and a clear path forward — pick the one that's yours today.",
                 "homeLabel": "Links",
                 "homeHref": "/links",
                 "homeIcon": "back",
@@ -39,13 +39,12 @@
                         "embedHeight": "80vh"
                     },
                     {
-                        "label": "Join a GO Team",
-                        "blurb": "The Great Commission calls us to go \u2014 join a Missions Team, a Local Outreach Team, or a Church Ambassador Team.",
-                        "href": "/connect?from=next+steps+page#teams",
+                        "label": "The Formation App",
+                        "blurb": "",
+                        "href": "https://theformation.app/join/0LY0R",
                         "feature": "no",
-                        "embed": "inline",
-                        "embedSrc": "/connect?from=next+steps+page&embed=1#teams",
-                        "embedHeight": "80vh"
+                        "preview": "Our community app for growing in faith day by day: guided paths, Life Group resources and what is happening at New Life.",
+                        "previewAction": "Open the app"
                     }
                 ],
                 "footLabel": "Everything else at New Life",
