@@ -91,6 +91,8 @@ export type Entry = {
 	href?: string | null;
 	website?: string | null;
 	handoff?: Handoff | null;
+	/** Extra call-to-action buttons on the ministry detail page, beyond the standard handoff/website ones. */
+	ctas?: { label: string; href: string }[] | null;
 	calendar?: CalendarLink | null;
 	/** live | proposed | reviewing | dormant */
 	status: string;

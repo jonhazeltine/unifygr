@@ -78,16 +78,20 @@
 				"healing-prayer",
 				"prophetic"
 			],
-			"summary": "Prayer on Sundays and worship nights, prayer for our city, and support for urgent requests.",
-			"why": "Prayer is not a program here. It is the engine, and it has been running longer than most of our other ministries have existed.",
+			"summary": "Ministry teams pray with you after every service, and pre-service prayer meets at 8:30am in the prayer room.",
+			"why": "You can be prayed for after every service we hold, and there is a set time before the service if you want to come pray for others.",
 			"bestFor": "Anyone who wants to be prayed for, and anyone ready to pray for others.",
 			"area": "Knapp's Corner",
 			"city": "Grand Rapids",
-			"rhythm": "Prayer throughout the week",
+			"rhythm": "Pre-service prayer at 8:30am; ministry teams pray after every service",
 			"href": null,
+			"ctas": [
+				{ "label": "Request prayer", "href": "/connect?interest=prayer" },
+				{ "label": "Pray for the church and city", "href": "/links/pray" }
+			],
 			"handoff": {
-				"how": "Ask at the Connections desk on a Sunday, or send a request through the connect card and it goes out to the chain the same day.",
-				"person": "Elizabeth Bish"
+				"how": "Stay after the service and a ministry team will be up front to pray with you. Pre-service prayer starts at 8:30am in the prayer room.",
+				"person": null
 			},
 			"calendar": {
 				"url": null,
@@ -116,16 +120,19 @@
 				"nursery",
 				"childrens-ministry"
 			],
-			"summary": "Nursery through elementary on Sunday mornings, led by a director who has built this for years.",
-			"why": "Your kids get their own space, their own teaching, and adults who know their names.",
+			"summary": "Kids start in worship with their families and are dismissed to Children's Ministry at 10:30am.",
+			"why": "Kids start the service with their family in the sanctuary, then head to their own space and their own teaching partway through.",
 			"bestFor": "Families with kids from infants through 5th grade.",
 			"area": "Knapp's Corner",
 			"city": "Grand Rapids",
-			"rhythm": "Sundays at 10am",
+			"rhythm": "Sundays at 10am, dismissed to Children's Ministry at 10:30am",
 			"href": null,
+			"ctas": [
+				{ "label": "This week's kids lesson for parents", "href": "https://theformation.app/c/newlifegr?section=new-life-kids-parents-fall-2026" }
+			],
 			"handoff": {
-				"how": "Check in at the kids desk when you arrive on Sunday.",
-				"person": "Allie Seif"
+				"how": "Stay with your kids in worship until 10:30am dismissal. There is a kids connection station, though it is not always staffed — one of our greeters or Children's Ministry workers will be glad to point you where to go. A nursing moms' space is also available.",
+				"person": null
 			},
 			"calendar": {
 				"url": null,
@@ -200,7 +207,7 @@
 			"rhythm": "Sundays",
 			"href": "/visit",
 			"handoff": {
-				"how": "Find the Connections desk in the lobby.",
+				"how": "Look for one of our greeters wearing a lanyard, or fill out a Connect card and we will follow up.",
 				"person": "Elizabeth Bish"
 			},
 			"calendar": {
@@ -383,16 +390,16 @@
 				"discipleship-groups",
 				"bible-study"
 			],
-			"summary": "Groups that meet in homes through the week. Where people actually get known.",
-			"why": "We will point you to another church for almost anything. Not this. Belonging is the one thing a community cannot hand off, so life groups stay ours.",
+			"summary": "Our place to connect and do life together through the week, often with good food.",
+			"why": "Life Groups are where people get known outside of a Sunday morning — some meet at the church, some meet in homes around the city.",
 			"bestFor": "Anyone who has been coming a while and still feels like a visitor.",
-			"area": "Knapp's Corner",
+			"area": "At the church and in homes around Grand Rapids",
 			"city": "Grand Rapids",
-			"rhythm": "Weekly, in homes",
+			"rhythm": "Weekly",
 			"href": null,
 			"website": null,
 			"handoff": {
-				"how": "Tell Elizabeth at the Connections desk what part of town you live in and she will match you to a group.",
+				"how": "Fill out a Connect card and tell us you want a group. Elizabeth will follow up and match you to one.",
 				"person": "Elizabeth Bish"
 			},
 			"calendar": {
@@ -407,10 +414,7 @@
 				"by": "Jon Hazeltine",
 				"on": "2026-08-17"
 			},
-			"lat": 42.999923,
-			"lng": -85.601454,
-			"address": "2777 Knapp St NE, Grand Rapids, MI 49525",
-			"venue": "New Life, Knapp's Corner",
+			"venue": null,
 			"venueUrl": null
 		},
 		{

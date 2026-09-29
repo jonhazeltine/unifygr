@@ -44,7 +44,7 @@ export const answers = [
 	},
 	{
 		q: "What about my kids?",
-		a: "Nursery through 5th grade have their own space, their own teaching, and adults who learn their names. Check in at the kids desk when you arrive and someone will walk you through it.",
+		a: "Kids start in worship with you, then head to Children's Ministry at 10:30am for their own space and their own teaching. Look for one of our greeters wearing a lanyard if you need help finding your way.",
 		key: true,
 	},
 	{
