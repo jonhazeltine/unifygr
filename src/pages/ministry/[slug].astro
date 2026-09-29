@@ -116,6 +116,9 @@ const learnMore = publicBuilderDetailLink(entry, pageStatuses, removedBuilderTar
 					)}
 				</dl>
 				<div class="min-actions">
+					{entry.ctas?.map((cta) => (
+						<a class="button button--primary" href={cta.href}>{cta.label}</a>
+					))}
 					{learnMore && <a class="button button--primary" href={learnMore}>Learn more</a>}
 					{entry.website && (
 						<a class="button button--secondary" href={entry.website} target="_blank" rel="noopener">
