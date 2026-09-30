@@ -21,12 +21,13 @@ interface Props {
 
 const { entry, image, href, light = false, imageSize } = Astro.props;
 const id = `sig-${entry.slug}`;
+const toggleId = `${id}-toggle`;
 // Ours meet in our building; what travels says where it goes.
 const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ?? entry.venue ?? null);
 ---
 
 <article class="sig">
-	<button class:list={["sig__face", { "sig__face--light": light }]} type="button" aria-expanded="false" aria-controls={id}>
+	<button class:list={["sig__face", { "sig__face--light": light }]} type="button" id={toggleId} aria-expanded="false" aria-controls={id}>
 		{light && image ? (
 			<img class="sig__image" src={image} width={imageSize?.width} height={imageSize?.height} alt="" aria-hidden="true" loading={light ? "eager" : "lazy"} decoding="async" />
 		) : light ? (
@@ -48,7 +49,12 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 		</span>
 	</button>
 
-	<div class="sig__body" id={id} hidden>
+	<div class="sig__body-anchor">
+		<div class="sig__body" id={id} role="region" aria-labelledby={toggleId} hidden>
+			<div class="sig__detail-heading">
+				<h3>{entry.name}</h3>
+				<button class="sig__close" type="button" aria-label={`Close details for ${entry.name}`}>Close</button>
+			</div>
 		{entry.why && (
 			<div class="sig__why">
 				<p class="eyebrow">Why we do it this way</p>
@@ -63,6 +69,7 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 		<p class="sig__go">
 			<a href={href ?? entry.href ?? `/ministry/${entry.slug}`}>More about {entry.name}</a>
 		</p>
+		</div>
 	</div>
 </article>
 
@@ -125,28 +132,123 @@ const where = entry.house === "in" && entry.venue ? entry.venue : (entry.city ??
 	   card on load. */
 	.sig__body[hidden] { display: none; }
 	.sig__body { padding: clamp(1.2rem, 3vw, 1.9rem); display: grid; gap: 1.4rem; }
-	.sig__why p:last-child { margin: 0.4rem 0 0; color: var(--text); line-height: 1.75; max-width: 60ch; }
-	.sig__facts { display: grid; grid-template-columns: 9rem 1fr; gap: 0.5rem 1.2rem; margin: 0; }
-	.sig__facts dt { color: var(--muted); font-size: 0.82rem; }
-	.sig__facts dd { margin: 0; line-height: 1.6; }
+	:global(.sig-detail-panel) {
+		flex: 0 0 100%; padding: 0; scroll-margin-block: 5rem;
+		border: 1px solid var(--gold-soft, var(--line)); border-radius: 18px;
+		background: var(--panel); overflow: hidden;
+	}
+	.sig__detail-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+	.sig__detail-heading h3 { margin: 0; max-width: none; font-family: "Iowan Old Style", Georgia, serif; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: -0.03em; }
+	.sig__close { flex: none; border: 1px solid var(--line); border-radius: 999px; padding: 0.38rem 0.75rem; color: var(--muted); background: transparent; font: inherit; font-size: 0.78rem; cursor: pointer; }
+	.sig__close:hover, .sig__close:focus-visible { color: var(--text); border-color: var(--gold-soft, var(--line)); }
+	.sig__why p:last-child { margin: 0.4rem 0 0; color: var(--text); line-height: 1.75; max-width: 70ch; }
+	.sig__facts { display: grid; grid-template-columns: 1fr; gap: 0.25rem; margin: 0; }
+	.sig__facts dt { margin-top: 0.85rem; color: var(--muted); font-size: 0.82rem; }
+	.sig__facts dt:first-child { margin-top: 0; }
+	.sig__facts dd { margin: 0; max-width: 70ch; line-height: 1.6; }
 	.sig__go { margin: 0; }
 	.sig__go a { color: var(--gold-soft, #d8bd82); }
 	.sig:has(.sig__face--light) .sig__go a { color: #765a2b; }
 
-	@media (max-width: 34rem) {
-		.sig__facts { grid-template-columns: 1fr; gap: 0.15rem; }
-		.sig__facts dd { margin-bottom: 0.7rem; }
-	}
 </style>
 
 <script>
-	// One listener for every card on the page: they are static, so this runs once.
+	function bodyFor(face: HTMLButtonElement) {
+		return document.getElementById(face.getAttribute("aria-controls")!) as HTMLDivElement | null;
+	}
+
+	function panelFor(grid: HTMLElement) {
+		let panel = grid.querySelector<HTMLDivElement>(":scope > .sig-detail-panel");
+		if (!panel) {
+			panel = document.createElement("div");
+			panel.className = "sig-detail-panel";
+			panel.hidden = true;
+			grid.append(panel);
+		}
+		return panel;
+	}
+
+	function returnBody(body: HTMLDivElement) {
+		const card = document.querySelector<HTMLButtonElement>(`.sig__face[aria-controls="${body.id}"]`)?.closest(".sig");
+		const anchor = card?.querySelector(".sig__body-anchor");
+		if (anchor) anchor.append(body);
+		body.hidden = true;
+	}
+
+	function placePanel(grid: HTMLElement, face: HTMLButtonElement, panel: HTMLDivElement) {
+		panel.hidden = true;
+		const cards = [...grid.querySelectorAll<HTMLElement>(":scope > .sig")];
+		const selected = face.closest<HTMLElement>(".sig");
+		if (!selected) return;
+		const rowTop = selected.offsetTop;
+		const row = cards.filter((card) => Math.abs(card.offsetTop - rowTop) < 2);
+		(row.at(-1) ?? selected).after(panel);
+		panel.hidden = false;
+	}
+
+	function closeDetails(face: HTMLButtonElement, body: HTMLDivElement, panel: HTMLDivElement, returnFocus = false) {
+		face.setAttribute("aria-expanded", "false");
+		returnBody(body);
+		panel.hidden = true;
+		if (returnFocus) face.focus();
+	}
+
+	function closeGrid(grid: HTMLElement, except?: HTMLButtonElement) {
+		grid.querySelectorAll<HTMLButtonElement>(".sig__face[aria-expanded=\"true\"]").forEach((openFace) => {
+			if (openFace === except) return;
+			const body = bodyFor(openFace);
+			const panel = grid.querySelector<HTMLDivElement>(":scope > .sig-detail-panel");
+			if (body && panel) closeDetails(openFace, body, panel);
+		});
+	}
+
+	// The row can change when the viewport crosses a responsive breakpoint.
+	let resizeFrame = 0;
+	window.addEventListener("resize", () => {
+		cancelAnimationFrame(resizeFrame);
+		resizeFrame = requestAnimationFrame(() => {
+			document.querySelectorAll<HTMLElement>(".sig-grid").forEach((grid) => {
+				const face = grid.querySelector<HTMLButtonElement>(".sig__face[aria-expanded=\"true\"]");
+				const panel = grid.querySelector<HTMLDivElement>(":scope > .sig-detail-panel");
+				if (face && panel) placePanel(grid, face, panel);
+			});
+		});
+	});
+
 	document.querySelectorAll<HTMLButtonElement>(".sig__face").forEach((face) => {
 		face.addEventListener("click", () => {
-			const open = face.getAttribute("aria-expanded") === "true";
-			const body = document.getElementById(face.getAttribute("aria-controls")!);
-			face.setAttribute("aria-expanded", String(!open));
-			if (body) body.hidden = open;
+			const grid = face.closest<HTMLElement>(".sig-grid");
+			const body = bodyFor(face);
+			if (!grid || !body) return;
+			const isOpen = face.getAttribute("aria-expanded") === "true";
+			const panel = panelFor(grid);
+			if (isOpen) {
+				closeDetails(face, body, panel);
+				return;
+			}
+			closeGrid(grid, face);
+			body.hidden = false;
+			panel.append(body);
+			face.setAttribute("aria-expanded", "true");
+			placePanel(grid, face, panel);
+			requestAnimationFrame(() => panel.scrollIntoView({ block: "nearest", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }));
 		});
+	});
+
+	document.querySelectorAll<HTMLButtonElement>(".sig__close").forEach((close) => {
+		close.addEventListener("click", () => {
+			const body = close.closest<HTMLDivElement>(".sig__body");
+			const face = body ? document.getElementById(body.getAttribute("aria-labelledby")!) as HTMLButtonElement | null : null;
+			const panel = close.closest<HTMLDivElement>(".sig-detail-panel");
+			if (body && face && panel) closeDetails(face, body, panel, true);
+		});
+	});
+
+	document.addEventListener("keydown", (event) => {
+		if (event.key !== "Escape") return;
+		const panel = (event.target as Element).closest<HTMLDivElement>(".sig-detail-panel");
+		const body = panel?.querySelector<HTMLDivElement>(".sig__body");
+		const face = body ? document.getElementById(body.getAttribute("aria-labelledby")!) as HTMLButtonElement | null : null;
+		if (panel && body && face) closeDetails(face, body, panel, true);
 	});
 </script>

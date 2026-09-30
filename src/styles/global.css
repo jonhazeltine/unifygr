@@ -2625,7 +2625,8 @@ a.min-test h3 { color: var(--text); margin-top: 0; }
 .min-family__art--pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .min-family__art--pair img { min-width: 0; object-fit: cover; }
 .min-family__art--placeholder { background: linear-gradient(145deg, #f0e9de, #e5dac9); }
-.sig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1.1rem; }
+.sig-grid { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1.1rem; }
+.sig-grid > .sig { flex: 1 1 18rem; min-width: 0; }
 .min-family:hover .min-family__art img { transform: scale(1.04); filter: saturate(1) brightness(1.06); }
 .min-family__mix { margin-top: 0.4rem; font-size: 0.74rem; letter-spacing: 0.08em; color: rgba(246,240,231,0.5); }
 /* Both halves are the same line of information, so they get the same type. */
