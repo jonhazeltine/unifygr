@@ -30,6 +30,11 @@
 					"blurb": "The people who lead and care for this community."
 				},
 				{
+					"label": "Our History",
+					"href": "https://history.newlifegr.com",
+					"blurb": "Explore the story of New Life—and add your own memories."
+				},
+				{
 					"label": "What we believe",
 					"href": "/beliefs",
 					"blurb": "What we believe about Jesus, Scripture, and life with God."

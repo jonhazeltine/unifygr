@@ -21,6 +21,7 @@ import { validateImageBytes } from "../src/lib/studio/media.ts";
 import { readOrgs, runtimeDirectoryEntries, writeOrgs } from "../src/lib/partners/directory.ts";
 import { readSitePageStatuses, setSitePageStatus, sitePageDraftGuard, sitePageStatus, updateSitePageStatus } from "../src/lib/studio/site-page-state.ts";
 import { isPagePublished, withPageVisibilityHeaders } from "../src/lib/studio/page-visibility.ts";
+import { readNav } from "../src/lib/studio/nav.ts";
 
 type Entry = { body: string; etag: string };
 
@@ -223,6 +224,17 @@ test("nav API returns a fresh version for the next save and rejects a stale clie
 	assert.notEqual(second.body.version, first.body.version);
 	const stale = await studioPost("../src/pages/api/studio/nav.ts", { nav: { groups: [], cta: { label: "Old", href: "/" } }, version: "seed" }, cookies);
 	assert.equal(stale.status, 409);
+});
+
+test("the default About menu includes the approved New Life history link", async () => {
+	__setRuntimeContentDriverForTests(memoryBlob() as any);
+	const nav = await readNav(locals);
+	const about = nav.groups.find((group) => group.label === "About us");
+	assert.deepEqual(about?.items.find((item) => item.label === "Our History"), {
+		label: "Our History",
+		href: "https://history.newlifegr.com",
+		blurb: "Explore the story of New Life—and add your own memories.",
+	});
 });
 
 test("page API returns a fresh draft version for content saves, and rejects a stale one", async () => {
