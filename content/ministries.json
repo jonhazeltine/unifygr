@@ -170,8 +170,7 @@
 			"rhythm": "As needed",
 			"href": "/staff",
 			"handoff": {
-				"how": "Talk with a staff member. Someone will call you back.",
-				"person": "Tory & Allie Seif"
+				"how": "Talk with a staff member. Our pastoral care team will follow up."
 			},
 			"calendar": {
 				"url": null,
@@ -207,8 +206,7 @@
 			"rhythm": "Sundays",
 			"href": "/visit",
 			"handoff": {
-				"how": "Look for one of our greeters wearing a lanyard, or fill out a Connect card and we will follow up.",
-				"person": "Elizabeth Bish"
+				"how": "Look for one of our greeters wearing a lanyard, or fill out a Connect card and our connections team will follow up."
 			},
 			"calendar": {
 				"url": null,
@@ -246,8 +244,7 @@
 			"href": "/spiritual-formation",
 			"website": "/app",
 			"handoff": {
-				"how": "Start the path online, then Elizabeth follows up personally.",
-				"person": "Elizabeth Bish"
+				"how": "Start the path online, and our team will help you take your next step."
 			},
 			"calendar": {
 				"url": null,
@@ -276,8 +273,7 @@
 			"area": "Knapp's Corner",
 			"href": "/mission-trips",
 			"handoff": {
-				"how": "Read the trip page, then talk to Stacy. She has led these for over a decade.",
-				"person": "Stacy Hazeltine"
+				"how": "Read the trip page, then contact our missions team with questions about the trip."
 			},
 			"calendar": {
 				"url": null,
@@ -320,8 +316,7 @@
 			"rhythm": "Multiple teams weekly",
 			"href": "/outreach-teams",
 			"handoff": {
-				"how": "Tell us you're in and we'll send the next date, where to be, and what we're doing.",
-				"person": "Rebecca Taylor"
+				"how": "Tell us you're in and our outreach team will send the next date, where to be, and what we're doing."
 			},
 			"calendar": {
 				"url": null,
@@ -375,8 +370,7 @@
 			"rhythm": "The fourth Sunday of the month",
 			"href": "/ambassador-teams",
 			"handoff": {
-				"how": "Tell us you want to go and we'll say which church, when to be there, and what to expect.",
-				"person": "Jon Hazeltine"
+				"how": "Tell us you want to go and our ambassador team will share which church, when to be there, and what to expect."
 			}
 		},
 		{
@@ -399,8 +393,7 @@
 			"href": null,
 			"website": null,
 			"handoff": {
-				"how": "Fill out a Connect card and tell us you want a group. Elizabeth will follow up and match you to one.",
-				"person": "Elizabeth Bish"
+				"how": "Fill out a Connect card and tell us you want a group. Our team will help you find one."
 			},
 			"calendar": {
 				"url": null,
